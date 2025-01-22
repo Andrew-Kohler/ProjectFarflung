@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Stores and manages player data saved between scenes.
-/// Stores and manages save data saved between sessions.
+/// Stores and manages progression data saved between scenes and sessions.
+/// Stores and manages options data saved between sessions.
 /// </summary>
 public class GameManager : MonoBehaviour
 {
@@ -32,81 +31,46 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    #region SCENE PERSISTENT DATA
-
-    // Data saved between scenes
+    #region PROGRESSION DATA
     [Serializable]
-    public class ScenePersistentData
+    public class ProgressionData
     {
+        // previous save terminal (or none in case of game start)
+        // terminal unlock states (zone unlock states on power map)
+        // activated light zones (through terminal)
+        // light switch states (physical switches)
+        // busted box fix states
+        // picked up keycard list
+        // narrative log pickup list
+        // etc...
 
-    }
-
-    // private stored inventory
-    private ScenePersistentData _scenePersistent;
-
-    // public accessor of inventory
-    public ScenePersistentData ScenePersistent
-    {
-        get
-        {
-            // initialize if necessary and possible
-            if (_scenePersistent == null)
-            {
-                ResetScenePersistentData();
-            }
-            // return new/existing inventory
-            return _scenePersistent;
-        }
-        private set
-        {
-            _scenePersistent = value;
-        }
-    }
-
-    /// <summary>
-    /// initializes base stats of inventory.
-    /// Used to reset inventory between runs.
-    /// </summary>
-    public void ResetScenePersistentData()
-    {
-        ScenePersistentData newScenePersistent = new ScenePersistentData();
-
-        // Apply reset/initialized Inventory data to Instance
-        Instance.ScenePersistent = newScenePersistent;
-    }
-    #endregion
-
-    #region GAME PERSISTENT DATA
-    // permanent upgrades, settings, etc. (saved between sessions)
-    [Serializable]
-    public class GamePersistentData
-    {
-        public float SFXVolume;
-        public float MusicVolume;
-
-        public float Brightness;
-        public float CamSensitivity;
+        // --------------------------------------------------------- \\
+        // TODO: Add additional progression data types here
+        // --------------------------------------------------------- \\
     }
 
     // private stored save data
-    private GamePersistentData _gamePersistent;
+    private ProgressionData _gameData;
 
-    // public accessor for save data
-    public GamePersistentData GamePersistent
+    /// <summary>
+    /// accessor for save data.
+    /// CAUTION: should generally not interface here in other files, instead use SceneData
+    /// </summary>
+    private ProgressionData GameData // currently being hidden from other files to prevent misuse of interfacing with progression data
     {
         get
         {
             // initialize if necessary and possible
-            if (_gamePersistent == null)
+            if (_gameData == null)
             {
-                InitializeSaveData();
+                InitializeGameData();
             }
 
-            return _gamePersistent;
+            return _gameData;
         }
-        private set
+        set
         {
-            _gamePersistent = value;
+            _gameData = value;
         }
     }
 
@@ -114,43 +78,176 @@ public class GameManager : MonoBehaviour
     /// initializes base stats of save data (used for first time playing).
     /// Used both for reading existing save data AND for creating new save data if none is found.
     /// </summary>
-    public void InitializeSaveData(bool deleteOldSave = false)
+    private void InitializeGameData()
     {
-        // new persistent data instance to initialize/load
-        GamePersistentData newSaveData = new GamePersistentData();
-
-        newSaveData.SFXVolume = 1f;
-        newSaveData.MusicVolume = 1f;
-
-        newSaveData.Brightness = 1f;
-        newSaveData.CamSensitivity = .5f;
-
+        // initialize to default values before reading from file
+        ResetGameData();
+        ProgressionData newSaveData = Instance.GameData;
 
         // read save data, overriding existing data as it is found
-        string filePath = Application.persistentDataPath + "/GameData.json";
-        if (!deleteOldSave)
+        string filePath = Application.persistentDataPath + "/ProgressionData.json";
+        if (System.IO.File.Exists(filePath))
         {
-            if (System.IO.File.Exists(filePath))
-            {
-                string saveData = System.IO.File.ReadAllText(filePath);
-                newSaveData = JsonUtility.FromJson<GamePersistentData>(saveData);
-                Instance.GamePersistent = newSaveData;
-                return;
-            }
+            string saveData = System.IO.File.ReadAllText(filePath);
+            newSaveData = JsonUtility.FromJson<ProgressionData>(saveData);
         }
 
         // Apply read/initialized data to instance
-        Instance.GamePersistent = newSaveData;
+        Instance.GameData = newSaveData;
     }
 
-    private void OnApplicationQuit()
+    /// <summary>
+    /// Sets all save data to its default values.
+    /// Useful for when creating a new game save.
+    /// </summary>
+    public void ResetGameData()
     {
-        // Saves data on quitting application
-        string saveData = JsonUtility.ToJson(GamePersistent);
-        string filePath = Application.persistentDataPath + "/GameData.json";
-        System.IO.File.WriteAllText(filePath, saveData);
+        // new persistent data instance to initialize/load
+        ProgressionData newSaveData = new ProgressionData();
+
+        // e.g.
+        // newSaveData.SaveTerminal = 0;
+
+        // --------------------------------------------------------- \\
+        // TODO: Add default values for additional progression data here
+        // --------------------------------------------------------- \\
+
+        // reset BOTH scene and game data to be safe
+        Instance.GameData = newSaveData;
+        Instance.SceneData = newSaveData;
+    }
+
+    // private stored scene data
+    private ProgressionData _sceneData;
+
+    /// <summary>
+    /// public accessor for scene data (unsaved version of progression data)
+    /// This is where progression data should be interfaced throughout the project in nearly every case.
+    /// </summary>
+    public ProgressionData SceneData
+    {
+        get
+        {
+            // initialize if necessary and possible
+            if (_sceneData == null)
+            {
+                // if no scene data is found, update it to match save data
+                // should occur on application start
+                Instance.SceneData = Instance.GameData;
+            }
+            // return new/existing inventory
+            return _sceneData;
+        }
+        private set
+        {
+            _sceneData = value;
+        }
+    }
+
+    /// <summary>
+    /// Transfers progression data from scene data to game data, so that it will be saved to file.
+    /// Should be called whenever interacting with or exiting a terminal (save points).
+    /// </summary>
+    public void SaveSceneDataToGameData()
+    {
+        Instance.GameData = Instance.SceneData;
     }
     #endregion
 
+    #region OPTIONS DATA
+    // permanent upgrades, settings, etc. (saved between sessions)
+    [Serializable]
+    public class OptionsConfig
+    {
+        // SETTINGS DATA
+        // Volume
+        public float SFXVolume;
+        public float MusicVolume;
+        // Graphics
+        public float Brightness;
+        // Controls
+        public float CamSensitivity;
 
+        // --------------------------------------------------------- \\
+        // TODO: Add additional options data types here
+        // --------------------------------------------------------- \\
+    }
+
+    // private stored save data
+    private OptionsConfig _optionsData;
+
+    // public accessor for save data
+    public OptionsConfig OptionsData
+    {
+        get
+        {
+            // initialize if necessary and possible
+            if (_optionsData == null)
+            {
+                InitializeOptionsData();
+            }
+
+            return _optionsData;
+        }
+        private set
+        {
+            _optionsData = value;
+        }
+    }
+
+    /// <summary>
+    /// initializes base stats of save data (used for first time playing).
+    /// Used both for reading existing save data AND for creating new save data if none is found.
+    /// </summary>
+    public void InitializeOptionsData()
+    {
+        // new persistent data instance to initialize/load
+        OptionsConfig newSaveData = new OptionsConfig();
+
+        // default values in case of missing values from read file
+        // Volume
+        newSaveData.SFXVolume = 1f;
+        newSaveData.MusicVolume = 1f;
+        // Graphics
+        newSaveData.Brightness = 1f;
+        // Controls
+        newSaveData.CamSensitivity = .5f;
+
+        // --------------------------------------------------------- \\
+        // TODO: Add default values for additional options data here
+        // --------------------------------------------------------- \\
+
+        // Read options data file, overriding defaults as data is found
+        string filePath = Application.persistentDataPath + "/OptionsData.json";
+        if (System.IO.File.Exists(filePath))
+        {
+            string saveData = System.IO.File.ReadAllText(filePath);
+            newSaveData = JsonUtility.FromJson<OptionsConfig>(saveData);
+        }
+
+        // Apply read/initialized data to instance
+        Instance.OptionsData = newSaveData;
+    }
+
+    // TODO: any custom public functions for options menu
+    // reset SFX sliders to defaults
+    // reset Controls to defaults
+    // etc...
+    //
+    // Note: if those reset to defaults functions are made,
+    // then the default initialization in the above function should be replaced by calls to the function where possible
+    #endregion
+
+    private void OnApplicationQuit()
+    {
+        // Save OPTIONS DATA to file
+        string optionsData = JsonUtility.ToJson(Instance.OptionsData);
+        string optionsPath = Application.persistentDataPath + "/OptionsData.json";
+        System.IO.File.WriteAllText(optionsPath, optionsData);
+
+        // Save PROGRESSION DATA to file
+        string saveData = JsonUtility.ToJson(Instance.GameData);
+        string savePath = Application.persistentDataPath + "/ProgressionData.json";
+        System.IO.File.WriteAllText(savePath, saveData);
+    }
 }
