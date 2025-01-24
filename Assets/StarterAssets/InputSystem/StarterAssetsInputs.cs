@@ -12,6 +12,7 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
+		public bool tab;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -43,6 +44,11 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
+
+		public void OnTab(InputValue value)
+		{
+			TabInput(value.isPressed);
+		}
 #endif
 
 
@@ -65,7 +71,12 @@ namespace StarterAssets
 		{
 			sprint = newSprintState;
 		}
-		
+
+		public void TabInput(bool newTabState)
+		{
+			tab = newTabState;
+		}
+
 		private void OnApplicationFocus(bool hasFocus)
 		{
 			SetCursorState(cursorLocked);

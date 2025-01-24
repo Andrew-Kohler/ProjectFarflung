@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class HUDController : MonoBehaviour
 {
+    [SerializeField] private PlayerInput _playerInput;
+
     [Header("HUD Tab Navigation")]
     [SerializeField] private Animator _hudNavAnim;
     [SerializeField] private List<Image> _hudImages; // -2, -1, 0, 1, 2
     [SerializeField] private List<Image> _hudSprites; // Map, main, file
 
     [Header("HUD Tabs")]
-    [SerializeField] private GameObject _mainTab;
-    [SerializeField] private GameObject _mapTab;
-    [SerializeField] private GameObject _fileTab;
+    [SerializeField] private List<GameObject> _tabs;
 
-    bool active = true;
+    private int currentTab = 0;
+
+    bool active = false;
     void Start()
     {
         
@@ -25,15 +28,25 @@ public class HUDController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (active)
+        if (_playerInput.actions.FindAction("Tab").IsPressed() && !active)
         {
             StartCoroutine(DoTabSwitch());
         }
+
     }
 
     private IEnumerator DoTabSwitch()
     {
-        active = false;
+        active = true;
+
+        _tabs[currentTab].SetActive(false);
+        currentTab++;
+        if(currentTab >= _tabs.Count)
+        {
+            currentTab = 0;
+        }
+        _tabs[currentTab].SetActive(true);
+
         _hudNavAnim.Play("Right", 0, 0);
         Sprite end = _hudImages[2].sprite;
         // 1 becomes 0
@@ -45,8 +58,8 @@ public class HUDController : MonoBehaviour
         // -2 becomes 2
         _hudImages[0].sprite = end;
 
-        yield return new WaitForSeconds(2f);
-        active = true;
+        yield return new WaitForSeconds(.25f);
+        active = false;
         yield return null;
     }
 }
