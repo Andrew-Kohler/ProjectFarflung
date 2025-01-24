@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -32,19 +31,23 @@ public class GameManager : MonoBehaviour
     }
 
     #region PROGRESSION DATA
-    [Serializable]
+    [System.Serializable]
     public class ProgressionData
     {
         // previous save terminal (or none in case of game start)
-        // light switch states (physical switches)
         // busted box fix states
         // picked up keycard list
         // narrative log pickup list
+        // HP level remaining
         // etc...
 
-        // First bool = terminal/zone unlocked
-        // Second bool = zone toggled on/off
-        public (bool, bool)[] LightZones;
+        // terminal/zone unlocked
+        public bool[] TerminalUnlocks;
+        // zone power toggled on/off - MUST be same size as TerminalUnlocks
+        public bool[] PoweredZones;
+
+        // List of light switch on/off states based on light switch index
+        public bool[] PowerSwitches;
 
         // --------------------------------------------------------- \\
         // TODO: Add additional progression data types here
@@ -109,8 +112,18 @@ public class GameManager : MonoBehaviour
         ProgressionData newSaveData = new ProgressionData();
 
         // default progression data
-        newSaveData.LightZones = new (bool, bool)[12]; // 12 total power zones
-        newSaveData.LightZones[0].Item2 = true; // command enabled by default (but still locked)
+        newSaveData.TerminalUnlocks = new bool[12]; // 12 total power zones
+        for (int i = 0; i < newSaveData.TerminalUnlocks.Length; i++)
+            newSaveData.TerminalUnlocks[i] = false; // all locked by default
+
+        newSaveData.PoweredZones = new bool[12]; // 12 total power zones
+        for (int i = 0; i < newSaveData.PoweredZones.Length; i++)
+            newSaveData.PoweredZones[i] = false; // all off by default
+        newSaveData.PoweredZones[0] = true; // command enabled by default
+
+        newSaveData.PowerSwitches = new bool[64];
+        for (int i = 0; i < newSaveData.PowerSwitches.Length; i++)
+            newSaveData.PowerSwitches[i] = true; // all switches are ON by default
 
         // --------------------------------------------------------- \\
         // TODO: Add default values for additional progression data here
@@ -160,7 +173,7 @@ public class GameManager : MonoBehaviour
 
     #region OPTIONS DATA
     // permanent upgrades, settings, etc. (saved between sessions)
-    [Serializable]
+    [System.Serializable]
     public class OptionsConfig
     {
         // SETTINGS DATA
