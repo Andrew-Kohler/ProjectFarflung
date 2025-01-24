@@ -36,13 +36,15 @@ public class GameManager : MonoBehaviour
     public class ProgressionData
     {
         // previous save terminal (or none in case of game start)
-        // terminal unlock states (zone unlock states on power map)
-        // activated light zones (through terminal)
         // light switch states (physical switches)
         // busted box fix states
         // picked up keycard list
         // narrative log pickup list
         // etc...
+
+        // First bool = terminal/zone unlocked
+        // Second bool = zone toggled on/off
+        public (bool, bool)[] LightZones;
 
         // --------------------------------------------------------- \\
         // TODO: Add additional progression data types here
@@ -94,6 +96,7 @@ public class GameManager : MonoBehaviour
 
         // Apply read/initialized data to instance
         Instance.GameData = newSaveData;
+        Instance.SceneData = newSaveData;
     }
 
     /// <summary>
@@ -105,8 +108,9 @@ public class GameManager : MonoBehaviour
         // new persistent data instance to initialize/load
         ProgressionData newSaveData = new ProgressionData();
 
-        // e.g.
-        // newSaveData.SaveTerminal = 0;
+        // default progression data
+        newSaveData.LightZones = new (bool, bool)[12]; // 12 total power zones
+        newSaveData.LightZones[0].Item2 = true; // command enabled by default (but still locked)
 
         // --------------------------------------------------------- \\
         // TODO: Add default values for additional progression data here
