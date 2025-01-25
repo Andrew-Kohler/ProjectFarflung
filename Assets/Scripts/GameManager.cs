@@ -35,6 +35,12 @@ public class GameManager : MonoBehaviour
     [Serializable]
     public class ProgressionData
     {
+        // Narrative timestamp (conveying to the player that time has past - represented as an integer 0 through 4)
+        public int narrativeTimestamp;
+        // Player max lives
+        public int maxLives;
+        // Player remaining lives
+        public int remainingLives;
         // previous save terminal (or none in case of game start)
         // terminal unlock states (zone unlock states on power map)
         // activated light zones (through terminal)
@@ -94,6 +100,7 @@ public class GameManager : MonoBehaviour
 
         // Apply read/initialized data to instance
         Instance.GameData = newSaveData;
+        Instance.SceneData = newSaveData;
     }
 
     /// <summary>
@@ -107,6 +114,9 @@ public class GameManager : MonoBehaviour
 
         // e.g.
         // newSaveData.SaveTerminal = 0;
+        newSaveData.narrativeTimestamp = 0;
+        newSaveData.maxLives = 9;
+        newSaveData.remainingLives = 9;
 
         // --------------------------------------------------------- \\
         // TODO: Add default values for additional progression data here

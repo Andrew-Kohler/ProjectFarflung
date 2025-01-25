@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using Unity.Mathematics;
 
 public class HUDController : MonoBehaviour
 {
@@ -12,10 +13,11 @@ public class HUDController : MonoBehaviour
     [Header("HUD Tab Navigation")]
     [SerializeField] private Animator _hudNavAnim;
     [SerializeField] private List<Image> _hudImages; // -2, -1, 0, 1, 2
-    [SerializeField] private List<Image> _hudSprites; // Map, main, file
 
     [Header("HUD Tabs")]
     [SerializeField] private List<GameObject> _tabs;
+
+    
 
     private int currentTab = 0;
 
@@ -28,12 +30,17 @@ public class HUDController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
+
         if (_playerInput.actions.FindAction("Tab").IsPressed() && !active)
         {
             StartCoroutine(DoTabSwitch());
         }
 
     }
+
+    
 
     private IEnumerator DoTabSwitch()
     {
