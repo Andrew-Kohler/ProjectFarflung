@@ -41,6 +41,10 @@ public class GameManager : MonoBehaviour
         public int maxLives;
         // Player remaining lives
         public int remainingLives;
+        // What floor the player is on
+        public int floor;
+        // Lists of rooms the players have visited in the form of booleans (we'll be assigning the order)
+        public ArrayList VisitationList1F;
         // previous save terminal (or none in case of game start)
         // terminal unlock states (zone unlock states on power map)
         // activated light zones (through terminal)
@@ -114,9 +118,10 @@ public class GameManager : MonoBehaviour
 
         // e.g.
         // newSaveData.SaveTerminal = 0;
-        newSaveData.narrativeTimestamp = 0;
-        newSaveData.maxLives = 9;
+        newSaveData.narrativeTimestamp = 0;     
+        newSaveData.maxLives = 9;               
         newSaveData.remainingLives = 9;
+        newSaveData.floor = 1;
 
         // --------------------------------------------------------- \\
         // TODO: Add default values for additional progression data here
