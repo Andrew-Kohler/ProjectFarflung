@@ -89,7 +89,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &9082802730195104220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,13 +135,13 @@ Transform:
   m_LocalScale: {x: 25000, y: 25000, z: 25000}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 664703130979584326}
   - {fileID: 8541110124373687948}
-  - {fileID: 2311211455926084344}
   - {fileID: 387097680508338720}
-  - {fileID: 8223416709738453974}
-  - {fileID: 7430486117852792957}
+  - {fileID: 664703130979584326}
+  - {fileID: 2311211455926084344}
   - {fileID: 7743487945028541263}
+  - {fileID: 7430486117852792957}
+  - {fileID: 8223416709738453974}
   m_Father: {fileID: 5545132134957757420}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -455,13 +455,13 @@ Transform:
   m_LocalScale: {x: 25000, y: 25000, z: 25000}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 3871794077479332024}
   - {fileID: 4449442866253554669}
-  - {fileID: 2995776254783820929}
   - {fileID: 7923010640677189214}
-  - {fileID: 8823530468870680902}
-  - {fileID: 9120276197454691729}
   - {fileID: 4523359789727115035}
+  - {fileID: 3871794077479332024}
+  - {fileID: 9120276197454691729}
+  - {fileID: 2995776254783820929}
+  - {fileID: 8823530468870680902}
   m_Father: {fileID: 5545132134957757420}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -875,6 +875,10 @@ PrefabInstance:
       propertyPath: _zoneIndex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2684315969942265932, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: deec335ada2d88744b0012f4e3827256, type: 3}
     - target: {fileID: 3782294193909620045, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -885,7 +889,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: deec335ada2d88744b0012f4e3827256, type: 3}
     - target: {fileID: 5635867508123537812, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Name
-      value: Power Button - Hangar
+      value: 1 - Power Button - Hangar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -995,7 +999,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5635867508123537812, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Name
-      value: Power Button - Cargo
+      value: 2- Power Button - Cargo
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1103,6 +1107,10 @@ PrefabInstance:
       propertyPath: _zoneIndex
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2684315969942265932, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 26ef5e8b722b6d74486cef7f44319a6a, type: 3}
     - target: {fileID: 3782294193909620045, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -1113,7 +1121,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 26ef5e8b722b6d74486cef7f44319a6a, type: 3}
     - target: {fileID: 5635867508123537812, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Name
-      value: Power Button - Command 3
+      value: 0 - Power Button - Command 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1221,6 +1229,10 @@ PrefabInstance:
       propertyPath: _zoneIndex
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2684315969942265932, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bab3338e106d07542a8e9bcdf5db874e, type: 3}
     - target: {fileID: 3782294193909620045, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -1231,7 +1243,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: bab3338e106d07542a8e9bcdf5db874e, type: 3}
     - target: {fileID: 5635867508123537812, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Name
-      value: Power Button - Engineering
+      value: 3- Power Button - Engineering
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1337,8 +1349,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2381942218069245177, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: _zoneIndex
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2684315969942265932, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b3eaf6d5d76232842b47d80322605a76, type: 3}
     - target: {fileID: 3782294193909620045, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -1349,7 +1365,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: b3eaf6d5d76232842b47d80322605a76, type: 3}
     - target: {fileID: 5635867508123537812, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Name
-      value: Power Button - Farm
+      value: 10 - Power Button - Farm
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1455,8 +1471,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2381942218069245177, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: _zoneIndex
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 2684315969942265932, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7378348665c8ef9408c8eb20f4b6b469, type: 3}
     - target: {fileID: 3782294193909620045, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -1467,7 +1487,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 7378348665c8ef9408c8eb20f4b6b469, type: 3}
     - target: {fileID: 5635867508123537812, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Name
-      value: Power Button - Communal
+      value: 8 - Power Button - Communal
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1575,6 +1595,10 @@ PrefabInstance:
       propertyPath: _zoneIndex
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2684315969942265932, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 30616b4bfdd74e64983945e41b73729c, type: 3}
     - target: {fileID: 3782294193909620045, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -1585,7 +1609,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 30616b4bfdd74e64983945e41b73729c, type: 3}
     - target: {fileID: 5635867508123537812, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Name
-      value: Power Button - Command 2
+      value: 0 - Power Button - Command 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1691,8 +1715,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2381942218069245177, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: _zoneIndex
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 2684315969942265932, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1e584e03517c9f241b7f0ede185ea79e, type: 3}
     - target: {fileID: 3782294193909620045, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -1703,7 +1731,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 1e584e03517c9f241b7f0ede185ea79e, type: 3}
     - target: {fileID: 5635867508123537812, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Name
-      value: Power Button - Residential
+      value: 7 - Power Button - Residential
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1811,6 +1839,10 @@ PrefabInstance:
       propertyPath: _zoneIndex
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2684315969942265932, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a11ed763e1fbe65409a14d89fea77007, type: 3}
     - target: {fileID: 3782294193909620045, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -1821,7 +1853,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: a11ed763e1fbe65409a14d89fea77007, type: 3}
     - target: {fileID: 5635867508123537812, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Name
-      value: Power Button - Research
+      value: 5- Power Button - Research
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1929,6 +1961,10 @@ PrefabInstance:
       propertyPath: _zoneIndex
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 2684315969942265932, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ca9094024ff6f414f865b56ca7627d35, type: 3}
     - target: {fileID: 3782294193909620045, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -1939,7 +1975,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: ca9094024ff6f414f865b56ca7627d35, type: 3}
     - target: {fileID: 5635867508123537812, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Name
-      value: Power Button - Security
+      value: 4- Power Button - Security
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2047,6 +2083,10 @@ PrefabInstance:
       propertyPath: _zoneIndex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2684315969942265932, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: deec335ada2d88744b0012f4e3827256, type: 3}
     - target: {fileID: 3782294193909620045, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -2057,7 +2097,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: deec335ada2d88744b0012f4e3827256, type: 3}
     - target: {fileID: 5635867508123537812, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Name
-      value: Power Button - Hangar
+      value: 1 - Power Button - Hangar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2165,6 +2205,10 @@ PrefabInstance:
       propertyPath: _zoneIndex
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 2684315969942265932, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6ec8d808be1e30c4588a26d90cc37053, type: 3}
     - target: {fileID: 3782294193909620045, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -2175,7 +2219,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 6ec8d808be1e30c4588a26d90cc37053, type: 3}
     - target: {fileID: 5635867508123537812, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Name
-      value: Power Button - Nuclear
+      value: 6- Power Button - Nuclear
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2283,6 +2327,10 @@ PrefabInstance:
       propertyPath: _zoneIndex
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2684315969942265932, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 26ef5e8b722b6d74486cef7f44319a6a, type: 3}
     - target: {fileID: 3782294193909620045, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -2293,7 +2341,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 26ef5e8b722b6d74486cef7f44319a6a, type: 3}
     - target: {fileID: 5635867508123537812, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Name
-      value: Power Button - Command 1
+      value: 0 - Power Button - Command 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2399,8 +2447,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2381942218069245177, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: _zoneIndex
-      value: 9
+      value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 2684315969942265932, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c0711cc7e3d9f324d97991e03a0b1749, type: 3}
     - target: {fileID: 3782294193909620045, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -2411,7 +2463,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: c0711cc7e3d9f324d97991e03a0b1749, type: 3}
     - target: {fileID: 5635867508123537812, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Name
-      value: Power Button - Medical
+      value: 11 - Power Button - Medical
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2517,8 +2569,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2381942218069245177, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: _zoneIndex
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 2684315969942265932, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9359c480d07c7dd48ac723887f8e20e7, type: 3}
     - target: {fileID: 3782294193909620045, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -2529,7 +2585,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 9359c480d07c7dd48ac723887f8e20e7, type: 3}
     - target: {fileID: 5635867508123537812, guid: d89384928e9bf2b40afb53b4ce8e2136, type: 3}
       propertyPath: m_Name
-      value: Power Button - Offices
+      value: 9 - Power Button - Offices
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
