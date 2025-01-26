@@ -590,7 +590,7 @@ GameObject:
   m_Component:
   - component: {fileID: 294334473569878926}
   m_Layer: 0
-  m_Name: Floor 2
+  m_Name: Command - Floor 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1115,6 +1115,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6074834f17b68e94faf322192b9287f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _capacity: 300
+  _floorNum: 0
+  HangarObjects:
+  - {fileID: 6410205272581797837}
+  Floor1Objects:
+  - {fileID: 4356214933862085365}
+  - {fileID: 5485733510224592911}
+  - {fileID: 1149455839845727480}
+  - {fileID: 3294754564585586748}
+  - {fileID: 8371495226770747303}
+  - {fileID: 2950226673705062239}
+  Floor2Objects:
+  - {fileID: 1773975928159664313}
+  - {fileID: 1442526742677295915}
+  - {fileID: 5782920870663971292}
+  - {fileID: 742584823245143161}
+  - {fileID: 1724343166265443264}
+  - {fileID: 3093738683150089921}
+  - {fileID: 1442526742677295915}
+  Floor3Objects:
+  - {fileID: 6892520582494467281}
   PoweredZones:
   - {fileID: 7116806335091081568}
   - {fileID: 3605132055211168470}
@@ -1128,7 +1149,6 @@ MonoBehaviour:
   - {fileID: 7817394144648781019}
   - {fileID: 5454874806440751765}
   - {fileID: 159906052403570085}
-  _floorNum: 0
 --- !u!1 &2950226673705062239
 GameObject:
   m_ObjectHideFlags: 0
@@ -1833,7 +1853,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8154793108336631194}
   m_Layer: 0
-  m_Name: Floor 1
+  m_Name: Command - Floor 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2343,12 +2363,12 @@ GameObject:
   m_Component:
   - component: {fileID: 876703433169887678}
   m_Layer: 0
-  m_Name: Floor 3
+  m_Name: Command - Floor 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &876703433169887678
 Transform:
   m_ObjectHideFlags: 0

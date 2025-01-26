@@ -84,4 +84,12 @@ public class PoweredZone : MonoBehaviour
             maxConsum += elem.PowerDraw;
         return maxConsum;
     }
+
+    /// <summary>
+    /// The powered state of the zone.
+    /// </summary>
+    public bool IsPowered()
+    {
+        return _isPowered;
+    }
 }

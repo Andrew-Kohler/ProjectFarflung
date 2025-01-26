@@ -8,6 +8,10 @@ using UnityEngine;
 /// </summary>
 public class PowerSystem : MonoBehaviour
 {
+    [Header("Capacity")]
+    [SerializeField, Tooltip("Total maximum capacity of the power grid before a shutdown will occur.")]
+    private int _capacity;
+
     [Header("Floor Configuration")]
     [SerializeField, Tooltip("Specifies which floor the current scene is for. 0 = hangar")]
     private int _floorNum;
@@ -78,4 +82,31 @@ public class PowerSystem : MonoBehaviour
                 throw new System.Exception("Invalid Power System Setup. Must have a floor number between 1 and 3.");
         }
     }
+
+    /// <summary>
+    /// returns the current power consumption of all zones in the power grid.
+    /// </summary>
+    public int GetCurrentConsumption()
+    {
+        int currConsum = 0;
+        foreach (PoweredZone zone in PoweredZones)
+        {
+            if (zone.IsPowered())
+            {
+                currConsum += zone.GetCurrentConsumption();
+            }
+        }
+        return currConsum;
+    }
+
+    /// <summary>
+    /// returns the capacity of the power grid
+    /// </summary>
+    /// <returns></returns>
+    public int GetCapacity()
+    {
+        return _capacity;
+    }
+
+    // TODO: system for system exceeding capacity. Some checks in update? as well as a function to turn off ALL zones?
 }
