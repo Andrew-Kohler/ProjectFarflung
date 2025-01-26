@@ -13,7 +13,6 @@ public class PoweredZone : MonoBehaviour
     private PoweredElement[] _poweredElements;
 
     private bool _isPowered;
-    private float _maxPowerConsum = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -24,10 +23,6 @@ public class PoweredZone : MonoBehaviour
 
         // initial configuration
         UpdatePowerStates();
-
-        // Calculate max power consumption
-        foreach (PoweredElement elem in _poweredElements)
-            _maxPowerConsum += elem.PowerDraw;
     }
 
     // Update is called once per frame
@@ -84,6 +79,9 @@ public class PoweredZone : MonoBehaviour
     /// </summary>
     public float GetMaxConsumption()
     {
-        return _maxPowerConsum;
+        float maxConsum = 0;
+        foreach (PoweredElement elem in _poweredElements)
+            maxConsum += elem.PowerDraw;
+        return maxConsum;
     }
 }
