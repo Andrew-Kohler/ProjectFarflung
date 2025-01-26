@@ -9,8 +9,8 @@ using UnityEngine.UI;
 public class TerminalZoneToggle : MonoBehaviour
 {
     [Header("Configuration")]
-    [SerializeField, Tooltip("Zone index of the region this toggle controls.")]
-    private int _zoneIndex;
+    [Tooltip("Zone index of the region this toggle controls.")]
+    public int ZoneIndex;
 
     [Header("References")]
     [SerializeField, Tooltip("Used to read the state of the toggle.")]
@@ -23,7 +23,7 @@ public class TerminalZoneToggle : MonoBehaviour
     private void Awake()
     {
         // Precondition: zone index must be valid
-        if (_zoneIndex < 0 || _zoneIndex >= GameManager.Instance.SceneData.PoweredZones.Length || _zoneIndex >= GameManager.Instance.SceneData.TerminalUnlocks.Length)
+        if (ZoneIndex < 0 || ZoneIndex >= GameManager.Instance.SceneData.PoweredZones.Length || ZoneIndex >= GameManager.Instance.SceneData.TerminalUnlocks.Length)
             throw new System.Exception("Invalid zone index: toggle MUST be in range of Game Manager's powered zones list.");
 
         // initial configuration
@@ -35,11 +35,11 @@ public class TerminalZoneToggle : MonoBehaviour
     void Update()
     {
         // update toggle with changes (changes made in other panels)
-        if (_toggle.isOn != GameManager.Instance.SceneData.PoweredZones[_zoneIndex])
+        if (_toggle.isOn != GameManager.Instance.SceneData.PoweredZones[ZoneIndex])
             UpdatePoweredState();
 
         // update toggle interactability
-        if (_toggle.interactable != GameManager.Instance.SceneData.TerminalUnlocks[_zoneIndex])
+        if (_toggle.interactable != GameManager.Instance.SceneData.TerminalUnlocks[ZoneIndex])
             UpdateLockedState();
     }
 
@@ -49,7 +49,7 @@ public class TerminalZoneToggle : MonoBehaviour
     private void UpdatePoweredState()
     {
         // set toggle to initial state of zone
-        _toggle.isOn = GameManager.Instance.SceneData.PoweredZones[_zoneIndex];
+        _toggle.isOn = GameManager.Instance.SceneData.PoweredZones[ZoneIndex];
         _poweredIndicator.SetActive(_toggle.isOn); // powered indicator should match toggle
     }
 
@@ -58,7 +58,7 @@ public class TerminalZoneToggle : MonoBehaviour
     /// </summary>
     private void UpdateLockedState()
     {
-        _toggle.interactable = GameManager.Instance.SceneData.TerminalUnlocks[_zoneIndex];
+        _toggle.interactable = GameManager.Instance.SceneData.TerminalUnlocks[ZoneIndex];
         _lockedIndicator.SetActive(!_toggle.interactable);
     }
 
@@ -68,7 +68,7 @@ public class TerminalZoneToggle : MonoBehaviour
     public void TogglePowerZone()
     {
         // set game manager data to match toggle state on toggle change
-        GameManager.Instance.SceneData.PoweredZones[_zoneIndex] = _toggle.isOn;
+        GameManager.Instance.SceneData.PoweredZones[ZoneIndex] = _toggle.isOn;
         // ensure powered indicator matches change
         _poweredIndicator.SetActive(_toggle.isOn);
     }

@@ -10,6 +10,10 @@ using UnityEngine.UI;
 /// </summary>
 public class TerminalFloorNavigation : MonoBehaviour
 {
+    [Header("Power System")]
+    [Tooltip("Scene reference to the power system for retrieving data to display.")]
+    public PowerSystem PowerSystem;
+
     [Header("Buttons")]
     [SerializeField, Tooltip("Used to disable up when on top floor.")]
     private Button _upButton;

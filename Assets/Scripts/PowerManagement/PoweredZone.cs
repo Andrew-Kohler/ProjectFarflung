@@ -59,13 +59,13 @@ public class PoweredZone : MonoBehaviour
     /// <summary>
     /// Current power draw of all elements powered in this zone.
     /// </summary>
-    public float GetCurrentConsumption()
+    public int GetCurrentConsumption()
     {
         // no consumption if zone not powered
         if (!_isPowered)
-            return 0f;
+            return 0;
 
-        float currConsum = 0;
+        int currConsum = 0;
         foreach(PoweredElement elem in _poweredElements)
         {
             if (elem.IsPowered())
@@ -77,9 +77,9 @@ public class PoweredZone : MonoBehaviour
     /// <summary>
     /// Maximum potential power draw if all elements in the zone are powered.
     /// </summary>
-    public float GetMaxConsumption()
+    public int GetMaxConsumption()
     {
-        float maxConsum = 0;
+        int maxConsum = 0;
         foreach (PoweredElement elem in _poweredElements)
             maxConsum += elem.PowerDraw;
         return maxConsum;
