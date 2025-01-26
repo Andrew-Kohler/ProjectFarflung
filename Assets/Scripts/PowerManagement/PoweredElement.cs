@@ -8,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public abstract class PoweredElement : MonoBehaviour
 {
+    [Tooltip("Power draw while this element is powered.")]
+    public float PowerDraw;
     [SerializeField, Tooltip("Index of the light switch corresponding with the PoweredLight. -1 if there is no switch.")]
     protected int _switchIndex = -1;
 
