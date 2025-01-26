@@ -13,6 +13,8 @@ public class TerminalZoneToggle : MonoBehaviour
     public int ZoneIndex;
 
     [Header("References")]
+    [SerializeField, Tooltip("Used to actually call the functional toggle of powered elements on the power system prefab instance.")]
+    private TerminalFloorNavigation _terminal;
     [SerializeField, Tooltip("Used to read the state of the toggle.")]
     private Toggle _toggle;
     [SerializeField, Tooltip("Enabled to indicate locked state.")]
@@ -20,8 +22,12 @@ public class TerminalZoneToggle : MonoBehaviour
     [SerializeField, Tooltip("Enabled to indicated powered state.")]
     private GameObject _poweredIndicator;
 
+    private PowerSystem _powerSystem;
+
     private void Awake()
     {
+        _powerSystem = _terminal.PowerSystem;
+
         // Precondition: zone index must be valid
         if (ZoneIndex < 0 || ZoneIndex >= GameManager.Instance.SceneData.PoweredZones.Length || ZoneIndex >= GameManager.Instance.SceneData.TerminalUnlocks.Length)
             throw new System.Exception("Invalid zone index: toggle MUST be in range of Game Manager's powered zones list.");
@@ -45,6 +51,7 @@ public class TerminalZoneToggle : MonoBehaviour
 
     /// <summary>
     /// Updates isOn state of toggle and powered indicator to match game manager values.
+    /// Useful for when a state is changed by a DIFFERENT button either within the same terminal or in a different terminal.
     /// </summary>
     private void UpdatePoweredState()
     {
@@ -71,5 +78,7 @@ public class TerminalZoneToggle : MonoBehaviour
         GameManager.Instance.SceneData.PoweredZones[ZoneIndex] = _toggle.isOn;
         // ensure powered indicator matches change
         _poweredIndicator.SetActive(_toggle.isOn);
+        // ensure power elements are properly configured after UI press
+        _powerSystem.PoweredZones[ZoneIndex].UpdatePowerStates();
     }
 }

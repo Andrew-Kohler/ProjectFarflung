@@ -25,20 +25,11 @@ public class PoweredZone : MonoBehaviour
         UpdatePowerStates();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // if a change occurs
-        if (_isPowered != GameManager.Instance.SceneData.PoweredZones[_zoneIndex])
-        {
-            UpdatePowerStates();
-        }
-    }
-
     /// <summary>
     /// Powers all or unpowers all elements of the zone, based on the powered state of the zone.
+    /// Can be called externally to sync this object with game manager data.
     /// </summary>
-    private void UpdatePowerStates()
+    public void UpdatePowerStates()
     {
         // power up each powered element
         if (GameManager.Instance.SceneData.PoweredZones[_zoneIndex])
