@@ -8,7 +8,8 @@ using Unity.Mathematics;
 
 public class HUDController : MonoBehaviour
 {
-    [SerializeField] private PlayerInput _playerInput;
+    public PlayerInput _playerInput;
+    public Transform PlayerTransform;
 
     [Header("HUD Tab Navigation")]
     [SerializeField] private Animator _hudNavAnim;
@@ -30,14 +31,10 @@ public class HUDController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
-
         if (_playerInput.actions.FindAction("Tab").IsPressed() && !active)
         {
             StartCoroutine(DoTabSwitch());
         }
-
     }
 
     

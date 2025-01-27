@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+
 
 /// <summary>
 /// Stores and manages progression data saved between scenes and sessions.
@@ -44,7 +46,7 @@ public class GameManager : MonoBehaviour
         // What floor the player is on
         public int floor;
         // Lists of rooms the players have visited in the form of booleans (we'll be assigning the order)
-        public ArrayList VisitationList1F;
+        public List<bool> VisitationList1F;
         // previous save terminal (or none in case of game start)
         // terminal unlock states (zone unlock states on power map)
         // activated light zones (through terminal)
@@ -122,6 +124,8 @@ public class GameManager : MonoBehaviour
         newSaveData.maxLives = 9;               
         newSaveData.remainingLives = 9;
         newSaveData.floor = 1;
+        // Center, top, left, bottom, right
+        newSaveData.VisitationList1F = new List<bool>{true, false, false, false, false};
 
         // --------------------------------------------------------- \\
         // TODO: Add default values for additional progression data here
