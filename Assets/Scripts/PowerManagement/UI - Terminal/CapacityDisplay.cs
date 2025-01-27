@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// Handles displaying current consumption of entire power system AND capacity of grid.
+/// Also handles grid shutdown when maximum capacity is exceeded.
+/// </summary>
 public class CapacityDisplay : MonoBehaviour
 {
     [Header("Data Retrieval")]
@@ -34,6 +38,14 @@ public class CapacityDisplay : MonoBehaviour
         int newPower = _powerSystem.GetCurrentConsumption();
         if (newPower != _currPower)
         {
+            // check for grid shutdown
+            if (newPower > _powerSystem.GetCapacity())
+            {
+                _powerSystem.ShutdownGrid();
+                newPower = _powerSystem.GetCurrentConsumption(); // ensure stored power is updated to the new power after shutdown
+            }
+
+            // update display and curr power tracker
             UpdateDisplay();
             _currPower = newPower;
         }

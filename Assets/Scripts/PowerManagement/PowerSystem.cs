@@ -108,5 +108,25 @@ public class PowerSystem : MonoBehaviour
         return _capacity;
     }
 
+    /// <summary>
+    /// Disables ALL zones in the entire grid (except locked zones such as command).
+    /// Occurs when power grid exceeds capacity.
+    /// </summary>
+    public void ShutdownGrid()
+    {
+        for (int i = 0; i < GameManager.Instance.SceneData.PoweredZones.Length; i++)
+        {
+            // only shut down unlocked zones, otherwise they stay where they are (i.e. locked command stays on)
+            if (GameManager.Instance.SceneData.TerminalUnlocks[i])
+            {
+                GameManager.Instance.SceneData.PoweredZones[i] = false;
+            }
+
+            // actually update zones to match new game manager data
+            foreach (PoweredZone zone in PoweredZones)
+                zone.UpdatePowerStates();
+        }
+    }
+
     // TODO: system for system exceeding capacity. Some checks in update? as well as a function to turn off ALL zones?
 }
