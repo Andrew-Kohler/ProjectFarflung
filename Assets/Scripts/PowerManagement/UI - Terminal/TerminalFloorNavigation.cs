@@ -28,27 +28,42 @@ public class TerminalFloorNavigation : MonoBehaviour
     [SerializeField, Tooltip("Used to enable/disable floor groupings appropriately.")]
     private GameObject[] _floors;
 
-    private int _currFloor = 0;
+    private int _currUIFloor;
 
     private void Start()
     {
         if (_floors.Length != 3)
             throw new System.Exception("There MUST be 3 floors for floor navigation or it is improperly configured.");
 
-        // set button states accordingly
-        if (_currFloor == 0)
-            _downButton.interactable = false;
-        else if (_currFloor == 2)
-            _upButton.interactable = false;
-
         // activate floor sections accordingly
         _floors[0].SetActive(false);
         _floors[1].SetActive(false);
         _floors[2].SetActive(false);
-        _floors[_currFloor].SetActive(true);
+        // TERMINAL UI FLOOR NUMS: 0 = Floor 1, 1 = Floor 2, 2 = Floor 3
+        // POWER SYSTEM FLOOR NUM: 0 = Hangar, 1 = Floor 1, 2 = Floor 2, 3 = Floor 3
+        switch (this.PowerSystem.FloorNum)
+        {
+            // floor 1
+            case 1:
+                _currUIFloor = 0; // floor 1
+                _floors[_currUIFloor].SetActive(true);
+                _downButton.interactable = false; // cannot go further down
+                break;
+            // floor 2 / Hangar
+            case 0:
+            case 2:
+                _currUIFloor = 1; // floor 2
+                _floors[_currUIFloor].SetActive(true);
+                break;
+            case 3:
+                _currUIFloor = 2; // floor 3
+                _floors[_currUIFloor].SetActive(true);
+                _upButton.interactable = false;
+                break;
+        }
 
         // initial text
-        _floorText.text = "" + (_currFloor + 1) + "F";
+        _floorText.text = "" + (_currUIFloor + 1) + "F";
     }
 
     /// <summary>
@@ -57,21 +72,21 @@ public class TerminalFloorNavigation : MonoBehaviour
     public void UpFloor()
     {
         // Precondition: CANNOT go up from 2
-        if (_currFloor >= 2)
+        if (_currUIFloor >= 2)
             throw new System.Exception("Cannot navigate up 1 floor when already on top floor. Player should not be able to do this.");
 
         // enable / disable floors
-        _floors[_currFloor].SetActive(false);
-        _currFloor++;
-        _floors[_currFloor].SetActive(true);
+        _floors[_currUIFloor].SetActive(false);
+        _currUIFloor++;
+        _floors[_currUIFloor].SetActive(true);
 
         // enable / disable buttons
         _downButton.interactable = true; // no matter what
-        if (_currFloor == 2)
+        if (_currUIFloor == 2)
             _upButton.interactable = false;
 
         // set text
-        _floorText.text = "" + (_currFloor + 1) + "F";
+        _floorText.text = "" + (_currUIFloor + 1) + "F";
     }
 
     /// <summary>
@@ -80,20 +95,20 @@ public class TerminalFloorNavigation : MonoBehaviour
     public void DownFloor()
     {
         // Precondition: CANNOT go up from 2
-        if (_currFloor <= 0)
+        if (_currUIFloor <= 0)
             throw new System.Exception("Cannot navigate down 1 floor when already on bottom floor. Player should not be able to do this.");
 
         // enable / disable floors
-        _floors[_currFloor].SetActive(false);
-        _currFloor--;
-        _floors[_currFloor].SetActive(true);
+        _floors[_currUIFloor].SetActive(false);
+        _currUIFloor--;
+        _floors[_currUIFloor].SetActive(true);
 
         // enable / disable buttons
         _upButton.interactable = true; // no matter what
-        if (_currFloor == 0)
+        if (_currUIFloor == 0)
             _downButton.interactable = false;
 
         // set text
-        _floorText.text = "" + (_currFloor + 1) + "F";
+        _floorText.text = "" + (_currUIFloor + 1) + "F";
     }
 }

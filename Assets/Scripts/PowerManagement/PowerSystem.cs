@@ -14,7 +14,7 @@ public class PowerSystem : MonoBehaviour
 
     [Header("Floor Configuration")]
     [SerializeField, Tooltip("Specifies which floor the current scene is for. 0 = hangar")]
-    private int _floorNum;
+    public int FloorNum;
     [SerializeField, Tooltip("List of objects pertaining to the hangar.")]
     private GameObject[] HangarObjects;
     [SerializeField, Tooltip("List of objects pertaining to floor 1.")]
@@ -44,7 +44,7 @@ public class PowerSystem : MonoBehaviour
     private void Start()
     {
         // must be in start to give lights a chance to actually update in their awake methods
-        switch (_floorNum)
+        switch (FloorNum)
         {
             case 0: // 0 = hangar
                 foreach (GameObject obj in Floor1Objects)
