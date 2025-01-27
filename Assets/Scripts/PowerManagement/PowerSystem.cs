@@ -127,6 +127,4 @@ public class PowerSystem : MonoBehaviour
                 zone.UpdatePowerStates();
         }
     }
-
-    // TODO: system for system exceeding capacity. Some checks in update? as well as a function to turn off ALL zones?
 }
