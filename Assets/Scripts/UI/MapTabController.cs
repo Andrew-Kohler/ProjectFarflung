@@ -160,7 +160,7 @@ public class MapTabController : MonoBehaviour
     {
         if (_currentFloor == 1)
         {
-            for (int i = 0; i < _1FHUDImages.Count; i++)
+            /*for (int i = 0; i < _1FHUDImages.Count; i++)
             {
                 if(CheckRectOverlap(_dot.rectTransform, _1FHUDImages[i].rectTransform))
                 {
@@ -170,7 +170,7 @@ public class MapTabController : MonoBehaviour
                 {
                     _1FHUDImages[i].color = _inactiveColor;
                 }
-            }
+            }*/
         }
         else if (_currentFloor == 2)
         {
@@ -182,7 +182,7 @@ public class MapTabController : MonoBehaviour
         }
     }
 
-    private bool CheckRectOverlap(RectTransform rectTrans1, RectTransform rectTrans2) // Helper function for seeing if UI elements overlap
+    /*private bool CheckRectOverlap(RectTransform rectTrans1, RectTransform rectTrans2) // Helper function for seeing if UI elements overlap
     {
         return WorldRect(rectTrans1).Overlaps(WorldRect(rectTrans2));
     }
@@ -204,5 +204,5 @@ public class MapTabController : MonoBehaviour
         Debug.Log("X: " + x + " Y: " + y + " W/H: " + rectTransformHeight + " " + rectTransformHeight);
 
         return new Rect(x, y, rectTransformWidth, rectTransformHeight);
-    }
+    }*/
 }
