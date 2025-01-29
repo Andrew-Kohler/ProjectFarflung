@@ -16,11 +16,10 @@ public class MapTabController : MonoBehaviour
     [Header("Position Dot")]
     [SerializeField] private Image _dot;
     [SerializeField] private Transform _player;
-    [SerializeField] private Color _activeColor;
-    [SerializeField] private Color _inactiveColor;
 
     [Header("Supplemental Text")]
     [SerializeField] private TextMeshProUGUI _coordsText;
+    [SerializeField] private TextMeshProUGUI _locationText;
 
     [Header("Ranges of Motion")]
     // The X and Y (or X and Z) ranges that (a) the dot can move within in the HUD and (b) the player can move within in the game
@@ -64,7 +63,6 @@ public class MapTabController : MonoBehaviour
     void Update()
     {
         UpdatePosition();
-        CheckMapOverlap();
     }
 
     private void UpdatePosition() // Updating position dot
@@ -87,24 +85,27 @@ public class MapTabController : MonoBehaviour
         // Updating position correctly based on the bounds of the given floor
         if(_currentFloor == 1)
         {
-            hudXPos = math.remap(_1FGameRange.x, _1FGameRange.y, _1FHUDRange.x, _1FHUDRange.y, _player.position.x);
-            hudYPos = math.remap(_1FGameRange.z, _1FGameRange.w, _1FHUDRange.z, _1FHUDRange.w, _player.position.z);
+            hudXPos = math.remap(_1FGameRange.x, _1FGameRange.y, _1FHUDRange.x, _1FHUDRange.y, _mainHUD.PlayerTransform.position.x);
+            hudYPos = math.remap(_1FGameRange.z, _1FGameRange.w, _1FHUDRange.z, _1FHUDRange.w, _mainHUD.PlayerTransform.position.z);
             hudZPos = 0f + (_mainHUD.PlayerTransform.position.y - _baselinePlayerHeight);
 
         }
         else if (_currentFloor == 2)
         {
-            hudXPos = math.remap(_2FGameRange.x, _2FGameRange.y, _2FHUDRange.x, _2FHUDRange.y, _player.position.x);
-            hudYPos = math.remap(_2FGameRange.z, _2FGameRange.w, _2FHUDRange.z, _2FHUDRange.w, _player.position.z);
+            hudXPos = math.remap(_2FGameRange.x, _2FGameRange.y, _2FHUDRange.x, _2FHUDRange.y, _mainHUD.PlayerTransform.position.x);
+            hudYPos = math.remap(_2FGameRange.z, _2FGameRange.w, _2FHUDRange.z, _2FHUDRange.w, _mainHUD.PlayerTransform.position.z);
             hudZPos = 15f + (_mainHUD.PlayerTransform.position.y - _baselinePlayerHeight); 
         }
         else if (_currentFloor == 3)
         {
-            hudXPos = math.remap(_3FGameRange.x, _3FGameRange.y, _3FHUDRange.x, _3FHUDRange.y, _player.position.x);
-            hudYPos = math.remap(_3FGameRange.z, _3FGameRange.w, _3FHUDRange.z, _3FHUDRange.w, _player.position.z);
+            hudXPos = math.remap(_3FGameRange.x, _3FGameRange.y, _3FHUDRange.x, _3FHUDRange.y, _mainHUD.PlayerTransform.position.x);
+            hudYPos = math.remap(_3FGameRange.z, _3FGameRange.w, _3FHUDRange.z, _3FHUDRange.w, _mainHUD.PlayerTransform.position.z);
             hudZPos = 30f + (_mainHUD.PlayerTransform.position.y - _baselinePlayerHeight); 
         }
         _dot.transform.localPosition = new Vector2(hudXPos, hudYPos);
+        _dot.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, _mainHUD.PlayerTransform.rotation.eulerAngles.y));
+            
+          //  .eulerAngles.Set(); //=  new Vector3();
 
         // Display coordinates are based off of the HUD; that way, we don't have to correctly center things in the 2 scenes
         _coordsText.text = "localusercoords:\nX " + System.Math.Round(hudXPos, 2) + "\nY " + System.Math.Round(hudYPos, 2) + "\nZ " + System.Math.Round(hudZPos, 2);
@@ -156,53 +157,17 @@ public class MapTabController : MonoBehaviour
         
     }
 
-    private void CheckMapOverlap() // Function that highlights the room the player is currently in
+    private void SwitchTabs()
     {
-        if (_currentFloor == 1)
-        {
-            /*for (int i = 0; i < _1FHUDImages.Count; i++)
-            {
-                if(CheckRectOverlap(_dot.rectTransform, _1FHUDImages[i].rectTransform))
-                {
-                    _1FHUDImages[i].color = _activeColor;
-                }
-                else
-                {
-                    _1FHUDImages[i].color = _inactiveColor;
-                }
-            }*/
-        }
-        else if (_currentFloor == 2)
-        {
-
-        }
-        else if (_currentFloor == 3)
+        if (_mainHUD.PlayerInput.actions.FindAction("Arrows").IsPressed())
         {
 
         }
     }
 
-    /*private bool CheckRectOverlap(RectTransform rectTrans1, RectTransform rectTrans2) // Helper function for seeing if UI elements overlap
+    public void SetLocationText(string txt)
     {
-        return WorldRect(rectTrans1).Overlaps(WorldRect(rectTrans2));
+        _locationText.text = ">locationdata\n>roomname \"" + txt + "\"";
     }
 
-    // Credit to https://stackoverflow.com/questions/42043017/check-if-ui-elements-recttransform-are-overlapping for this sol'n
-    // for ensuring rectangles are compared appropriately
-    public static Rect WorldRect(RectTransform rectTransform)
-    {
-        Vector2 sizeDelta = rectTransform.sizeDelta;
-        Vector2 pivot = rectTransform.pivot;
-
-        float rectTransformWidth = sizeDelta.x * rectTransform.lossyScale.x;
-        float rectTransformHeight = sizeDelta.y * rectTransform.lossyScale.y;
-
-        //With this it works even if the pivot is not at the center
-        Vector3 position = rectTransform.TransformPoint(rectTransform.rect.center);
-        float x = position.x - rectTransformWidth * 0.5f;
-        float y = position.y - rectTransformHeight * 0.5f;
-        Debug.Log("X: " + x + " Y: " + y + " W/H: " + rectTransformHeight + " " + rectTransformHeight);
-
-        return new Rect(x, y, rectTransformWidth, rectTransformHeight);
-    }*/
 }
