@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,7 +33,7 @@ public class GameManager : MonoBehaviour
     }
 
     #region PROGRESSION DATA
-    [Serializable]
+    [System.Serializable]
     public class ProgressionData
     {
         // Narrative timestamp (conveying to the player that time has past - represented as an integer 0 through 4)
@@ -50,17 +49,88 @@ public class GameManager : MonoBehaviour
         public List<bool> VisitationList2F;
         public List<bool> VisitationList3F;
         // previous save terminal (or none in case of game start)
-        // terminal unlock states (zone unlock states on power map)
-        // activated light zones (through terminal)
-        // light switch states (physical switches)
         // busted box fix states
         // picked up keycard list
         // narrative log pickup list
+        // HP level remaining
         // etc...
+
+        // terminal/zone unlocked
+        public bool[] TerminalUnlocks;
+        // zone power toggled on/off - MUST be same size as TerminalUnlocks
+        public bool[] PoweredZones;
+
+        // List of light switch on/off states based on light switch index
+        public bool[] PowerSwitches;
 
         // --------------------------------------------------------- \\
         // TODO: Add additional progression data types here
         // --------------------------------------------------------- \\
+
+        /// <summary>
+        /// Default constructor.
+        /// Used for default initialization OR resetting of progression data.
+        /// </summary>
+        public ProgressionData()
+        {
+            
+
+            narrativeTimestamp = 0;     
+            maxLives = 9;               
+            remainingLives = 9;
+            floor = 1;
+        // Center, top, left, bottom, right
+            VisitationList1F = new List<bool> {true, false, false, false, false};
+            VisitationList2F = new List<bool> {true, false, false};
+            VisitationList3F = new List<bool> {false};
+
+            // arrays must be initialized like this otherwise json lists will be empty instead of properly initialized
+
+            TerminalUnlocks = new bool[12]; // 12 total power zones
+            for (int i = 0; i < TerminalUnlocks.Length; i++)
+                TerminalUnlocks[i] = false; // all locked by default
+
+            PoweredZones = new bool[12]; // 12 total power zones
+            for (int i = 0; i < PoweredZones.Length; i++)
+                PoweredZones[i] = false; // all off by default
+            PoweredZones[0] = true; // command enabled by default
+
+            PowerSwitches = new bool[64];
+            for (int i = 0; i < PowerSwitches.Length; i++)
+                PowerSwitches[i] = true; // all switches are ON by default
+
+            // --------------------------------------------------------- \\
+            // TODO: Add default values for additional progression data here
+            // --------------------------------------------------------- \\
+        }
+
+        /// <summary>
+        /// Copy constructor for ProgressionData.
+        /// Used for copying data from scene data to game data BY VALUE and not by reference.
+        /// </summary>
+        public ProgressionData(ProgressionData other)
+        {
+            // arrays are reference based, so MUST be assigned like this
+
+            // terminal/zone unlocked
+            TerminalUnlocks = new bool[other.TerminalUnlocks.Length];
+            for (int i = 0; i < TerminalUnlocks.Length; i++)
+                TerminalUnlocks[i] = other.TerminalUnlocks[i];
+
+            // zone power toggled on/off
+            PoweredZones = new bool[other.PoweredZones.Length];
+            for (int i = 0; i < PoweredZones.Length; i++)
+                PoweredZones[i] = other.PoweredZones[i];
+
+            // light switch on/off states
+            PowerSwitches = new bool[other.PowerSwitches.Length];
+            for (int i = 0; i < PowerSwitches.Length; i++)
+                PowerSwitches[i] = other.PowerSwitches[i];
+
+            // --------------------------------------------------------- \\
+            // TODO: Add additional progression data value copies here
+            // --------------------------------------------------------- \\
+        }
     }
 
     // private stored save data
@@ -95,8 +165,7 @@ public class GameManager : MonoBehaviour
     private void InitializeGameData()
     {
         // initialize to default values before reading from file
-        ResetGameData();
-        ProgressionData newSaveData = Instance.GameData;
+        ProgressionData newSaveData = new ProgressionData();
 
         // read save data, overriding existing data as it is found
         string filePath = Application.persistentDataPath + "/ProgressionData.json";
@@ -107,8 +176,8 @@ public class GameManager : MonoBehaviour
         }
 
         // Apply read/initialized data to instance
-        Instance.GameData = newSaveData;
-        Instance.SceneData = newSaveData;
+        // should be a copy of the data, not the same reference
+        Instance.GameData = new ProgressionData(newSaveData);
     }
 
     /// <summary>
@@ -117,27 +186,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResetGameData()
     {
-        // new persistent data instance to initialize/load
-        ProgressionData newSaveData = new ProgressionData();
-
-        // e.g.
-        // newSaveData.SaveTerminal = 0;
-        newSaveData.narrativeTimestamp = 0;     
-        newSaveData.maxLives = 9;               
-        newSaveData.remainingLives = 9;
-        newSaveData.floor = 1;
-        // Center, top, left, bottom, right
-        newSaveData.VisitationList1F = new List<bool> {true, false, false, false, false};
-        newSaveData.VisitationList2F = new List<bool> {true, false, false};
-        newSaveData.VisitationList3F = new List<bool> {false};
-
-        // --------------------------------------------------------- \\
-        // TODO: Add default values for additional progression data here
-        // --------------------------------------------------------- \\
-
-        // reset BOTH scene and game data to be safe
-        Instance.GameData = newSaveData;
-        Instance.SceneData = newSaveData;
+        // Resets BOTH game and scene data to properly reset progress
+        Instance.GameData = new ProgressionData();
+        Instance.SceneData = new ProgressionData();
     }
 
     // private stored scene data
@@ -156,7 +207,7 @@ public class GameManager : MonoBehaviour
             {
                 // if no scene data is found, update it to match save data
                 // should occur on application start
-                Instance.SceneData = Instance.GameData;
+                Instance.SceneData = new ProgressionData(Instance.GameData);
             }
             // return new/existing inventory
             return _sceneData;
@@ -173,13 +224,14 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void SaveSceneDataToGameData()
     {
-        Instance.GameData = Instance.SceneData;
+        // copy of scene data, NOT using same reference
+        Instance.GameData = new ProgressionData(Instance.SceneData);
     }
     #endregion
 
     #region OPTIONS DATA
     // permanent upgrades, settings, etc. (saved between sessions)
-    [Serializable]
+    [System.Serializable]
     public class OptionsConfig
     {
         // SETTINGS DATA
@@ -194,6 +246,26 @@ public class GameManager : MonoBehaviour
         // --------------------------------------------------------- \\
         // TODO: Add additional options data types here
         // --------------------------------------------------------- \\
+
+        /// <summary>
+        /// Default constructor.
+        /// Used only when existing options config data cannot be found.
+        /// </summary>
+        public OptionsConfig()
+        {
+            // default values in case of missing values from read file
+            // Volume
+            SFXVolume = 1f;
+            MusicVolume = 1f;
+            // Graphics
+            Brightness = 1f;
+            // Controls
+            CamSensitivity = .5f;
+
+            // --------------------------------------------------------- \\
+            // TODO: Add default values for additional options data here
+            // --------------------------------------------------------- \\
+        }
     }
 
     // private stored save data
@@ -226,19 +298,6 @@ public class GameManager : MonoBehaviour
     {
         // new persistent data instance to initialize/load
         OptionsConfig newSaveData = new OptionsConfig();
-
-        // default values in case of missing values from read file
-        // Volume
-        newSaveData.SFXVolume = 1f;
-        newSaveData.MusicVolume = 1f;
-        // Graphics
-        newSaveData.Brightness = 1f;
-        // Controls
-        newSaveData.CamSensitivity = .5f;
-
-        // --------------------------------------------------------- \\
-        // TODO: Add default values for additional options data here
-        // --------------------------------------------------------- \\
 
         // Read options data file, overriding defaults as data is found
         string filePath = Application.persistentDataPath + "/OptionsData.json";
