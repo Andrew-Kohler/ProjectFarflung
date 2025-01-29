@@ -10,6 +10,7 @@ public class MapTabController : MonoBehaviour
 {
     [Header("HUD Controller")]
     [SerializeField] private HUDController _mainHUD;
+    [SerializeField] private GameObject _mapTabContents; // Important because the listener for adding new rooms to the map is on here
 
     private float _baselinePlayerHeight;
 
@@ -34,7 +35,8 @@ public class MapTabController : MonoBehaviour
     [Header("Floor Lists & Floor Switching")]
     [SerializeField] private List<GameObject> _floorGameObjects;
     [SerializeField] private List<GameObject> _floorNumbers;
-    [SerializeField] private GameObject floorSelector;
+    [SerializeField] private GameObject _floorSelector;
+    private bool _isFloorSwapActive;
 
     [Header("Room Image Lists")]
     [SerializeField] private List<Image> _1FHUDImages;
@@ -58,13 +60,20 @@ public class MapTabController : MonoBehaviour
 
     void Start()
     {
-        _currentFloor = GameManager.Instance.SceneData.floor;
-        _currentHUDFloor = _currentFloor;
-
+        // Lore height of the floors
         _baselinePlayerHeight = _mainHUD.PlayerTransform.position.y;
 
+        // Arrow keys
         _arrowAction = _mainHUD.PlayerInput.actions.FindAction("Arrows");
         _arrowAction.Enable();
+
+        // Update the floor we're on, the floor the HUD is on, and the floor being shown by the HUD
+        _currentFloor = GameManager.Instance.SceneData.floor;
+        _currentHUDFloor = _currentFloor;
+        _floorSelector.transform.position = _floorNumbers[_currentHUDFloor - 1].transform.position;
+        _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(true);
+
+        
 
         RevealHUDMapStart(); // Make sure everywhere that's been enabled is visible
     }
@@ -72,8 +81,12 @@ public class MapTabController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdatePosition();
-        UpdateFloor();
+        if (_mapTabContents.activeSelf)
+        {
+            UpdatePosition();
+            UpdateFloor();
+        }
+        
     }
 
     private void UpdatePosition() // Updating position dot
@@ -124,24 +137,29 @@ public class MapTabController : MonoBehaviour
 
     private void RevealHUDMapStart() // On scene start, show everything the player has been able to explore
     {
-        // Floor check! Gotta be in the right place
-        if (_currentFloor == 1)
+        // Reveals all explored images so the player can still see them when they switch tabs
+        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList1F.Count; i++)
         {
-            for(int i = 0; i < GameManager.Instance.SceneData.VisitationList1F.Count; i++)
+            if (GameManager.Instance.SceneData.VisitationList1F[i] == true)
             {
-                if (GameManager.Instance.SceneData.VisitationList1F[i] == true) 
-                {
-                    _1FHUDImages[i].gameObject.SetActive(true);
-                }
+                _1FHUDImages[i].gameObject.SetActive(true);
             }
         }
-        else if (_currentFloor == 2)
-        {
 
+        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList2F.Count; i++)
+        {
+            if (GameManager.Instance.SceneData.VisitationList2F[i] == true)
+            {
+                _2FHUDImages[i].gameObject.SetActive(true);
+            }
         }
-        else if (_currentFloor == 3)
-        {
 
+        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList3F.Count; i++)
+        {
+            if (GameManager.Instance.SceneData.VisitationList3F[i] == true)
+            {
+                _3FHUDImages[i].gameObject.SetActive(true);
+            }
         }
     }
 
@@ -159,34 +177,67 @@ public class MapTabController : MonoBehaviour
         }
         else if (_currentFloor == 2)
         {
+            // Visual update in scene
+            _2FHUDImages[room1].gameObject.SetActive(true);
+            _2FHUDImages[room2].gameObject.SetActive(true);
 
+            // Save data update in GM
+            GameManager.Instance.SceneData.VisitationList2F[room1] = true;
+            GameManager.Instance.SceneData.VisitationList2F[room2] = true;
         }
         else if (_currentFloor == 3)
         {
+            // Visual update in scene
+            _3FHUDImages[room1].gameObject.SetActive(true);
+            _3FHUDImages[room2].gameObject.SetActive(true);
 
+            // Save data update in GM
+            GameManager.Instance.SceneData.VisitationList3F[room1] = true;
+            GameManager.Instance.SceneData.VisitationList3F[room2] = true;
         }
         
     }
 
     private void UpdateFloor() // Switches floors when the up or down arrows are hit
     {
-        Vector2 arrowInput = _arrowAction.ReadValue<Vector2>();
-        if (arrowInput.y > 0)
+        if (!_isFloorSwapActive)
         {
-            _currentHUDFloor++;
-            if(_currentHUDFloor > 3) 
+            Vector2 arrowInput = _arrowAction.ReadValue<Vector2>();
+            if (arrowInput.y > 0)
             {
-                _currentHUDFloor = 3; // Infinite scrolling is NOT enabled, that's too easy and useful for a horror interface
+                
+                _currentHUDFloor++;
+
+                if (_currentHUDFloor > 3)
+                {
+                    _currentHUDFloor = 3; // Infinite scrolling is NOT enabled, that's too easy and useful for a horror interface
+
+                }
+                else
+                {
+                    _floorGameObjects[_currentHUDFloor - 2].gameObject.SetActive(false);
+                    StartCoroutine(DoFloorSwap());
+                }
             }
-        }
-        else if(arrowInput.y < 0)
-        {
-            _currentHUDFloor--;
-            if (_currentHUDFloor < 1)
+            else if (arrowInput.y < 0)
             {
-                _currentHUDFloor = 1;
+                
+                _currentHUDFloor--;
+                if (_currentHUDFloor < 1)
+                {
+                    _currentHUDFloor = 1;
+                }
+                else
+                {
+                    _floorGameObjects[_currentHUDFloor].gameObject.SetActive(false);
+                    StartCoroutine(DoFloorSwap());
+                }
+                
             }
+
+            
         }
+        
     }
 
     public void SetLocationText(string txt)
@@ -196,7 +247,11 @@ public class MapTabController : MonoBehaviour
 
     private IEnumerator DoFloorSwap()
     {
+        _isFloorSwapActive = true;
+        _floorSelector.transform.position = _floorNumbers[_currentHUDFloor - 1].transform.position;
+        _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(true);
         yield return new WaitForSeconds(.2f);
+        _isFloorSwapActive = false;
     }
 
 }

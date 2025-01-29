@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
         public int floor;
         // Lists of rooms the players have visited in the form of booleans (we'll be assigning the order)
         public List<bool> VisitationList1F;
+        public List<bool> VisitationList2F;
+        public List<bool> VisitationList3F;
         // previous save terminal (or none in case of game start)
         // terminal unlock states (zone unlock states on power map)
         // activated light zones (through terminal)
@@ -125,7 +127,9 @@ public class GameManager : MonoBehaviour
         newSaveData.remainingLives = 9;
         newSaveData.floor = 1;
         // Center, top, left, bottom, right
-        newSaveData.VisitationList1F = new List<bool>{true, false, false, false, false};
+        newSaveData.VisitationList1F = new List<bool> {true, false, false, false, false};
+        newSaveData.VisitationList2F = new List<bool> {true, false, false};
+        newSaveData.VisitationList3F = new List<bool> {false};
 
         // --------------------------------------------------------- \\
         // TODO: Add default values for additional progression data here
