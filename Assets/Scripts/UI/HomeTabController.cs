@@ -42,8 +42,8 @@ public class HomeTabController : MonoBehaviour
 
     private void UpdateNarrativeTime() // Updates the indicator of narratively passed time
     {
-        _narrativeTime.sprite = _narrativeTimeImages[GameManager.Instance.SceneData.narrativeTimestamp];
-        _narrativeTimeText.text = _narrativeTimeReadouts[GameManager.Instance.SceneData.narrativeTimestamp];
+        _narrativeTime.sprite = _narrativeTimeImages[GameManager.Instance.SceneData.NarrativeTimestamp];
+        _narrativeTimeText.text = _narrativeTimeReadouts[GameManager.Instance.SceneData.NarrativeTimestamp];
     }
 
     private void UpdateRotationGauge()
@@ -70,8 +70,8 @@ public class HomeTabController : MonoBehaviour
 
     private void UpdateVitals()
     {
-        _healthFill.fillAmount = ((float)GameManager.Instance.SceneData.remainingLives / GameManager.Instance.SceneData.maxLives);
-        float healthR = math.remap(GameManager.Instance.SceneData.maxLives, 0, .7f, 0, GameManager.Instance.SceneData.remainingLives);
+        _healthFill.fillAmount = ((float)GameManager.Instance.SceneData.RemainingLives / GameManager.Instance.SceneData.MaxLives);
+        float healthR = math.remap(GameManager.Instance.SceneData.MaxLives, 0, .7f, 0, GameManager.Instance.SceneData.RemainingLives);
         _healthFill.color = new Color(.7f, healthR, healthR);
     }
 }

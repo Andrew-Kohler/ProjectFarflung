@@ -37,23 +37,18 @@ public class GameManager : MonoBehaviour
     public class ProgressionData
     {
         // Narrative timestamp (conveying to the player that time has past - represented as an integer 0 through 4)
-        public int narrativeTimestamp;
+        public int NarrativeTimestamp;
         // Player max lives
-        public int maxLives;
+        public int MaxLives;
         // Player remaining lives
-        public int remainingLives;
-        // What floor the player is on
-        public int floor;
+        public int RemainingLives;
+
+        // What floor the player is on (used by HUD, 1-3)
+        public int Floor;
         // Lists of rooms the players have visited in the form of booleans (we'll be assigning the order)
-        public List<bool> VisitationList1F;
-        public List<bool> VisitationList2F;
-        public List<bool> VisitationList3F;
-        // previous save terminal (or none in case of game start)
-        // busted box fix states
-        // picked up keycard list
-        // narrative log pickup list
-        // HP level remaining
-        // etc...
+        public bool[] VisitationList1F;
+        public bool[] VisitationList2F;
+        public bool[] VisitationList3F;
 
         // terminal/zone unlocked
         public bool[] TerminalUnlocks;
@@ -62,6 +57,12 @@ public class GameManager : MonoBehaviour
 
         // List of light switch on/off states based on light switch index
         public bool[] PowerSwitches;
+
+        // previous save terminal (or none in case of game start)
+        // busted box fix states
+        // picked up keycard list
+        // narrative log pickup list
+        // etc...
 
         // --------------------------------------------------------- \\
         // TODO: Add additional progression data types here
@@ -73,16 +74,25 @@ public class GameManager : MonoBehaviour
         /// </summary>
         public ProgressionData()
         {
-            
+            NarrativeTimestamp = 0;     
+            MaxLives = 9;               
+            RemainingLives = 9;
 
-            narrativeTimestamp = 0;     
-            maxLives = 9;               
-            remainingLives = 9;
-            floor = 1;
-        // Center, top, left, bottom, right
-            VisitationList1F = new List<bool> {true, false, false, false, false};
-            VisitationList2F = new List<bool> {true, false, false};
-            VisitationList3F = new List<bool> {false};
+            Floor = 1;
+            // Center, top, left, bottom, right
+            VisitationList1F = new bool[5]; 
+            for (int i = 0; i < VisitationList1F.Length; i++)
+                VisitationList1F[i] = false;
+            VisitationList1F[0] = true; // Center room visited by default for now
+
+            VisitationList2F = new bool[3];
+            for (int i = 0; i < VisitationList2F.Length; i++)
+                VisitationList2F[i] = false;
+            VisitationList2F[0] = true; // Center room visited by default for now
+
+            VisitationList3F = new bool[1];
+            for (int i = 0; i < VisitationList3F.Length; i++)
+                VisitationList3F[i] = false;
 
             // arrays must be initialized like this otherwise json lists will be empty instead of properly initialized
 
@@ -109,7 +119,24 @@ public class GameManager : MonoBehaviour
         /// Used for copying data from scene data to game data BY VALUE and not by reference.
         /// </summary>
         public ProgressionData(ProgressionData other)
-        {
+        { 
+            NarrativeTimestamp = other.NarrativeTimestamp;     
+            MaxLives = other.MaxLives;               
+            RemainingLives = other.RemainingLives;
+
+            Floor = other.Floor;
+            VisitationList1F = new bool[5]; 
+            for (int i = 0; i<VisitationList1F.Length; i++)
+                VisitationList1F[i] = other.VisitationList1F[i];
+
+            VisitationList2F = new bool[3];
+            for (int i = 0; i<VisitationList2F.Length; i++)
+                VisitationList2F[i] = other.VisitationList2F[i];
+
+            VisitationList3F = new bool[1];
+            for (int i = 0; i<VisitationList3F.Length; i++)
+                VisitationList3F[i] = other.VisitationList3F[i];
+        
             // arrays are reference based, so MUST be assigned like this
 
             // terminal/zone unlocked

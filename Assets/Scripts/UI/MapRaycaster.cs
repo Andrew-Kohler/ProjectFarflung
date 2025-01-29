@@ -10,9 +10,11 @@ public class MapRaycaster : MonoBehaviour
     [SerializeField] private Color _activeColor;
     [SerializeField] private Color _inactiveColor;
     [SerializeField] private MapTabController _tabController;
+
+    private BoxCollider2D _col;
     void Start()
     {
-
+        _col = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -69,5 +71,17 @@ public class MapRaycaster : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         collision.GetComponent<Image>().color = _inactiveColor;
+    }
+
+    public void ToggleState(bool currentFloor)
+    {
+        if (currentFloor)
+        {
+            _col.enabled = true;
+        }
+        else
+        {
+            _col.enabled = false;
+        }
     }
 }

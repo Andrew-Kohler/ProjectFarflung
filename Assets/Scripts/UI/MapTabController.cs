@@ -16,6 +16,7 @@ public class MapTabController : MonoBehaviour
 
     [Header("Position Dot")]
     [SerializeField] private Image _dot;
+    [SerializeField] private MapRaycaster _dotScript;
     [SerializeField] private Transform _player;
 
     [Header("Supplemental Text")]
@@ -68,7 +69,7 @@ public class MapTabController : MonoBehaviour
         _arrowAction.Enable();
 
         // Update the floor we're on, the floor the HUD is on, and the floor being shown by the HUD
-        _currentFloor = GameManager.Instance.SceneData.floor;
+        _currentFloor = GameManager.Instance.SceneData.Floor;
         _currentHUDFloor = _currentFloor;
         _floorSelector.transform.position = _floorNumbers[_currentHUDFloor - 1].transform.position;
         _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(true);
@@ -96,7 +97,7 @@ public class MapTabController : MonoBehaviour
 
         float hudZPos = 0; // Purely for narrative purposes
 
-        // Floor check! Gotta be in the right place
+        // Floor check! Dot remains active but becomes discolored
         if(_currentFloor == _currentHUDFloor)
         {
             _dot.gameObject.SetActive(true);
@@ -138,23 +139,23 @@ public class MapTabController : MonoBehaviour
     private void RevealHUDMapStart() // On scene start, show everything the player has been able to explore
     {
         // Reveals all explored images so the player can still see them when they switch tabs
-        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList1F.Count; i++)
+        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList1F.Length; i++)
         {
-            if (GameManager.Instance.SceneData.VisitationList1F[i] == true)
+            if (GameManager.Instance.SceneData.VisitationList1F[i])
             {
                 _1FHUDImages[i].gameObject.SetActive(true);
             }
         }
 
-        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList2F.Count; i++)
+        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList2F.Length; i++)
         {
-            if (GameManager.Instance.SceneData.VisitationList2F[i] == true)
+            if (GameManager.Instance.SceneData.VisitationList2F[i])
             {
                 _2FHUDImages[i].gameObject.SetActive(true);
             }
         }
 
-        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList3F.Count; i++)
+        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList3F.Length; i++)
         {
             if (GameManager.Instance.SceneData.VisitationList3F[i] == true)
             {
