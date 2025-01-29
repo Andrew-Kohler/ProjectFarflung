@@ -10,6 +10,7 @@ namespace StarterAssets
 		[Header("Character Input Values")]
 		public Vector2 move;
 		public Vector2 look;
+		public Vector2 arrows;
 		public bool jump;
 		public bool sprint;
 		public bool tab;
@@ -33,6 +34,11 @@ namespace StarterAssets
 			{
 				LookInput(value.Get<Vector2>());
 			}
+		}
+
+		public void OnArrows(InputValue value)
+		{
+			ArrowInput(value.Get<Vector2>());
 		}
 
 		public void OnJump(InputValue value)
@@ -60,6 +66,11 @@ namespace StarterAssets
 		public void LookInput(Vector2 newLookDirection)
 		{
 			look = newLookDirection;
+		}
+
+		public void ArrowInput(Vector2 newArrowDirection)
+		{
+			arrows = newArrowDirection;
 		}
 
 		public void JumpInput(bool newJumpState)

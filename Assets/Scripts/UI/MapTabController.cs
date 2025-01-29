@@ -31,13 +31,20 @@ public class MapTabController : MonoBehaviour
     [SerializeField] private Vector4 _3FHUDRange;
     [SerializeField] private Vector4 _3FGameRange;
 
-    [Header("HUD Image Lists")]
+    [Header("Floor Lists & Floor Switching")]
+    [SerializeField] private List<GameObject> _floorGameObjects;
+    [SerializeField] private List<GameObject> _floorNumbers;
+    [SerializeField] private GameObject floorSelector;
+
+    [Header("Room Image Lists")]
     [SerializeField] private List<Image> _1FHUDImages;
     [SerializeField] private List<Image> _2FHUDImages;
     [SerializeField] private List<Image> _3FHUDImages;
 
     private int _currentFloor;      // The floor the player is on
     private int _currentHUDFloor;   // The floor the HUD is displaying
+
+    private InputAction _arrowAction;
 
     private void OnEnable()
     {
@@ -56,6 +63,9 @@ public class MapTabController : MonoBehaviour
 
         _baselinePlayerHeight = _mainHUD.PlayerTransform.position.y;
 
+        _arrowAction = _mainHUD.PlayerInput.actions.FindAction("Arrows");
+        _arrowAction.Enable();
+
         RevealHUDMapStart(); // Make sure everywhere that's been enabled is visible
     }
 
@@ -63,6 +73,7 @@ public class MapTabController : MonoBehaviour
     void Update()
     {
         UpdatePosition();
+        UpdateFloor();
     }
 
     private void UpdatePosition() // Updating position dot
@@ -157,17 +168,35 @@ public class MapTabController : MonoBehaviour
         
     }
 
-    private void SwitchTabs()
+    private void UpdateFloor() // Switches floors when the up or down arrows are hit
     {
-        if (_mainHUD.PlayerInput.actions.FindAction("Arrows").IsPressed())
+        Vector2 arrowInput = _arrowAction.ReadValue<Vector2>();
+        if (arrowInput.y > 0)
         {
-
+            _currentHUDFloor++;
+            if(_currentHUDFloor > 3) 
+            {
+                _currentHUDFloor = 3; // Infinite scrolling is NOT enabled, that's too easy and useful for a horror interface
+            }
+        }
+        else if(arrowInput.y < 0)
+        {
+            _currentHUDFloor--;
+            if (_currentHUDFloor < 1)
+            {
+                _currentHUDFloor = 1;
+            }
         }
     }
 
     public void SetLocationText(string txt)
     {
         _locationText.text = ">locationdata\n>roomname \"" + txt + "\"";
+    }
+
+    private IEnumerator DoFloorSwap()
+    {
+        yield return new WaitForSeconds(.2f);
     }
 
 }
