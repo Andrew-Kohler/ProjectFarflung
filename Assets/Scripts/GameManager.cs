@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 /// <summary>
 /// Stores and manages progression data saved between scenes and sessions.
 /// Stores and manages options data saved between sessions.
