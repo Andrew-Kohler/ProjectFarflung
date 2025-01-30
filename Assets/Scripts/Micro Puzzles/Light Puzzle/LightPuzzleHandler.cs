@@ -20,7 +20,7 @@ public class LightPuzzleHandler : MonoBehaviour
     [SerializeField, Tooltip("Toggles to be flipped in patterns based on presses.")]
     private Toggle[] _toggles;
     [SerializeField, Tooltip("Used to access terminal index.")]
-    private TerminalFloorNavigation _terminal;
+    private TerminalConfiguration _terminal;
 
     private void Awake()
     {

@@ -14,7 +14,7 @@ public class TerminalZoneToggle : MonoBehaviour
 
     [Header("References")]
     [SerializeField, Tooltip("Used to actually call the functional toggle of powered elements on the power system prefab instance.")]
-    private TerminalFloorNavigation _terminal;
+    private TerminalConfiguration _terminal;
     [SerializeField, Tooltip("Used to read the state of the toggle.")]
     private Toggle _toggle;
     [SerializeField, Tooltip("Enabled to indicate locked state.")]

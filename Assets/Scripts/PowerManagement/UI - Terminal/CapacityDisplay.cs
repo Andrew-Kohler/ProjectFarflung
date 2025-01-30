@@ -11,7 +11,7 @@ public class CapacityDisplay : MonoBehaviour
 {
     [Header("Data Retrieval")]
     [SerializeField, Tooltip("Used to retrieve the power system and read data.")]
-    private TerminalFloorNavigation _terminal;
+    private TerminalConfiguration _terminal;
 
     [Header("Data Display")]
     [SerializeField, Tooltip("Used to set display text.")]
