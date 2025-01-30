@@ -10,7 +10,9 @@ using UnityEngine.UI;
 /// </summary>
 public class TerminalFloorNavigation : MonoBehaviour
 {
-    [Header("Power System")]
+    [Header("Scene Configuration")]
+    [Tooltip("Terminal index, used for terminal unlocking AND knowing where to zoom in on (puzzle vs screen).")]
+    public int ZoneIndex;
     [Tooltip("Scene reference to the power system for retrieving data to display.")]
     public PowerSystem PowerSystem;
 
@@ -32,6 +34,11 @@ public class TerminalFloorNavigation : MonoBehaviour
 
     private void Start()
     {
+        // Precondition: proper zone index
+        if (ZoneIndex < 0 || ZoneIndex >= GameManager.Instance.SceneData.PoweredZones.Length || ZoneIndex >= GameManager.Instance.SceneData.TerminalUnlocks.Length)
+            throw new System.Exception("Invalid Terminal Index: must be in range of powered zones list in game manager.");
+
+        // Precondition: must have 3 floors
         if (_floors.Length != 3)
             throw new System.Exception("There MUST be 3 floors for floor navigation or it is improperly configured.");
 
