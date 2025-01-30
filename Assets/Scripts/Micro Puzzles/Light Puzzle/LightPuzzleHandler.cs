@@ -53,6 +53,14 @@ public class LightPuzzleHandler : MonoBehaviour
     /// </summary>
     public void TogglePattern(int buttonIndex)
     {
+        // blocks functionality of buttons once puzzle has been completed
+        if (GameManager.Instance.SceneData.TerminalUnlocks[_terminal.ZoneIndex])
+        {
+            // undo the press of the current toggle
+            _toggles[buttonIndex].isOn = true;
+            return;
+        }
+
         for (int i = 0; i < _toggles.Length; i++)
         {
             // apply left pattern
@@ -87,8 +95,7 @@ public class LightPuzzleHandler : MonoBehaviour
         {
             // unlock terminal
             GameManager.Instance.SceneData.TerminalUnlocks[_terminal.ZoneIndex] = true;
-            if (_terminal.ZoneIndex == 0)
-                Debug.Log("UNLOCK");
+            
             // TODO: transition camera from puzzle to screen now (using same lerp function to be made??)
         }
     }
