@@ -45,17 +45,17 @@ public class HomeTabController : MonoBehaviour
     private void UpdateRotationGauge()
     {
         float yPos = 0;
-        if (_cameraRotTransform.localRotation.eulerAngles.x < 270) // upward angle
+        if (_cameraRotTransform.localRotation.eulerAngles.x < 270) // downward angle
         {
             yPos = math.remap(90, 0, -60, 0, _cameraRotTransform.localRotation.eulerAngles.x);
             double angle = System.Math.Round((-1 * (_cameraRotTransform.localRotation.eulerAngles.x)), 1);
-            _verticalRotationText.text = angle.ToString();
+            _verticalRotationText.text = angle.ToString(".0");
         }
-        else // downward angle
+        else // upward angle
         {
             yPos = math.remap(360, 270, 0, 60, _cameraRotTransform.localRotation.eulerAngles.x);
             double angle = System.Math.Round((90 - (_cameraRotTransform.localRotation.eulerAngles.x - 270f)), 1);
-            _verticalRotationText.text = angle.ToString();
+            _verticalRotationText.text = angle.ToString(".0");
         }
 
         Vector3 gaugePos = new Vector3(0, yPos, 0);
