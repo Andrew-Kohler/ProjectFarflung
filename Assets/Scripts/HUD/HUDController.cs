@@ -18,15 +18,9 @@ public class HUDController : MonoBehaviour
     [Header("HUD Tabs")]
     [SerializeField] private List<GameObject> _tabs;
 
-    
-
     private int currentTab = 0;
 
     bool active = false;
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -36,8 +30,6 @@ public class HUDController : MonoBehaviour
             StartCoroutine(DoTabSwitch());
         }
     }
-
-    
 
     private IEnumerator DoTabSwitch()
     {

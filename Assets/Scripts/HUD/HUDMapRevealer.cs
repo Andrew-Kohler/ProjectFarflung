@@ -8,6 +8,7 @@ public class HUDMapRevealer : MonoBehaviour
     // Whenever this trigger is passed through, it tells the HUD and GM that the player has visited both sides of that door
     public delegate void OnPassthrough(int side1, int side2);
     public static event OnPassthrough onPassthrough;
+
     void Start()
     {
         
