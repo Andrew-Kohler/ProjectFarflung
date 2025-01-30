@@ -59,7 +59,6 @@ public class MapRaycaster : MonoBehaviour
         if(hit.collider != null)
           Debug.Log(hit.collider);*/
 
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

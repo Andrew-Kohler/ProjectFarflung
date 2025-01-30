@@ -49,16 +49,6 @@ public class MapTabController : MonoBehaviour
 
     private InputAction _arrowAction;
 
-    private void OnEnable()
-    {
-        HUDMapRevealer.onPassthrough += UpdateHUDMap;
-    }
-
-    private void OnDisable()
-    {
-        HUDMapRevealer.onPassthrough -= UpdateHUDMap;
-    }
-
     void Start()
     {
         // Lore height of the floors
@@ -74,10 +64,88 @@ public class MapTabController : MonoBehaviour
         _floorSelector.transform.position = _floorNumbers[_currentHUDFloor - 1].transform.position;
         _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(true);
 
-        
-
         RevealHUDMapStart(); // Make sure everywhere that's been enabled is visible
     }
+
+    #region Map Zones
+    /// <summary>
+    /// Configures map zone active states to match states stored in game manager
+    /// </summary>
+    private void RevealHUDMapStart() // On scene start, show everything the player has been able to explore
+    {
+        // Reveals all explored images so the player can still see them when they switch tabs
+        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList1F.Length; i++)
+        {
+            if (GameManager.Instance.SceneData.VisitationList1F[i])
+            {
+                _1FHUDImages[i].gameObject.SetActive(true);
+            }
+        }
+
+        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList2F.Length; i++)
+        {
+            if (GameManager.Instance.SceneData.VisitationList2F[i])
+            {
+                _2FHUDImages[i].gameObject.SetActive(true);
+            }
+        }
+
+        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList3F.Length; i++)
+        {
+            if (GameManager.Instance.SceneData.VisitationList3F[i] == true)
+            {
+                _3FHUDImages[i].gameObject.SetActive(true);
+            }
+        }
+    }
+
+    private void OnEnable()
+    {
+        HUDMapRevealer.onPassthrough += UpdateHUDMap;
+    }
+
+    private void OnDisable()
+    {
+        HUDMapRevealer.onPassthrough -= UpdateHUDMap;
+    }
+
+    /// <summary>
+    /// Only called when player is triggered to entering a new zone.
+    /// </summary>
+    private void UpdateHUDMap(int room1, int room2) // Updating parts of the map that are visible (event listener)
+    {
+        if (_currentFloor == 1)
+        {
+            // Visual update in scene
+            _1FHUDImages[room1].gameObject.SetActive(true);
+            _1FHUDImages[room2].gameObject.SetActive(true);
+
+            // Save data update in GM
+            GameManager.Instance.SceneData.VisitationList1F[room1] = true;
+            GameManager.Instance.SceneData.VisitationList1F[room2] = true;
+        }
+        else if (_currentFloor == 2)
+        {
+            // Visual update in scene
+            _2FHUDImages[room1].gameObject.SetActive(true);
+            _2FHUDImages[room2].gameObject.SetActive(true);
+
+            // Save data update in GM
+            GameManager.Instance.SceneData.VisitationList2F[room1] = true;
+            GameManager.Instance.SceneData.VisitationList2F[room2] = true;
+        }
+        else if (_currentFloor == 3)
+        {
+            // Visual update in scene
+            _3FHUDImages[room1].gameObject.SetActive(true);
+            _3FHUDImages[room2].gameObject.SetActive(true);
+
+            // Save data update in GM
+            GameManager.Instance.SceneData.VisitationList3F[room1] = true;
+            GameManager.Instance.SceneData.VisitationList3F[room2] = true;
+        }
+    }
+    #endregion
 
     // Update is called once per frame
     void Update()
@@ -87,7 +155,6 @@ public class MapTabController : MonoBehaviour
             UpdatePosition();
             UpdateFloor();
         }
-        
     }
 
     private void UpdatePosition() // Updating position dot
@@ -136,69 +203,6 @@ public class MapTabController : MonoBehaviour
         _coordsText.text = "localusercoords:\nX " + System.Math.Round(hudXPos, 2) + "\nY " + System.Math.Round(hudYPos, 2) + "\nZ " + System.Math.Round(hudZPos, 2);
     }
 
-    private void RevealHUDMapStart() // On scene start, show everything the player has been able to explore
-    {
-        // Reveals all explored images so the player can still see them when they switch tabs
-        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList1F.Length; i++)
-        {
-            if (GameManager.Instance.SceneData.VisitationList1F[i])
-            {
-                _1FHUDImages[i].gameObject.SetActive(true);
-            }
-        }
-
-        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList2F.Length; i++)
-        {
-            if (GameManager.Instance.SceneData.VisitationList2F[i])
-            {
-                _2FHUDImages[i].gameObject.SetActive(true);
-            }
-        }
-
-        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList3F.Length; i++)
-        {
-            if (GameManager.Instance.SceneData.VisitationList3F[i] == true)
-            {
-                _3FHUDImages[i].gameObject.SetActive(true);
-            }
-        }
-    }
-
-    private void UpdateHUDMap(int room1, int room2) // Updating parts of the map that are visible (event listener)
-    {
-        if (_currentFloor == 1)
-        {
-            // Visual update in scene
-            _1FHUDImages[room1].gameObject.SetActive(true);
-            _1FHUDImages[room2].gameObject.SetActive(true);
-
-            // Save data update in GM
-            GameManager.Instance.SceneData.VisitationList1F[room1] = true;
-            GameManager.Instance.SceneData.VisitationList1F[room2] = true;
-        }
-        else if (_currentFloor == 2)
-        {
-            // Visual update in scene
-            _2FHUDImages[room1].gameObject.SetActive(true);
-            _2FHUDImages[room2].gameObject.SetActive(true);
-
-            // Save data update in GM
-            GameManager.Instance.SceneData.VisitationList2F[room1] = true;
-            GameManager.Instance.SceneData.VisitationList2F[room2] = true;
-        }
-        else if (_currentFloor == 3)
-        {
-            // Visual update in scene
-            _3FHUDImages[room1].gameObject.SetActive(true);
-            _3FHUDImages[room2].gameObject.SetActive(true);
-
-            // Save data update in GM
-            GameManager.Instance.SceneData.VisitationList3F[room1] = true;
-            GameManager.Instance.SceneData.VisitationList3F[room2] = true;
-        }
-        
-    }
-
     private void UpdateFloor() // Switches floors when the up or down arrows are hit
     {
         if (!_isFloorSwapActive)
@@ -206,13 +210,11 @@ public class MapTabController : MonoBehaviour
             Vector2 arrowInput = _arrowAction.ReadValue<Vector2>();
             if (arrowInput.y > 0)
             {
-                
                 _currentHUDFloor++;
 
                 if (_currentHUDFloor > 3)
                 {
                     _currentHUDFloor = 3; // Infinite scrolling is NOT enabled, that's too easy and useful for a horror interface
-
                 }
                 else
                 {
@@ -221,8 +223,7 @@ public class MapTabController : MonoBehaviour
                 }
             }
             else if (arrowInput.y < 0)
-            {
-                
+            {   
                 _currentHUDFloor--;
                 if (_currentHUDFloor < 1)
                 {
@@ -233,19 +234,13 @@ public class MapTabController : MonoBehaviour
                     _floorGameObjects[_currentHUDFloor].gameObject.SetActive(false);
                     StartCoroutine(DoFloorSwap());
                 }
-                
             }
-
-            
         }
-        
     }
 
-    public void SetLocationText(string txt)
-    {
-        _locationText.text = ">locationdata\n>roomname \"" + txt + "\"";
-    }
-
+    /// <summary>
+    /// Ensures the floor can only be swapped once every 0.2 seconds.
+    /// </summary>
     private IEnumerator DoFloorSwap()
     {
         _isFloorSwapActive = true;
@@ -255,4 +250,8 @@ public class MapTabController : MonoBehaviour
         _isFloorSwapActive = false;
     }
 
+    public void SetLocationText(string txt)
+    {
+        _locationText.text = ">locationdata\n>roomname \"" + txt + "\"";
+    }
 }
