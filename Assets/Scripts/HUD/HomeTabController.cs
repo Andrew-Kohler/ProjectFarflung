@@ -8,12 +8,12 @@ using Unity.Mathematics;
 
 public class HomeTabController : MonoBehaviour
 {
-    [Header("Narrative Time")]
+    [Header("Narrative Time")] 
     // Narrative time passage
     [SerializeField] private Image _narrativeTime; // Top right indicator of time passage
-    [SerializeField] private List<Sprite> _narrativeTimeImages;
+    [SerializeField] private Sprite[] _narrativeTimeImages = new Sprite[5];
     [SerializeField] private TextMeshProUGUI _narrativeTimeText;
-    [SerializeField, TextArea(1,4)] private List<string> _narrativeTimeReadouts;
+    [SerializeField, TextArea(1,4)] private string[] _narrativeTimeReadouts = new string[5];
 
     [Header("Head Rotation")]
     // Rotation gauge
@@ -64,8 +64,8 @@ public class HomeTabController : MonoBehaviour
 
     private void UpdateVitals()
     {
-        _healthFill.fillAmount = ((float)GameManager.Instance.SceneData.RemainingLives / GameManager.Instance.SceneData.MaxLives);
-        float healthR = math.remap(GameManager.Instance.SceneData.MaxLives, 0, .7f, 0, GameManager.Instance.SceneData.RemainingLives);
+        _healthFill.fillAmount = ((float)GameManager.Instance.SceneData.RemainingLives / GameManager.Instance.MaxLives);
+        float healthR = math.remap(GameManager.Instance.MaxLives, 0, .7f, 0, GameManager.Instance.SceneData.RemainingLives);
         _healthFill.color = new Color(.7f, healthR, healthR);
     }
 }

@@ -9,7 +9,7 @@ public class HUDMapRevealer : MonoBehaviour
     public delegate void OnPassthrough(int side1, int side2);
     public static event OnPassthrough onPassthrough;
 
-    void Start()
+    void Start() //
     {
         
     }

@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     // private singleton instance
     private static GameManager _instance;
 
+    // Player max lives
+    public int MaxLives = 9;
+
     // public accessor of instance
     public static GameManager Instance
     {
@@ -37,8 +40,6 @@ public class GameManager : MonoBehaviour
     {
         // Narrative timestamp (conveying to the player that time has past - represented as an integer 0 through 4)
         public int NarrativeTimestamp;
-        // Player max lives
-        public int MaxLives;
         // Player remaining lives
         public int RemainingLives;
 
@@ -73,8 +74,7 @@ public class GameManager : MonoBehaviour
         /// </summary>
         public ProgressionData()
         {
-            NarrativeTimestamp = 0;     
-            MaxLives = 9;               
+            NarrativeTimestamp = 0;                   
             RemainingLives = 9;
 
             Floor = 1;

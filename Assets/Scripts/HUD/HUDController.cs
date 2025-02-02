@@ -9,7 +9,7 @@ using Unity.Mathematics;
 public class HUDController : MonoBehaviour
 {
     public PlayerInput PlayerInput;
-    public Transform PlayerTransform;
+    public Transform PlayerTransform; // I swear to god
 
     [Header("HUD Tab Navigation")]
     [SerializeField] private Animator _hudNavAnim;
@@ -22,10 +22,30 @@ public class HUDController : MonoBehaviour
 
     bool active = false;
 
+    private void OnEnable()
+    {
+        InputSystem.actions.FindAction("Tab").started += context => TabSwitch();
+        InputSystem.actions.FindAction("Tab").canceled += context => active = false;
+    }
+
+    private void OnDisable()
+    {
+        InputSystem.actions.FindAction("Tab").started -= context => TabSwitch();
+        InputSystem.actions.FindAction("Tab").canceled -= context => active = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (PlayerInput.actions.FindAction("Tab").IsPressed() && !active)
+        /*if (InputSystem.actions.FindAction("Tab").IsPressed() && !active)
+        {
+            StartCoroutine(DoTabSwitch());
+        }*/
+    }
+
+    private void TabSwitch()
+    {
+        if (!active)
         {
             StartCoroutine(DoTabSwitch());
         }
@@ -55,7 +75,7 @@ public class HUDController : MonoBehaviour
         _hudImages[0].sprite = end;
 
         yield return new WaitForSeconds(.25f);
-        active = false;
+        
         yield return null;
     }
 }

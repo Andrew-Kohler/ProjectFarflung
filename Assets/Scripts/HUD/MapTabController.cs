@@ -49,6 +49,18 @@ public class MapTabController : MonoBehaviour
 
     private InputAction _arrowAction;
 
+    private void OnEnable()
+    {
+        HUDMapRevealer.onPassthrough += UpdateHUDMap;
+        InputSystem.actions.FindAction("Arrows").started += context => UpdateFloor();
+    }
+
+    private void OnDisable()
+    {
+        HUDMapRevealer.onPassthrough -= UpdateHUDMap;
+        InputSystem.actions.FindAction("Arrows").started -= context => UpdateFloor();
+    }
+
     void Start()
     {
         // Lore height of the floors
@@ -99,16 +111,6 @@ public class MapTabController : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        HUDMapRevealer.onPassthrough += UpdateHUDMap;
-    }
-
-    private void OnDisable()
-    {
-        HUDMapRevealer.onPassthrough -= UpdateHUDMap;
-    }
-
     /// <summary>
     /// Only called when player is triggered to entering a new zone.
     /// </summary>
@@ -153,7 +155,7 @@ public class MapTabController : MonoBehaviour
         if (_mapTabContents.activeSelf)
         {
             UpdatePosition();
-            UpdateFloor();
+            //UpdateFloor();
         }
     }
 
@@ -164,7 +166,7 @@ public class MapTabController : MonoBehaviour
 
         float hudZPos = 0; // Purely for narrative purposes
 
-        // Floor check! Dot remains active but becomes discolored
+        // Floor check! 
         if(_currentFloor == _currentHUDFloor)
         {
             _dot.gameObject.SetActive(true);
@@ -196,8 +198,6 @@ public class MapTabController : MonoBehaviour
         }
         _dot.transform.localPosition = new Vector2(hudXPos, hudYPos);
         _dot.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, _mainHUD.PlayerTransform.rotation.eulerAngles.y));
-            
-          //  .eulerAngles.Set(); //=  new Vector3();
 
         // Display coordinates are based off of the HUD; that way, we don't have to correctly center things in the 2 scenes
         _coordsText.text = "localusercoords:\nX " + System.Math.Round(hudXPos, 2) + "\nY " + System.Math.Round(hudYPos, 2) + "\nZ " + System.Math.Round(hudZPos, 2);
@@ -205,8 +205,6 @@ public class MapTabController : MonoBehaviour
 
     private void UpdateFloor() // Switches floors when the up or down arrows are hit
     {
-        if (!_isFloorSwapActive)
-        {
             Vector2 arrowInput = _arrowAction.ReadValue<Vector2>();
             if (arrowInput.y > 0)
             {
@@ -219,7 +217,8 @@ public class MapTabController : MonoBehaviour
                 else
                 {
                     _floorGameObjects[_currentHUDFloor - 2].gameObject.SetActive(false);
-                    StartCoroutine(DoFloorSwap());
+                    _floorSelector.transform.position = _floorNumbers[_currentHUDFloor - 1].transform.position;
+                    _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(true);
                 }
             }
             else if (arrowInput.y < 0)
@@ -232,22 +231,11 @@ public class MapTabController : MonoBehaviour
                 else
                 {
                     _floorGameObjects[_currentHUDFloor].gameObject.SetActive(false);
-                    StartCoroutine(DoFloorSwap());
+                    _floorSelector.transform.position = _floorNumbers[_currentHUDFloor - 1].transform.position;
+                    _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(true);
                 }
             }
-        }
-    }
-
-    /// <summary>
-    /// Ensures the floor can only be swapped once every 0.2 seconds.
-    /// </summary>
-    private IEnumerator DoFloorSwap()
-    {
-        _isFloorSwapActive = true;
-        _floorSelector.transform.position = _floorNumbers[_currentHUDFloor - 1].transform.position;
-        _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(true);
-        yield return new WaitForSeconds(.2f);
-        _isFloorSwapActive = false;
+        
     }
 
     public void SetLocationText(string txt)

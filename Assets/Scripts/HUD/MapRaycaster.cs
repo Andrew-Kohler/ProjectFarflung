@@ -11,7 +11,7 @@ public class MapRaycaster : MonoBehaviour
     [SerializeField] private Color _inactiveColor;
     [SerializeField] private MapTabController _tabController;
 
-    private BoxCollider2D _col;
+    private BoxCollider2D _col; //
     void Start()
     {
         _col = GetComponent<BoxCollider2D>();
