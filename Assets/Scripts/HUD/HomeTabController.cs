@@ -64,8 +64,8 @@ public class HomeTabController : MonoBehaviour
 
     private void UpdateVitals()
     {
-        _healthFill.fillAmount = ((float)GameManager.Instance.SceneData.RemainingLives / GameManager.Instance.MaxLives);
-        float healthR = math.remap(GameManager.Instance.MaxLives, 0, .7f, 0, GameManager.Instance.SceneData.RemainingLives);
+        _healthFill.fillAmount = (float)GameManager.Instance.SceneData.RemainingLives / GameManager.MaxLives;
+        float healthR = math.remap(GameManager.MaxLives, 0, .7f, 0, GameManager.Instance.SceneData.RemainingLives);
         _healthFill.color = new Color(.7f, healthR, healthR);
     }
 }

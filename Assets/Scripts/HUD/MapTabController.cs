@@ -16,6 +16,7 @@ public class MapTabController : MonoBehaviour
 
     [Header("Position Dot")]
     [SerializeField] private Image _dot;
+    [SerializeField] private Image _dotTri;
     [SerializeField] private MapRaycaster _dotScript;
     [SerializeField] private Transform _player;
 
@@ -37,7 +38,6 @@ public class MapTabController : MonoBehaviour
     [SerializeField] private List<GameObject> _floorGameObjects;
     [SerializeField] private List<GameObject> _floorNumbers;
     [SerializeField] private GameObject _floorSelector;
-    private bool _isFloorSwapActive;
 
     [Header("Room Image Lists")]
     [SerializeField] private List<Image> _1FHUDImages;
@@ -51,14 +51,15 @@ public class MapTabController : MonoBehaviour
 
     private void OnEnable()
     {
-        HUDMapRevealer.onPassthrough += UpdateHUDMap;
+        MapRaycaster.onPassthrough += UpdateHUDMap;
         InputSystem.actions.FindAction("Arrows").started += context => UpdateFloor();
     }
 
     private void OnDisable()
     {
-        HUDMapRevealer.onPassthrough -= UpdateHUDMap;
+        MapRaycaster.onPassthrough -= UpdateHUDMap;
         InputSystem.actions.FindAction("Arrows").started -= context => UpdateFloor();
+
     }
 
     void Start()
@@ -75,22 +76,20 @@ public class MapTabController : MonoBehaviour
         _currentHUDFloor = _currentFloor;
         _floorSelector.transform.position = _floorNumbers[_currentHUDFloor - 1].transform.position;
         _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(true);
-
-        RevealHUDMapStart(); // Make sure everywhere that's been enabled is visible
     }
 
     #region Map Zones
     /// <summary>
     /// Configures map zone active states to match states stored in game manager
     /// </summary>
-    private void RevealHUDMapStart() // On scene start, show everything the player has been able to explore
+    public void RevealHUDMapStart() // On scene start, show everything the player has been able to explore
     {
         // Reveals all explored images so the player can still see them when they switch tabs
         for (int i = 0; i < GameManager.Instance.SceneData.VisitationList1F.Length; i++)
         {
             if (GameManager.Instance.SceneData.VisitationList1F[i])
             {
-                _1FHUDImages[i].gameObject.SetActive(true);
+                _1FHUDImages[i].enabled = true;
             }
         }
 
@@ -98,7 +97,7 @@ public class MapTabController : MonoBehaviour
         {
             if (GameManager.Instance.SceneData.VisitationList2F[i])
             {
-                _2FHUDImages[i].gameObject.SetActive(true);
+                _2FHUDImages[i].enabled = true;
             }
         }
 
@@ -106,45 +105,76 @@ public class MapTabController : MonoBehaviour
         {
             if (GameManager.Instance.SceneData.VisitationList3F[i] == true)
             {
-                _3FHUDImages[i].gameObject.SetActive(true);
+                _3FHUDImages[i].enabled = true;
             }
         }
     }
 
     /// <summary>
+    /// Configures map zone image states to all be inactive, and properly sets the active state of the current floor's map colliders
+    /// </summary>
+    public void HideHUDMapEnd()
+    {
+        // Reveals all explored images so the player can still see them when they switch tabs
+        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList1F.Length; i++)
+        {
+                _1FHUDImages[i].enabled = false;
+        }
+
+        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList2F.Length; i++)
+        {
+                _2FHUDImages[i].enabled = false;
+        }
+
+        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList3F.Length; i++)
+        {
+
+                _3FHUDImages[i].enabled = false;
+        }
+
+        _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(false);
+        _currentHUDFloor = _currentFloor;
+        _floorSelector.transform.position = _floorNumbers[_currentHUDFloor - 1].transform.position;
+        _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(true);
+    }
+
+    /// <summary>
     /// Only called when player is triggered to entering a new zone.
     /// </summary>
-    private void UpdateHUDMap(int room1, int room2) // Updating parts of the map that are visible (event listener)
+    private void UpdateHUDMap(int room1) // Updating parts of the map that are visible (event listener)
     {
         if (_currentFloor == 1)
         {
             // Visual update in scene
-            _1FHUDImages[room1].gameObject.SetActive(true);
-            _1FHUDImages[room2].gameObject.SetActive(true);
+            if (_mapTabContents.activeSelf)
+            {
+                _1FHUDImages[room1].enabled = true;
+            }
 
             // Save data update in GM
             GameManager.Instance.SceneData.VisitationList1F[room1] = true;
-            GameManager.Instance.SceneData.VisitationList1F[room2] = true;
         }
         else if (_currentFloor == 2)
         {
             // Visual update in scene
-            _2FHUDImages[room1].gameObject.SetActive(true);
-            _2FHUDImages[room2].gameObject.SetActive(true);
+            if (_mapTabContents.activeSelf)
+            {
+                _2FHUDImages[room1].enabled = true;
+            }
 
             // Save data update in GM
             GameManager.Instance.SceneData.VisitationList2F[room1] = true;
-            GameManager.Instance.SceneData.VisitationList2F[room2] = true;
         }
         else if (_currentFloor == 3)
         {
             // Visual update in scene
-            _3FHUDImages[room1].gameObject.SetActive(true);
-            _3FHUDImages[room2].gameObject.SetActive(true);
+            if (_mapTabContents.activeSelf)
+            {
+                _3FHUDImages[room1].enabled = true;
+            }
 
             // Save data update in GM
             GameManager.Instance.SceneData.VisitationList3F[room1] = true;
-            GameManager.Instance.SceneData.VisitationList3F[room2] = true;
         }
     }
     #endregion
@@ -152,11 +182,7 @@ public class MapTabController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_mapTabContents.activeSelf)
-        {
-            UpdatePosition();
-            //UpdateFloor();
-        }
+        UpdatePosition();
     }
 
     private void UpdatePosition() // Updating position dot
@@ -176,8 +202,21 @@ public class MapTabController : MonoBehaviour
             _dot.gameObject.SetActive(false);
         }
 
+        // Tab check! The dot still needs to be active when tabbed out of map, but we turn the image component off
+        if (_mapTabContents.activeSelf)
+        {
+            _dot.enabled = true;
+            _dotTri.enabled = true;
+        }
+        else
+        {
+            _dot.enabled = false;
+            _dotTri.enabled = false;
+        }
+
+
         // Updating position correctly based on the bounds of the given floor
-        if(_currentFloor == 1)
+        if (_currentFloor == 1)
         {
             hudXPos = math.remap(_1FGameRange.x, _1FGameRange.y, _1FHUDRange.x, _1FHUDRange.y, _mainHUD.PlayerTransform.position.x);
             hudYPos = math.remap(_1FGameRange.z, _1FGameRange.w, _1FHUDRange.z, _1FHUDRange.w, _mainHUD.PlayerTransform.position.z);

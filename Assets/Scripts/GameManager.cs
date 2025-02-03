@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
 
     // Player max lives
-    public int MaxLives = 9;
+    public static int MaxLives = 9;
 
     // public accessor of instance
     public static GameManager Instance
@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
             VisitationList1F = new bool[5]; 
             for (int i = 0; i < VisitationList1F.Length; i++)
                 VisitationList1F[i] = false;
-            VisitationList1F[0] = true; // Center room visited by default for now
+            //VisitationList1F[0] = true; // Center room visited by default for now
 
             VisitationList2F = new bool[3];
             for (int i = 0; i < VisitationList2F.Length; i++)
@@ -119,8 +119,7 @@ public class GameManager : MonoBehaviour
         /// </summary>
         public ProgressionData(ProgressionData other)
         { 
-            NarrativeTimestamp = other.NarrativeTimestamp;     
-            MaxLives = other.MaxLives;               
+            NarrativeTimestamp = other.NarrativeTimestamp;                    
             RemainingLives = other.RemainingLives;
 
             Floor = other.Floor;

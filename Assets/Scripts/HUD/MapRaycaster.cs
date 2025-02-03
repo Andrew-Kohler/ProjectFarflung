@@ -11,7 +11,11 @@ public class MapRaycaster : MonoBehaviour
     [SerializeField] private Color _inactiveColor;
     [SerializeField] private MapTabController _tabController;
 
-    private BoxCollider2D _col; //
+    private BoxCollider2D _col;
+
+    public delegate void OnPassthrough(int currRoom);
+    public static event OnPassthrough onPassthrough;
+
     void Start()
     {
         _col = GetComponent<BoxCollider2D>();
@@ -63,8 +67,13 @@ public class MapRaycaster : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        
         collision.GetComponent<Image>().color = _activeColor;
-        _tabController.SetLocationText(collision.gameObject.name);
+
+        // The index of a room is stored as the first character of its name
+        onPassthrough?.Invoke(int.Parse(collision.gameObject.name.Substring(0, 1)));
+        // The canon name of the room is stored in the rest of the string
+        _tabController.SetLocationText(collision.gameObject.name.Substring(1, collision.gameObject.name.Length - 1));
     }
 
     private void OnTriggerExit2D(Collider2D collision)
