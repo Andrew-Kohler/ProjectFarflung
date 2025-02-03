@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactor : MonoBehaviour
+public class LogInteractable : Interactable
 {
     // Start is called before the first frame update
     void Start()
@@ -14,5 +14,10 @@ public class Interactor : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public override void InteractEffects()
+    {
+        Destroy(gameObject);
     }
 }
