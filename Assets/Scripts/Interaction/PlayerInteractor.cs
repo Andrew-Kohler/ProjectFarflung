@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerInteractor : MonoBehaviour
 {
     private bool _canInteract;
-    private GameObject _obj;
+    private Interactable _obj;
 
     RaycastHit hit;
     Ray ray;
@@ -39,11 +39,17 @@ public class PlayerInteractor : MonoBehaviour
         if (Physics.Raycast(ray, out hit, 5f, LayerMask.GetMask("Interactable")))
         {
             _canInteract = true;
-            _obj = hit.collider.gameObject;
+            _obj = hit.collider.gameObject.GetComponent<Interactable>();
+            _obj.ShowVFX();
         }
         else
         {
             _canInteract = false;
+            if(_obj != null)
+            {
+                _obj.HideVFX();
+                _obj = null;
+            }
         }
     }
 

@@ -853,7 +853,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 225085898}
   - {fileID: 157666257}
   - {fileID: 3745622628493024811}
   m_Father: {fileID: 0}
@@ -871,6 +870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bf8debda67152245ab032cfcb2ceae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _vfx: {fileID: 157666256}
 --- !u!135 &93649865
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1182,13 +1182,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 157666257}
+  - component: {fileID: 157666258}
   m_Layer: 7
   m_Name: Particle Systems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &157666257
 Transform:
   m_ObjectHideFlags: 0
@@ -1198,9 +1199,10 @@ Transform:
   m_GameObject: {fileID: 157666256}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15994711, y: 0.15994708, z: 0.15994711}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.16, y: 0.16, z: 0.16}
+  m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 225085898}
   - {fileID: 1788270819}
   - {fileID: 755243421}
   - {fileID: 323374929}
@@ -1208,6 +1210,27 @@ Transform:
   m_Father: {fileID: 93649863}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &157666258
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157666256}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ff99d7d50cc258d46a700bfb9ff9297c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &214396274
 GameObject:
   m_ObjectHideFlags: 0
@@ -1271,18 +1294,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 225085897}
-  m_LocalRotation: {x: -0.00032696957, y: -0.9995879, z: -0.012693482, w: 0.02574824}
-  m_LocalPosition: {x: 0, y: 0, z: 0.01887989}
-  m_LocalScale: {x: -0.074450664, y: 0.07445065, z: 0.07445064}
+  m_LocalRotation: {x: -0.0003268775, y: -0.99958795, z: -0.0126918, w: 0.025744403}
+  m_LocalPosition: {x: 0, y: 0, z: 0.118038334}
+  m_LocalScale: {x: -0.4654705, y: 0.46547052, z: 0.4654704}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1751859216}
-  m_Father: {fileID: 93649863}
+  m_Father: {fileID: 157666257}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: -0.443, y: 121.78, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.20717144, y: 0.09793663}
+  m_AnchoredPosition: {x: -1.2952496, y: 0.61230636}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &225085899
@@ -8094,7 +8117,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
+  scalingMode: 0
   randomSeed: 0
   InitialModule:
     serializedVersion: 3
@@ -8273,7 +8296,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.01
+      scalar: 0.05
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -17034,7 +17057,7 @@ GameObject:
   - component: {fileID: 1462072960}
   - component: {fileID: 1462072959}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: Helmet Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18928,7 +18951,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -24066,7 +24089,7 @@ ParticleSystem:
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  emitterVelocityMode: 1
+  emitterVelocityMode: 0
   looping: 1
   prewarm: 1
   playOnAwake: 1
@@ -24127,7 +24150,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
+  scalingMode: 0
   randomSeed: 0
   InitialModule:
     serializedVersion: 3
@@ -24306,7 +24329,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.01
+      scalar: 0.05
       minScalar: 1
       maxCurve:
         serializedVersion: 2
