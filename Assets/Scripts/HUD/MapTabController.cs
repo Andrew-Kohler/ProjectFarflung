@@ -15,8 +15,6 @@ public class MapTabController : MonoBehaviour
     private float _baselinePlayerHeight;
 
     [Header("Position Dot")]
-    [SerializeField] private Image _dot;
-    [SerializeField] private Image _dotTri;
     [SerializeField] private MapRaycaster _dotScript;
     [SerializeField] private Transform _player;
 
@@ -193,26 +191,9 @@ public class MapTabController : MonoBehaviour
         float hudZPos = 0; // Purely for narrative purposes
 
         // Floor check! 
-        if(_currentFloor == _currentHUDFloor)
-        {
-            _dot.gameObject.SetActive(true);
-        }
-        else
-        {
-            _dot.gameObject.SetActive(false);
-        }
-
+        _dotScript.ToggleState(_currentFloor == _currentHUDFloor);
         // Tab check! The dot still needs to be active when tabbed out of map, but we turn the image component off
-        if (_mapTabContents.activeSelf)
-        {
-            _dot.enabled = true;
-            _dotTri.enabled = true;
-        }
-        else
-        {
-            _dot.enabled = false;
-            _dotTri.enabled = false;
-        }
+        _dotScript.ToggleEnabled(_mapTabContents.activeSelf);
 
 
         // Updating position correctly based on the bounds of the given floor
@@ -235,8 +216,8 @@ public class MapTabController : MonoBehaviour
             hudYPos = math.remap(_3FGameRange.z, _3FGameRange.w, _3FHUDRange.z, _3FHUDRange.w, _mainHUD.PlayerTransform.position.z);
             hudZPos = 30f + (_mainHUD.PlayerTransform.position.y - _baselinePlayerHeight); 
         }
-        _dot.transform.localPosition = new Vector2(hudXPos, hudYPos);
-        _dot.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, _mainHUD.PlayerTransform.rotation.eulerAngles.y));
+        _dotScript.transform.localPosition = new Vector2(hudXPos, hudYPos);
+        _dotScript.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, _mainHUD.PlayerTransform.rotation.eulerAngles.y));
 
         // Display coordinates are based off of the HUD; that way, we don't have to correctly center things in the 2 scenes
         _coordsText.text = "localusercoords:\nX " + System.Math.Round(hudXPos, 2) + "\nY " + System.Math.Round(hudYPos, 2) + "\nZ " + System.Math.Round(hudZPos, 2);

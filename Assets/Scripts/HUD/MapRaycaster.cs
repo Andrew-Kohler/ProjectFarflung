@@ -11,6 +11,12 @@ public class MapRaycaster : MonoBehaviour
     [SerializeField] private Color _inactiveColor;
     [SerializeField] private MapTabController _tabController;
 
+    [Header("Dot Images")]
+    [SerializeField] private Image _dot;
+    [SerializeField] private Image _dotTri;
+    [SerializeField] private Color _currentFloorColor;
+    [SerializeField] private Color _otherFloorColor;
+
     private BoxCollider2D _col;
 
     public delegate void OnPassthrough(int currRoom);
@@ -83,13 +89,22 @@ public class MapRaycaster : MonoBehaviour
 
     public void ToggleState(bool currentFloor)
     {
+        _col.enabled = currentFloor;
         if (currentFloor)
         {
-            _col.enabled = true;
+            _dot.color = _currentFloorColor;
+            _dotTri.color = _currentFloorColor;
         }
         else
         {
-            _col.enabled = false;
+            _dot.color = _otherFloorColor;
+            _dotTri.color = _otherFloorColor;
         }
+    }
+
+    public void ToggleEnabled(bool enabled)
+    {
+        _dot.enabled = enabled;
+        _dotTri.enabled = enabled;
     }
 }
