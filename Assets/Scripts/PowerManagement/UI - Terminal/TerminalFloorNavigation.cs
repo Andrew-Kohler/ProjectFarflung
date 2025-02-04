@@ -10,9 +10,9 @@ using UnityEngine.UI;
 /// </summary>
 public class TerminalFloorNavigation : MonoBehaviour
 {
-    [Header("Power System")]
-    [Tooltip("Scene reference to the power system for retrieving data to display.")]
-    public PowerSystem PowerSystem;
+    [Header("Reference")]
+    [SerializeField, Tooltip("Used to access configured power system and zone index.")]
+    private TerminalConfiguration _terminal;
 
     [Header("Buttons")]
     [SerializeField, Tooltip("Used to disable up when on top floor.")]
@@ -32,6 +32,7 @@ public class TerminalFloorNavigation : MonoBehaviour
 
     private void Start()
     {
+        // Precondition: must have 3 floors
         if (_floors.Length != 3)
             throw new System.Exception("There MUST be 3 floors for floor navigation or it is improperly configured.");
 
@@ -41,7 +42,7 @@ public class TerminalFloorNavigation : MonoBehaviour
         _floors[2].SetActive(false);
         // TERMINAL UI FLOOR NUMS: 0 = Floor 1, 1 = Floor 2, 2 = Floor 3
         // POWER SYSTEM FLOOR NUM: 0 = Hangar, 1 = Floor 1, 2 = Floor 2, 3 = Floor 3
-        switch (this.PowerSystem.FloorNum)
+        switch (_terminal.PowerSystem.FloorNum)
         {
             // floor 1
             case 1:
