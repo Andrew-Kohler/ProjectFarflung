@@ -20,7 +20,6 @@ public class WireSelector : ClickableObject
     private Outline _outline;
     private bool _isSelected = false;
 
-    // Start is called before the first frame update
     void Awake()
     {
         // Precondition: must be contained by WireManager

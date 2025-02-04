@@ -16,18 +16,6 @@ public class WireManager : MonoBehaviour
             throw new System.Exception("Incorrect Wire Configuration. Wire Manager must contain AT LEAST one WireSelector");
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     /// <summary>
     /// Sets all wires to deselected state.
     /// </summary>
@@ -48,5 +36,15 @@ public class WireManager : MonoBehaviour
     {
         wire.DeselectVisual();
         _currWire = null;
+    }
+
+    /// <summary>
+    /// Returns null if no wire is currently selected.
+    /// </summary>
+    public WireSelector GetSelectedWire()
+    {
+        if (_currWire is null)
+            return null;
+        return _currWire;
     }
 }
