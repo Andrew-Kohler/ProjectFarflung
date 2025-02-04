@@ -8,8 +8,10 @@ using Unity.Mathematics;
 
 public class HUDController : MonoBehaviour
 {
-    public PlayerInput PlayerInput;
-    public Transform PlayerTransform; // I swear to god
+
+    // Routing all of the player components through here so we don't have to dig around in the tabs
+    public Transform PlayerTransform;
+    public Transform CameraRotTransform;
 
     [Header("HUD Tab Navigation")]
     [SerializeField] private Animator _hudNavAnim;
@@ -37,10 +39,7 @@ public class HUDController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if (InputSystem.actions.FindAction("Tab").IsPressed() && !active)
-        {
-            StartCoroutine(DoTabSwitch());
-        }*/
+
     }
 
     private void TabSwitch()

@@ -8,6 +8,10 @@ using Unity.Mathematics;
 
 public class HomeTabController : MonoBehaviour
 {
+
+    [Header("HUD Controller")]
+    [SerializeField] private HUDController _mainHUD;
+
     [Header("Narrative Time")] 
     // Narrative time passage
     [SerializeField] private Image _narrativeTime; // Top right indicator of time passage
@@ -19,7 +23,7 @@ public class HomeTabController : MonoBehaviour
     // Rotation gauge
     [SerializeField] private Image _verticalRotationIndicator;
     [SerializeField] private TextMeshProUGUI _verticalRotationText;
-    [SerializeField] private Transform _cameraRotTransform;
+    
 
     [Header("Vitals")]
     // Health
@@ -45,16 +49,16 @@ public class HomeTabController : MonoBehaviour
     private void UpdateRotationGauge()
     {
         float yPos = 0;
-        if (_cameraRotTransform.localRotation.eulerAngles.x < 270) // downward angle
+        if (_mainHUD.CameraRotTransform.localRotation.eulerAngles.x < 270) // downward angle
         {
-            yPos = math.remap(90, 0, -60, 0, _cameraRotTransform.localRotation.eulerAngles.x);
-            double angle = System.Math.Round((-1 * (_cameraRotTransform.localRotation.eulerAngles.x)), 1);
+            yPos = math.remap(90, 0, -60, 0, _mainHUD.CameraRotTransform.localRotation.eulerAngles.x);
+            double angle = System.Math.Round((-1 * (_mainHUD.CameraRotTransform.localRotation.eulerAngles.x)), 1);
             _verticalRotationText.text = angle.ToString(".0");
         }
         else // upward angle
         {
-            yPos = math.remap(360, 270, 0, 60, _cameraRotTransform.localRotation.eulerAngles.x);
-            double angle = System.Math.Round((90 - (_cameraRotTransform.localRotation.eulerAngles.x - 270f)), 1);
+            yPos = math.remap(360, 270, 0, 60, _mainHUD.CameraRotTransform.localRotation.eulerAngles.x);
+            double angle = System.Math.Round((90 - (_mainHUD.CameraRotTransform.localRotation.eulerAngles.x - 270f)), 1);
             _verticalRotationText.text = angle.ToString(".0");
         }
 

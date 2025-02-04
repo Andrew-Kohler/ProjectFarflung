@@ -10,13 +10,12 @@ public class MapTabController : MonoBehaviour
 {
     [Header("HUD Controller")]
     [SerializeField] private HUDController _mainHUD;
-    [SerializeField] private GameObject _mapTabContents; // Important because the listener for adding new rooms to the map is on here
+    [SerializeField] private GameObject _mapTabContents; 
 
     private float _baselinePlayerHeight;
 
     [Header("Position Dot")]
     [SerializeField] private MapRaycaster _dotScript;
-    [SerializeField] private Transform _player;
 
     [Header("Supplemental Text")]
     [SerializeField] private TextMeshProUGUI _coordsText;
@@ -66,7 +65,7 @@ public class MapTabController : MonoBehaviour
         _baselinePlayerHeight = _mainHUD.PlayerTransform.position.y;
 
         // Arrow keys
-        _arrowAction = _mainHUD.PlayerInput.actions.FindAction("Arrows");
+        _arrowAction = InputSystem.actions.FindAction("Arrows");
         _arrowAction.Enable();
 
         // Update the floor we're on, the floor the HUD is on, and the floor being shown by the HUD
