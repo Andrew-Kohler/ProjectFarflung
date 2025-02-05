@@ -8,6 +8,12 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class NodeManager : MonoBehaviour
 {
+    [Header("Obstructions")]
+    [SerializeField, Tooltip("Radius of obstruction overlap capsule checks.")]
+    private float _obstructionCheckRadius;
+    [SerializeField, Tooltip("Inwards offset between nodes of obstruction check to prevent wire tips from touching within a node and registering as obstruction.")]
+    private float _obstructionInwardOffset;
+
     [Header("References")]
     [SerializeField, Tooltip("Used to access current selected wire state")]
     private WireManager _wireManager;
@@ -107,20 +113,21 @@ public class NodeManager : MonoBehaviour
         _currConnection.transform.rotation = rot;
     }
 
-    public void ProcessNodeClick(NodeSelector node)
+    public void ProcessNodeClick(NodeSelector clickedNode)
     {
         // Don't even try if there is no selected wire
         if (_wireManager.GetSelectedWire() is null)
             return;
 
+        // NEW CONNECTION
         // attaching first half of wire
         if (_firstNode is null)
         {
-            node.SelectVisual(); // show outline
-            _firstNode = node;
+            clickedNode.SelectVisual(); // show outline
+            _firstNode = clickedNode;
         }
-        // cancel connection
-        else if (_firstNode == node)
+        // CANCEL CONNECTION
+        else if (_firstNode == clickedNode)
         {
             DeselectFirstNode();
 
@@ -128,11 +135,34 @@ public class NodeManager : MonoBehaviour
             Destroy(_currConnection);
             _currConnection = null;
         }
-        // attaching second half of wire - RANGE PERMITTING
-        else if (Vector3.Distance(node.transform.position, _firstNode.transform.position) < _wireManager.GetSelectedWire().Length)
+        // COMPLETE CONNECTION - range and obstruction permitting
+        else if (Vector3.Distance(clickedNode.transform.position, _firstNode.transform.position) < _wireManager.GetSelectedWire().Length)
         {
+            // determine if there are obstructions
+            // CANNOT be placed if there are node/wire obstructions
+            Collider[] potentialObstructions = new Collider[64]; // should be excessive, but will ensure no important collisions are missed
+            CapsuleCollider collider = _currConnection.GetComponentInChildren<CapsuleCollider>();
+            Vector3 pointTop = _firstNode.transform.position;
+            Vector3 pointBot = clickedNode.transform.position;
+            pointTop = pointTop + (pointBot - pointTop).normalized * _obstructionInwardOffset;
+            pointBot = pointBot + (pointTop - pointBot).normalized * _obstructionInwardOffset;
+            int numColls = Physics.OverlapCapsuleNonAlloc(pointTop, pointBot, _obstructionCheckRadius, potentialObstructions, LayerMask.GetMask("WireBoxObstruction"));
+            for (int i = 0; i < numColls; i++)
+                Debug.Log(potentialObstructions[i]);
+            for (int i = 0; i < numColls; i++)
+            {
+                // (1) obstructed by ANY other connection (we implicitly know any ConnectionRemover is not the current once since it does not have a ConnectionRemover yet)
+                // (2) obstructed by ANY node that is not either endpoint
+                if (potentialObstructions[i].TryGetComponent(out ConnectionRemover connectionColl)
+                    || (potentialObstructions[i].TryGetComponent(out NodeSelector nodeColl) && nodeColl != _firstNode && nodeColl != clickedNode))
+                {
+                    return;
+                }
+            }
+
+            // if we got this far, there is a successful connection!!!
             // snap wire between two nodes
-            ShowWire(_firstNode.transform.position, node.transform.position);
+            ShowWire(_firstNode.transform.position, clickedNode.transform.position);
 
             // sever control over these connections (the wire has been placed)
             DeselectFirstNode();
