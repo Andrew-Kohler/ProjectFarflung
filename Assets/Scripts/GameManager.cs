@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
 
     // Player max lives
-    public static int MaxLives = 9;
+    public const int MAX_LIVES = 9;
 
     // public accessor of instance
     public static GameManager Instance
