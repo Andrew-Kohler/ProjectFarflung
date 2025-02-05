@@ -30,7 +30,6 @@ public class MapRaycaster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         // This is left here as a reminder of pretty much everything that didn't work in
         // case anyone (me included) tries to think of a better way to do this
         //ray = cam.ScreenPointToRay(obj.position);
@@ -68,12 +67,10 @@ public class MapRaycaster : MonoBehaviour
         Debug.DrawRay(cam.transform.position, ray.direction, Color.red);
         if(hit.collider != null)
           Debug.Log(hit.collider);*/
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
         collision.GetComponent<Image>().color = _activeColor;
 
         // The index of a room is stored as the first character of its name

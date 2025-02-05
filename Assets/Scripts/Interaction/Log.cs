@@ -32,5 +32,4 @@ public class Log : ScriptableObject
     [Header("Image Logs")]
     [Tooltip("The visual contents of the log")]
     public Sprite visual;
-
 }

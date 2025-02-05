@@ -56,7 +56,6 @@ public class MapTabController : MonoBehaviour
     {
         MapRaycaster.onPassthrough -= UpdateHUDMap;
         InputSystem.actions.FindAction("Arrows").started -= context => UpdateFloor();
-
     }
 
     void Start()
@@ -115,18 +114,18 @@ public class MapTabController : MonoBehaviour
         // Reveals all explored images so the player can still see them when they switch tabs
         for (int i = 0; i < GameManager.Instance.SceneData.VisitationList1F.Length; i++)
         {
-                _1FHUDImages[i].enabled = false;
+            _1FHUDImages[i].enabled = false;
         }
 
         for (int i = 0; i < GameManager.Instance.SceneData.VisitationList2F.Length; i++)
         {
-                _2FHUDImages[i].enabled = false;
+            _2FHUDImages[i].enabled = false;
         }
 
         for (int i = 0; i < GameManager.Instance.SceneData.VisitationList3F.Length; i++)
         {
 
-                _3FHUDImages[i].enabled = false;
+             _3FHUDImages[i].enabled = false;
         }
 
         _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(false);
@@ -224,37 +223,36 @@ public class MapTabController : MonoBehaviour
 
     private void UpdateFloor() // Switches floors when the up or down arrows are hit
     {
-            Vector2 arrowInput = _arrowAction.ReadValue<Vector2>();
-            if (arrowInput.y > 0)
-            {
-                _currentHUDFloor++;
+        Vector2 arrowInput = _arrowAction.ReadValue<Vector2>();
+        if (arrowInput.y > 0)
+        {
+            _currentHUDFloor++;
 
-                if (_currentHUDFloor > 3)
-                {
-                    _currentHUDFloor = 3; // Infinite scrolling is NOT enabled, that's too easy and useful for a horror interface
-                }
-                else
-                {
-                    _floorGameObjects[_currentHUDFloor - 2].gameObject.SetActive(false);
-                    _floorSelector.transform.position = _floorNumbers[_currentHUDFloor - 1].transform.position;
-                    _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(true);
-                }
+            if (_currentHUDFloor > 3)
+            {
+                _currentHUDFloor = 3; // Infinite scrolling is NOT enabled, that's too easy and useful for a horror interface
             }
-            else if (arrowInput.y < 0)
-            {   
-                _currentHUDFloor--;
-                if (_currentHUDFloor < 1)
-                {
-                    _currentHUDFloor = 1;
-                }
-                else
-                {
-                    _floorGameObjects[_currentHUDFloor].gameObject.SetActive(false);
-                    _floorSelector.transform.position = _floorNumbers[_currentHUDFloor - 1].transform.position;
-                    _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(true);
-                }
+            else
+            {
+                _floorGameObjects[_currentHUDFloor - 2].gameObject.SetActive(false);
+                _floorSelector.transform.position = _floorNumbers[_currentHUDFloor - 1].transform.position;
+                _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(true);
             }
-        
+        }
+        else if (arrowInput.y < 0)
+        {   
+            _currentHUDFloor--;
+            if (_currentHUDFloor < 1)
+            {
+                _currentHUDFloor = 1;
+            }
+            else
+            {
+                _floorGameObjects[_currentHUDFloor].gameObject.SetActive(false);
+                _floorSelector.transform.position = _floorNumbers[_currentHUDFloor - 1].transform.position;
+                _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(true);
+            }
+        }   
     }
 
     public void SetLocationText(string txt)

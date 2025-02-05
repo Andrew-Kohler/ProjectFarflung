@@ -9,6 +9,7 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField] protected GameObject _vfx;
     protected void Start()
     {
+
     }
 
     // Update is called once per frame
