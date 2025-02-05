@@ -15,7 +15,7 @@ public abstract class ClickableObject : MonoBehaviour
 
     protected virtual void OnDisable()
     {
-        InputSystem.actions.FindAction("MousePress").canceled -= CheckForClick;
+        InputSystem.actions.FindAction("MousePress").started -= CheckForClick;
     }
 
     /// <summary>

@@ -44,8 +44,8 @@ public class NodeManager : MonoBehaviour
             // create new connection
             if (_currConnection is null)
             {
-                // parented to node manager, positioned at node
-                _currConnection = Instantiate(_wireConnectionPrefab, _firstNode.transform.position, _wireConnectionPrefab.transform.rotation, transform);
+                // parented to node manager
+                _currConnection = Instantiate(_wireConnectionPrefab, transform);
             }
 
             // update connection
@@ -61,35 +61,7 @@ public class NodeManager : MonoBehaviour
                 hitPos.z = _currConnection.transform.position.z;
                 Vector3 nodePos = _firstNode.transform.position;
 
-                // Max Length
-                float maxLength = _wireManager.GetSelectedWire().Length;
-                if (Vector3.Distance(hitPos, nodePos) > maxLength / 10f) // 10x scale factor from unity coords to length unit
-                {
-                    // POSITION
-                    Vector3 newEndpoint = nodePos + ((hitPos - nodePos).normalized * maxLength / 10f); // 10x scale factor from unity coords to length unit
-                    _currConnection.transform.position = (nodePos + newEndpoint) / 2f;
-
-                    // SCALE
-                    Vector3 scale = _currConnection.transform.localScale;
-                    scale.x = _wireManager.GetSelectedWire().Length;
-                    _currConnection.transform.localScale = scale;
-                }
-                // Within Length Limit
-                else
-                {
-                    // POSITION
-                    _currConnection.transform.position = (hitPos + nodePos) / 2f;
-
-                    // SCALE
-                    Vector3 scale = _currConnection.transform.localScale;
-                    scale.x = Vector3.Distance(hitPos, nodePos) * 10f; // 10x scale factor from unity coords to grid units
-                    _currConnection.transform.localScale = scale;
-                }
-
-                // ROTATE
-                Quaternion rot = Quaternion.LookRotation(nodePos - hitPos, Vector3.forward);
-                rot *= Quaternion.Euler(0, 90, 0); // rotate 90 degrees (to account for improperly aligned forward)
-                _currConnection.transform.rotation = rot;
+                ShowWire(nodePos, hitPos);
             }
             else
             {
@@ -97,6 +69,42 @@ public class NodeManager : MonoBehaviour
                 _currConnection.SetActive(false);
             }
         }
+    }
+
+    /// <summary>
+    /// Renders wire between two provided vector3 points
+    /// </summary>
+    private void ShowWire(Vector3 originPos, Vector3 endPos)
+    {
+        // Max Length
+        float maxLength = _wireManager.GetSelectedWire().Length;
+        if (Vector3.Distance(endPos, originPos) > maxLength) // 10x scale factor from unity coords to length unit
+        {
+            // POSITION
+            Vector3 newEndpoint = originPos + ((endPos - originPos).normalized * maxLength); // 10x scale factor from unity coords to length unit
+            _currConnection.transform.position = (originPos + newEndpoint) / 2f;
+
+            // SCALE
+            Vector3 scale = _currConnection.transform.localScale;
+            scale.x = _wireManager.GetSelectedWire().Length * 10f; // 10x scale factor from unit coords to length units
+            _currConnection.transform.localScale = scale;
+        }
+        // Within Length Limit
+        else
+        {
+            // POSITION
+            _currConnection.transform.position = (endPos + originPos) / 2f;
+
+            // SCALE
+            Vector3 scale = _currConnection.transform.localScale;
+            scale.x = Vector3.Distance(endPos, originPos) * 10f; // 10x scale factor from unity coords to grid units
+            _currConnection.transform.localScale = scale;
+        }
+
+        // ROTATE
+        Quaternion rot = Quaternion.LookRotation(originPos - endPos, Vector3.forward);
+        rot *= Quaternion.Euler(0, 90, 0); // rotate 90 degrees (to account for improperly aligned forward)
+        _currConnection.transform.rotation = rot;
     }
 
     public void ProcessNodeClick(NodeSelector node)
@@ -115,11 +123,22 @@ public class NodeManager : MonoBehaviour
         else if (_firstNode == node)
         {
             DeselectFirstNode();
-        }
-        // attaching second half of wire
-        else if (true) // TODO: add check here for wire length
-        {
 
+            // ensure display wire is removed
+            Destroy(_currConnection);
+            _currConnection = null;
+        }
+        // attaching second half of wire - RANGE PERMITTING
+        else if (Vector3.Distance(node.transform.position, _firstNode.transform.position) < _wireManager.GetSelectedWire().Length)
+        {
+            // snap wire between two nodes
+            ShowWire(_firstNode.transform.position, node.transform.position);
+
+            // sever control over these connections (the wire has been placed)
+            DeselectFirstNode();
+
+            _currConnection.GetComponentInChildren<ConnectionRemover>().Connect(); // allow remove functionality to start
+            _currConnection = null;
         }
     }
 
