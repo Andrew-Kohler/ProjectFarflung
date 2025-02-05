@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -9,6 +10,9 @@ public class GameManager : MonoBehaviour
 {
     // private singleton instance
     private static GameManager _instance;
+
+    // Player max lives
+    public const int MAX_LIVES = 9;
 
     // public accessor of instance
     public static GameManager Instance
@@ -34,12 +38,17 @@ public class GameManager : MonoBehaviour
     [System.Serializable]
     public class ProgressionData
     {
-        // previous save terminal (or none in case of game start)
-        // busted box fix states
-        // picked up keycard list
-        // narrative log pickup list
-        // HP level remaining
-        // etc...
+        // Narrative timestamp (conveying to the player that time has past - represented as an integer 0 through 4)
+        public int NarrativeTimestamp;
+        // Player remaining lives
+        public int RemainingLives;
+
+        // What floor the player is on (used by HUD, 1-3)
+        public int Floor;
+        // Lists of rooms the players have visited in the form of booleans (we'll be assigning the order)
+        public bool[] VisitationList1F;
+        public bool[] VisitationList2F;
+        public bool[] VisitationList3F;
 
         // terminal/zone unlocked
         public bool[] TerminalUnlocks;
@@ -48,6 +57,12 @@ public class GameManager : MonoBehaviour
 
         // List of light switch on/off states based on light switch index
         public bool[] PowerSwitches;
+
+        // previous save terminal (or none in case of game start)
+        // busted box fix states
+        // picked up keycard list
+        // narrative log pickup list
+        // etc...
 
         // --------------------------------------------------------- \\
         // TODO: Add additional progression data types here
@@ -59,6 +74,25 @@ public class GameManager : MonoBehaviour
         /// </summary>
         public ProgressionData()
         {
+            NarrativeTimestamp = 0;                   
+            RemainingLives = 9;
+
+            Floor = 1;
+            // Center, top, left, bottom, right
+            VisitationList1F = new bool[5]; 
+            for (int i = 0; i < VisitationList1F.Length; i++)
+                VisitationList1F[i] = false;
+            //VisitationList1F[0] = true; // Center room visited by default for now
+
+            VisitationList2F = new bool[3];
+            for (int i = 0; i < VisitationList2F.Length; i++)
+                VisitationList2F[i] = false;
+            VisitationList2F[0] = true; // Center room visited by default for now
+
+            VisitationList3F = new bool[1];
+            for (int i = 0; i < VisitationList3F.Length; i++)
+                VisitationList3F[i] = false;
+
             // arrays must be initialized like this otherwise json lists will be empty instead of properly initialized
 
             TerminalUnlocks = new bool[12]; // 12 total power zones
@@ -84,7 +118,23 @@ public class GameManager : MonoBehaviour
         /// Used for copying data from scene data to game data BY VALUE and not by reference.
         /// </summary>
         public ProgressionData(ProgressionData other)
-        {
+        { 
+            NarrativeTimestamp = other.NarrativeTimestamp;                    
+            RemainingLives = other.RemainingLives;
+
+            Floor = other.Floor;
+            VisitationList1F = new bool[5]; 
+            for (int i = 0; i<VisitationList1F.Length; i++)
+                VisitationList1F[i] = other.VisitationList1F[i];
+
+            VisitationList2F = new bool[3];
+            for (int i = 0; i<VisitationList2F.Length; i++)
+                VisitationList2F[i] = other.VisitationList2F[i];
+
+            VisitationList3F = new bool[1];
+            for (int i = 0; i<VisitationList3F.Length; i++)
+                VisitationList3F[i] = other.VisitationList3F[i];
+        
             // arrays are reference based, so MUST be assigned like this
 
             // terminal/zone unlocked
