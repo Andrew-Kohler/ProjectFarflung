@@ -63,6 +63,9 @@ public abstract class PoweredElement : MonoBehaviour
 
         _isSwitchOn = !_isSwitchOn;
 
+        // Modifies game manager data
+        GameManager.Instance.SceneData.PowerSwitches[_switchIndex] = _isSwitchOn;
+
         // turn on light if zone was already on
         if (_isSwitchOn && _isZoneOn)
             EnablePoweredElement();
