@@ -137,8 +137,11 @@ public class NodeManager : MonoBehaviour
             // sever control over these connections (the wire has been placed)
             DeselectFirstNode();
 
-            _currConnection.GetComponentInChildren<ConnectionRemover>().Connect(); // allow remove functionality to start
+            // properly initialize completed connection
+            ConnectionRemover newConnection = _currConnection.transform.GetChild(0).gameObject.AddComponent<ConnectionRemover>();
+            newConnection.Initialize(_wireManager.GetSelectedWire());
             _currConnection = null;
+            _wireManager.ConsumeCurrentWire();
         }
     }
 

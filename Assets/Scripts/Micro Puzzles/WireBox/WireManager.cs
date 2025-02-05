@@ -47,4 +47,14 @@ public class WireManager : MonoBehaviour
             return null;
         return _currWire;
     }
+
+    /// <summary>
+    /// Removes the current wire selection and hides the object
+    /// </summary>
+    public void ConsumeCurrentWire()
+    {
+        _currWire.DeselectVisual();
+        _currWire.gameObject.SetActive(false);
+        _currWire = null;
+    }
 }
