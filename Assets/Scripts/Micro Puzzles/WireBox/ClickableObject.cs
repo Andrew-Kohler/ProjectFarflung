@@ -1,17 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Handles base functionality for all clickable objects, including hit detection and not click implementation
 /// </summary>
 public abstract class ClickableObject : MonoBehaviour
 {
-    // Update is called once per frame
-    protected virtual void Update()
+    protected virtual void OnEnable()
     {
-        // TODO: update this to new input system once Andrew's Player HUD PR is merged in
-        if (Input.GetMouseButtonDown(0) && gameObject == GetClickedObject())
+        InputSystem.actions.FindAction("MousePress").started += CheckForClick;
+    }
+
+    protected virtual void OnDisable()
+    {
+        InputSystem.actions.FindAction("MousePress").canceled -= CheckForClick;
+    }
+
+    /// <summary>
+    /// Fetches object that was clicked and compares it to game object
+    /// </summary>
+    private void CheckForClick(InputAction.CallbackContext context)
+    {
+        if (gameObject == GetClickedObject())
         {
             OnObjectClick();
         }
@@ -20,13 +32,12 @@ public abstract class ClickableObject : MonoBehaviour
     /// <summary>
     /// Returns the object clicked by the mouse
     /// </summary>
-    /// <returns></returns>
     private GameObject GetClickedObject()
     {
         GameObject target = null;
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // TODO: shift to new input system
-        if (Physics.Raycast(ray.origin, ray.direction * 10, out hit))
+        Vector3 mousePos = InputSystem.actions.FindAction("MousePosition").ReadValue<Vector2>();
+        Ray ray = Camera.main.ScreenPointToRay(mousePos);
+        if (Physics.Raycast(ray.origin, ray.direction * 10, out RaycastHit hit))
         {
             target = hit.collider.gameObject;
         }

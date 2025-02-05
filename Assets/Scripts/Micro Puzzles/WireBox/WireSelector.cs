@@ -30,13 +30,6 @@ public class WireSelector : ClickableObject
         _outline.OutlineWidth = 0; // no outline by default
     }
 
-    // Update is called once per frame
-    override protected void Update()
-    {
-        // ensure click check occurs
-        base.Update();
-    }
-
     public override void OnObjectClick()
     {
         // Deselection

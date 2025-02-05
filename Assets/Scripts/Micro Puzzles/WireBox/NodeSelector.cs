@@ -29,13 +29,6 @@ public class NodeSelector : ClickableObject
         _outline.OutlineWidth = 0; // no outline by default
     }
 
-    // Update is called once per frame
-    override protected void Update()
-    {
-        // ensure base click check is handled
-        base.Update();
-    }
-
     public override void OnObjectClick()
     {
         // cannot connect more than two connections on a single node - skip processing
