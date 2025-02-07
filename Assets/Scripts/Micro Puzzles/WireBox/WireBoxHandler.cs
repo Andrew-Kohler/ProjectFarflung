@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,9 +8,11 @@ using UnityEngine;
 /// </summary>
 public class WireBoxHandler : MonoBehaviour
 {
+    public static event Action WireBoxFixed;
+
     [Header("Configuration")]
-    [SerializeField, Tooltip("Name of this wire box puzzle state stored in game manager.")]
-    private string _identifierName;
+    [Tooltip("Name of this wire box puzzle state stored in game manager.")]
+    public string IdentifierName;
 
     [Header("References")]
     [SerializeField, Tooltip("Output node from which success is checked from")]
@@ -20,7 +23,7 @@ public class WireBoxHandler : MonoBehaviour
     private void Awake()
     {
         // TODO: replace with OFF by default always, only enabling itself on interaction (waiting for interaction system)
-        if (GameManager.Instance.SceneData.FixedWireBoxes.Contains(_identifierName))
+        if (GameManager.Instance.SceneData.FixedWireBoxes.Contains(IdentifierName))
         {
             DisablePuzzle();
         }
@@ -59,9 +62,12 @@ public class WireBoxHandler : MonoBehaviour
         if (currNode.IsEndNode && chargeTotal == _outputNode.VoltageDifference)
         {
             // mark puzzle as complete
-            GameManager.Instance.SceneData.FixedWireBoxes.Add(_identifierName);
+            GameManager.Instance.SceneData.FixedWireBoxes.Add(IdentifierName);
 
             DisablePuzzle();
+
+            // ensure power elements update accordingly
+            WireBoxFixed?.Invoke();
 
             // TODO: camera pan out and box close
         }
