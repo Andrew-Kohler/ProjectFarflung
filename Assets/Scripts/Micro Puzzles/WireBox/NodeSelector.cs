@@ -17,6 +17,10 @@ public class NodeSelector : ClickableObject
     private float _outlineWidth;
     [SerializeField, Tooltip("Used to configure text to match voltage customization.")]
     private TextMeshProUGUI _voltageText;
+    [SerializeField, Tooltip("Used to set the material of the node.")]
+    private Renderer _renderer;
+    [SerializeField, Tooltip("Materials for different charge types of node. 0 = negative, 1 = neutral, 2 = positive")]
+    private Material[] _nodeMaterials;
 
     [HideInInspector]
     public NodeSelector Connection1 = null;
@@ -37,6 +41,13 @@ public class NodeSelector : ClickableObject
 
         // voltage text configuration (never changes)
         _voltageText.text = (VoltageDifference >= 0 ? "+" : "-") + (int) Mathf.Abs(VoltageDifference) + "V";
+        // node color by voltage
+        if (VoltageDifference < 0)
+            _renderer.material = _nodeMaterials[0];
+        else if (VoltageDifference > 0)
+            _renderer.material = _nodeMaterials[2];
+        else
+            _renderer.material = _nodeMaterials[1];
     }
 
     public override void OnObjectClick()
