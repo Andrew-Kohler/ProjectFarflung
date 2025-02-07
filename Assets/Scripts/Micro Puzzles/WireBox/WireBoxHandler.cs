@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Handles checking for puzzle completion, and updates progression data upon completion.
 /// </summary>
-public class WireBoxCompletionChecker : MonoBehaviour
+public class WireBoxHandler : MonoBehaviour
 {
     [SerializeField, Tooltip("Output node from which success is checked from")]
     NodeSelector _outputNode;
