@@ -156,7 +156,7 @@ MonoBehaviour:
   PowerDraw: 10
   _switchIdentifier: 
   _isSwitchOffByDefault: 0
-  _wireBox: {fileID: 0}
+  _wireBoxIdentifier: 
   _light: {fileID: 213323641}
 --- !u!108 &213323641
 Light:
@@ -454,17 +454,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6074834f17b68e94faf322192b9287f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &611181065 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4891517149346474511, guid: f6c774c775d689e4b9cdb01ba761591e, type: 3}
-  m_PrefabInstance: {fileID: 4382100198942641753}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c12c0c47ba6ff0c45a6f93a67d55505b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &875068065
@@ -1731,7 +1720,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4891517149346474511, guid: f6c774c775d689e4b9cdb01ba761591e, type: 3}
       propertyPath: IdentifierName
-      value: Demo Wire Box
+      value: DemoWireBox
       objectReference: {fileID: 0}
     - target: {fileID: 4891517149346474511, guid: f6c774c775d689e4b9cdb01ba761591e, type: 3}
       propertyPath: _identifierName
@@ -1803,9 +1792,9 @@ PrefabInstance:
       value: PowerSystem
       objectReference: {fileID: 0}
     - target: {fileID: 4164254588039417000, guid: ac58399b2a5e3764e93e6d0eb515622f, type: 3}
-      propertyPath: _wireBox
-      value: 
-      objectReference: {fileID: 611181065}
+      propertyPath: _wireBoxIdentifier
+      value: DemoWireBox
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

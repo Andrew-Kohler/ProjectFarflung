@@ -18,8 +18,8 @@ public abstract class PoweredElement : MonoBehaviour
     private bool _isSwitchOffByDefault;
 
     [Header("OPTIONAL - Busted Wire Box")]
-    [SerializeField, Tooltip("Used to fetch identifier of wire box puzzle to read state for power determination.")]
-    private WireBoxHandler _wireBox;
+    [SerializeField, Tooltip("Used to determine if associated busted power box is fixed for power determination.")]
+    private string _wireBoxIdentifier;
 
     private bool _isSwitchOn;
     private bool _isZoneOn;
@@ -27,13 +27,13 @@ public abstract class PoweredElement : MonoBehaviour
     private void OnEnable()
     {
         // ensure element updates when wire box is fixed
-        if (_wireBox)
+        if (!_wireBoxIdentifier.Equals(""))
             WireBoxHandler.WireBoxFixed += UpdatePowerState;
     }
 
     private void OnDisable()
     {
-        if (_wireBox)
+        if (!_wireBoxIdentifier.Equals(""))
             WireBoxHandler.WireBoxFixed -= UpdatePowerState;
     }
 
@@ -113,7 +113,7 @@ public abstract class PoweredElement : MonoBehaviour
         // (1) Power Switch on (through light switch)
         // (2) Zone Power toggled on (through terminal) - if any
         // (3) Associated busted wire box is repaired   - if any
-        return _isSwitchOn && _isZoneOn && (!_wireBox || GameManager.Instance.SceneData.FixedWireBoxes.Contains(_wireBox.IdentifierName));
+        return _isSwitchOn && _isZoneOn && (_wireBoxIdentifier.Equals("") || GameManager.Instance.SceneData.FixedWireBoxes.Contains(_wireBoxIdentifier));
     }
 
     /// <summary>
