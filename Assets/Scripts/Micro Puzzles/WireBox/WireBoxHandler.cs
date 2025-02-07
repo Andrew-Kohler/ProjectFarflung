@@ -22,6 +22,10 @@ public class WireBoxHandler : MonoBehaviour
 
     private void Awake()
     {
+        // Precondition: must have non-empty identifier name
+        if (IdentifierName.Equals(""))
+            throw new Exception("Incorrect Wire Box Configuration: MUST have non-empty identifier name.");
+
         // TODO: replace with OFF by default always, only enabling itself on interaction (waiting for interaction system)
         if (GameManager.Instance.SceneData.FixedWireBoxes.Contains(IdentifierName))
         {
