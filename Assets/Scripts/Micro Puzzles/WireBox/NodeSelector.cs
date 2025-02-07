@@ -1,15 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 /// <summary>
 /// Handles clicking functionality and data configuration for an individual wire node.
 /// </summary>
 public class NodeSelector : ClickableObject
 {
-    [Header("Visual")]
+    [Header("Customization")]
+    [Tooltip("Voltage difference imposed on a wire connection crossing the node.")]
+    public int VoltageDifference;
+
+    [Header("Visuals")]
     [SerializeField, Tooltip("Thickness of selected outline, according to Outline.cs.")]
     private float _outlineWidth;
+    [SerializeField, Tooltip("Used to configure text to match voltage customization.")]
+    private TextMeshProUGUI _voltageText;
 
     [HideInInspector]
     public NodeSelector Connection1 = null;
@@ -27,6 +34,9 @@ public class NodeSelector : ClickableObject
 
         _outline = gameObject.AddComponent<Outline>();
         _outline.OutlineWidth = 0; // no outline by default
+
+        // voltage text configuration (never changes)
+        _voltageText.text = (VoltageDifference >= 0 ? "+" : "-") + (int) Mathf.Abs(VoltageDifference) + "V";
     }
 
     public override void OnObjectClick()
