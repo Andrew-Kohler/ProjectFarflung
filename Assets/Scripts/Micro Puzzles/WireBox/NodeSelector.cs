@@ -22,10 +22,8 @@ public class NodeSelector : ClickableObject
     [SerializeField, Tooltip("Materials for different charge types of node. 0 = negative, 1 = neutral, 2 = positive")]
     private Material[] _nodeMaterials;
 
-    [HideInInspector]
-    public NodeSelector Connection1 = null;
-    [HideInInspector]
-    public NodeSelector Connection2 = null;
+    private NodeSelector _connection1 = null;
+    private NodeSelector _connection2 = null;
 
     private NodeManager _nodeManager;
     private Outline _outline;
@@ -53,7 +51,7 @@ public class NodeSelector : ClickableObject
     public override void OnObjectClick()
     {
         // cannot connect more than two connections on a single node - skip processing
-        if (Connection1 is not null && Connection2 is not null)
+        if (_connection1 is not null && _connection2 is not null)
             return;
 
         _nodeManager.ProcessNodeClick(this);
@@ -73,5 +71,52 @@ public class NodeSelector : ClickableObject
     public void SelectVisual()
     {
         _outline.OutlineWidth = _outlineWidth;
+    }
+
+    /// <summary>
+    /// Adds input node as one the open connections (arbitrary).
+    /// </summary>
+    public void AssignConnection(NodeSelector node)
+    {
+        if (_connection1 is null)
+        {
+            _connection1 = node;
+            return;
+        }    
+        else if (_connection2 is null)
+        {
+            _connection2 = node;
+            return;
+        }
+
+        // no place to assign connection
+        throw new System.Exception("Improper use of AssignConnection, there must be an open connection");
+    }
+
+    /// <summary>
+    /// Removes connection that matches the provided node.
+    /// </summary>
+    public void RemoveConnection(NodeSelector node)
+    {
+        if (_connection1 is not null && _connection1 == node)
+        {
+            _connection1 = null;
+            return;
+        }
+        else if (_connection2 is not null && _connection2 == node)
+        {
+            _connection2 = null;
+            return;
+        }
+
+        throw new System.Exception("Improper use of RemoveConnection, can only provide a node that currently is a connection.");
+    }
+
+    /// <summary>
+    /// Returns whether there are no more available slots on this node to attach another wire.
+    /// </summary>
+    public bool AreConnectionsFull()
+    {
+        return _connection1 is not null && _connection2 is not null;
     }
 }

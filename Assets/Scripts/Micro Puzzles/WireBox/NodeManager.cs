@@ -121,6 +121,10 @@ public class NodeManager : MonoBehaviour
         if (_wireManager.GetSelectedWire() is null)
             return;
 
+        // cannot do ANYTHING to a node that already has two connections
+        if (clickedNode.AreConnectionsFull())
+            return;
+
         // NEW CONNECTION
         // attaching first half of wire
         if (_firstNode is null)
@@ -161,16 +165,22 @@ public class NodeManager : MonoBehaviour
             }
 
             // if we got this far, there is a successful connection!!!
+
             // snap wire between two nodes
             ShowWire(_firstNode.transform.position, clickedNode.transform.position);
+            // properly initialize completed connection
+            ConnectionRemover newConnection = _currConnection.transform.GetChild(0).gameObject.AddComponent<ConnectionRemover>();
+            newConnection.Initialize(_wireManager.GetSelectedWire(), _firstNode, clickedNode);
+
+            // assign wire connections (for charge calculations) - two way reference
+            _firstNode.AssignConnection(clickedNode);
+            clickedNode.AssignConnection(_firstNode);
 
             // sever control over these connections (the wire has been placed)
             DeselectFirstNode();
-
-            // properly initialize completed connection
-            ConnectionRemover newConnection = _currConnection.transform.GetChild(0).gameObject.AddComponent<ConnectionRemover>();
-            newConnection.Initialize(_wireManager.GetSelectedWire());
             _currConnection = null;
+
+            // consume the current selected wire from the wire rack
             _wireManager.ConsumeCurrentWire();
         }
     }
