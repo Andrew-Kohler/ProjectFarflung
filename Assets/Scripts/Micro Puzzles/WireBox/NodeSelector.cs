@@ -12,6 +12,10 @@ public class NodeSelector : ClickableObject
     [Tooltip("Voltage difference imposed on a wire connection crossing the node.")]
     public int VoltageDifference;
 
+    [Header("Configuration")]
+    [SerializeField, Tooltip("Whether the current node is an end node and only permits ONE connection.")]
+    public bool IsEndNode;
+
     [Header("Visuals")]
     [SerializeField, Tooltip("Thickness of selected outline, according to Outline.cs.")]
     private float _outlineWidth;
@@ -83,7 +87,7 @@ public class NodeSelector : ClickableObject
             _connection1 = node;
             return;
         }    
-        else if (_connection2 is null)
+        else if (!IsEndNode && _connection2 is null)
         {
             _connection2 = node;
             return;
@@ -117,6 +121,43 @@ public class NodeSelector : ClickableObject
     /// </summary>
     public bool AreConnectionsFull()
     {
-        return _connection1 is not null && _connection2 is not null;
+        return _connection1 is not null && (IsEndNode || _connection2 is not null);
+    }
+
+    /// <summary>
+    /// Returns whether there are any connections attached to this node.
+    /// </summary>
+    public bool HasAnyConnections()
+    {
+        return _connection1 is not null || _connection2 is not null;
+    }
+
+    /// <summary>
+    /// Returns the next connection that is NOT the provided one.
+    /// Useful for one-way traversal of a node chain.
+    /// </summary>
+    public NodeSelector GetNextConnection(NodeSelector node)
+    {
+        if (_connection1 == node)
+        {
+            return _connection2 is null ? null : _connection2;
+        }
+        else if (_connection2 == node)
+        {
+            return _connection1 is null ? null : _connection1;
+        }
+
+        throw new System.Exception("Incorrect usage of GetNextConnection. The provided node MUST be one of the connections.");
+    }
+
+    /// <summary>
+    /// Returns the first connection on this node.
+    /// </summary>
+    public NodeSelector GetFirstConnection()
+    {
+        if (_connection1 is null)
+            throw new System.Exception("Incorrect usage of GetFirstCOnnection. The first connection must exist to access it.");
+
+        return _connection1;
     }
 }
