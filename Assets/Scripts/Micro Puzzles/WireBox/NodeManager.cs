@@ -146,9 +146,7 @@ public class NodeManager : MonoBehaviour
             Vector3 pointBot = clickedNode.transform.position;
             pointTop = pointTop + (pointBot - pointTop).normalized * _obstructionInwardOffset;
             pointBot = pointBot + (pointTop - pointBot).normalized * _obstructionInwardOffset;
-            int numColls = Physics.OverlapCapsuleNonAlloc(pointTop, pointBot, _obstructionCheckRadius, potentialObstructions, LayerMask.GetMask("WireBoxObstruction"));
-            for (int i = 0; i < numColls; i++)
-                Debug.Log(potentialObstructions[i]);
+            int numColls = Physics.OverlapCapsuleNonAlloc(pointTop, pointBot, _obstructionCheckRadius, potentialObstructions);
             for (int i = 0; i < numColls; i++)
             {
                 // (1) obstructed by ANY other connection (we implicitly know any ConnectionRemover is not the current once since it does not have a ConnectionRemover yet)
