@@ -50,6 +50,9 @@ public class GameManager : MonoBehaviour
         public bool[] VisitationList2F;
         public bool[] VisitationList3F;
 
+        // List of bools showing which logs the player has found
+        public bool[] LogUnlocks;
+
         // terminal/zone unlocked
         public bool[] TerminalUnlocks;
         // zone power toggled on/off - MUST be same size as TerminalUnlocks
@@ -92,6 +95,10 @@ public class GameManager : MonoBehaviour
             VisitationList3F = new bool[1];
             for (int i = 0; i < VisitationList3F.Length; i++)
                 VisitationList3F[i] = false;
+
+            LogUnlocks = new bool[6]; // Temp value (the amount of logs we have may be as high as 71)
+            for (int i = 0; i < LogUnlocks.Length; i++)
+                LogUnlocks[i] = false;
 
             // arrays must be initialized like this otherwise json lists will be empty instead of properly initialized
 

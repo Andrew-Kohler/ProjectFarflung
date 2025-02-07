@@ -14,7 +14,7 @@ public class Log : ScriptableObject
     // Depending on the manner in which we decide to store and display these, we might need an index that this gets placed into 
     // an array at
 
-    [Tooltip("Date of the log (MM/DD/YYYY)")]
+    [Tooltip("Date of the log (What date format are we using)")]
     public Vector3 date;
     [Tooltip("Log timestamp (for nondigital content, 'timestamp indeterminate')")]
     public string timestamp;
