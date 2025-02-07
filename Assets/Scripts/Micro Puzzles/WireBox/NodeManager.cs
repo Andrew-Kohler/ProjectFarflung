@@ -8,11 +8,13 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class NodeManager : MonoBehaviour
 {
-    [Header("Obstructions")]
+    [Header("Obstructions / Adjustments")]
     [SerializeField, Tooltip("Radius of obstruction overlap capsule checks.")]
     private float _obstructionCheckRadius;
     [SerializeField, Tooltip("Inwards offset between nodes of obstruction check to prevent wire tips from touching within a node and registering as obstruction.")]
     private float _obstructionInwardOffset;
+    [SerializeField, Tooltip("Max length reducing offset for wire preview to better align with actual snapping distance (since proper functional snap distance is center, but visually should be edge for clarity).")]
+    private float _maxLengthVisualOffset;
 
     [Header("References")]
     [SerializeField, Tooltip("Used to access current selected wire state")]
@@ -83,7 +85,7 @@ public class NodeManager : MonoBehaviour
     private void ShowWire(Vector3 originPos, Vector3 endPos)
     {
         // Max Length
-        float maxLength = _wireManager.GetSelectedWire().Length;
+        float maxLength = _wireManager.GetSelectedWire().Length - _maxLengthVisualOffset;
         if (Vector3.Distance(endPos, originPos) > maxLength) // 10x scale factor from unity coords to length unit
         {
             // POSITION
@@ -92,7 +94,7 @@ public class NodeManager : MonoBehaviour
 
             // SCALE
             Vector3 scale = _currConnection.transform.localScale;
-            scale.x = _wireManager.GetSelectedWire().Length * 10f; // 10x scale factor from unit coords to length units
+            scale.x = maxLength * 10f; // 10x scale factor from unit coords to length units
             _currConnection.transform.localScale = scale;
         }
         // Within Length Limit
