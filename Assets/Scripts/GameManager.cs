@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         // zone power toggled on/off - MUST be same size as TerminalUnlocks
         public bool[] PoweredZones;
         // List of light switch on/off states based on light switch index
-        public bool[] PowerSwitches;
+        public List<string> PowerSwitches;
 
         // BUSTED WIRE BOXES
         // list of names of boxes that have been fixed (since states only added and not ever removed - it is easier to use a List)
@@ -111,9 +111,7 @@ public class GameManager : MonoBehaviour
                 PoweredZones[i] = false; // all off by default
             PoweredZones[0] = true; // command enabled by default
 
-            PowerSwitches = new bool[64];
-            for (int i = 0; i < PowerSwitches.Length; i++)
-                PowerSwitches[i] = true; // all switches are ON by default
+            PowerSwitches = new List<string>();
 
             // BUSTED WIRE BOXES
             FixedWireBoxes = new List<string>(); // new empty list (expandable)
@@ -160,9 +158,7 @@ public class GameManager : MonoBehaviour
                 PoweredZones[i] = other.PoweredZones[i];
 
             // light switch on/off states
-            PowerSwitches = new bool[other.PowerSwitches.Length];
-            for (int i = 0; i < PowerSwitches.Length; i++)
-                PowerSwitches[i] = other.PowerSwitches[i];
+            PowerSwitches = new List<string>(other.PowerSwitches);
 
             // BUSTED WIRE BOXES
             FixedWireBoxes = new List<string>(other.FixedWireBoxes);
