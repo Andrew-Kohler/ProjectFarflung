@@ -13,12 +13,13 @@ public class Log : ScriptableObject
 
     // Depending on the manner in which we decide to store and display these, we might need an index that this gets placed into 
     // an array at
-
-    [Tooltip("Date of the log (What date format are we using)")]
-    public Vector3 date;
+    [Tooltip("File name (file(1), What's For Lunch, etc.)")]
+    public string filename;
+    [Tooltip("Date of the log (Century.year.relativemonth.day)")]
+    public Vector4 date;
     [Tooltip("Log timestamp (for nondigital content, 'timestamp indeterminate')")]
     public string timestamp;
-    [TextArea(1, 5), Tooltip("Paragraphs of text for text log, subtitles for audio log, or image description for image log")] 
+    [TextArea(1, 17), Tooltip("Blocks of text for text log, subtitles for audio log, or image description for image log")] 
     public List<string> textParas;
 
     // If an audio file, two additional pieces of info are needed
