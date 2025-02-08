@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
 
         // List of bools showing which logs the player has found
         public bool[] LogUnlocks;
+        // Index of the log the player currently has selected
+        public int LogIndex; 
 
         // terminal/zone unlocked
         public bool[] TerminalUnlocks;
@@ -96,9 +98,11 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < VisitationList3F.Length; i++)
                 VisitationList3F[i] = false;
 
-            LogUnlocks = new bool[6]; // Temp value (the amount of logs we have may be as high as 71)
+            LogUnlocks = new bool[3]; // TEMP VALUE
             for (int i = 0; i < LogUnlocks.Length; i++)
-                LogUnlocks[i] = false;
+                LogUnlocks[i] = true;
+
+            LogIndex = 1;
 
             // arrays must be initialized like this otherwise json lists will be empty instead of properly initialized
 
@@ -141,7 +145,13 @@ public class GameManager : MonoBehaviour
             VisitationList3F = new bool[1];
             for (int i = 0; i<VisitationList3F.Length; i++)
                 VisitationList3F[i] = other.VisitationList3F[i];
-        
+
+            LogUnlocks = new bool[3]; // TEMP VALUE
+            for (int i = 0; i < LogUnlocks.Length; i++)
+                LogUnlocks[i] = other.LogUnlocks[i];
+
+            LogIndex = other.LogIndex;
+
             // arrays are reference based, so MUST be assigned like this
 
             // terminal/zone unlocked
