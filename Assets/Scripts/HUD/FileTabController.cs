@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
+using Unity.Mathematics;
 
 public class FileTabController : MonoBehaviour
 {
@@ -19,6 +20,17 @@ public class FileTabController : MonoBehaviour
     private TextMeshProUGUI _sideText;
     [SerializeField, Tooltip("Animator for showing files")]
     private Animator _fileDisplayAnim;
+
+    [Header("Timeline")]
+    [SerializeField, Tooltip("Timeline object")]
+    private GameObject _timeline;
+    [SerializeField, Tooltip("How fast the timeline moves")]
+    private float _timelineSpeed = .5f;
+    [SerializeField, Tooltip("The furthest and most recent datestamp values of our logs")]
+    private Vector2 _timelineDateBounds;
+    [SerializeField, Tooltip("The start and end X values that the timeline can move to on the HUD")]
+    private Vector2 _timelineHUDBounds;
+    
 
     [Header("Text Log Display")]
     [SerializeField, Tooltip("Parent of log display")]
@@ -45,7 +57,8 @@ public class FileTabController : MonoBehaviour
     // Some control variables
     private bool _isActiveCoroutine;
     private bool _isLogOpen;
-    private int _textLogIndex; 
+    private int _textLogIndex;
+    private IEnumerator _currentTimelineCoroutine;
     private void OnEnable()
     {
         InputSystem.actions.FindAction("Arrows").started += context => FileInteraction();
@@ -79,16 +92,27 @@ public class FileTabController : MonoBehaviour
         {
             if (arrowInput.x > 0 && GameManager.Instance.SceneData.LogIndex < GameManager.Instance.SceneData.LogUnlocks.Length - 1) // Moving to the right
             {
+                // Start the change animations and change the index
                 _nodeDisplayList[GameManager.Instance.SceneData.LogIndex].Shrink();
                 GameManager.Instance.SceneData.LogIndex++;
                 _nodeDisplayList[GameManager.Instance.SceneData.LogIndex].Grow();
+
+                // Move the timeline
+                MoveTimeline();
+
+                // Move the file nodes
                 StartCoroutine(DoLerpXTimed(_fileNodeParent, _fileNodeParent.transform.localPosition.x, _fileNodeParent.transform.localPosition.x - _fileNodeDistance, _scrollTime));
             }
             else if (arrowInput.x < 0 && GameManager.Instance.SceneData.LogIndex > 0) // Moving to the left
             {
+                // Start the change animations and change the index
                 _nodeDisplayList[GameManager.Instance.SceneData.LogIndex].Shrink();
                 GameManager.Instance.SceneData.LogIndex--;
                 _nodeDisplayList[GameManager.Instance.SceneData.LogIndex].Grow();
+
+                MoveTimeline();
+
+                // Move the file nodes
                 StartCoroutine(DoLerpXTimed(_fileNodeParent, _fileNodeParent.transform.localPosition.x, _fileNodeParent.transform.localPosition.x + _fileNodeDistance, _scrollTime));
             }
 
@@ -147,8 +171,24 @@ public class FileTabController : MonoBehaviour
     {
         int currentMasterIndex = _nodeDisplayList[GameManager.Instance.SceneData.LogIndex].masterIndex; // The index of the contents of the log
         _selectedLog = _masterList.logList[currentMasterIndex]; // The contents of the log
-        string date = _selectedLog.date.x + "." + _selectedLog.date.y + "." + _selectedLog.date.z + "." + _selectedLog.date.w;
+        string date = "3.604." + _selectedLog.date.x + "." + _selectedLog.date.y;
         _sideText.text = ">filename\n\"" + _selectedLog.filename + "\"\n>datestamp\n" + date + "\n>timestamp\n" + _selectedLog.timestamp + "\n>filetype " + _selectedLog.type;
+    }
+
+    // Converts the date stamp of the current log into the X position
+    private void MoveTimeline()
+    {
+        float convertedDate = _masterList.logList[GameManager.Instance.SceneData.LogIndex].date.x * 100 + _masterList.logList[GameManager.Instance.SceneData.LogIndex].date.y;
+        if(convertedDate >= 201)
+        {
+            convertedDate -= 49;
+        }
+        float convertedXPos = math.remap(_timelineDateBounds.x, _timelineDateBounds.y, _timelineHUDBounds.x, _timelineHUDBounds.y, convertedDate);
+        if (_currentTimelineCoroutine != null)
+            StopCoroutine(_currentTimelineCoroutine);
+
+        _currentTimelineCoroutine = DoLerpXConstant(_timeline, convertedXPos);
+        StartCoroutine(_currentTimelineCoroutine);
     }
 
     /// <summary>
@@ -169,6 +209,20 @@ public class FileTabController : MonoBehaviour
         obj.transform.localPosition = new Vector2(endX, obj.transform.localPosition.y);
 
         _isActiveCoroutine = false;
+    }
+
+    private IEnumerator DoLerpXConstant(GameObject obj, float endX)
+    {
+        float startX = obj.transform.localPosition.x;
+        float timeElapsed = 0f;
+
+        while (Mathf.Abs(obj.transform.localPosition.x - endX) > .05f)
+        {
+            obj.transform.localPosition = new Vector2(Mathf.Lerp(startX, endX, timeElapsed/_timelineSpeed), obj.transform.localPosition.y);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+        obj.transform.localPosition = new Vector2(endX, obj.transform.localPosition.y);
     }
 
     /// <summary>

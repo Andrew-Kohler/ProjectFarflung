@@ -15,11 +15,15 @@ public class Log : ScriptableObject
     // an array at
     [Tooltip("File name (file(1), What's For Lunch, etc.)")]
     public string filename;
-    [Tooltip("Date of the log (Century.year.relativemonth.day)")]
-    public Vector4 date;
-    [Tooltip("Log timestamp (for nondigital content, 'timestamp indeterminate')")]
+    [Tooltip("Date of the log on Oixys-3 (RelativeMonth.Day)")]
+    public Vector2 date;
+    [Tooltip("Was this log sent to Oixys-3 from another planet?")]
+    public bool offworldOrigin;
+    [Tooltip("Transmission date of the log from planet of origin (RelativeMonth.Day)")]
+    public Vector2 transmissionDate;
+    [Tooltip("Log timestamp (for nondigital content, 'indeterminate')")]
     public string timestamp;
-    [TextArea(1, 17), Tooltip("Blocks of text for text log, subtitles for audio log, or image description for image log")] 
+    [TextArea(1, 15), Tooltip("Blocks of text for text log, subtitles for audio log, or image description for image log")] 
     public List<string> textParas;
 
     // If an audio file, two additional pieces of info are needed
