@@ -7,7 +7,22 @@ using UnityEngine;
 /// </summary>
 public class CreatureZone : MonoBehaviour
 {
+    [Header("Configuration")]
+    [SerializeField, Tooltip("Spawn zone options for spawning the creature. The farthest location will be prioritized")]
+    private Transform[] _spawnLocations;
+
+    [Header("References")]
+    [SerializeField, Tooltip("Used to spawn/despawn creature functionality.")]
+    private CreatureMotion _creature;
+
     private bool _isPlayerContained = false;
+
+    private void Awake()
+    {
+        // Precondition: at least one spawn location
+        if (_spawnLocations.Length == 0)
+            throw new System.Exception("Invalid Creature Zone Configuration: MUST have at least one spawn location");
+    }
 
     // Update is called once per frame
     void Update()
@@ -15,8 +30,9 @@ public class CreatureZone : MonoBehaviour
         // no functionality unless player is contained
         if (!_isPlayerContained)
         {
-            // TODO: despawn creature if not already despawned
-            Debug.Log("Despawn");
+            // only call despawn functionality once per despawn
+            if (_creature.IsCreatureActive())
+                _creature.DespawnCreature();
 
             return;
         }
@@ -26,8 +42,8 @@ public class CreatureZone : MonoBehaviour
         {
             CreatureManager.Instance.ActivateCreatureAggro(this);
 
-            // TODO: spawna creature
-            Debug.Log("Spawn");
+            // functionally spawn creature
+            _creature.SpawnCreature(_spawnLocations);
         }
     }
 
