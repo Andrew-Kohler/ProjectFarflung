@@ -34,6 +34,8 @@ public class CreatureManager : MonoBehaviour
                 _instance.PlayerTransform = player.transform;
 
                 _instance.CurrentSpeed = 0; // start at 0 speed
+                _instance.ActiveZone = null; // no starting active zone
+                _instance.IsAggro = false; // no aggro instantly
             }
             // return new/existing instance
             return _instance;
@@ -43,12 +45,18 @@ public class CreatureManager : MonoBehaviour
 
     #region Behavior
     // unfortunately these cannot be configured from inspector because I chose to make this a singleton manager
-    private const float SPEED_CHANGE_FACTOR = 1.0f;
-    private const float STUN_DURATION = 1.5f;
+    private const float SPEED_INCREASE_FACTOR = 0.2f;
+    private const float SPEED_DECREASE_FACTOR = 0.4f;
+    private const float STUN_DURATION = 1.0f;
 
     public Transform PlayerTransform { get; private set; }
 
-    public CreatureZone ActiveZone { get; private set; } = null;
+    public CreatureZone ActiveZone { get; private set; }
+
+    /// <summary>
+    /// Controls whether the creature is currently increasing or decreasing in speed.
+    /// </summary>
+    public bool IsAggro;
 
     private float _currentSpeed;
     public float CurrentSpeed {
@@ -65,7 +73,6 @@ public class CreatureManager : MonoBehaviour
         }
     }
 
-    private bool _isAggro = false;
     private bool _isStunned = false;
 
     // Update is called once per frame
@@ -76,15 +83,15 @@ public class CreatureManager : MonoBehaviour
             return;
 
         // increase / decrease speed
-        if (_isAggro)
+        if (IsAggro)
         {
             // increase speed without cap
-            CurrentSpeed += SPEED_CHANGE_FACTOR * Time.deltaTime;
+            CurrentSpeed += SPEED_INCREASE_FACTOR * Time.deltaTime;
         }
         else
         {
             // decrease speed without cap
-            CurrentSpeed -= SPEED_CHANGE_FACTOR * Time.deltaTime;
+            CurrentSpeed -= SPEED_DECREASE_FACTOR * Time.deltaTime;
             if (CurrentSpeed < 0)
                 CurrentSpeed = 0;
         }
@@ -93,21 +100,23 @@ public class CreatureManager : MonoBehaviour
 
     #region Public Interfacing
     /// <summary>
-    /// Starts ramping velocity that creature uses to track player.
+    /// Attaches provided zone as new active zone
     /// </summary>
-    public void ActivateCreatureAggro(CreatureZone zone)
+    public void AttachCurrentZone(CreatureZone zone)
     {
-        _isAggro = true;
+        if (ActiveZone is not null)
+            throw new System.Exception("Improper usage of AttachCurrentZone. existing zone MUST be detached first.");
 
         ActiveZone = zone;
     }
 
     /// <summary>
-    /// Sets creature speed to start decreasing over time.
+    /// Detaches current zone as active zone, allowing a replacement
     /// </summary>
-    public void DeactivateCreatureAggro()
+    public void DetachCurrentZone()
     {
-        _isAggro = false;
+        if (ActiveZone is null)
+            throw new System.Exception("Improper usage of DetachCurrentZone. There MUST be an active zone to remove.");
 
         ActiveZone = null;
     }

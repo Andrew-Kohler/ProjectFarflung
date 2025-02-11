@@ -1,24 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Mathematics;
 
 /// <summary>
 /// Controls motion of creature object by tracking rotation towards the player and accounting for speed ramp.
 /// </summary>
 public class CreatureMotion : MonoBehaviour
 {
+    [SerializeField, Tooltip("Distince within which creature will begin moving towards the player.")]
+    private float _aggroDistance;
     [SerializeField, Tooltip("Rotation lerping speed to face the player.")]
     private float _rotationSharpness;
 
     // Update is called once per frame
     void Update()
     {
-        // lerp rotation
-        Vector3 dirToPlayer = CreatureManager.Instance.PlayerTransform.position - transform.position;
-        Quaternion goalRot = transform.rotation;
-        goalRot.SetLookRotation(dirToPlayer, Vector3.up);
-        // smooth motion - also scaled by creature move speed factor
-        transform.rotation = Quaternion.Lerp(transform.rotation, goalRot, 1f - Mathf.Exp(-_rotationSharpness * Time.deltaTime * CreatureManager.Instance.CurrentSpeed));
+        // activate aggro (speed ramping)
+        // (1) activate aggro in range
+        // (2) ALSO activate aggro if creature does not have 0 speed (not fully calmed)
+        if (!CreatureManager.Instance.IsAggro && (Vector3.Distance(CreatureManager.Instance.PlayerTransform.position, transform.position) < _aggroDistance
+            || CreatureManager.Instance.CurrentSpeed > 0f))
+        {
+            CreatureManager.Instance.IsAggro = true;
+        }
+
+        // motion lerping
+        if (CreatureManager.Instance.IsAggro)
+        {
+            Vector3 playerPos = CreatureManager.Instance.PlayerTransform.position;
+            playerPos.y = 0; // don't track with player jumps
+            Vector3 dirToPlayer = playerPos - transform.position;
+
+            // LERP ROTATION
+            Quaternion goalRot = transform.rotation;
+            goalRot.SetLookRotation(dirToPlayer, Vector3.up);
+            // smooth motion - also scaled by creature move speed factor
+            transform.rotation = Quaternion.Lerp(transform.rotation, goalRot, 1f - Mathf.Exp(-_rotationSharpness * Time.deltaTime * CreatureManager.Instance.CurrentSpeed));
+
+            // LERP MOTION
+            // slower speed when not looking directly at player
+            float angle = Vector3.Angle(transform.forward, dirToPlayer);
+            float angleFactor = math.remap(0, 180, 1, 0, angle); // 0 degree difference = max speed; 180 degree difference = no speed
+            transform.position += transform.forward * angleFactor * CreatureManager.Instance.CurrentSpeed * Time.deltaTime;
+        }
     }
 
     #region Spawning/Despawning
@@ -51,6 +76,9 @@ public class CreatureMotion : MonoBehaviour
     /// </summary>
     public void DespawnCreature()
     {
+        // allow creature to slowly approach 0 speed again
+        CreatureManager.Instance.IsAggro = false;
+
         gameObject.SetActive(false);
 
         // TODO: smoother despawning with behavior freeze and despawn animation

@@ -40,7 +40,7 @@ public class CreatureZone : MonoBehaviour
         // activating creature in this zone - only if creature is not already active in another zone
         if (CreatureManager.Instance.ActiveZone is null)
         {
-            CreatureManager.Instance.ActivateCreatureAggro(this);
+            CreatureManager.Instance.AttachCurrentZone(this);
 
             // functionally spawn creature
             _creature.SpawnCreature(_spawnLocations);
@@ -62,6 +62,6 @@ public class CreatureZone : MonoBehaviour
 
         // deactivate aggro if current zone is left - either keeps it gone or respawns it in new region
         if (CreatureManager.Instance.ActiveZone == this)
-            CreatureManager.Instance.DeactivateCreatureAggro();
+            CreatureManager.Instance.DetachCurrentZone();
     }
 }
