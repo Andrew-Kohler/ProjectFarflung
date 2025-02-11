@@ -117,6 +117,5 @@ public class CreatureManager : MonoBehaviour
             _isStunned = false;
         }
     }
-    
     #endregion
 }
