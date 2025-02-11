@@ -47,17 +47,21 @@ public class CreatureManager : MonoBehaviour
     private const float STUN_DURATION = 1.5f;
 
     public Transform PlayerTransform { get; private set; }
+
+    public CreatureZone ActiveZone { get; private set; } = null;
+
+    private float _currentSpeed;
     public float CurrentSpeed {
         get
         {
             // return 0 speed if stunned so it stops moving
             if (_isStunned)
                 return 0f;
-            return CurrentSpeed;
+            return _currentSpeed;
         }
         private set
         {
-            CurrentSpeed = value;
+            _currentSpeed = value;
         }
     }
 
@@ -91,9 +95,11 @@ public class CreatureManager : MonoBehaviour
     /// <summary>
     /// Starts ramping velocity that creature uses to track player.
     /// </summary>
-    public void ActivateCreatureAggro()
+    public void ActivateCreatureAggro(CreatureZone zone)
     {
         _isAggro = true;
+
+        ActiveZone = zone;
     }
 
     /// <summary>
@@ -102,6 +108,8 @@ public class CreatureManager : MonoBehaviour
     public void DeactivateCreatureAggro()
     {
         _isAggro = false;
+
+        ActiveZone = null;
     }
 
     public void StunCreature()
