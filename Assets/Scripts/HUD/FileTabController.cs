@@ -48,6 +48,25 @@ public class FileTabController : MonoBehaviour
     [SerializeField, Tooltip("Image for putting log sprite into")]
     private Image _img;
 
+    [Header("Audio Log Display")]
+    [SerializeField, Tooltip("Parent of audio display")]
+    private GameObject _audioDisplayParent;
+    [SerializeField, Tooltip("Subtitle text")]
+    private TextMeshProUGUI _subText;
+    [SerializeField, Tooltip("Progress slider")]
+    private Slider _timeSlider;
+    [SerializeField, Tooltip("Time remaining text")]
+    private TextMeshProUGUI _timeRemainingText;
+    [SerializeField, Tooltip("Waveform parent")]
+    private GameObject _waveformParent;
+    [SerializeField, Tooltip("Waveform scale speed")]
+    private float _waveformSpeed = 10f;
+    [SerializeField, Tooltip("Waveform sensitivity")]
+    private float _waveformSensitivity = 2f;
+    private AudioSource _source;
+    private List<GameObject> _bars;
+    private float[] spectrum;
+
     private List<FileNode> _nodeDisplayList;
     private float _fileNodeDistance = 120f;
     private Log _selectedLog;
@@ -59,6 +78,7 @@ public class FileTabController : MonoBehaviour
     private bool _isLogOpen;
     private int _textLogIndex;
     private IEnumerator _currentTimelineCoroutine;
+    private IEnumerator _currentSubtitleCoroutine;
     private void OnEnable()
     {
         InputSystem.actions.FindAction("Arrows").started += context => FileInteraction();
@@ -68,18 +88,28 @@ public class FileTabController : MonoBehaviour
     private void OnDisable()
     {
         InputSystem.actions.FindAction("Arrows").started -= context => FileInteraction();
+        TabClose();
     }
     void Start()
     {
         // Arrow keys
         _arrowAction = InputSystem.actions.FindAction("Arrows");
         _arrowAction.Enable();
+
+        _source = GetComponent<AudioSource>();
+        _bars = new List<GameObject>();
+        foreach(Transform child in _waveformParent.transform)
+        {
+            _bars.Add(child.gameObject);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         UpdateFileText();
+        UpdateAudioSlider();
+        UpdateAudioWaveform();
     }
 
     /// <summary>
@@ -148,7 +178,70 @@ public class FileTabController : MonoBehaviour
         }
     }
 
-    // Show or close the selected log
+    // Updates the metadata text on the side of the screen, and also keeps track of which log is selected
+    private void UpdateFileText()
+    {
+        int currentMasterIndex = _nodeDisplayList[GameManager.Instance.SceneData.LogIndex].masterIndex; // The index of the contents of the log
+        _selectedLog = _masterList.logList[currentMasterIndex]; // The contents of the log
+        string date = "3.604." + _selectedLog.date.x + "." + _selectedLog.date.y;
+        _sideText.text = ">filename\n\"" + _selectedLog.filename + "\"\n>datestamp\n" + date + "\n>timestamp\n" + _selectedLog.timestamp + "\n>filetype " + _selectedLog.type;
+    }
+
+    private void UpdateAudioWaveform()
+    {
+        if (_source.isPlaying)
+        {
+            // Get the waveform data (highest possible sample rate rn)
+            spectrum = new float[1024];
+            _source.GetSpectrumData(spectrum, 0, FFTWindow.Rectangular);
+
+            for (int i = 0; i < _bars.Count; i++) //needs to be <= sample rate or error
+            {
+                float level = spectrum[i] * _waveformSensitivity * Time.deltaTime * 1000; //0,1 = l,r for two channels
+                
+
+                // Scale pillars 
+                Vector3 previousScale = _bars[i].transform.localScale;
+                previousScale.y = Mathf.Lerp(previousScale.y, level, _waveformSpeed * Time.deltaTime);
+                if (previousScale.y < 0.02f)
+                    previousScale.y = .02f;
+                _bars[i].transform.localScale = previousScale;
+
+                /*//Move pillars up by scale/2
+                Vector3 pos = pillars[i].transform.position;
+                pos.y = previousScale.y * .5f;
+                pillars[i].transform.position = pos;*/
+            }
+
+        }
+    }
+
+    private void UpdateAudioSlider()
+    {
+        if (_source.isPlaying)
+        {
+            // Update the slider
+            _timeSlider.value = (_source.time / _source.clip.length);
+
+            // Update time remaining
+            int minRemaining = (int)((_source.clip.length - _source.time)/ 60);
+            int secRemaining = (int)(_source.clip.length - (minRemaining * 60) - _source.time);
+            string timeString = "";
+            if (minRemaining < 10)
+                timeString += "0";
+            timeString += minRemaining + ":";
+            if (secRemaining < 10)
+                timeString += "0";
+            timeString += secRemaining;
+            _timeRemainingText.text = timeString;
+
+        }
+        
+    }
+
+    /// <summary>
+    /// Show or close the selected log
+    /// </summary>
     private void CurrentLogDisplay(bool show)
     {
         if (!_isActiveCoroutine)
@@ -163,16 +256,11 @@ public class FileTabController : MonoBehaviour
         _fileDisplayAnim.Play("Static");
         _textLogDisplayParent.SetActive(false);
         _imgDisplayParent.SetActive(false);
+        _audioDisplayParent.SetActive(false);
+        _timeSlider.value = 0;
+        if (_currentSubtitleCoroutine != null)
+            StopCoroutine(_currentSubtitleCoroutine);
         _isLogOpen = false;
-    }
-
-    // Updates the metadata text on the side of the screen, and also keeps track of which log is selected
-    private void UpdateFileText()
-    {
-        int currentMasterIndex = _nodeDisplayList[GameManager.Instance.SceneData.LogIndex].masterIndex; // The index of the contents of the log
-        _selectedLog = _masterList.logList[currentMasterIndex]; // The contents of the log
-        string date = "3.604." + _selectedLog.date.x + "." + _selectedLog.date.y;
-        _sideText.text = ">filename\n\"" + _selectedLog.filename + "\"\n>datestamp\n" + date + "\n>timestamp\n" + _selectedLog.timestamp + "\n>filetype " + _selectedLog.type;
     }
 
     // Converts the date stamp of the current log into the X position
@@ -243,6 +331,13 @@ public class FileTabController : MonoBehaviour
             {
                 _imgDisplayParent.SetActive(false);
             }
+            else
+            {
+                _audioDisplayParent.SetActive(false);
+                _timeSlider.value = 0;
+                StopCoroutine(_currentSubtitleCoroutine);
+                _source.Stop();
+            }
         }
 
         // Play the animation
@@ -269,9 +364,35 @@ public class FileTabController : MonoBehaviour
                 _imgText.text = _selectedLog.textParas[0];
                 _img.sprite = _selectedLog.visual;
             }
+            else // It's an audio log
+            {
+                _audioDisplayParent.SetActive(true);
+                _source.clip = _selectedLog.audio;
+                _source.Play();
+                _currentSubtitleCoroutine = DoAudioSubtitles();
+                StartCoroutine(_currentSubtitleCoroutine);
+            }
         }
         
         _isActiveCoroutine = false;
+    }
+
+    private IEnumerator DoAudioSubtitles()
+    {
+        for(int i = 0; i < _selectedLog.subtitleTiming.Count; i++)
+        {
+            _subText.text = _selectedLog.textParas[i];
+            if(i + 1 < _selectedLog.subtitleTiming.Count)
+            {
+                yield return new WaitForSeconds(_selectedLog.subtitleTiming[i+1]-_selectedLog.subtitleTiming[i]);
+            }
+            else
+            {
+                yield return new WaitForSeconds(_source.clip.length - _selectedLog.subtitleTiming[i]);
+            }
+            
+        }
+        _subText.text = "";
     }
 
     /// <summary>
@@ -280,7 +401,6 @@ public class FileTabController : MonoBehaviour
     /// </summary>
     private void TabOpen()
     {
-
         if(_fileNodeParent.transform.childCount == 0) {
             float currentXPosition = 0;
             _nodeDisplayList = new List<FileNode>(); // Initialize the list since OnEnable happens before it would get its default
@@ -297,6 +417,7 @@ public class FileTabController : MonoBehaviour
                     _nodeDisplayList.Add(newNodeScript);
                     newNodeScript.masterIndex = i;
 
+                    newNodeScript.SetType(_masterList.logList[i].type);
                     // Set the correct size of this log because for some reason I wanted this detail
                     if (GameManager.Instance.SceneData.LogIndex != _nodeDisplayList.Count - 1)
                     {

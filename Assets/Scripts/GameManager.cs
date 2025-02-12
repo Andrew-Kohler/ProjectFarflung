@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < VisitationList3F.Length; i++)
                 VisitationList3F[i] = false;
 
-            LogUnlocks = new bool[4]; // TEMP VALUE
+            LogUnlocks = new bool[5]; // TEMP VALUE
             for (int i = 0; i < LogUnlocks.Length; i++)
                 LogUnlocks[i] = true;
 
@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i<VisitationList3F.Length; i++)
                 VisitationList3F[i] = other.VisitationList3F[i];
 
-            LogUnlocks = new bool[4]; // TEMP VALUE
+            LogUnlocks = new bool[5]; // TEMP VALUE
             for (int i = 0; i < LogUnlocks.Length; i++)
                 LogUnlocks[i] = other.LogUnlocks[i];
 
