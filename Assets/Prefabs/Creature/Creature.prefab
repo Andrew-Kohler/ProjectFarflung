@@ -9,11 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5560156107552122561}
+  - component: {fileID: 472437871313540849}
   - component: {fileID: 8540784109814597828}
   - component: {fileID: 4217230062116522161}
   - component: {fileID: 5062569076851113926}
   m_Layer: 12
-  m_Name: Model
+  m_Name: Body / Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,6 +35,18 @@ Transform:
   m_Father: {fileID: 9100991200374567824}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &472437871313540849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161833568256508849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c26c80a2ea5e1d944a14fd60def8751a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &8540784109814597828
 MeshFilter:
   m_ObjectHideFlags: 0

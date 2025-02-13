@@ -47,7 +47,8 @@ public class CreatureManager : MonoBehaviour
     // unfortunately these cannot be configured from inspector because I chose to make this a singleton manager
     private const float SPEED_INCREASE_FACTOR = 0.2f;
     private const float SPEED_DECREASE_FACTOR = 0.4f;
-    private const float STUN_DURATION = 1.0f;
+    private const float STUN_DURATION = 1.5f;
+    private const float STUN_COOLDOWN = 4.5f; // after regaining control, creature cannot be stunned again during this period
 
     public Transform PlayerTransform { get; private set; }
 
@@ -74,10 +75,12 @@ public class CreatureManager : MonoBehaviour
     }
 
     private bool _isStunned = false;
+    private bool _isStunnable = true;
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(_currentSpeed);
         // prevent building speed while stunned
         if (_isStunned)
             return;
@@ -121,17 +124,26 @@ public class CreatureManager : MonoBehaviour
         ActiveZone = null;
     }
 
-    public void StunCreature()
+    public void TryStunCreature()
     {
-        _isStunned = true;
-
-        StartCoroutine(DoStunCreature());
-
-        IEnumerator DoStunCreature()
+        // conduct stun logic ONLY if it is able to be stunned again
+        if (!_isStunned && _isStunnable)
         {
-            yield return new WaitForSeconds(STUN_DURATION);
+            _isStunned = true;
+            _isStunnable = false;
 
-            _isStunned = false;
+            StartCoroutine(DoStunCreature());
+
+            IEnumerator DoStunCreature()
+            {
+                yield return new WaitForSeconds(STUN_DURATION);
+
+                _isStunned = false;
+
+                yield return new WaitForSeconds(STUN_COOLDOWN);
+
+                _isStunnable = true;
+            }
         }
     }
     #endregion
