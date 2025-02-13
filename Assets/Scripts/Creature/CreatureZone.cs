@@ -10,6 +10,8 @@ public class CreatureZone : MonoBehaviour
     [Header("Configuration")]
     [SerializeField, Tooltip("Spawn zone options for spawning the creature. The farthest location will be prioritized")]
     private Transform[] _spawnLocations;
+    [SerializeField, Tooltip("Corresponding PoweredLight that must be off for the creture to be able to spawn.")]
+    private PoweredLight _correspondingLight;
 
     [Header("References")]
     [SerializeField, Tooltip("Used to spawn/despawn creature functionality.")]
@@ -27,8 +29,8 @@ public class CreatureZone : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // no functionality unless player is contained
-        if (!_isPlayerContained)
+        // no functionality unless player is contained AND the light is powered off
+        if (!_isPlayerContained || _correspondingLight.IsPowered())
         {
             // only call despawn functionality once per despawn
             if (_creature.IsCreatureActive())
