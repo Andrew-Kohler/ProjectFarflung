@@ -37,12 +37,12 @@ public class GameManager : MonoBehaviour
 
     #region SCENE DATA
     // Static non-saved data (between scenes)
-    public static float BatteryCharge;
+    public static float FlashlightCharge;
 
     private static void DefaultSceneData()
     {
         // since terminals are save points battery charge can always be full at start of a new session (no need to be saved)
-        BatteryCharge = 1f; // 1 = full charge; 0 = no charge
+        FlashlightCharge = 1f; // 1 = full charge; 0 = no charge
     }
     #endregion
 

@@ -78,12 +78,12 @@ public class FlashlightController : MonoBehaviour
         // decrease battery charge
         if (_isOn)
         {
-            GameManager.BatteryCharge -= (1f/_maxChargeDuration) * Time.deltaTime;
+            GameManager.FlashlightCharge -= (1f/_maxChargeDuration) * Time.deltaTime;
 
             // running out of charge
-            if (GameManager.BatteryCharge < 0)
+            if (GameManager.FlashlightCharge < 0)
             {
-                GameManager.BatteryCharge = 0;
+                GameManager.FlashlightCharge = 0;
                 _isOn = false;
                 _leftLight.enabled = false;
                 _rightLight.enabled = false;
