@@ -12,6 +12,8 @@ public class FlashlightController : MonoBehaviour
     [Header("Functionality Tuning")]
     [SerializeField, Tooltip("Maximum duration of flashlight from full charge (in seconds)")]
     private float _maxChargeDuration;
+    [SerializeField, Tooltip("Intensity with which light lags behind camera rotation.")]
+    private float _lightPivotSharpness;
 
     [Header("Lights / References")]
     [SerializeField, Tooltip("Used to enable/disable actual left light element.")]
@@ -22,6 +24,8 @@ public class FlashlightController : MonoBehaviour
     private Light _rightLight;
     [SerializeField, Tooltip("Used to rotate right light.")]
     private GameObject _rightLightPivot;
+
+    private Quaternion _prevPivotRot;
 
     #region CONTROLS
     private bool _isOn = false;
@@ -60,6 +64,11 @@ public class FlashlightController : MonoBehaviour
     }
     #endregion
 
+    private void Start()
+    {
+        _prevPivotRot = _leftLightPivot.transform.rotation;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -77,5 +86,19 @@ public class FlashlightController : MonoBehaviour
                 _rightLight.enabled = false;
             }
         }
+
+        // Delayed rotation of lights
+
+        // necessary so previous local can be fetched in terms of current forward
+        _leftLightPivot.transform.rotation = _prevPivotRot;
+        // goal is always 0, 0, 0 (forward)
+        Quaternion goal = Quaternion.identity;
+        // lerp between previous angle (in terms of current local frame)
+        Quaternion newRot = Quaternion.Lerp(_leftLightPivot.transform.localRotation, goal, 1f - Mathf.Exp(-_lightPivotSharpness * Time.deltaTime));
+        // update local rotations
+        _leftLightPivot.transform.localRotation = newRot;
+        _rightLightPivot.transform.localRotation = newRot;
+        // save pivot for next frame
+        _prevPivotRot = _leftLightPivot.transform.rotation;
     }
 }

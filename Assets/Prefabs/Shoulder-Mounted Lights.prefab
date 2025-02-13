@@ -140,11 +140,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37fbc4890baf5db4cb9271a12000b17e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxChargeDuration: 20
+  _maxChargeDuration: 30
+  _lightPivotSharpness: 8
   _leftLight: {fileID: 7565683518033406030}
-  _leftLightPivot: {fileID: 0}
+  _leftLightPivot: {fileID: 8536664500985002125}
   _rightLight: {fileID: 9012052654320639282}
-  _rightLightPivot: {fileID: 0}
+  _rightLightPivot: {fileID: 6453394984307671867}
 --- !u!1 &3402047212475705442
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,7 +464,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1787078214556960019}
   m_Layer: 10
-  m_Name: Right Light
+  m_Name: Right Light Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -496,7 +497,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7520440650128669054}
   m_Layer: 10
-  m_Name: Left Light
+  m_Name: Left Light Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
