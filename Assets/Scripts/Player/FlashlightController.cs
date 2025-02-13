@@ -24,6 +24,8 @@ public class FlashlightController : MonoBehaviour
     private Light _rightLight;
     [SerializeField, Tooltip("Used to rotate right light.")]
     private GameObject _rightLightPivot;
+    [SerializeField, Tooltip("Used to enable/disable light stun trigger when light is on.")]
+    private Collider _stunTrigger;
 
     private Quaternion _prevPivotRot;
 
@@ -59,6 +61,7 @@ public class FlashlightController : MonoBehaviour
         _isOn = !_isOn;
         _leftLight.enabled = _isOn;
         _rightLight.enabled = _isOn;
+        _stunTrigger.enabled = _isOn;
 
         // TODO: SFX for button release
     }
@@ -84,6 +87,7 @@ public class FlashlightController : MonoBehaviour
                 _isOn = false;
                 _leftLight.enabled = false;
                 _rightLight.enabled = false;
+                _stunTrigger.enabled = false;
             }
         }
 
