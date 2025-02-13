@@ -9,13 +9,21 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class FlashlightController : MonoBehaviour
 {
-    #region CONTROLS
-    [Header("Controls")]
+    [Header("Functionality Tuning")]
+    [SerializeField, Tooltip("Maximum duration of flashlight from full charge (in seconds)")]
+    private float _maxChargeDuration;
+
+    [Header("Lights / References")]
     [SerializeField, Tooltip("Used to enable/disable actual left light element.")]
     private Light _leftLight;
+    [SerializeField, Tooltip("Used to rotate left light.")]
+    private GameObject _leftLightPivot;
     [SerializeField, Tooltip("Used to enable/disable actual right light element.")]
     private Light _rightLight;
+    [SerializeField, Tooltip("Used to rotate right light.")]
+    private GameObject _rightLightPivot;
 
+    #region CONTROLS
     private bool _isOn = false;
 
     private void OnEnable()
@@ -52,15 +60,22 @@ public class FlashlightController : MonoBehaviour
     }
     #endregion
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
-        
+        // decrease battery charge
+        if (_isOn)
+        {
+            GameManager.BatteryCharge -= (1f/_maxChargeDuration) * Time.deltaTime;
+
+            // running out of charge
+            if (GameManager.BatteryCharge < 0)
+            {
+                GameManager.BatteryCharge = 0;
+                _isOn = false;
+                _leftLight.enabled = false;
+                _rightLight.enabled = false;
+            }
+        }
     }
 }

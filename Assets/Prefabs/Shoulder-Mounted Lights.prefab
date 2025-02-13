@@ -39,15 +39,15 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 949158318512011874}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
+  m_SpotAngle: 40
+  m_InnerSpotAngle: 4
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -126,7 +126,7 @@ Transform:
   - {fileID: 7520440650128669054}
   - {fileID: 1787078214556960019}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7261653889972815403
 MonoBehaviour:
@@ -140,8 +140,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37fbc4890baf5db4cb9271a12000b17e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxChargeDuration: 20
   _leftLight: {fileID: 7565683518033406030}
+  _leftLightPivot: {fileID: 0}
   _rightLight: {fileID: 9012052654320639282}
+  _rightLightPivot: {fileID: 0}
 --- !u!1 &3402047212475705442
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,15 +184,15 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3402047212475705442}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
+  m_SpotAngle: 40
+  m_InnerSpotAngle: 4
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
