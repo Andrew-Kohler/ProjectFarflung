@@ -19,6 +19,8 @@ public class Log : ScriptableObject
     public Vector2 date;
     [Tooltip("Was this log sent to Oixys-3 from another planet?")]
     public bool offworldOrigin;
+    [Tooltip("If so, where was it sent from?")]
+    public string planetOfOrigin;
     [Tooltip("Transmission date of the log from planet of origin (RelativeMonth.Day)")]
     public Vector2 transmissionDate;
     [Tooltip("Log timestamp (for nondigital content, 'indeterminate')")]

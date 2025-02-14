@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -53,8 +54,8 @@ public class GameManager : MonoBehaviour
         public bool[] VisitationList2F;
         public bool[] VisitationList3F;
 
-        // List of log names the player posesses (incoprorated into 
-        public List<string> FoundLogNames;
+        // List of log names the player posesses (used to load actual log data) and their read state (because changing the contents of ScrObs is bad)
+        public List<Tuple<string,bool>> FoundLogNames;
         
         // Index of the log the player currently has selected
         public int LogIndex; 
@@ -70,7 +71,6 @@ public class GameManager : MonoBehaviour
         // previous save terminal (or none in case of game start)
         // busted box fix states
         // picked up keycard list
-        // narrative log pickup list
         // etc...
 
         // --------------------------------------------------------- \\
@@ -91,7 +91,6 @@ public class GameManager : MonoBehaviour
             VisitationList1F = new bool[5]; 
             for (int i = 0; i < VisitationList1F.Length; i++)
                 VisitationList1F[i] = false;
-            //VisitationList1F[0] = true; // Center room visited by default for now
 
             VisitationList2F = new bool[3];
             for (int i = 0; i < VisitationList2F.Length; i++)
@@ -102,7 +101,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < VisitationList3F.Length; i++)
                 VisitationList3F[i] = false;
 
-            FoundLogNames = new List<string>();
+            FoundLogNames = new List<Tuple<string, bool>>();
             LogIndex = 0;
 
             // arrays must be initialized like this otherwise json lists will be empty instead of properly initialized
@@ -282,7 +281,7 @@ public class GameManager : MonoBehaviour
         {
             for (int i = 0; i < GameData.FoundLogNames.Count; i++)
             {
-                FoundLogs.Add((Log)Resources.Load(GameData.FoundLogNames[i]));
+                FoundLogs.Add((Log)Resources.Load(GameData.FoundLogNames[i].Item1));
             }
         }
         
@@ -294,45 +293,39 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void AddLogData(Log log, string resourceName)
     {
-        FoundLogs.Add(log);
-        SceneData.FoundLogNames.Add(resourceName);
-        // The below code crashes not only Unity, but my computer, with remarkable efficiency
-        // Sorting may be a tomorrow problem
-        /*if(FoundLogs.Count > 0)
+        // Adds log to lists in correct order
+        if (FoundLogs.Count > 0)
         {
             for (int i = 0; i < FoundLogs.Count; i++)
             {
-
-
-                    if(log.date.x < FoundLogs[i].date.x) // If the month is earlier, then the log we're adding is currently the last one of its month
+                if (log.date.x < FoundLogs[i].date.x) // If the month is earlier, then the log we're adding is currently the last one of its month
+                {
+                    FoundLogs.Insert(i, log);
+                    SceneData.FoundLogNames.Insert(i, new Tuple<string, bool>(resourceName, false));
+                    return;
+                }
+                else if (log.date.x == FoundLogs[i].date.x) // If the month is the same
+                {
+                    if (log.date.y <= FoundLogs[i].date.y)
                     {
                         FoundLogs.Insert(i, log);
-                        SceneData.FoundLogNames.Insert(i, resourceName);
-                        break;
+                        SceneData.FoundLogNames.Insert(i, new Tuple<string, bool>(resourceName, false));
+                        return;
                     }
-                    else if (log.date.x == FoundLogs[i].date.x) // If the month is the same
-                    {
-                        if (log.date.y < FoundLogs[i].date.y) 
-                        {
-                            FoundLogs.Insert(i, log);
-                            SceneData.FoundLogNames.Insert(i, resourceName);
-                            break;
-                        }
-                    }
-
-                if (i == FoundLogs.Count - 1) // If there are no logs left after this one, this log is at the end of the list
-                {
-                    FoundLogs.Add(log);
-                    SceneData.FoundLogNames.Add(resourceName);
                 }
-
+            }
+            if (!FoundLogs.Find(x => x.filename == log.filename)) // If there are no logs left after this one, this log is at the end of the list
+            {
+                FoundLogs.Add(log);
+                SceneData.FoundLogNames.Add(new Tuple<string, bool>(resourceName, false));
+                return;
             }
         }
         else // If this is the first log to be added, no need to sort
         {
             FoundLogs.Add(log);
-            SceneData.FoundLogNames.Add(resourceName);
-        }*/
+            SceneData.FoundLogNames.Add(new Tuple<string, bool>(resourceName, false));
+        }
 
     }
     #endregion
