@@ -63,9 +63,13 @@ public class FileTabController : MonoBehaviour
     private float _waveformSpeed = 10f;
     [SerializeField, Tooltip("Waveform sensitivity")]
     private float _waveformSensitivity = 2f;
+    [SerializeField, Tooltip("Waveform color gradient")]
+    private Gradient _gradient;
     private AudioSource _source;
     private List<GameObject> _bars;
+    private List<Image> _barsImg;
     private float[] spectrum;
+    private float largestScale = 0;
 
     private List<FileNode> _nodeDisplayList;
     private float _fileNodeDistance = 120f;
@@ -96,11 +100,14 @@ public class FileTabController : MonoBehaviour
         _arrowAction = InputSystem.actions.FindAction("Arrows");
         _arrowAction.Enable();
 
+        // Audio tab setup
         _source = GetComponent<AudioSource>();
         _bars = new List<GameObject>();
-        foreach(Transform child in _waveformParent.transform)
+        _barsImg = new List<Image>();
+        foreach (Transform child in _waveformParent.transform)
         {
             _bars.Add(child.gameObject);
+            _barsImg.Add(child.GetComponent<Image>());
         }
     }
 
@@ -118,9 +125,9 @@ public class FileTabController : MonoBehaviour
     private void FileInteraction()
     {
         Vector2 arrowInput = _arrowAction.ReadValue<Vector2>();
-        if (!_isActiveCoroutine && this.isActiveAndEnabled)
+        if (!_isActiveCoroutine && this.isActiveAndEnabled && GameManager.Instance.SceneData.FoundLogNames.Count > 0)
         {
-            if (arrowInput.x > 0 && GameManager.Instance.SceneData.LogIndex < GameManager.Instance.SceneData.LogUnlocks.Length - 1) // Moving to the right
+            if (arrowInput.x > 0 && GameManager.Instance.SceneData.LogIndex < GameManager.Instance.SceneData.FoundLogNames.Count - 1) // Moving to the right
             {
                 // Start the change animations and change the index
                 _nodeDisplayList[GameManager.Instance.SceneData.LogIndex].Shrink();
@@ -181,36 +188,41 @@ public class FileTabController : MonoBehaviour
     // Updates the metadata text on the side of the screen, and also keeps track of which log is selected
     private void UpdateFileText()
     {
-        int currentMasterIndex = _nodeDisplayList[GameManager.Instance.SceneData.LogIndex].masterIndex; // The index of the contents of the log
-        _selectedLog = _masterList.logList[currentMasterIndex]; // The contents of the log
-        string date = "3.604." + _selectedLog.date.x + "." + _selectedLog.date.y;
-        _sideText.text = ">filename\n\"" + _selectedLog.filename + "\"\n>datestamp\n" + date + "\n>timestamp\n" + _selectedLog.timestamp + "\n>filetype " + _selectedLog.type;
+        if(GameManager.Instance.FoundLogs.Count > 0)
+        {
+            _selectedLog = GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex];
+            string date = "3.604." + _selectedLog.date.x + "." + _selectedLog.date.y;
+            _sideText.text = ">filename\n\"" + _selectedLog.filename + "\"\n>datestamp\n" + date + "\n>timestamp\n" + _selectedLog.timestamp + "\n>filetype " + _selectedLog.type;
+        }
+        else
+        {
+            _sideText.text = ">no readable files in memory";
+        }
+        
     }
 
     private void UpdateAudioWaveform()
     {
         if (_source.isPlaying)
         {
-            // Get the waveform data (highest possible sample rate rn)
+            // Get the waveform data (1024 = sample rate)
             spectrum = new float[1024];
             _source.GetSpectrumData(spectrum, 0, FFTWindow.Rectangular);
 
-            for (int i = 0; i < _bars.Count; i++) //needs to be <= sample rate or error
+            for (int i = 0; i < _bars.Count; i++) //needs to be <= sample rate
             {
-                float level = spectrum[i] * _waveformSensitivity * Time.deltaTime * 1000; //0,1 = l,r for two channels
+                float level = spectrum[i] * _waveformSensitivity * Time.deltaTime * 1000; 
                 
-
-                // Scale pillars 
+                // Scale bars
                 Vector3 previousScale = _bars[i].transform.localScale;
                 previousScale.y = Mathf.Lerp(previousScale.y, level, _waveformSpeed * Time.deltaTime);
                 if (previousScale.y < 0.02f)
                     previousScale.y = .02f;
-                _bars[i].transform.localScale = previousScale;
 
-                /*//Move pillars up by scale/2
-                Vector3 pos = pillars[i].transform.position;
-                pos.y = previousScale.y * .5f;
-                pillars[i].transform.position = pos;*/
+                _bars[i].transform.localScale = previousScale;
+                float gradientPercent = previousScale.y * 2;
+                if (gradientPercent > 1) gradientPercent = 1;
+                _barsImg[i].color = _gradient.Evaluate(gradientPercent);
             }
 
         }
@@ -266,7 +278,7 @@ public class FileTabController : MonoBehaviour
     // Converts the date stamp of the current log into the X position
     private void MoveTimeline()
     {
-        float convertedDate = _masterList.logList[GameManager.Instance.SceneData.LogIndex].date.x * 100 + _masterList.logList[GameManager.Instance.SceneData.LogIndex].date.y;
+        float convertedDate = GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex].date.x * 100 + GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex].date.y;
         if(convertedDate >= 201)
         {
             convertedDate -= 49;
@@ -405,19 +417,20 @@ public class FileTabController : MonoBehaviour
             float currentXPosition = 0;
             _nodeDisplayList = new List<FileNode>(); // Initialize the list since OnEnable happens before it would get its default
 
-            for (int i = 0; i < GameManager.Instance.SceneData.LogUnlocks.Length; i++)
+            for (int i = 0; i < GameManager.Instance.FoundLogs.Count; i++)
             {
-                if (GameManager.Instance.SceneData.LogUnlocks[i]) // If we have this log...
-                {
+
                     // Instantiate a File Node prefab at a position
                     GameObject newNode = Instantiate(_fileNodePrefab, _fileNodeParent.transform, false);
                     newNode.transform.localPosition = new Vector3(currentXPosition, 0f, 0f);
+
                     // Get the File Node component and add it to our display list; tell it which log it correlates to
                     FileNode newNodeScript = newNode.GetComponent<FileNode>();
                     _nodeDisplayList.Add(newNodeScript);
-                    newNodeScript.masterIndex = i;
 
-                    newNodeScript.SetType(_masterList.logList[i].type);
+                    // Set the type of the node corresponding to its contents
+                    newNodeScript.SetType(GameManager.Instance.FoundLogs[i].type);
+
                     // Set the correct size of this log because for some reason I wanted this detail
                     if (GameManager.Instance.SceneData.LogIndex != _nodeDisplayList.Count - 1)
                     {
@@ -426,7 +439,7 @@ public class FileTabController : MonoBehaviour
 
                     // Make sure we spawn the next file node at the right place
                     currentXPosition += _fileNodeDistance;
-                }
+                
             }
 
             // Once all the nodes are spawned, we need to make sure the player's selection is in the same place as it was before

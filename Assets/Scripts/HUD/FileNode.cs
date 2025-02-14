@@ -7,7 +7,6 @@ public class FileNode : MonoBehaviour
 {
     // The script that goes on each file node / the file node prefab; pretty much just used to control sprites and animations of the object.
 
-    public int masterIndex; // The index of this log IN THE MASTER LIST (not in the HUD list that's only some logs)
     [SerializeField] private List<Sprite> _typeSprites; // The images representing log types
 
     private Animator _anim;

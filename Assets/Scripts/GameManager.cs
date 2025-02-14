@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     // Player max lives
     public const int MAX_LIVES = 9;
 
+    // Current list of player's Log objects
+    public List<Log> FoundLogs;
+
     // public accessor of instance
     public static GameManager Instance
     {
@@ -50,8 +53,9 @@ public class GameManager : MonoBehaviour
         public bool[] VisitationList2F;
         public bool[] VisitationList3F;
 
-        // List of bools showing which logs the player has found
-        public bool[] LogUnlocks;
+        // List of log names the player posesses (incoprorated into 
+        public List<string> FoundLogNames;
+        
         // Index of the log the player currently has selected
         public int LogIndex; 
 
@@ -98,11 +102,8 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < VisitationList3F.Length; i++)
                 VisitationList3F[i] = false;
 
-            LogUnlocks = new bool[5]; // TEMP VALUE
-            for (int i = 0; i < LogUnlocks.Length; i++)
-                LogUnlocks[i] = true;
-
-            LogIndex = 1;
+            FoundLogNames = new List<string>();
+            LogIndex = 0;
 
             // arrays must be initialized like this otherwise json lists will be empty instead of properly initialized
 
@@ -146,10 +147,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i<VisitationList3F.Length; i++)
                 VisitationList3F[i] = other.VisitationList3F[i];
 
-            LogUnlocks = new bool[5]; // TEMP VALUE
-            for (int i = 0; i < LogUnlocks.Length; i++)
-                LogUnlocks[i] = other.LogUnlocks[i];
-
+            FoundLogNames = other.FoundLogNames;
             LogIndex = other.LogIndex;
 
             // arrays are reference based, so MUST be assigned like this
@@ -208,6 +206,7 @@ public class GameManager : MonoBehaviour
     {
         // initialize to default values before reading from file
         ProgressionData newSaveData = new ProgressionData();
+        FoundLogs = new List<Log>();
 
         // read save data, overriding existing data as it is found
         string filePath = Application.persistentDataPath + "/ProgressionData.json";
@@ -215,11 +214,13 @@ public class GameManager : MonoBehaviour
         {
             string saveData = System.IO.File.ReadAllText(filePath);
             newSaveData = JsonUtility.FromJson<ProgressionData>(saveData);
+            
         }
 
         // Apply read/initialized data to instance
         // should be a copy of the data, not the same reference
         Instance.GameData = new ProgressionData(newSaveData);
+        LoadLogData();
     }
 
     /// <summary>
@@ -268,6 +269,71 @@ public class GameManager : MonoBehaviour
     {
         // copy of scene data, NOT using same reference
         Instance.GameData = new ProgressionData(Instance.SceneData);
+    }
+
+    /// <summary>
+    /// Loads in log data from resources based on the stored names of the files the player owns.
+    /// Scriptable objects cannot be stored in JSON data as they'll be kept only via reference.
+    /// Called when save data is loaded into a play session.
+    /// </summary>
+    private void LoadLogData()
+    {
+        if(GameData.FoundLogNames.Count > 0)
+        {
+            for (int i = 0; i < GameData.FoundLogNames.Count; i++)
+            {
+                FoundLogs.Add((Log)Resources.Load(GameData.FoundLogNames[i]));
+            }
+        }
+        
+    }
+
+    /// <summary>
+    /// Adds newly acquired log data to both the name list and the current data list in the correct order.
+    /// Then, invokes a delegate that lets the HUD UI know (if it's active) to refresh the list.
+    /// </summary>
+    public void AddLogData(Log log, string resourceName)
+    {
+        FoundLogs.Add(log);
+        SceneData.FoundLogNames.Add(resourceName);
+        // The below code crashes not only Unity, but my computer, with remarkable efficiency
+        // Sorting may be a tomorrow problem
+        /*if(FoundLogs.Count > 0)
+        {
+            for (int i = 0; i < FoundLogs.Count; i++)
+            {
+
+
+                    if(log.date.x < FoundLogs[i].date.x) // If the month is earlier, then the log we're adding is currently the last one of its month
+                    {
+                        FoundLogs.Insert(i, log);
+                        SceneData.FoundLogNames.Insert(i, resourceName);
+                        break;
+                    }
+                    else if (log.date.x == FoundLogs[i].date.x) // If the month is the same
+                    {
+                        if (log.date.y < FoundLogs[i].date.y) 
+                        {
+                            FoundLogs.Insert(i, log);
+                            SceneData.FoundLogNames.Insert(i, resourceName);
+                            break;
+                        }
+                    }
+
+                if (i == FoundLogs.Count - 1) // If there are no logs left after this one, this log is at the end of the list
+                {
+                    FoundLogs.Add(log);
+                    SceneData.FoundLogNames.Add(resourceName);
+                }
+
+            }
+        }
+        else // If this is the first log to be added, no need to sort
+        {
+            FoundLogs.Add(log);
+            SceneData.FoundLogNames.Add(resourceName);
+        }*/
+
     }
     #endregion
 
