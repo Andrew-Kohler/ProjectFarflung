@@ -9,18 +9,24 @@ public class PoweredZone : MonoBehaviour
 {
     [SerializeField, Tooltip("Numbered index zone that this area corresponds with.")]
     private int _zoneIndex;
-    [SerializeField, Tooltip("Used to power/unpower individual powered elements.")]
-    private PoweredElement[] _poweredElements;
 
+    private PoweredElement[] _poweredElements;
     private bool _isPowered;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         // Precondition: must have valid zone index
         if (_zoneIndex < 0 || _zoneIndex >= GameManager.Instance.SceneData.PoweredZones.Length)
             throw new System.Exception("Invalid zone index. Must be in range of Game Manager's powered zones list");
 
+        // fetch powered elements from children
+        // easier configuration then assigning manually in inspector, and it only happens once per scene
+        _poweredElements = transform.GetComponentsInChildren<PoweredElement>();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
         // initial configuration
         UpdatePowerStates();
     }
