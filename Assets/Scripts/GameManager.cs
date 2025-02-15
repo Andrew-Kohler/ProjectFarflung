@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     // private singleton instance
     private static GameManager _instance;
 
-    // Player max lives
+    // Constants
     public const int MAX_LIVES = 9;
 
     // public accessor of instance
@@ -28,11 +28,23 @@ public class GameManager : MonoBehaviour
                 newManager.AddComponent<GameManager>();
                 DontDestroyOnLoad(newManager);
                 _instance = newManager.GetComponent<GameManager>();
+                GameManager.DefaultSceneData(); // set scene data to defaults
             }
             // return new/existing instance
             return _instance;
         }
     }
+
+    #region SCENE DATA
+    // Static non-saved data (between scenes)
+    public static float FlashlightCharge;
+
+    private static void DefaultSceneData()
+    {
+        // since terminals are save points battery charge can always be full at start of a new session (no need to be saved)
+        FlashlightCharge = 1f; // 1 = full charge; 0 = no charge
+    }
+    #endregion
 
     #region PROGRESSION DATA
     [System.Serializable]
