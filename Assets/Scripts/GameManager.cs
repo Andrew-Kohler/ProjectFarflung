@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     [System.Serializable]
     public class ProgressionData
     {
+        // HEADS-UP DISPLAY (HUD)
         // Narrative timestamp (conveying to the player that time has past - represented as an integer 0 through 4)
         public int NarrativeTimestamp;
         // Player remaining lives
@@ -50,16 +51,19 @@ public class GameManager : MonoBehaviour
         public bool[] VisitationList2F;
         public bool[] VisitationList3F;
 
+        // POWER MANAGEMENT
         // terminal/zone unlocked
         public bool[] TerminalUnlocks;
         // zone power toggled on/off - MUST be same size as TerminalUnlocks
         public bool[] PoweredZones;
-
         // List of light switch on/off states based on light switch index
-        public bool[] PowerSwitches;
+        public List<string> PowerSwitches;
+
+        // BUSTED WIRE BOXES
+        // list of names of boxes that have been fixed (since states only added and not ever removed - it is easier to use a List)
+        public List<string> FixedWireBoxes;
 
         // previous save terminal (or none in case of game start)
-        // busted box fix states
         // picked up keycard list
         // narrative log pickup list
         // etc...
@@ -74,6 +78,8 @@ public class GameManager : MonoBehaviour
         /// </summary>
         public ProgressionData()
         {
+            // HEADS-UP DISPLAY (HUD)
+
             NarrativeTimestamp = 0;                   
             RemainingLives = 9;
 
@@ -93,6 +99,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < VisitationList3F.Length; i++)
                 VisitationList3F[i] = false;
 
+            // POWER MANAGEMENT
             // arrays must be initialized like this otherwise json lists will be empty instead of properly initialized
 
             TerminalUnlocks = new bool[12]; // 12 total power zones
@@ -104,9 +111,10 @@ public class GameManager : MonoBehaviour
                 PoweredZones[i] = false; // all off by default
             PoweredZones[0] = true; // command enabled by default
 
-            PowerSwitches = new bool[64];
-            for (int i = 0; i < PowerSwitches.Length; i++)
-                PowerSwitches[i] = true; // all switches are ON by default
+            PowerSwitches = new List<string>();
+
+            // BUSTED WIRE BOXES
+            FixedWireBoxes = new List<string>(); // new empty list (expandable)
 
             // --------------------------------------------------------- \\
             // TODO: Add default values for additional progression data here
@@ -119,6 +127,7 @@ public class GameManager : MonoBehaviour
         /// </summary>
         public ProgressionData(ProgressionData other)
         { 
+            // HEADS-UP DISPLAY (HUD)
             NarrativeTimestamp = other.NarrativeTimestamp;                    
             RemainingLives = other.RemainingLives;
 
@@ -135,6 +144,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i<VisitationList3F.Length; i++)
                 VisitationList3F[i] = other.VisitationList3F[i];
         
+            // POWER MANAGEMENT
             // arrays are reference based, so MUST be assigned like this
 
             // terminal/zone unlocked
@@ -148,9 +158,10 @@ public class GameManager : MonoBehaviour
                 PoweredZones[i] = other.PoweredZones[i];
 
             // light switch on/off states
-            PowerSwitches = new bool[other.PowerSwitches.Length];
-            for (int i = 0; i < PowerSwitches.Length; i++)
-                PowerSwitches[i] = other.PowerSwitches[i];
+            PowerSwitches = new List<string>(other.PowerSwitches);
+
+            // BUSTED WIRE BOXES
+            FixedWireBoxes = new List<string>(other.FixedWireBoxes);
 
             // --------------------------------------------------------- \\
             // TODO: Add additional progression data value copies here
