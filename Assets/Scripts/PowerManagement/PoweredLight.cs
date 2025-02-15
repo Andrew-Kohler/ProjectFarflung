@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PoweredLight : PoweredElement
 {
+    [Header("Light")]
     [SerializeField, Tooltip("Light component for enabling/disabling light source.")]
     private Light _light;
 
