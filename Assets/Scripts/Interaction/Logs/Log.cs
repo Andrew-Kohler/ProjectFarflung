@@ -10,9 +10,6 @@ public class Log : ScriptableObject
     public LogType type;
 
     [Header("All Logs")]
-
-    // Depending on the manner in which we decide to store and display these, we might need an index that this gets placed into 
-    // an array at
     [Tooltip("File name (file(1), What's For Lunch, etc.)")]
     public string filename;
     [Tooltip("If this is a dated material or not")]

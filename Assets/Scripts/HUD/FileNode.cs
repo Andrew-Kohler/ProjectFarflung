@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+/// <summary>
+/// The script that goes on each file node / the file node prefab; pretty much just used to control sprites and animations of the object.
+/// </summary>
 public class FileNode : MonoBehaviour
 {
-    // The script that goes on each file node / the file node prefab; pretty much just used to control sprites and animations of the object.
 
-    [SerializeField] private List<Sprite> _typeSprites; // The images representing log types
-    [SerializeField] private GameObject _unreadIndicator;
-    [SerializeField] private Image _typeImg;
+    [SerializeField, Tooltip("The images representing log types")]
+    private List<Sprite> _typeSprites; 
+    [SerializeField, Tooltip("GameObject for the unread indicator - for toggling on and off")] 
+    private GameObject _unreadIndicator;
+    [SerializeField, Tooltip("Image component of the prefab that displays the type image")] 
+    private Image _typeImg;
 
-    private Animator _anim;
+    private Animator _anim; // Animator shrinks or grows the display icon
 
     void Start()
     {
@@ -23,6 +29,9 @@ public class FileNode : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Sets the type image of the node.
+    /// </summary>
     public void SetType(Log.LogType type)
     {
         if (type == Log.LogType.Text) 
@@ -31,8 +40,6 @@ public class FileNode : MonoBehaviour
             _typeImg.sprite = _typeSprites[1];
         if (type == Log.LogType.Image)
             _typeImg.sprite = _typeSprites[2];
-
-        //_unreadIndicator.GetComponent<Image>().sprite = _typeImg.sprite;
     }
 
     public void SetRead(bool read)

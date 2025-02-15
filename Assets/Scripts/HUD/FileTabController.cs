@@ -76,11 +76,13 @@ public class FileTabController : MonoBehaviour
     [SerializeField, Tooltip("Waveform color gradient")]
     private Gradient _gradient;
 
-    private AudioSource _source;
+    // Audio components
+    private AudioSource _source;    
     private List<GameObject> _bars; // Bars of the waveform
     private List<Image> _barsImg;   // Image component of waveform bars
     private float[] spectrum;       // Array that holds the live audio data
 
+    // File list components
     private List<FileNode> _nodeDisplayList;
     private float _fileNodeDistance = 120f; // How far apart the file nodes are from each other
     private Log _selectedLog;
@@ -92,7 +94,8 @@ public class FileTabController : MonoBehaviour
     private bool _isLogOpen;         // Is there a log open?
     private int _textLogIndex;       // What page of an open text log we're on 
     private int _localFileCount = 0;     // The last local count of how many files there are (if there's a difference, list gets updated)
-    private Log _lastSelected = null;
+    private Log _lastSelected = null;    // Used to hold the last log the player was looking at so that new additions don't move the menu around
+                                         // Necessary because selectedLog can be affected by things other than direct player input.
     private IEnumerator _currentTimelineCoroutine;
     private IEnumerator _currentSubtitleCoroutine;
     private void OnEnable()
@@ -129,8 +132,11 @@ public class FileTabController : MonoBehaviour
     {
         UpdateFileList();
         UpdateFileText();
-        UpdateAudioSlider();
-        UpdateAudioWaveform();
+        if (_source.isPlaying)
+        {
+            UpdateAudioSlider();
+            UpdateAudioWaveform();
+        }
     }
 
     /// <summary>
@@ -138,7 +144,10 @@ public class FileTabController : MonoBehaviour
     /// </summary>
     private void FileInteraction()
     {
+        // Read inputs
         Vector2 arrowInput = _arrowAction.ReadValue<Vector2>();
+
+        // If a movement coroutine isn't running, this tab is open, and there's at least one log to look at
         if (!_isActiveCoroutine && this.isActiveAndEnabled && GameManager.Instance.SceneData.FoundLogNames.Count > 0)
         {
             if (arrowInput.x > 0 && GameManager.Instance.SceneData.LogIndex < GameManager.Instance.SceneData.FoundLogNames.Count - 1) // Moving to the right
@@ -180,7 +189,7 @@ public class FileTabController : MonoBehaviour
             }
             else if (arrowInput.y < 0) // Opening a log
             {
-                if (!_isLogOpen)
+                if (!_isLogOpen) // If there's not a log open, open the log
                 {
                     CurrentLogDisplay(true);
                     _isLogOpen = true;
@@ -218,9 +227,12 @@ public class FileTabController : MonoBehaviour
     // Updates the metadata text on the side of the screen, and also keeps track of which log is selected
     private void UpdateFileText()
     {
+        // If there's a log for us to update the text from
         if(GameManager.Instance.FoundLogs.Count > 0)
         {
-            _selectedLog = GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex];
+            _selectedLog = GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex]; // Set a variable for accessing the currently selected log
+
+            // Format the text string correctly depending on if a log originates from the station or offworld, or has no datestamp
             string date = "3.604." + _selectedLog.date.x + "." + _selectedLog.date.y;
             if (!_selectedLog.hasDate)
             {
@@ -239,8 +251,6 @@ public class FileTabController : MonoBehaviour
                     _sideText.text = ">filename\n\"" + _selectedLog.filename + "\"\n>datestamp\n" + date + "\n>timestamp\n" + _selectedLog.timestamp + "\n>filetype " + _selectedLog.type;
                 }
             }
-            
-            
         }
         else
         {
@@ -249,10 +259,10 @@ public class FileTabController : MonoBehaviour
         
     }
 
+    #region AUDIO LOG METHODS
+    // Updates the audio waveform graphic when an audio log plays.
     private void UpdateAudioWaveform()
     {
-        if (_source.isPlaying)
-        {
             // Get the waveform data (1024 = sample rate)
             spectrum = new float[1024];
             _source.GetSpectrumData(spectrum, 0, FFTWindow.Rectangular);
@@ -267,19 +277,16 @@ public class FileTabController : MonoBehaviour
                 if (previousScale.y < 0.02f)
                     previousScale.y = .02f;
 
+                // Color the bars based on their size (because it looks cool)
                 _bars[i].transform.localScale = previousScale;
                 float gradientPercent = previousScale.y * 2;
                 if (gradientPercent > 1) gradientPercent = 1;
                 _barsImg[i].color = _gradient.Evaluate(gradientPercent);
             }
-
-        }
     }
 
     private void UpdateAudioSlider()
     {
-        if (_source.isPlaying)
-        {
             // Update the slider
             _timeSlider.value = (_source.time / _source.clip.length);
 
@@ -294,13 +301,29 @@ public class FileTabController : MonoBehaviour
                 timeString += "0";
             timeString += secRemaining;
             _timeRemainingText.text = timeString;
-
-        }
-        
     }
 
+    private IEnumerator DoAudioSubtitles()
+    {
+        for (int i = 0; i < _selectedLog.subtitleTiming.Count; i++)
+        {
+            _subText.text = _selectedLog.textParas[i];
+            if (i + 1 < _selectedLog.subtitleTiming.Count)
+            {
+                yield return new WaitForSeconds(_selectedLog.subtitleTiming[i + 1] - _selectedLog.subtitleTiming[i]);
+            }
+            else
+            {
+                yield return new WaitForSeconds(_source.clip.length - _selectedLog.subtitleTiming[i]);
+            }
+
+        }
+        _subText.text = "";
+    }
+    #endregion
+
     /// <summary>
-    /// Show or close the selected log
+    /// Show or close the selected log; method that routes to a coroutine
     /// </summary>
     private void CurrentLogDisplay(bool show)
     {
@@ -308,100 +331,6 @@ public class FileTabController : MonoBehaviour
         {
             StartCoroutine(DoDisplayCurrentLog(show));
         }
-    }
-
-    // Closes the selected log in response to a left or right press (skipping the animation)
-    private void CloseCurrentLogFast()
-    {
-        _fileDisplayAnim.Play("Static");
-        _textLogDisplayParent.SetActive(false);
-        _imgDisplayParent.SetActive(false);
-        _audioDisplayParent.SetActive(false);
-        _timeSlider.value = 0;
-        if(_source.isPlaying)
-            _source.Stop();
-        if (_currentSubtitleCoroutine != null)
-            StopCoroutine(_currentSubtitleCoroutine);
-        _isLogOpen = false;
-    }
-
-    // Converts the date stamp of the current log into the X position and moves the timeline to that position
-    private void MoveTimeline(bool instant)
-    {
-        if (GameManager.Instance.FoundLogs.Count > 0)
-        {
-            if (!GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex].hasDate) // If the selected log is undated, a timeline isn't very useful, now, is it
-            {
-                _timeline.SetActive(false);
-            }
-            else
-            {
-                _timeline.SetActive(true);
-
-                float convertedDate = GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex].date.x * 100 + GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex].date.y;
-                if (convertedDate >= 201)
-                {
-                    convertedDate -= 48;
-                }
-                float convertedXPos = math.remap(_timelineDateBounds.x, _timelineDateBounds.y, _timelineHUDBounds.x, _timelineHUDBounds.y, convertedDate);
-
-                if (instant)
-                {
-                    _timeline.transform.localPosition = new Vector2(convertedXPos, _timeline.transform.localPosition.y);
-                }
-                else
-                {
-                    if (_currentTimelineCoroutine != null)
-                        StopCoroutine(_currentTimelineCoroutine);
-
-                    _currentTimelineCoroutine = DoLerpXConstant(_timeline, convertedXPos);
-                    StartCoroutine(_currentTimelineCoroutine);
-                }
-
-            }
-        }
-        
-        
-        
-        
-    }
-
-    /// <summary>
-    /// Used for moving the list left and right.
-    /// </summary>
-    private IEnumerator DoLerpXTimed(GameObject obj, float startX, float endX, float duration)
-    {
-        _isActiveCoroutine = true; // Prevent anything (like opening a log mid switch) from overlapping this
-        float timeElapsed = 0;
-        CloseCurrentLogFast();
-
-        while (timeElapsed < duration)
-        {
-            obj.transform.localPosition = new Vector2(Mathf.Lerp(startX, endX, timeElapsed / duration), obj.transform.localPosition.y);
-            timeElapsed += Time.deltaTime;
-            yield return null;
-        }
-        obj.transform.localPosition = new Vector2(endX, obj.transform.localPosition.y);
-
-        _isActiveCoroutine = false;
-    }
-
-    /// <summary>
-    /// Used for moving the timeline left and right.
-    /// </summary>
-    private IEnumerator DoLerpXConstant(GameObject obj, float endX)
-    {
-        float startX = obj.transform.localPosition.x;
-        //float timeElapsed = 0f;
-
-        while (Mathf.Abs(obj.transform.localPosition.x - endX) > .05f)
-        {
-            //obj.transform.localPosition = new Vector2(Mathf.Lerp(startX, endX, timeElapsed/_timelineSpeed), obj.transform.localPosition.y);
-            obj.transform.localPosition = Vector2.MoveTowards(obj.transform.localPosition, new Vector2(endX, obj.transform.localPosition.y), Time.deltaTime * _timelineSpeed * 100);
-            //timeElapsed += Time.deltaTime;
-            yield return null;
-        }
-        obj.transform.localPosition = new Vector2(endX, obj.transform.localPosition.y);
     }
 
     /// <summary>
@@ -464,27 +393,107 @@ public class FileTabController : MonoBehaviour
                 StartCoroutine(_currentSubtitleCoroutine);
             }
         }
-        
+
         _isActiveCoroutine = false;
     }
 
-    private IEnumerator DoAudioSubtitles()
+    /// <summary>
+    /// Closes the selected log instantly (skipping the animation)
+    /// </summary>
+    private void CloseCurrentLogFast()
     {
-        for(int i = 0; i < _selectedLog.subtitleTiming.Count; i++)
+        _fileDisplayAnim.Play("Static");
+        _textLogDisplayParent.SetActive(false);
+        _imgDisplayParent.SetActive(false);
+        _audioDisplayParent.SetActive(false);
+        _timeSlider.value = 0;
+        if(_source.isPlaying)
+            _source.Stop();
+        if (_currentSubtitleCoroutine != null)
+            StopCoroutine(_currentSubtitleCoroutine);
+        _isLogOpen = false;
+    }
+
+    // Converts the date stamp of the current log into the X position and moves the timeline to that position
+    private void MoveTimeline(bool instant)
+    {
+        if (GameManager.Instance.FoundLogs.Count > 0)
         {
-            _subText.text = _selectedLog.textParas[i];
-            if(i + 1 < _selectedLog.subtitleTiming.Count)
+            if (!GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex].hasDate) // If the selected log is undated, a timeline isn't very useful, now, is it
             {
-                yield return new WaitForSeconds(_selectedLog.subtitleTiming[i+1]-_selectedLog.subtitleTiming[i]);
+                _timeline.SetActive(false);
             }
             else
             {
-                yield return new WaitForSeconds(_source.clip.length - _selectedLog.subtitleTiming[i]);
+                _timeline.SetActive(true);
+
+                float convertedDate = GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex].date.x * 100 + GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex].date.y;
+                if (convertedDate >= 201)
+                {
+                    convertedDate -= 48;
+                }
+                float convertedXPos = math.remap(_timelineDateBounds.x, _timelineDateBounds.y, _timelineHUDBounds.x, _timelineHUDBounds.y, convertedDate);
+                Debug.Log(convertedDate + " " + convertedXPos);
+
+                if (instant)
+                {
+                    _timeline.transform.localPosition = new Vector2(convertedXPos, _timeline.transform.localPosition.y);
+                }
+                else
+                {
+                    if (_currentTimelineCoroutine != null)
+                        StopCoroutine(_currentTimelineCoroutine);
+
+                    _currentTimelineCoroutine = DoLerpXConstant(_timeline, convertedXPos);
+                    StartCoroutine(_currentTimelineCoroutine);
+                }
+
             }
-            
         }
-        _subText.text = "";
+        
     }
+
+    #region LERP COROUTINES
+    /// <summary>
+    /// Used for moving the file list left and right.
+    /// </summary>
+    private IEnumerator DoLerpXTimed(GameObject obj, float startX, float endX, float duration)
+    {
+        _isActiveCoroutine = true; // Prevent anything (like opening a log mid switch) from overlapping this
+        float timeElapsed = 0;
+        CloseCurrentLogFast();
+
+        while (timeElapsed < duration)
+        {
+            obj.transform.localPosition = new Vector2(Mathf.Lerp(startX, endX, timeElapsed / duration), obj.transform.localPosition.y);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+        obj.transform.localPosition = new Vector2(endX, obj.transform.localPosition.y);
+
+        _isActiveCoroutine = false;
+    }
+
+    /// <summary>
+    /// Used for moving the timeline left and right.
+    /// </summary>
+    private IEnumerator DoLerpXConstant(GameObject obj, float endX)
+    {
+        float startX = obj.transform.localPosition.x;
+        //float timeElapsed = 0f;
+
+        while (Mathf.Abs(obj.transform.localPosition.x - endX) > .05f)
+        {
+            //obj.transform.localPosition = new Vector2(Mathf.Lerp(startX, endX, timeElapsed/_timelineSpeed), obj.transform.localPosition.y);
+            obj.transform.localPosition = Vector2.MoveTowards(obj.transform.localPosition, new Vector2(endX, obj.transform.localPosition.y), Time.deltaTime * _timelineSpeed * 100);
+            //timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+        obj.transform.localPosition = new Vector2(endX, obj.transform.localPosition.y);
+    }
+    #endregion
+
+    
 
     /// <summary>
     /// Refreshes the file list when the tab is enabled in case new logs were picked up.

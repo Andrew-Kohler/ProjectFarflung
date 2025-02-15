@@ -118,8 +118,8 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < VisitationList3F.Length; i++)
                 VisitationList3F[i] = false;
 
-            FoundLogNames = new List<Tuple<string, bool>>();
-            LogIndex = 0;
+            FoundLogNames = new List<Tuple<string, bool>>(); // Tuple of file name / whether it's been read by the player
+            LogIndex = 0;                                    // Index in the HUD list that the player has selected
 
             // POWER MANAGEMENT
             // arrays must be initialized like this otherwise json lists will be empty instead of properly initialized
@@ -166,7 +166,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i<VisitationList3F.Length; i++)
                 VisitationList3F[i] = other.VisitationList3F[i];
 
-            FoundLogNames = other.FoundLogNames;
+            FoundLogNames = new List<Tuple<string, bool>>(other.FoundLogNames);
             LogIndex = other.LogIndex;
 
         
