@@ -25,7 +25,7 @@ public class FileNode : MonoBehaviour
 
     public void SetType(Log.LogType type)
     {
-        if (type == Log.LogType.Text)
+        if (type == Log.LogType.Text) 
             _typeImg.sprite = _typeSprites[0];
         if (type == Log.LogType.Audio)
             _typeImg.sprite = _typeSprites[1];

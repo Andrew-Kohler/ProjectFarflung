@@ -34,9 +34,9 @@ public class PlayerInteractor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ray = new Ray(this.transform.position, transform.forward * 5);
+        ray = new Ray(this.transform.position, transform.forward * 3);
         //Debug.DrawRay(this.transform.position, transform.forward * 5, Color.green);
-        if (Physics.Raycast(ray, out hit, 5f, LayerMask.GetMask("Interactable")))
+        if (Physics.Raycast(ray, out hit, 3f, LayerMask.GetMask("Interactable")))
         {
             _canInteract = true;
             _obj = hit.collider.gameObject.GetComponent<Interactable>();

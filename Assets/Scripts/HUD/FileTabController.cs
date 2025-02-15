@@ -20,6 +20,17 @@ public class FileTabController : MonoBehaviour
     [SerializeField, Tooltip("Animator for showing files")]
     private Animator _fileDisplayAnim;
 
+    [Header("Hard Drive Capacity")]
+    [SerializeField, Tooltip("Made up file sizes for text, audio, and image logs")]
+    private Vector3 _fileSizes;
+    [SerializeField, Tooltip("Sum of all our made up file size numbers")]
+    private float _maxDataCapacity;
+    [SerializeField, Tooltip("Sum of all our made up file size numbers")]
+    private TextMeshProUGUI _dataCapacityText;
+    [SerializeField, Tooltip("Fill bar for our made up file size sum")]
+    private Image _dataCapacityMeter;
+    private float _currentDataSum;
+
     [Header("Timeline")]
     [SerializeField, Tooltip("Timeline object")]
     private GameObject _timeline;
@@ -211,16 +222,24 @@ public class FileTabController : MonoBehaviour
         {
             _selectedLog = GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex];
             string date = "3.604." + _selectedLog.date.x + "." + _selectedLog.date.y;
-            if (_selectedLog.offworldOrigin)
+            if (!_selectedLog.hasDate)
             {
-                string offworldDate = "3.604." + _selectedLog.transmissionDate.x + "." + _selectedLog.transmissionDate.y;
-                _sideText.text = ">filename\n\"" + _selectedLog.filename + "\"\n>fileorigin " + _selectedLog.planetOfOrigin + 
-                    "\n>sent\n" + offworldDate + "\n >received\n" + date +"\n >timestamp\n" + _selectedLog.timestamp + "\n>filetype " + _selectedLog.type;
+                _sideText.text = ">filename\n\"" + _selectedLog.filename + "\"\n>datestamp unknown" + "\n>filetype " + _selectedLog.type;
             }
             else
             {
-                _sideText.text = ">filename\n\"" + _selectedLog.filename + "\"\n>datestamp\n" + date + "\n>timestamp\n" + _selectedLog.timestamp + "\n>filetype " + _selectedLog.type;
+                if (_selectedLog.offworldOrigin)
+                {
+                    string offworldDate = "3.604." + _selectedLog.transmissionDate.x + "." + _selectedLog.transmissionDate.y;
+                    _sideText.text = ">filename\n\"" + _selectedLog.filename + "\"\n>fileorigin " + _selectedLog.planetOfOrigin +
+                        "\n>sent\n" + offworldDate + "\n>received\n" + date + "\n>timestamp\n" + _selectedLog.timestamp + "\n>filetype " + _selectedLog.type;
+                }
+                else
+                {
+                    _sideText.text = ">filename\n\"" + _selectedLog.filename + "\"\n>datestamp\n" + date + "\n>timestamp\n" + _selectedLog.timestamp + "\n>filetype " + _selectedLog.type;
+                }
             }
+            
             
         }
         else
@@ -309,28 +328,40 @@ public class FileTabController : MonoBehaviour
     // Converts the date stamp of the current log into the X position and moves the timeline to that position
     private void MoveTimeline(bool instant)
     {
-        if(GameManager.Instance.FoundLogs.Count > 0)
+        if (GameManager.Instance.FoundLogs.Count > 0)
         {
-            float convertedDate = GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex].date.x * 100 + GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex].date.y;
-            if (convertedDate >= 201)
+            if (!GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex].hasDate) // If the selected log is undated, a timeline isn't very useful, now, is it
             {
-                convertedDate -= 49;
-            }
-            float convertedXPos = math.remap(_timelineDateBounds.x, _timelineDateBounds.y, _timelineHUDBounds.x, _timelineHUDBounds.y, convertedDate);
-
-            if (instant)
-            {
-                _timeline.transform.localPosition = new Vector2(convertedXPos, _timeline.transform.localPosition.y);
+                _timeline.SetActive(false);
             }
             else
             {
-                if (_currentTimelineCoroutine != null)
-                    StopCoroutine(_currentTimelineCoroutine);
+                _timeline.SetActive(true);
 
-                _currentTimelineCoroutine = DoLerpXConstant(_timeline, convertedXPos);
-                StartCoroutine(_currentTimelineCoroutine);
+                float convertedDate = GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex].date.x * 100 + GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex].date.y;
+                if (convertedDate >= 201)
+                {
+                    convertedDate -= 48;
+                }
+                float convertedXPos = math.remap(_timelineDateBounds.x, _timelineDateBounds.y, _timelineHUDBounds.x, _timelineHUDBounds.y, convertedDate);
+
+                if (instant)
+                {
+                    _timeline.transform.localPosition = new Vector2(convertedXPos, _timeline.transform.localPosition.y);
+                }
+                else
+                {
+                    if (_currentTimelineCoroutine != null)
+                        StopCoroutine(_currentTimelineCoroutine);
+
+                    _currentTimelineCoroutine = DoLerpXConstant(_timeline, convertedXPos);
+                    StartCoroutine(_currentTimelineCoroutine);
+                }
+
             }
         }
+        
+        
         
         
     }
@@ -355,6 +386,9 @@ public class FileTabController : MonoBehaviour
         _isActiveCoroutine = false;
     }
 
+    /// <summary>
+    /// Used for moving the timeline left and right.
+    /// </summary>
     private IEnumerator DoLerpXConstant(GameObject obj, float endX)
     {
         float startX = obj.transform.localPosition.x;
@@ -458,9 +492,17 @@ public class FileTabController : MonoBehaviour
     /// </summary>
     private void TabOpen()
     {
-        if(_fileNodeParent.transform.childCount == 0 || _localFileCount != GameManager.Instance.FoundLogs.Count) 
+        if(_localFileCount == 0)  // Initialize the list since OnEnable happens before it would get its default
         {
+            _nodeDisplayList = new List<FileNode>();
+        }
 
+        if(_localFileCount != GameManager.Instance.FoundLogs.Count) // _fileNodeParent.transform.childCount == 0 || 
+        {
+            if(_localFileCount == 0) // If this is the first log picked up, we need to set _lastSelected (as it's normally set when the arrow keys are pressed)
+            {
+                _lastSelected = GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex];
+            }
             // Get the new index of the data that was previously selected so the player will have the same data selected as when they left
             if (_lastSelected != null)
             {
@@ -474,7 +516,8 @@ public class FileTabController : MonoBehaviour
             }
 
             float currentXPosition = 0;
-            _nodeDisplayList = new List<FileNode>(); // Initialize the list since OnEnable happens before it would get its default
+            _currentDataSum = 0;
+            _nodeDisplayList = new List<FileNode>();
 
             for (int i = 0; i < GameManager.Instance.FoundLogs.Count; i++)
             {
@@ -492,32 +535,48 @@ public class FileTabController : MonoBehaviour
                 // Set this node's unread indicator to the correct position
                 newNodeScript.SetRead(GameManager.Instance.SceneData.FoundLogNames[i].Item2);
 
-                    // Set the correct size of this log because for some reason I wanted this detail
+                // Set the correct size of this log 
                 if (GameManager.Instance.SceneData.LogIndex != _nodeDisplayList.Count - 1)
                 {
-                        newNodeScript.SetSmall();
+                    newNodeScript.SetSmall();
                 }
+
+                // Add this log's "file size" to our file size counter
+                if (GameManager.Instance.FoundLogs[i].type == Log.LogType.Text)
+                    _currentDataSum += _fileSizes.x;
+                if (GameManager.Instance.FoundLogs[i].type == Log.LogType.Audio)
+                    _currentDataSum += _fileSizes.y;
+                if (GameManager.Instance.FoundLogs[i].type == Log.LogType.Image)
+                    _currentDataSum += _fileSizes.z;
 
                 // Make sure we spawn the next file node at the right place
                 currentXPosition += _fileNodeDistance;
                 
             }
 
+            _dataCapacityText.text = ">freespace \n" + (_maxDataCapacity - _currentDataSum) + "/" + _maxDataCapacity + " GB";
+            _dataCapacityMeter.fillAmount = _currentDataSum / _maxDataCapacity;
+
             _fileNodeParent.transform.localPosition = new Vector3(-_fileNodeDistance * GameManager.Instance.SceneData.LogIndex, 195, 0);
+
             MoveTimeline(true);
             
         }
         else
         {
             // Since default animation onEnable is to be large, we still need to make everyone small
-            MoveTimeline(true);
-            for (int i = 0; i < _nodeDisplayList.Count; i++)
+            if(_nodeDisplayList.Count > 0)
             {
-                if (GameManager.Instance.SceneData.LogIndex != i)
+                MoveTimeline(true);
+                for (int i = 0; i < _nodeDisplayList.Count; i++)
                 {
-                    _nodeDisplayList[i].SetSmall();
+                    if (GameManager.Instance.SceneData.LogIndex != i)
+                    {
+                        _nodeDisplayList[i].SetSmall();
+                    }
                 }
             }
+            
         }
         
     }

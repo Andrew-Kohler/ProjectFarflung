@@ -56,9 +56,8 @@ public class GameManager : MonoBehaviour
 
         // List of log names the player posesses (used to load actual log data) and their read state (because changing the contents of ScrObs is bad)
         public List<Tuple<string,bool>> FoundLogNames;
-        
         // Index of the log the player currently has selected
-        public int LogIndex; 
+        public int LogIndex;
 
         // terminal/zone unlocked
         public bool[] TerminalUnlocks;
@@ -296,8 +295,15 @@ public class GameManager : MonoBehaviour
         // Adds log to lists in correct order
         if (FoundLogs.Count > 0)
         {
+            if (!log.hasDate) // If a log doesn't have a date, it goes at the end of the list. Undated logs should have a date of 999.999 to make sure no dated materials get put with them.
+            {
+                FoundLogs.Add(log);
+                SceneData.FoundLogNames.Add(new Tuple<string, bool>(resourceName, false));
+                return;
+            }
             for (int i = 0; i < FoundLogs.Count; i++)
             {
+                
                 if (log.date.x < FoundLogs[i].date.x) // If the month is earlier, then the log we're adding is currently the last one of its month
                 {
                     FoundLogs.Insert(i, log);
@@ -314,7 +320,9 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
-            if (!FoundLogs.Find(x => x.filename == log.filename)) // If there are no logs left after this one, this log is at the end of the list
+            // If there are no logs left after this one, this log is at the end of the list
+            // If an undated log enters the list, this condition becomes irrelevant
+            if (!FoundLogs.Find(x => x.filename == log.filename)) 
             {
                 FoundLogs.Add(log);
                 SceneData.FoundLogNames.Add(new Tuple<string, bool>(resourceName, false));

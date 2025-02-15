@@ -15,6 +15,8 @@ public class Log : ScriptableObject
     // an array at
     [Tooltip("File name (file(1), What's For Lunch, etc.)")]
     public string filename;
+    [Tooltip("If this is a dated material or not")]
+    public bool hasDate = true;
     [Tooltip("Date of the log on Oixys-3 (RelativeMonth.Day)")]
     public Vector2 date;
     [Tooltip("Was this log sent to Oixys-3 from another planet?")]
