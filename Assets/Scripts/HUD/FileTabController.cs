@@ -40,7 +40,6 @@ public class FileTabController : MonoBehaviour
     private Vector2 _timelineDateBounds;
     [SerializeField, Tooltip("The start and end X values that the timeline can move to on the HUD")]
     private Vector2 _timelineHUDBounds;
-    
 
     [Header("Text Log Display")]
     [SerializeField, Tooltip("Parent of log display")]
@@ -506,7 +505,7 @@ public class FileTabController : MonoBehaviour
             _nodeDisplayList = new List<FileNode>();
         }
 
-        if(_localFileCount != GameManager.Instance.FoundLogs.Count) // _fileNodeParent.transform.childCount == 0 || 
+        if(_localFileCount != GameManager.Instance.FoundLogs.Count)
         {
             if(_localFileCount == 0) // If this is the first log picked up, we need to set _lastSelected (as it's normally set when the arrow keys are pressed)
             {
@@ -577,13 +576,26 @@ public class FileTabController : MonoBehaviour
             if(_nodeDisplayList.Count > 0)
             {
                 MoveTimeline(true);
+                _currentDataSum = 0;
+
                 for (int i = 0; i < _nodeDisplayList.Count; i++)
                 {
                     if (GameManager.Instance.SceneData.LogIndex != i)
                     {
                         _nodeDisplayList[i].SetSmall();
                     }
+
+                    // Add this log's "file size" to our file size counter
+                    if (GameManager.Instance.FoundLogs[i].type == Log.LogType.Text)
+                        _currentDataSum += _fileSizes.x;
+                    if (GameManager.Instance.FoundLogs[i].type == Log.LogType.Audio)
+                        _currentDataSum += _fileSizes.y;
+                    if (GameManager.Instance.FoundLogs[i].type == Log.LogType.Image)
+                        _currentDataSum += _fileSizes.z;
                 }
+
+                _dataCapacityText.text = ">freespace \n" + (_maxDataCapacity - _currentDataSum) + "/" + _maxDataCapacity + " GB";
+                _dataCapacityMeter.fillAmount = _currentDataSum / _maxDataCapacity;
             }
             
         }
