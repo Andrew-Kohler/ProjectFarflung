@@ -236,7 +236,6 @@ public class GameManager : MonoBehaviour
         {
             string saveData = System.IO.File.ReadAllText(filePath);
             newSaveData = JsonUtility.FromJson<ProgressionData>(saveData);
-            
         }
 
         // Apply read/initialized data to instance
