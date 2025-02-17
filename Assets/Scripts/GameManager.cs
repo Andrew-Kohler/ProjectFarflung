@@ -50,6 +50,9 @@ public class GameManager : MonoBehaviour
     [System.Serializable]
     public class ProgressionData
     {
+        // whether there is data to be overriden - only used for start menu
+        public bool NewGameStarted;
+
         // HEADS-UP DISPLAY (HUD)
         // Narrative timestamp (conveying to the player that time has past - represented as an integer 0 through 4)
         public int NarrativeTimestamp;
@@ -90,6 +93,8 @@ public class GameManager : MonoBehaviour
         /// </summary>
         public ProgressionData()
         {
+            NewGameStarted = false;
+
             // HEADS-UP DISPLAY (HUD)
 
             NarrativeTimestamp = 0;                   
@@ -138,7 +143,9 @@ public class GameManager : MonoBehaviour
         /// Used for copying data from scene data to game data BY VALUE and not by reference.
         /// </summary>
         public ProgressionData(ProgressionData other)
-        { 
+        {
+            NewGameStarted = other.NewGameStarted;
+
             // HEADS-UP DISPLAY (HUD)
             NarrativeTimestamp = other.NarrativeTimestamp;                    
             RemainingLives = other.RemainingLives;

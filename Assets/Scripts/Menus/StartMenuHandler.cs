@@ -18,12 +18,13 @@ public class StartMenuHandler : MonoBehaviour
     private GameObject _creditsContainer;
 
     [Header("Scene Transitions")]
+    // TODO: scene transition handler
     //[SerializeField, Tooltip("Used to make calls to smooth scene transitions.")]
     //private SceneTransitionHandler _transitionHandler;
     [SerializeField, Tooltip("Scene name of level select scene.")]
-    private string _levelSelectSceneName;
-    [SerializeField, Tooltip("Scene name of the first level. Bypass level select on new game.")]
-    private string _firstLevelName;
+    private string _levelScene; // TODO: replace with detecting which scene to load based on save data floor num
+    [SerializeField, Tooltip("Scene name of brightness configuration scene (for use on New Game press).")]
+    private string _brightnessConfigSceneName;
 
     [Header("New Game Functionality")]
     [SerializeField, Tooltip("Used to enable/disable resume button based on whether there is a save to resume.")]
@@ -33,11 +34,11 @@ public class StartMenuHandler : MonoBehaviour
 
     private void Awake()
     {
-        /*// Only show resume button if there is save data to resume with
-        if (!GameManager.Instance.SaveData.NewGameStarted)
+        // Only show resume button if there is save data to resume with
+        if (!GameManager.Instance.SceneData.NewGameStarted)
         {
             _resumeButton.SetActive(false);
-        }*/
+        }
     }
 
     #region Main Menu Buttons
@@ -47,18 +48,21 @@ public class StartMenuHandler : MonoBehaviour
     /// </summary>
     public void NewGameButton()
     {
-        /*// overriding previous save -> confirmation popup
-        if (GameManager.Instance.SaveData.NewGameStarted)
+        // overriding previous save -> confirmation popup
+        if (GameManager.Instance.SceneData.NewGameStarted)
         {
             _newGameConfirmation.SetActive(true);
         }
         // no save data being overriden
         else
         {
-            GameManager.Instance.ResetProgressionData(); // new progression data
-            GameManager.Instance.SaveData.NewGameStarted = true;
-            _transitionHandler.LoadScene(_firstLevelName);
-        }*/
+            GameManager.Instance.ResetGameData(); // new progression data
+            GameManager.Instance.SceneData.NewGameStarted = true;
+            GameManager.Instance.SaveSceneDataToGameData(); // ensure new save state transfers not only to scene data but also to game data
+            
+            // TODO: load brightness config scene
+            // _transitionHandler.LoadScene(_brightnessConfigSceneName);
+        }
     }
 
     /// <summary>
@@ -67,6 +71,7 @@ public class StartMenuHandler : MonoBehaviour
     /// </summary>
     public void ResumeButton()
     {
+        // TODO: load level scene functionality
         //_transitionHandler.LoadScene(_levelSelectSceneName);
     }
 
@@ -76,8 +81,9 @@ public class StartMenuHandler : MonoBehaviour
     /// </summary>
     public void OptionsButton()
     {
+        // TODO: interface with pause/options canvas once its created
         // Modified Pause Canvas is able to enable itself when this is toggled on
-        //GameManager.Instance.IsPaused = true;
+        // GameManager.Instance.IsPaused = true;
     }
 
     /// <summary>
@@ -86,8 +92,8 @@ public class StartMenuHandler : MonoBehaviour
     /// </summary>
     public void CreditsButton()
     {
-        /*_creditsContainer.SetActive(true);
-        _mainMenuContainer.SetActive(false);*/
+        _creditsContainer.SetActive(true);
+        _mainMenuContainer.SetActive(false);
     }
 
     /// <summary>
@@ -122,9 +128,10 @@ public class StartMenuHandler : MonoBehaviour
     /// </summary>
     public void ConfirmNewGame()
     {
-        /*GameManager.Instance.ResetProgressionData(); // new progression data
-        GameManager.Instance.SaveData.NewGameStarted = true;
-        _transitionHandler.LoadScene(_firstLevelName);*/
+        GameManager.Instance.ResetGameData(); // new progression data
+        GameManager.Instance.SceneData.NewGameStarted = true;
+        // TODO: load brightness config scene
+        // _transitionHandler.LoadScene(_firstLevelName);
     }
 
     /// <summary>
