@@ -18,11 +18,10 @@ public class StartMenuHandler : MonoBehaviour
     private GameObject _creditsContainer;
 
     [Header("Scene Transitions")]
-    // TODO: scene transition handler
-    //[SerializeField, Tooltip("Used to make calls to smooth scene transitions.")]
-    //private SceneTransitionHandler _transitionHandler;
+    [SerializeField, Tooltip("Used to make calls to smooth scene transitions.")]
+    private SceneTransitionHandler _transitionHandler;
     [SerializeField, Tooltip("Scene name of level select scene.")]
-    private string _levelScene; // TODO: replace with detecting which scene to load based on save data floor num
+    private string _levelSceneName; // TODO: replace with detecting which scene to load based on save data floor num
     [SerializeField, Tooltip("Scene name of brightness configuration scene (for use on New Game press).")]
     private string _brightnessConfigSceneName;
 
@@ -60,8 +59,8 @@ public class StartMenuHandler : MonoBehaviour
             GameManager.Instance.SceneData.NewGameStarted = true;
             GameManager.Instance.SaveSceneDataToGameData(); // ensure new save state transfers not only to scene data but also to game data
             
-            // TODO: load brightness config scene
-            // _transitionHandler.LoadScene(_brightnessConfigSceneName);
+            // load brightness config scene
+            _transitionHandler.LoadScene(_brightnessConfigSceneName);
         }
     }
 
@@ -71,8 +70,8 @@ public class StartMenuHandler : MonoBehaviour
     /// </summary>
     public void ResumeButton()
     {
-        // TODO: load level scene functionality
-        //_transitionHandler.LoadScene(_levelSelectSceneName);
+        // load level scene functionality
+        _transitionHandler.LoadScene(_levelSceneName);
     }
 
     /// <summary>
@@ -130,8 +129,8 @@ public class StartMenuHandler : MonoBehaviour
     {
         GameManager.Instance.ResetGameData(); // new progression data
         GameManager.Instance.SceneData.NewGameStarted = true;
-        // TODO: load brightness config scene
-        // _transitionHandler.LoadScene(_firstLevelName);
+        // load brightness config scene
+        _transitionHandler.LoadScene(_levelSceneName);
     }
 
     /// <summary>
