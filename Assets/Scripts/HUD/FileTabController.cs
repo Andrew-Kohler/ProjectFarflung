@@ -491,8 +491,6 @@ public class FileTabController : MonoBehaviour
     }
     #endregion
 
-    
-
     /// <summary>
     /// Refreshes the file list when the tab is enabled in case new logs were picked up.
     /// Called on enable.
@@ -567,7 +565,6 @@ public class FileTabController : MonoBehaviour
             _fileNodeParent.transform.localPosition = new Vector3(-_fileNodeDistance * GameManager.Instance.SceneData.LogIndex, 195, 0);
 
             MoveTimeline(true);
-            
         }
         else
         {
