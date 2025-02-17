@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Scriptable Objs/Log Data")]
+[CreateAssetMenu(menuName = "Scriptable Objs/Log")]
 public class Log : ScriptableObject
 {
     // The type of information the log contains
