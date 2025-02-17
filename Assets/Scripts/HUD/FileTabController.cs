@@ -401,7 +401,6 @@ public class FileTabController : MonoBehaviour
     /// </summary>
     private void CloseCurrentLogFast()
     {
-        _fileDisplayAnim.Play("Static");
         _textLogDisplayParent.SetActive(false);
         _imgDisplayParent.SetActive(false);
         _audioDisplayParent.SetActive(false);
