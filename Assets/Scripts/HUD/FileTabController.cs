@@ -432,7 +432,6 @@ public class FileTabController : MonoBehaviour
                     convertedDate -= 48;
                 }
                 float convertedXPos = math.remap(_timelineDateBounds.x, _timelineDateBounds.y, _timelineHUDBounds.x, _timelineHUDBounds.y, convertedDate);
-                Debug.Log(convertedDate + " " + convertedXPos);
 
                 if (instant)
                 {
