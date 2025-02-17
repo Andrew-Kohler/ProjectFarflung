@@ -129,6 +129,7 @@ public class StartMenuHandler : MonoBehaviour
     {
         GameManager.Instance.ResetGameData(); // new progression data
         GameManager.Instance.SceneData.NewGameStarted = true;
+        GameManager.Instance.SaveSceneDataToGameData(); // ensure new save state transfers not only to scene data but also to game data
         // load brightness config scene
         _transitionHandler.LoadScene(_levelSceneName);
     }
