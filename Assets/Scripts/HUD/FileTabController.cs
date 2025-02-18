@@ -195,8 +195,7 @@ public class FileTabController : MonoBehaviour
 
                     // We have now accessed this log
                     _nodeDisplayList[GameManager.Instance.SceneData.LogIndex].SetRead(true);
-                    GameManager.Instance.SceneData.FoundLogNames[GameManager.Instance.SceneData.LogIndex] 
-                        = new Tuple<string, bool>(GameManager.Instance.SceneData.FoundLogNames[GameManager.Instance.SceneData.LogIndex].Item1, true); 
+                    GameManager.Instance.SceneData.FoundLogReadStatus[GameManager.Instance.SceneData.LogIndex] = true;
                 }
                 else
                 {
@@ -537,7 +536,7 @@ public class FileTabController : MonoBehaviour
                 newNodeScript.SetType(GameManager.Instance.FoundLogs[i].type);
 
                 // Set this node's unread indicator to the correct position
-                newNodeScript.SetRead(GameManager.Instance.SceneData.FoundLogNames[i].Item2);
+                newNodeScript.SetRead(GameManager.Instance.SceneData.FoundLogReadStatus[i]);
 
                 // Set the correct size of this log 
                 if (GameManager.Instance.SceneData.LogIndex != _nodeDisplayList.Count - 1)

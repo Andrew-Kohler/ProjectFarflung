@@ -68,7 +68,8 @@ public class GameManager : MonoBehaviour
         public bool[] VisitationList3F;
 
         // List of log names the player posesses (used to load actual log data) and their read state (because changing the contents of ScrObs is bad)
-        public List<Tuple<string,bool>> FoundLogNames;
+        public List<string> FoundLogNames;
+        public List<bool> FoundLogReadStatus;
         // Index of the log the player currently has selected
         public int LogIndex;
 
@@ -118,7 +119,8 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < VisitationList3F.Length; i++)
                 VisitationList3F[i] = false;
 
-            FoundLogNames = new List<Tuple<string, bool>>(); // Tuple of file name / whether it's been read by the player
+            FoundLogNames = new List<string>(); // Found log file names
+            FoundLogReadStatus = new List<bool>();
             LogIndex = 0;                                    // Index in the HUD list that the player has selected
 
             // POWER MANAGEMENT
@@ -166,7 +168,8 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i<VisitationList3F.Length; i++)
                 VisitationList3F[i] = other.VisitationList3F[i];
 
-            FoundLogNames = new List<Tuple<string, bool>>(other.FoundLogNames);
+            FoundLogNames = new List<string>(other.FoundLogNames);
+            FoundLogReadStatus = new List<bool>(other.FoundLogReadStatus);
             LogIndex = other.LogIndex;
 
         
@@ -303,7 +306,7 @@ public class GameManager : MonoBehaviour
         {
             for (int i = 0; i < GameData.FoundLogNames.Count; i++)
             {
-                FoundLogs.Add((Log)Resources.Load(GameData.FoundLogNames[i].Item1));
+                FoundLogs.Add((Log)Resources.Load(GameData.FoundLogNames[i]));
             }
         }
         
@@ -321,7 +324,8 @@ public class GameManager : MonoBehaviour
             if (!log.hasDate) // If a log doesn't have a date, it goes at the end of the list. Undated logs should have a date of 999.999 to make sure no dated materials get put with them.
             {
                 FoundLogs.Add(log);
-                SceneData.FoundLogNames.Add(new Tuple<string, bool>(resourceName, false));
+                SceneData.FoundLogNames.Add(resourceName);
+                SceneData.FoundLogReadStatus.Add(false);
                 return;
             }
             for (int i = 0; i < FoundLogs.Count; i++)
@@ -330,7 +334,8 @@ public class GameManager : MonoBehaviour
                 if (log.date.x < FoundLogs[i].date.x) // If the month is earlier, then the log we're adding is currently the last one of its month
                 {
                     FoundLogs.Insert(i, log);
-                    SceneData.FoundLogNames.Insert(i, new Tuple<string, bool>(resourceName, false));
+                    SceneData.FoundLogNames.Insert(i, resourceName);
+                    SceneData.FoundLogReadStatus.Insert(i, false);
                     return;
                 }
                 else if (log.date.x == FoundLogs[i].date.x) // If the month is the same
@@ -338,7 +343,8 @@ public class GameManager : MonoBehaviour
                     if (log.date.y <= FoundLogs[i].date.y)
                     {
                         FoundLogs.Insert(i, log);
-                        SceneData.FoundLogNames.Insert(i, new Tuple<string, bool>(resourceName, false));
+                        SceneData.FoundLogNames.Insert(i, resourceName);
+                        SceneData.FoundLogReadStatus.Insert(i, false);
                         return;
                     }
                 }
@@ -348,14 +354,16 @@ public class GameManager : MonoBehaviour
             if (!FoundLogs.Find(x => x.filename == log.filename)) 
             {
                 FoundLogs.Add(log);
-                SceneData.FoundLogNames.Add(new Tuple<string, bool>(resourceName, false));
+                SceneData.FoundLogNames.Add(resourceName);
+                SceneData.FoundLogReadStatus.Add(false);
                 return;
             }
         }
         else // If this is the first log to be added, no need to sort
         {
             FoundLogs.Add(log);
-            SceneData.FoundLogNames.Add(new Tuple<string, bool>(resourceName, false));
+            SceneData.FoundLogNames.Add(resourceName);
+            SceneData.FoundLogReadStatus.Add(false);
         }
 
     }
