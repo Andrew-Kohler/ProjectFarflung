@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LogInteractable : Interactable
 {
-    // Start is called before the first frame update
+    [SerializeField, Tooltip("The log data associated with this pickup")] private Log data;
     new void Start()
     {
 
@@ -18,6 +18,7 @@ public class LogInteractable : Interactable
 
     public override void InteractEffects()
     {
+        GameManager.Instance.AddLogData(data, data.name);
         Destroy(gameObject);
     }
 }
