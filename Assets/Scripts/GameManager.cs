@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,9 @@ public class GameManager : MonoBehaviour
 
     // Constants
     public const int MAX_LIVES = 9;
+
+    // Current list of player's Log objects
+    public List<Log> FoundLogs;
 
     // public accessor of instance
     public static GameManager Instance
@@ -63,6 +67,12 @@ public class GameManager : MonoBehaviour
         public bool[] VisitationList2F;
         public bool[] VisitationList3F;
 
+        // List of log names the player posesses (used to load actual log data) and their read state (because changing the contents of ScrObs is bad)
+        public List<string> FoundLogNames;
+        public List<bool> FoundLogReadStatus;
+        // Index of the log the player currently has selected
+        public int LogIndex;
+
         // POWER MANAGEMENT
         // terminal/zone unlocked
         public bool[] TerminalUnlocks;
@@ -77,7 +87,6 @@ public class GameManager : MonoBehaviour
 
         // previous save terminal (or none in case of game start)
         // picked up keycard list
-        // narrative log pickup list
         // etc...
 
         // --------------------------------------------------------- \\
@@ -100,7 +109,6 @@ public class GameManager : MonoBehaviour
             VisitationList1F = new bool[5]; 
             for (int i = 0; i < VisitationList1F.Length; i++)
                 VisitationList1F[i] = false;
-            //VisitationList1F[0] = true; // Center room visited by default for now
 
             VisitationList2F = new bool[3];
             for (int i = 0; i < VisitationList2F.Length; i++)
@@ -110,6 +118,10 @@ public class GameManager : MonoBehaviour
             VisitationList3F = new bool[1];
             for (int i = 0; i < VisitationList3F.Length; i++)
                 VisitationList3F[i] = false;
+
+            FoundLogNames = new List<string>(); // Found log file names
+            FoundLogReadStatus = new List<bool>();
+            LogIndex = 0;                                    // Index in the HUD list that the player has selected
 
             // POWER MANAGEMENT
             // arrays must be initialized like this otherwise json lists will be empty instead of properly initialized
@@ -155,6 +167,11 @@ public class GameManager : MonoBehaviour
             VisitationList3F = new bool[1];
             for (int i = 0; i<VisitationList3F.Length; i++)
                 VisitationList3F[i] = other.VisitationList3F[i];
+
+            FoundLogNames = new List<string>(other.FoundLogNames);
+            FoundLogReadStatus = new List<bool>(other.FoundLogReadStatus);
+            LogIndex = other.LogIndex;
+
         
             // POWER MANAGEMENT
             // arrays are reference based, so MUST be assigned like this
@@ -214,6 +231,7 @@ public class GameManager : MonoBehaviour
     {
         // initialize to default values before reading from file
         ProgressionData newSaveData = new ProgressionData();
+        FoundLogs = new List<Log>();
 
         // read save data, overriding existing data as it is found
         string filePath = Application.persistentDataPath + "/ProgressionData.json";
@@ -226,6 +244,7 @@ public class GameManager : MonoBehaviour
         // Apply read/initialized data to instance
         // should be a copy of the data, not the same reference
         Instance.GameData = new ProgressionData(newSaveData);
+        LoadLogData();
     }
 
     /// <summary>
@@ -274,6 +293,79 @@ public class GameManager : MonoBehaviour
     {
         // copy of scene data, NOT using same reference
         Instance.GameData = new ProgressionData(Instance.SceneData);
+    }
+
+    /// <summary>
+    /// Loads in log data from resources based on the stored names of the files the player owns.
+    /// Scriptable objects cannot be stored in JSON data as they'll be kept only via reference.
+    /// Called when save data is loaded into a play session.
+    /// </summary>
+    private void LoadLogData()
+    {
+        if(GameData.FoundLogNames.Count > 0)
+        {
+            for (int i = 0; i < GameData.FoundLogNames.Count; i++)
+            {
+                FoundLogs.Add((Log)Resources.Load(GameData.FoundLogNames[i]));
+            }
+        }
+        
+    }
+
+    /// <summary>
+    /// Adds newly acquired log data to both the name list and the current data list in the correct order.
+    /// Then, invokes a delegate that lets the HUD UI know (if it's active) to refresh the list.
+    /// </summary>
+    public void AddLogData(Log log, string resourceName)
+    {
+        // Adds log to lists in correct order
+        if (FoundLogs.Count > 0)
+        {
+            if (!log.hasDate) // If a log doesn't have a date, it goes at the end of the list. Undated logs should have a date of 999.999 to make sure no dated materials get put with them.
+            {
+                FoundLogs.Add(log);
+                SceneData.FoundLogNames.Add(resourceName);
+                SceneData.FoundLogReadStatus.Add(false);
+                return;
+            }
+            for (int i = 0; i < FoundLogs.Count; i++)
+            {
+                
+                if (log.date.x < FoundLogs[i].date.x) // If the month is earlier, then the log we're adding is currently the last one of its month
+                {
+                    FoundLogs.Insert(i, log);
+                    SceneData.FoundLogNames.Insert(i, resourceName);
+                    SceneData.FoundLogReadStatus.Insert(i, false);
+                    return;
+                }
+                else if (log.date.x == FoundLogs[i].date.x) // If the month is the same
+                {
+                    if (log.date.y <= FoundLogs[i].date.y)
+                    {
+                        FoundLogs.Insert(i, log);
+                        SceneData.FoundLogNames.Insert(i, resourceName);
+                        SceneData.FoundLogReadStatus.Insert(i, false);
+                        return;
+                    }
+                }
+            }
+            // If there are no logs left after this one, this log is at the end of the list
+            // If an undated log enters the list, this condition becomes irrelevant
+            if (!FoundLogs.Find(x => x.filename == log.filename)) 
+            {
+                FoundLogs.Add(log);
+                SceneData.FoundLogNames.Add(resourceName);
+                SceneData.FoundLogReadStatus.Add(false);
+                return;
+            }
+        }
+        else // If this is the first log to be added, no need to sort
+        {
+            FoundLogs.Add(log);
+            SceneData.FoundLogNames.Add(resourceName);
+            SceneData.FoundLogReadStatus.Add(false);
+        }
+
     }
     #endregion
 
