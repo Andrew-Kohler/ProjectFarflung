@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8867041811532006768}
   - component: {fileID: 8371359329203540020}
+  - component: {fileID: -513120608143024815}
   m_Layer: 0
   m_Name: Television
   m_TagString: Untagged
@@ -54,6 +55,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.31, y: 1, z: 0.52}
   m_Center: {x: 0, y: 0.54, z: 0.02}
+--- !u!205 &-513120608143024815
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6658014005080963408}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.05
+    fadeTransitionWidth: 0
+    renderers: []
+  m_Enabled: 1
 --- !u!1001 &5535669878848247690
 PrefabInstance:
   m_ObjectHideFlags: 0

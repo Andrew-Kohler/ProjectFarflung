@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4890787161148117010}
   - component: {fileID: 7397691199010413538}
+  - component: {fileID: -7722763044037613913}
   m_Layer: 0
   m_Name: Curved Floor Large
   m_TagString: Untagged
@@ -55,6 +56,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -3305745604044522073, guid: 65928c4f917084f4196ecdcb0963883d, type: 3}
+--- !u!205 &-7722763044037613913
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4467122566407534104}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.05
+    fadeTransitionWidth: 0
+    renderers: []
+  m_Enabled: 1
 --- !u!1001 &3609590245853904481
 PrefabInstance:
   m_ObjectHideFlags: 0

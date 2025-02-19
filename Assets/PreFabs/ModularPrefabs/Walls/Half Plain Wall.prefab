@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7714814642051618369}
   - component: {fileID: 4608202537704567457}
+  - component: {fileID: -5045390232148762172}
   m_Layer: 0
   m_Name: Half Plain Wall
   m_TagString: Untagged
@@ -54,6 +55,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 1.6, z: 0.3}
   m_Center: {x: 0, y: 0.79, z: 0}
+--- !u!205 &-5045390232148762172
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4822242384476280273}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.05
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 4566493946626240546}
+    - renderer: {fileID: 3540106981145688646}
+  m_Enabled: 1
 --- !u!1001 &2226131449023574703
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -142,5 +163,15 @@ PrefabInstance:
 --- !u!4 &1832533762166838596 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6838b9844f887b54aa356477e6b981fd, type: 3}
+  m_PrefabInstance: {fileID: 2226131449023574703}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3540106981145688646 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3441931304943323369, guid: 6838b9844f887b54aa356477e6b981fd, type: 3}
+  m_PrefabInstance: {fileID: 2226131449023574703}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4566493946626240546 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -6792628015852371315, guid: 6838b9844f887b54aa356477e6b981fd, type: 3}
   m_PrefabInstance: {fileID: 2226131449023574703}
   m_PrefabAsset: {fileID: 0}

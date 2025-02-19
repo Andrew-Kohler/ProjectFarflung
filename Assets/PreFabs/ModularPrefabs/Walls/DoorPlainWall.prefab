@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2538327501642865027}
   - component: {fileID: 1558354938190181201}
   - component: {fileID: 1211313856125687540}
+  - component: {fileID: -510298546331924569}
   m_Layer: 0
   m_Name: DoorPlainWall
   m_TagString: Untagged
@@ -96,8 +97,30 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3, y: 1.05, z: 0.3}
+  m_Size: {x: 1.65, y: 1.05, z: 0.3}
   m_Center: {x: 0, y: 2.47, z: 0}
+--- !u!205 &-510298546331924569
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5924911849745368872}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.05
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 8164237232945197028}
+    - renderer: {fileID: 8789272468590398771}
+    - renderer: {fileID: 174037226724652396}
+    - renderer: {fileID: 7734445891108221534}
+  m_Enabled: 1
 --- !u!1001 &8277759584508830462
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -199,8 +222,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c38a2919f6b8cfe40bf727ab9f832798, type: 3}
+--- !u!23 &174037226724652396 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1113849725034555502, guid: c38a2919f6b8cfe40bf727ab9f832798, type: 3}
+  m_PrefabInstance: {fileID: 8277759584508830462}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7734445891108221534 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1852888144060862624, guid: c38a2919f6b8cfe40bf727ab9f832798, type: 3}
+  m_PrefabInstance: {fileID: 8277759584508830462}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8164237232945197028 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -8958309479052702438, guid: c38a2919f6b8cfe40bf727ab9f832798, type: 3}
+  m_PrefabInstance: {fileID: 8277759584508830462}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8460639727262270741 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c38a2919f6b8cfe40bf727ab9f832798, type: 3}
+  m_PrefabInstance: {fileID: 8277759584508830462}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8789272468590398771 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -8423623828734185523, guid: c38a2919f6b8cfe40bf727ab9f832798, type: 3}
   m_PrefabInstance: {fileID: 8277759584508830462}
   m_PrefabAsset: {fileID: 0}

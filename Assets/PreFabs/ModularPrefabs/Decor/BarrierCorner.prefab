@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8353745978916076145}
-  - component: {fileID: 7189601528980694166}
+  - component: {fileID: 3158515228224120463}
+  - component: {fileID: -7331535208319468980}
   m_Layer: 0
   m_Name: BarrierCorner
   m_TagString: Untagged
@@ -29,11 +30,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9046066622472496563}
+  - {fileID: 1150760697598156027}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &7189601528980694166
+--- !u!65 &3158515228224120463
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54,7 +55,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.25, y: 1.06, z: 0.25}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!1001 &8791216513123140184
+--- !u!205 &-7331535208319468980
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8270014012731513631}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.05
+    fadeTransitionWidth: 0
+    renderers: []
+  m_Enabled: 1
+--- !u!1001 &608808094875319056
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -106,6 +125,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -558848718666136509, guid: 0df9a421c6a0ffb44b6aef30bc83b96b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -558848718666136509, guid: 0df9a421c6a0ffb44b6aef30bc83b96b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0df9a421c6a0ffb44b6aef30bc83b96b, type: 3}
       propertyPath: m_Name
       value: BarrierCorner
@@ -119,8 +146,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0df9a421c6a0ffb44b6aef30bc83b96b, type: 3}
---- !u!4 &9046066622472496563 stripped
+--- !u!4 &1150760697598156027 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0df9a421c6a0ffb44b6aef30bc83b96b, type: 3}
-  m_PrefabInstance: {fileID: 8791216513123140184}
+  m_PrefabInstance: {fileID: 608808094875319056}
   m_PrefabAsset: {fileID: 0}
