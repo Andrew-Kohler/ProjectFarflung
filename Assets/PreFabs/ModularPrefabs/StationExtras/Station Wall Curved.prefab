@@ -72,7 +72,8 @@ LODGroup:
   m_LODs:
   - screenRelativeHeight: 0.05
     fadeTransitionWidth: 0
-    renderers: []
+    renderers:
+    - renderer: {fileID: 5274075041311737199}
   m_Enabled: 1
 --- !u!1001 &3750885478089635854
 PrefabInstance:
@@ -150,5 +151,10 @@ PrefabInstance:
 --- !u!4 &3713054088553390053 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1f7120930cb4d4248bdce608407e46ad, type: 3}
+  m_PrefabInstance: {fileID: 3750885478089635854}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5274075041311737199 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -199120221421175455, guid: 1f7120930cb4d4248bdce608407e46ad, type: 3}
   m_PrefabInstance: {fileID: 3750885478089635854}
   m_PrefabAsset: {fileID: 0}
