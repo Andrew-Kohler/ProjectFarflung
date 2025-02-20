@@ -18,6 +18,7 @@ public class KeyInteractable : Interactable
 
     public override void InteractEffects()
     {
+        GameManager.Instance.SceneData.Keys.Add(keyName);
         Destroy(gameObject);
     }
 }
