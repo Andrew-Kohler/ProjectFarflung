@@ -40,8 +40,11 @@ public class PlayerInteractor : MonoBehaviour
         if (Physics.Raycast(ray, out hit, _raycastDistance, LayerMask.GetMask("Interactable")))
         {
             _canInteract = true;
-            _obj = hit.collider.gameObject.GetComponent<Interactable>();
-            _obj.ShowVFX();
+            if (_obj == null)
+            {
+                _obj = hit.collider.gameObject.GetComponent<Interactable>();
+                _obj.ShowVFX();
+            } 
         }
         else
         {
