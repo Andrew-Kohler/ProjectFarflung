@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8498715499630104760}
+  - component: {fileID: 816189472374777207}
   m_Layer: 0
   m_Name: HalfPlainCeiling
   m_TagString: Untagged
@@ -32,6 +33,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &816189472374777207
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 454136015445804919}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.05
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 4719294963446114483}
+  m_Enabled: 1
 --- !u!1001 &2243165758656638884
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -96,6 +116,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 6800187619988899607, guid: 7422a52b7d31d664498784da711ca3f2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 56ae959505c40ae46b12e62503eebff9, type: 2}
     - target: {fileID: 7852084454094542229, guid: 7422a52b7d31d664498784da711ca3f2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -108,5 +132,10 @@ PrefabInstance:
 --- !u!4 &1777771910075058255 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7422a52b7d31d664498784da711ca3f2, type: 3}
+  m_PrefabInstance: {fileID: 2243165758656638884}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4719294963446114483 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6800187619988899607, guid: 7422a52b7d31d664498784da711ca3f2, type: 3}
   m_PrefabInstance: {fileID: 2243165758656638884}
   m_PrefabAsset: {fileID: 0}

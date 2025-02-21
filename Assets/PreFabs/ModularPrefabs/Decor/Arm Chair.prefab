@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7099466015444382356}
+  - component: {fileID: 6851852198253854440}
+  - component: {fileID: -4091859955102044262}
   m_Layer: 0
   m_Name: Arm Chair
   m_TagString: Untagged
@@ -32,6 +34,45 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6851852198253854440
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4711608868017140596}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.67, y: 0.8, z: 1.06}
+  m_Center: {x: 0, y: 0.39, z: 0}
+--- !u!205 &-4091859955102044262
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4711608868017140596}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.05
+    fadeTransitionWidth: 0
+    renderers: []
+  m_Enabled: 1
 --- !u!1001 &876280747231555273
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -84,6 +125,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6652725513331149018, guid: 44a867f35b3b19143982ced9cf067f26, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e149aca61b306f348b5979b9d2c8542e, type: 2}
     - target: {fileID: -1052647238114628369, guid: 44a867f35b3b19143982ced9cf067f26, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -100,6 +145,14 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 1779917378012884787, guid: 44a867f35b3b19143982ced9cf067f26, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8f85d21f3256a3d43a2a9bd90cacfa77, type: 2}
+    - target: {fileID: 8133898473981979916, guid: 44a867f35b3b19143982ced9cf067f26, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ccbb5a9de0884b14d81bc5f998018dbe, type: 2}
     - target: {fileID: 8999431524975491499, guid: 44a867f35b3b19143982ced9cf067f26, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
