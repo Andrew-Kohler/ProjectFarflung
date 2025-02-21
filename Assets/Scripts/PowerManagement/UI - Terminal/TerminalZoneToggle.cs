@@ -56,7 +56,9 @@ public class TerminalZoneToggle : MonoBehaviour
     private void UpdatePoweredState()
     {
         // set toggle to initial state of zone
-        _toggle.isOn = GameManager.Instance.SceneData.PoweredZones[ZoneIndex];
+        // without notify!! otherwise TogglePowerZone could be called on Awake, causing PoweredZone to call functions on ininitialized list
+        // random behavior since it would depend on which Awake() method happened first (pseudodrandom)
+        _toggle.SetIsOnWithoutNotify(GameManager.Instance.SceneData.PoweredZones[ZoneIndex]);
         _poweredIndicator.SetActive(_toggle.isOn); // powered indicator should match toggle
     }
 
