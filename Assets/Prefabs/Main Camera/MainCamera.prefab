@@ -62,7 +62,8 @@ GameObject:
   m_Component:
   - component: {fileID: 222934858538354614}
   - component: {fileID: 5905370766688801356}
-  m_Layer: 0
+  - component: {fileID: 3077547858503009579}
+  m_Layer: 15
   m_Name: Global Post-Process Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,6 +102,19 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   priority: 0
+--- !u!114 &3077547858503009579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4894068938147633458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0070e0323db79f140bcb944813c9a1d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _profile: {fileID: 11400000, guid: c2d94c02800cca9409b1d99576bee355, type: 2}
 --- !u!1 &9005220659476430823
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +218,7 @@ MonoBehaviour:
   volumeTrigger: {fileID: 9005220659476430818}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 32768
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
   antialiasingMode: 0
