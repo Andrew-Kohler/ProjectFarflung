@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 905549244881997805}
   - component: {fileID: 5839143892476049917}
+  - component: {fileID: 1439587144717167158}
   - component: {fileID: -2941292178495428958}
   m_Layer: 0
   m_Name: Couch
@@ -53,8 +54,29 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.7, y: 0.91, z: 0.7}
-  m_Center: {x: 0, y: 0.47, z: 0}
+  m_Size: {x: 2.45, y: 1.25, z: 0.34}
+  m_Center: {x: 0, y: 0.96, z: 0.39}
+--- !u!65 &1439587144717167158
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3913101509368031579}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.85, y: 0.7, z: 0.7}
+  m_Center: {x: 0, y: 0.32, z: 0}
 --- !u!205 &-2941292178495428958
 LODGroup:
   m_ObjectHideFlags: 0
