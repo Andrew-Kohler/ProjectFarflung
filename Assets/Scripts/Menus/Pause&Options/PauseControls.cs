@@ -77,6 +77,7 @@ public class PauseControls : MonoBehaviour
     public void Resume()
     {
         _pauseMenu.SetActive(false);
+        _optionsMenu.SetActive(false); // ensure options also closes if that was opened (i.e. closed from Escape press)
 
         // lock mouse back to center screen for first-person controls
         Cursor.lockState = CursorLockMode.Locked;
