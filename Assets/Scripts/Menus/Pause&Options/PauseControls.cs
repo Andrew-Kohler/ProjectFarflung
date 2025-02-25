@@ -15,11 +15,13 @@ public class PauseControls : MonoBehaviour
     [SerializeField, Tooltip("used to actually call scene transitions")]
     private SceneTransitionHandler _transitionHandler;
 
-    [Header("Menu Tabs")]
+    [Header("Object References")]
     [SerializeField, Tooltip("Used to enable/disable pause menu.")]
     private GameObject _pauseMenu;
     [SerializeField, Tooltip("Used to enable/disable options menu.")]
     private GameObject _optionsMenu;
+    [SerializeField, Tooltip("Used to enable/disable quit confirmation popup.")]
+    private GameObject _quitConfirmationPopup;
 
     private bool _isPaused = false; // never paused at scene start
 
@@ -97,9 +99,25 @@ public class PauseControls : MonoBehaviour
     }
 
     /// <summary>
+    /// Shows confirmation popup for quitting.
+    /// </summary>
+    public void TryQuit()
+    {
+        _quitConfirmationPopup.SetActive(true);
+    }
+
+    /// <summary>
+    /// Cancels confirmation popup for quitting.
+    /// </summary>
+    public void CancelQuit()
+    {
+        _quitConfirmationPopup.SetActive(false);
+    }
+
+    /// <summary>
     /// Returns to start menu.
     /// </summary>
-    public void Quit()
+    public void ConfirmQuit()
     {
         // ensure transition is able to occur
         Time.timeScale = 1;
