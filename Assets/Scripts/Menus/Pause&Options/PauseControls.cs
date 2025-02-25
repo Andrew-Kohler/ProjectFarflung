@@ -23,9 +23,13 @@ public class PauseControls : MonoBehaviour
 
     private bool _isPaused = false; // never paused at scene start
 
+    private InputActionMap _actionMap;
+
     #region Pause Toggling
     private void OnEnable()
     {
+        _actionMap = InputSystem.actions.FindActionMap("Player");
+
         InputSystem.actions.FindAction("Escape").started += TogglePause;
         InputSystem.actions.FindAction("Escape").Enable();
     }
@@ -54,6 +58,9 @@ public class PauseControls : MonoBehaviour
             // free control over the mouse
             Cursor.lockState = CursorLockMode.None;
 
+            Time.timeScale = 0;
+            _actionMap.Disable();
+
             // TODO: pause controls and time scale
 
             _isPaused = true;
@@ -72,6 +79,9 @@ public class PauseControls : MonoBehaviour
         // lock mouse back to center screen for first-person controls
         Cursor.lockState = CursorLockMode.Locked;
 
+        Time.timeScale = 1;
+        _actionMap.Enable();
+        
         // TODO: resume controls and time scale
 
         _isPaused = false;
@@ -91,6 +101,11 @@ public class PauseControls : MonoBehaviour
     /// </summary>
     public void Quit()
     {
+        // ensure transition is able to occur
+        Time.timeScale = 1;
+        // ensure player cannot re-pause during scene transition
+        InputSystem.actions.FindAction("Escape").Disable();
+
         _transitionHandler.LoadScene(_startSceneName);
     }
     #endregion

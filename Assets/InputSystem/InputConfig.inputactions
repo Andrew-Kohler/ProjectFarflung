@@ -85,15 +85,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Escape",
-                    "type": "Button",
-                    "id": "5bf072e3-e6e6-42c1-a05b-929a342a6c24",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -294,10 +285,27 @@
                     "action": "ToggleFlashlight",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
+                }
+            ]
+        },
+        {
+            "name": "Pausing",
+            "id": "71ba8d8c-c023-4292-baae-1695657a3986",
+            "actions": [
+                {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "2917dc90-39ec-49ef-8915-3676b79f1e7b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
                 {
                     "name": "",
-                    "id": "72da7b64-ba69-42de-9f16-623e83557195",
+                    "id": "9ee2b0d3-9511-4262-8496-b67790cc9e53",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
