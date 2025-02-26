@@ -7,7 +7,7 @@ public class KeyInteractable : Interactable
     [SerializeField, Tooltip("Key name / classification")] private string keyName;
     new void Start()
     {
-
+        base.Start();
     }
 
     // Update is called once per frame
