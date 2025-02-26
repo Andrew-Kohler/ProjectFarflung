@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KeyInteractable : Interactable
 {
-    [SerializeField, Tooltip("Key name / classification")] private string keyName;
+    [SerializeField, Tooltip("Key name / classification")] private PoweredDoor.KeyType keyName;
     new void Start()
     {
         base.Start();
@@ -18,7 +18,7 @@ public class KeyInteractable : Interactable
 
     public override void InteractEffects()
     {
-        GameManager.Instance.SceneData.Keys.Add(keyName);
+        GameManager.Instance.SceneData.Keys.Add(keyName.ToString());
         Destroy(gameObject);
     }
 }

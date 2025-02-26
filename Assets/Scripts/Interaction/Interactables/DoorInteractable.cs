@@ -7,10 +7,6 @@ public class DoorInteractable : Interactable
     [Header("General Controls")]
     [Tooltip("Sibling interactable (switch on the other side of the door)")]
     public DoorInteractable Sibling;
-    [Tooltip("Whether this switch is the leader, or listens to the other switch")]
-    public bool IsPrimary;
-
-    [Header("Primary Sibling Controls")]
     [Tooltip("Door element")]
     public PoweredDoor Element; // Door powered element
     [Tooltip("Door animator")]
@@ -35,23 +31,10 @@ public class DoorInteractable : Interactable
     {
         base.Start();
 
-        if (!IsPrimary) // If this isn't the primary door controller, give it everything it needs to control the door
-        {
-            IsOpen = Sibling.IsOpen;
-            IsBroken = Sibling.IsBroken;
-            RequiredKey = Sibling.RequiredKey;
-            Element = Sibling.Element;
-            DoorAnim = Sibling.DoorAnim;
-        }
-
         // Safety checks
         if (Element is null)
         {
             throw new System.Exception("Door cannot exist without being a PoweredDoor.");
-        }
-        if(IsPrimary && Sibling.IsPrimary)
-        {
-            throw new System.Exception("Both sibling switches on door cannot be the primary switch.");
         }
 
         // Set the default state of the door
