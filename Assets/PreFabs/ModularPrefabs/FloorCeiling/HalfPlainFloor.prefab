@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8470499466672653862}
+  - component: {fileID: 7641581951629743385}
   m_Layer: 0
   m_Name: HalfPlainFloor
   m_TagString: Untagged
@@ -32,6 +33,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &7641581951629743385
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2256311997680783478}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.05
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 1779615436459681813}
+  m_Enabled: 1
 --- !u!1001 &1677995044511203268
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -96,6 +116,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 1151541985875564497, guid: 3cbb62809ff32614f8a770ec22da8cf7, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 56ae959505c40ae46b12e62503eebff9, type: 2}
     - target: {fileID: 6993402303980811560, guid: 3cbb62809ff32614f8a770ec22da8cf7, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -111,6 +135,11 @@ PrefabInstance:
 --- !u!4 &1208045413702686767 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3cbb62809ff32614f8a770ec22da8cf7, type: 3}
+  m_PrefabInstance: {fileID: 1677995044511203268}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1779615436459681813 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1151541985875564497, guid: 3cbb62809ff32614f8a770ec22da8cf7, type: 3}
   m_PrefabInstance: {fileID: 1677995044511203268}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1983842557850387093 stripped
