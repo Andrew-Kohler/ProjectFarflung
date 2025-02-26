@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 public class DoorInteractable : Interactable
 {
     [Header("General Controls")]
-    //[SerializeField, Tooltip("Sibling interactable (switch on the other side of the door)")]
+    [Tooltip("Sibling interactable (switch on the other side of the door)")]
     public DoorInteractable Sibling;
-    //[SerializeField, Tooltip("Whether this switch is the leader, or listens to the other switch")]
+    [Tooltip("Whether this switch is the leader, or listens to the other switch")]
     public bool IsPrimary;
 
     [Header("Primary Sibling Controls")]
@@ -32,7 +31,7 @@ public class DoorInteractable : Interactable
     public PoweredDoor.KeyType RequiredKey;
     
     
-    void Start()
+    new void Start()
     {
         base.Start();
 
@@ -64,8 +63,7 @@ public class DoorInteractable : Interactable
         DoorAnim.speed = 0f;
     }
 
-    // Update is called once per frame
-    void Update()
+    new void Update()
     {
         // Update keeps track of player position and closes the door when they get too far away
         if (IsOpen && !IsActiveDoorCoroutine)
