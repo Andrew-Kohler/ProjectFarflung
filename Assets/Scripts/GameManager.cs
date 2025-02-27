@@ -33,6 +33,9 @@ public class GameManager : MonoBehaviour
                 DontDestroyOnLoad(newManager);
                 _instance = newManager.GetComponent<GameManager>();
                 GameManager.DefaultSceneData(); // set scene data to defaults
+
+                _instance.InitializeGameData();
+                _instance.InitializeOptionsData();
             }
             // return new/existing instance
             return _instance;
@@ -381,10 +384,12 @@ public class GameManager : MonoBehaviour
     [System.Serializable]
     public class OptionsConfig
     {
-        // SETTINGS DATA
         // Volume
+        public float MainVolume;
         public float SFXVolume;
         public float MusicVolume;
+        public float LogVolume;
+
         // Graphics
         public float Brightness;
         // Controls
@@ -401,9 +406,13 @@ public class GameManager : MonoBehaviour
         public OptionsConfig()
         {
             // default values in case of missing values from read file
+
             // Volume
+            MainVolume = 1f;
             SFXVolume = 1f;
             MusicVolume = 1f;
+            LogVolume = 1f;
+
             // Graphics
             Brightness = 1f;
             // Controls
