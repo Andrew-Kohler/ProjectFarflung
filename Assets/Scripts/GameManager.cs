@@ -393,13 +393,7 @@ public class GameManager : MonoBehaviour
         // Camera
         public float Brightness;
         public int FoV;
-
-        // Controls
-        public float CamSensitivity;
-
-        // --------------------------------------------------------- \\
-        // TODO: Add additional options data types here
-        // --------------------------------------------------------- \\
+        public float Sensitivity;
 
         /// <summary>
         /// Default constructor.
@@ -415,13 +409,7 @@ public class GameManager : MonoBehaviour
             // Camera
             ResetBrightness();
             ResetFoV();
-
-            // Controls
-            CamSensitivity = .5f;
-
-            // --------------------------------------------------------- \\
-            // TODO: Add default values for additional options data here
-            // --------------------------------------------------------- \\
+            ResetSensitivity();
         }
 
         /// <summary>
@@ -443,6 +431,11 @@ public class GameManager : MonoBehaviour
         public void ResetFoV()
         {
             FoV = 60;
+        }
+
+        public void ResetSensitivity()
+        {
+            Sensitivity = 3f;
         }
     }
 
