@@ -32,7 +32,6 @@ public class VolumeSlider : MonoBehaviour
         {
             case VolumeType.Main:
                 _slider.SetValueWithoutNotify(Mathf.RoundToInt(GameManager.Instance.OptionsData.MainVolume * 100));
-                _displayText.text = _slider.value.ToString("##0.") + "%";
                 break;
             case VolumeType.Music:
                 _slider.SetValueWithoutNotify(Mathf.RoundToInt(GameManager.Instance.OptionsData.MusicVolume * 100));
@@ -44,6 +43,9 @@ public class VolumeSlider : MonoBehaviour
                 _slider.SetValueWithoutNotify(Mathf.RoundToInt(GameManager.Instance.OptionsData.LogVolume * 100));
                 break;
         }
+
+        // same formula for all types
+        _displayText.text = _slider.value.ToString("##0.") + "%";
     }
 
     /// <summary>
@@ -55,7 +57,6 @@ public class VolumeSlider : MonoBehaviour
         {
             case VolumeType.Main:
                 GameManager.Instance.OptionsData.MainVolume = _slider.value / 100f;
-                _displayText.text = _slider.value.ToString("##0.") + "%";
                 break;
             case VolumeType.Music:
                 GameManager.Instance.OptionsData.MusicVolume = _slider.value / 100f;
@@ -67,5 +68,8 @@ public class VolumeSlider : MonoBehaviour
                 GameManager.Instance.OptionsData.LogVolume = _slider.value / 100f;
                 break;
         }
+
+        // same formula for all types
+        _displayText.text = _slider.value.ToString("##0.") + "%";
     }
 }

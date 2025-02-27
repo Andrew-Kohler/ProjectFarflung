@@ -408,10 +408,7 @@ public class GameManager : MonoBehaviour
             // default values in case of missing values from read file
 
             // Volume
-            MainVolume = 1f;
-            SFXVolume = 1f;
-            MusicVolume = 1f;
-            LogVolume = 1f;
+            ResetVolumeToDefaults();
 
             // Graphics
             Brightness = 1f;
@@ -421,6 +418,17 @@ public class GameManager : MonoBehaviour
             // --------------------------------------------------------- \\
             // TODO: Add default values for additional options data here
             // --------------------------------------------------------- \\
+        }
+
+        /// <summary>
+        /// Can be called to reset all volume sliders to their default values
+        /// </summary>
+        public void ResetVolumeToDefaults()
+        {
+            MainVolume = 0.8f;
+            SFXVolume = 0.8f;
+            MusicVolume = 0.8f;
+            LogVolume = 0.8f;
         }
     }
 
