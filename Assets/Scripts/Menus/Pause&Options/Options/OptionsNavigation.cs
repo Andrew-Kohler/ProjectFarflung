@@ -9,6 +9,10 @@ using UnityEngine.UI;
 /// </summary>
 public class OptionsNavigation : MonoBehaviour
 {
+    [Header("Configuration")]
+    [SerializeField, Tooltip("Whether the current scene is the start menu - makes back button close EVERYTHING instead of return to pause.")]
+    private bool _isMainMenu = false;
+
     [Header("Object References")]
     [SerializeField, Tooltip("Used to re-enable pause menu with back button.")]
     private GameObject _pauseMenuObject;
@@ -38,15 +42,23 @@ public class OptionsNavigation : MonoBehaviour
 
     private void OnEnable()
     {
-        // Ensure always starts on controls tab whenever re-opening options menu
-        InputSystem.actions.FindAction("Escape").started += context => ToControls();
-        InputSystem.actions.FindAction("Escape").Enable();
+        // in main menu escape key does NOTHING
+        if (!_isMainMenu)
+        {
+            // Ensure always starts on controls tab whenever re-opening options menu
+            InputSystem.actions.FindAction("Escape").started += context => ToControls();
+            InputSystem.actions.FindAction("Escape").Enable();
+        }
     }
 
     private void OnDisable()
     {
-        InputSystem.actions.FindAction("Escape").started -= context => ToControls();
-        InputSystem.actions.FindAction("Escape").Disable();
+        // in main menu escape key does NOTHING
+        if (!_isMainMenu)
+        {
+            InputSystem.actions.FindAction("Escape").started -= context => ToControls();
+            InputSystem.actions.FindAction("Escape").Disable();
+        }
     }
 
     #region Button Functions
@@ -91,8 +103,16 @@ public class OptionsNavigation : MonoBehaviour
     /// </summary>
     public void BackToPause()
     {
-        _pauseMenuObject.SetActive(true);
-        _optionsMenuObject.SetActive(false);
+        if (_isMainMenu)
+        {
+            _pauseMenuObject.SetActive(false);
+            _optionsMenuObject.SetActive(false);
+        }
+        else
+        {
+            _pauseMenuObject.SetActive(true);
+            _optionsMenuObject.SetActive(false);
+        }
 
         ToControls(); // return to default controls enabled state
     }

@@ -9,6 +9,10 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class PauseControls : MonoBehaviour
 {
+    [Header("Configuration")]
+    [SerializeField, Tooltip("Whether this is being used in the StartMenu - i.e. pause controls are disable.")]
+    private bool _isMainMenu = false;
+
     [Header("Quit Button")]
     [SerializeField, Tooltip("Scene name to return to upon pressing quit")]
     private string _startSceneName;
@@ -30,6 +34,13 @@ public class PauseControls : MonoBehaviour
     #region Pause Toggling
     private void OnEnable()
     {
+        // remove pause controls component in main menu since no pausing should be permitted
+        if (_isMainMenu)
+        {
+            Destroy(this);
+            return; // avoid still assigning the below keybindings
+        }
+
         _actionMap = InputSystem.actions.FindActionMap("Player");
 
         InputSystem.actions.FindAction("Escape").started += TogglePause;
