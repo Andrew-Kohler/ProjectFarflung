@@ -20,7 +20,7 @@ public class SensitivitySlider : MonoBehaviour
     private void Awake()
     {
         // initial configuration to match save data
-        _slider.SetValueWithoutNotify(GameManager.Instance.OptionsData.FoV);
+        _slider.SetValueWithoutNotify(InverseRemapNonlinear(GameManager.Instance.OptionsData.Sensitivity));
         _displayText.text = RemapNonlinear(_slider.value).ToString("#0.00");
     }
 
@@ -65,5 +65,13 @@ public class SensitivitySlider : MonoBehaviour
     {
         // appropriate inverse square root function
         return Mathf.Sqrt((brightnessVal - _minSensitivity) / (_maxSensitivity - _minSensitivity));
+    }
+
+    /// <summary>
+    /// Called by reset sensitivity button.
+    /// </summary>
+    public void ResetSensitivity()
+    {
+        GameManager.Instance.OptionsData.ResetSensitivity();
     }
 }

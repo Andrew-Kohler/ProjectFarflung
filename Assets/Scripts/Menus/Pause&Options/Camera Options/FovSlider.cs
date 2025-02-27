@@ -40,4 +40,12 @@ public class FovSlider : MonoBehaviour
         GameManager.Instance.OptionsData.FoV = Mathf.RoundToInt(_slider.value);
         _displayText.text = _slider.value.ToString("00.");
     }
+
+    /// <summary>
+    /// Called by reset FoV button.
+    /// </summary>
+    public void ResetFoV()
+    {
+        GameManager.Instance.OptionsData.ResetFoV();
+    }
 }
