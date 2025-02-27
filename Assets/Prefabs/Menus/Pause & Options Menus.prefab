@@ -184,6 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fca948a11ac3014a9503bdc9315284a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isMainMenu: 0
   _startSceneName: StartMenu
   _transitionHandler: {fileID: 5306277824455247560}
   _pauseMenu: {fileID: 1041127907332957217}
@@ -201,6 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b334e2fa6936a4b8bb53315f1d3680, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isMainMenu: 0
   _pauseMenuObject: {fileID: 1041127907332957217}
   _optionsMenuObject: {fileID: 6192580445264173361}
   _controlsTabObject: {fileID: 2357315990919861184}
@@ -1374,7 +1376,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1067839316751296755
 RectTransform:
   m_ObjectHideFlags: 0
