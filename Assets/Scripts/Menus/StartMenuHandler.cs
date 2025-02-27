@@ -131,7 +131,7 @@ public class StartMenuHandler : MonoBehaviour
         GameManager.Instance.SceneData.NewGameStarted = true;
         GameManager.Instance.SaveSceneDataToGameData(); // ensure new save state transfers not only to scene data but also to game data
         // load brightness config scene
-        _transitionHandler.LoadScene(_levelSceneName);
+        _transitionHandler.LoadScene(_brightnessConfigSceneName);
     }
 
     /// <summary>
