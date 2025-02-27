@@ -48,6 +48,37 @@ public class VolumeSlider : MonoBehaviour
         _displayText.text = _slider.value.ToString("##0.") + "%";
     }
 
+    private void Update()
+    {
+        // ensure slider updates if values modified from outside source (i.e. reset to defaults button)
+        int currVal = 0;
+        switch (_type)
+        {
+            case VolumeType.Main:
+                currVal = Mathf.RoundToInt(GameManager.Instance.OptionsData.MainVolume * 100);
+                break;
+            case VolumeType.Music:
+                currVal = Mathf.RoundToInt(GameManager.Instance.OptionsData.MusicVolume * 100);
+                break;
+            case VolumeType.SFX:
+                currVal = Mathf.RoundToInt(GameManager.Instance.OptionsData.SFXVolume * 100);
+                break;
+            case VolumeType.AudioLog:
+                currVal = Mathf.RoundToInt(GameManager.Instance.OptionsData.LogVolume * 100);
+                break;
+            default:
+                throw new System.Exception("Something is wrong with a volume slider, how is it none of the available volume types??");
+        }
+
+        // same formula for all types, if a change occurred
+        if (currVal != Mathf.RoundToInt(_slider.value))
+        {
+            _slider.SetValueWithoutNotify(currVal);
+            _displayText.text = _slider.value.ToString("##0.") + "%";
+        }
+        
+    }
+
     /// <summary>
     /// Called when the slider value is changed to update the saved values to match
     /// </summary>
