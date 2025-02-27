@@ -390,8 +390,10 @@ public class GameManager : MonoBehaviour
         public float MusicVolume;
         public float LogVolume;
 
-        // Graphics
+        // Camera
         public float Brightness;
+        public int FoV;
+
         // Controls
         public float CamSensitivity;
 
@@ -410,8 +412,10 @@ public class GameManager : MonoBehaviour
             // Volume
             ResetVolumeToDefaults();
 
-            // Graphics
-            Brightness = 1f;
+            // Camera
+            ResetBrightness();
+            ResetFoV();
+
             // Controls
             CamSensitivity = .5f;
 
@@ -429,6 +433,16 @@ public class GameManager : MonoBehaviour
             SFXVolume = 0.8f;
             MusicVolume = 0.8f;
             LogVolume = 0.8f;
+        }
+
+        public void ResetBrightness()
+        {
+            Brightness = 1f;
+        }
+
+        public void ResetFoV()
+        {
+            FoV = 60;
         }
     }
 
