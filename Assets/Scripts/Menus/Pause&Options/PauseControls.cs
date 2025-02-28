@@ -58,6 +58,11 @@ public class PauseControls : MonoBehaviour
     /// </summary>
     private void TogglePause(InputAction.CallbackContext context)
     {
+        // Block pausing control during load-in of new scene
+        // if it was allowed, then the UI of pause menu would be unclickable
+        if (!_transitionHandler.IsDoneEnter())
+            return;
+
         // Resume
         if (_isPaused)
         {
