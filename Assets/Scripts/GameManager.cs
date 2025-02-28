@@ -489,13 +489,29 @@ public class GameManager : MonoBehaviour
         Instance.OptionsData = newSaveData;
     }
 
-    // TODO: any custom public functions for options menu
-    // reset SFX sliders to defaults
-    // reset Controls to defaults
-    // etc...
-    //
-    // Note: if those reset to defaults functions are made,
-    // then the default initialization in the above function should be replaced by calls to the function where possible
+    /// <summary>
+    /// Returns volume level for SFX. Accounts for main volume reduction.
+    /// </summary>
+    public static float GetSFXVolume()
+    {
+        return Instance.OptionsData.SFXVolume * Instance.OptionsData.MainVolume;
+    }
+
+    /// <summary>
+    /// Returns volume level for Music. Accounts for main volume reduction.
+    /// </summary>
+    public static float GetMusicVolume()
+    {
+        return Instance.OptionsData.MusicVolume * Instance.OptionsData.MainVolume;
+    }
+
+    /// <summary>
+    /// Returns volume level for Audio Logs. Accounts for main volume reduction.
+    /// </summary>
+    public static float GetLogVolume()
+    {
+        return Instance.OptionsData.LogVolume * Instance.OptionsData.MainVolume;
+    }
     #endregion
 
     private void OnApplicationQuit()
