@@ -44,6 +44,10 @@ public class MapTabController : MonoBehaviour
     private int _currentFloor;      // The floor the player is on
     private int _currentHUDFloor;   // The floor the HUD is displaying
 
+    private int _visitationL1Length; // Kept because OnDisable tab cleanup calls the GameManager after it's destroyed
+    private int _visitationL2Length;
+    private int _visitationL3Length;
+
     private InputAction _arrowAction;
 
     private void OnEnable()
@@ -72,6 +76,10 @@ public class MapTabController : MonoBehaviour
         _currentHUDFloor = _currentFloor;
         _floorSelector.transform.position = _floorNumbers[_currentHUDFloor - 1].transform.position;
         _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(true);
+
+        _visitationL1Length = GameManager.Instance.SceneData.VisitationList1F.Length;
+        _visitationL2Length = GameManager.Instance.SceneData.VisitationList2F.Length;
+        _visitationL3Length = GameManager.Instance.SceneData.VisitationList3F.Length;
     }
 
     #region Map Zones
@@ -81,7 +89,7 @@ public class MapTabController : MonoBehaviour
     public void RevealHUDMapStart() // On scene start, show everything the player has been able to explore
     {
         // Reveals all explored images so the player can still see them when they switch tabs
-        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList1F.Length; i++)
+        for (int i = 0; i < _visitationL1Length; i++)
         {
             if (GameManager.Instance.SceneData.VisitationList1F[i])
             {
@@ -89,7 +97,7 @@ public class MapTabController : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList2F.Length; i++)
+        for (int i = 0; i < _visitationL2Length; i++)
         {
             if (GameManager.Instance.SceneData.VisitationList2F[i])
             {
@@ -97,7 +105,7 @@ public class MapTabController : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList3F.Length; i++)
+        for (int i = 0; i < _visitationL3Length; i++)
         {
             if (GameManager.Instance.SceneData.VisitationList3F[i] == true)
             {
@@ -112,17 +120,17 @@ public class MapTabController : MonoBehaviour
     public void HideHUDMapEnd()
     {
         // Reveals all explored images so the player can still see them when they switch tabs
-        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList1F.Length; i++)
+        for (int i = 0; i < _visitationL1Length; i++)
         {
             _1FHUDImages[i].enabled = false;
         }
 
-        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList2F.Length; i++)
+        for (int i = 0; i < _visitationL2Length; i++)
         {
             _2FHUDImages[i].enabled = false;
         }
 
-        for (int i = 0; i < GameManager.Instance.SceneData.VisitationList3F.Length; i++)
+        for (int i = 0; i < _visitationL3Length; i++)
         {
 
              _3FHUDImages[i].enabled = false;

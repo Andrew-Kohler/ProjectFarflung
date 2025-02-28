@@ -88,8 +88,11 @@ public class GameManager : MonoBehaviour
         // list of names of boxes that have been fixed (since states only added and not ever removed - it is easier to use a List)
         public List<string> FixedWireBoxes;
 
+        // KEYCARDS
+        // List of names of keys the player has picked up
+        public List<string> Keys;
+
         // previous save terminal (or none in case of game start)
-        // picked up keycard list
         // etc...
 
         // --------------------------------------------------------- \\
@@ -126,7 +129,7 @@ public class GameManager : MonoBehaviour
 
             FoundLogNames = new List<string>(); // Found log file names
             FoundLogReadStatus = new List<bool>();
-            LogIndex = 0;                                    // Index in the HUD list that the player has selected
+            LogIndex = 0;                       // Index in the HUD list that the player has selected
 
             // POWER MANAGEMENT
             // arrays must be initialized like this otherwise json lists will be empty instead of properly initialized
@@ -144,6 +147,9 @@ public class GameManager : MonoBehaviour
 
             // BUSTED WIRE BOXES
             FixedWireBoxes = new List<string>(); // new empty list (expandable)
+
+            // KEYCARDS
+            Keys = new List<string>();
 
             // --------------------------------------------------------- \\
             // TODO: Add default values for additional progression data here
@@ -199,6 +205,8 @@ public class GameManager : MonoBehaviour
             // BUSTED WIRE BOXES
             FixedWireBoxes = new List<string>(other.FixedWireBoxes);
 
+            // KEYS
+            Keys = new List<string>(other.Keys);
             // --------------------------------------------------------- \\
             // TODO: Add additional progression data value copies here
             // --------------------------------------------------------- \\
