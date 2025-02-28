@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3251248846442661750}
   - component: {fileID: 5625386149350956315}
+  - component: {fileID: 4965146530036814926}
   - component: {fileID: 7707721495598292427}
   - component: {fileID: 6483346157406733368}
-  - component: {fileID: 4965146530036814926}
   m_Layer: 0
   m_Name: Door Small Plain Wall
   m_TagString: Untagged
@@ -58,6 +58,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.78, y: 3, z: 0.3}
   m_Center: {x: 1.15, y: 1.5, z: 0}
+--- !u!114 &4965146530036814926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3190364584999887557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d62864f8dfa483419a0d9643f49d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PowerDraw: 0
+  _switchIdentifier: 
+  _isSwitchOffByDefault: 0
+  _wireBoxIdentifier: 
+  doorPanels:
+  - {fileID: 6301874696814177089}
+  - {fileID: 5427432749132982995}
+  RequiredKey: 0
+  IsOpen: 0
+  IsBroken: 0
 --- !u!65 &7707721495598292427
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -100,28 +122,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 1.05, z: 0.3}
   m_Center: {x: 0, y: 2.47, z: 0}
---- !u!114 &4965146530036814926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3190364584999887557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d62864f8dfa483419a0d9643f49d7ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PowerDraw: 0
-  _switchIdentifier: 
-  _isSwitchOffByDefault: 0
-  _wireBoxIdentifier: 
-  doorPanels:
-  - {fileID: 6301874696814177089}
-  - {fileID: 5427432749132982995}
-  RequiredKey: 0
-  IsOpen: 0
-  IsBroken: 0
 --- !u!1001 &1546188877682606686
 PrefabInstance:
   m_ObjectHideFlags: 0
