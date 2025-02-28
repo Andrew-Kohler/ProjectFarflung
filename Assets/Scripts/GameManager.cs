@@ -394,6 +394,7 @@ public class GameManager : MonoBehaviour
         public float Brightness;
         public int FoV;
         public float Sensitivity;
+        public bool CameraBobbing;
 
         /// <summary>
         /// Default constructor.
@@ -410,6 +411,7 @@ public class GameManager : MonoBehaviour
             ResetBrightness();
             ResetFoV();
             ResetSensitivity();
+            ResetBobbing();
         }
 
         /// <summary>
@@ -436,6 +438,11 @@ public class GameManager : MonoBehaviour
         public void ResetSensitivity()
         {
             Sensitivity = 3f;
+        }
+
+        public void ResetBobbing()
+        {
+            CameraBobbing = true;
         }
     }
 
