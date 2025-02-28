@@ -35,7 +35,7 @@ Transform:
   - {fileID: 483951942246819590}
   - {fileID: 1368975448856585653}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &5625386149350956315
 BoxCollider:
@@ -120,6 +120,8 @@ MonoBehaviour:
   - {fileID: 6301874696814177089}
   - {fileID: 5427432749132982995}
   RequiredKey: 0
+  IsOpen: 0
+  IsBroken: 0
 --- !u!1001 &1546188877682606686
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -276,6 +278,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4965146530036814926}
     - target: {fileID: 838185142904863190, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
+      propertyPath: DoorAnim
+      value: 
+      objectReference: {fileID: 8131509351805305884}
+    - target: {fileID: 1695332597701261380, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
+      propertyPath: Element
+      value: 
+      objectReference: {fileID: 4965146530036814926}
+    - target: {fileID: 1695332597701261380, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
       propertyPath: DoorAnim
       value: 
       objectReference: {fileID: 8131509351805305884}
