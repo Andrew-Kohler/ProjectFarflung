@@ -59,6 +59,7 @@ namespace StarterAssets
 		private float _rotationVelocity;
 		private float _verticalVelocity;
 		private float _terminalVelocity = 53.0f;
+		private bool _canMove = true;
 
 		// timeout deltatime
 		private float _jumpTimeoutDelta;
@@ -86,7 +87,17 @@ namespace StarterAssets
 			}
 		}
 
-		private void Awake()
+        private void OnEnable()
+        {
+			TerminalInteractable.playerActiveStateChange += ToggleCanMove;
+        }
+
+        private void OnDisable()
+        {
+			TerminalInteractable.playerActiveStateChange -= ToggleCanMove;
+		}
+
+        private void Awake()
 		{
 			// get a reference to our main camera
 			if (_mainCamera == null)
@@ -112,14 +123,19 @@ namespace StarterAssets
 
 		private void Update()
 		{
-			JumpAndGravity();
-			GroundedCheck();
-			Move();
+            if (_canMove)
+            {
+				JumpAndGravity();
+				GroundedCheck();
+				Move();
+			}
+			
 		}
 
 		private void LateUpdate()
 		{
-			CameraRotation();
+			if(_canMove)
+				CameraRotation();
 		}
 
 		private void GroundedCheck()
@@ -264,5 +280,10 @@ namespace StarterAssets
 			// when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
 			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
 		}
+
+		private void ToggleCanMove(bool state)
+        {
+			_canMove = state;
+        }
 	}
 }
