@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4890787161148117010}
-  - component: {fileID: 7397691199010413538}
+  - component: {fileID: 1119867765603845133}
   - component: {fileID: -7722763044037613913}
   m_Layer: 0
   m_Name: Curved Floor Large
@@ -34,8 +34,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &7397691199010413538
-MeshCollider:
+--- !u!65 &1119867765603845133
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -52,10 +52,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -3305745604044522073, guid: 65928c4f917084f4196ecdcb0963883d, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 12, y: 0.1, z: 12}
+  m_Center: {x: 0, y: 0.05, z: 0}
 --- !u!205 &-7722763044037613913
 LODGroup:
   m_ObjectHideFlags: 0

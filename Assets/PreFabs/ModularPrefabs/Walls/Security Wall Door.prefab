@@ -117,9 +117,10 @@ LODGroup:
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 3074641303422004407}
-    - renderer: {fileID: 2824848407085438884}
+    - renderer: {fileID: 4950058304266549342}
     - renderer: {fileID: 3325395306952947456}
     - renderer: {fileID: 2240737051987358418}
+    - renderer: {fileID: 179814607585492184}
   m_Enabled: 1
 --- !u!1001 &5354289094007829595
 PrefabInstance:
@@ -237,14 +238,14 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 8478795414410014852}
   m_SourcePrefab: {fileID: 100100000, guid: 5527264a082278e46aedbf28e52c95f9, type: 3}
+--- !u!23 &179814607585492184 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -4021549545805936509, guid: 5527264a082278e46aedbf28e52c95f9, type: 3}
+  m_PrefabInstance: {fileID: 5354289094007829595}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &2240737051987358418 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 6149370527633278601, guid: 5527264a082278e46aedbf28e52c95f9, type: 3}
-  m_PrefabInstance: {fileID: 5354289094007829595}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &2824848407085438884 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -1333732649357646849, guid: 5527264a082278e46aedbf28e52c95f9, type: 3}
   m_PrefabInstance: {fileID: 5354289094007829595}
   m_PrefabAsset: {fileID: 0}
 --- !u!23 &3074641303422004407 stripped
@@ -283,6 +284,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.98627114, y: 2.348038, z: 0.101269186}
   m_Center: {x: -0.49313557, y: 0, z: 0}
+--- !u!23 &4950058304266549342 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -8143525874448069627, guid: 5527264a082278e46aedbf28e52c95f9, type: 3}
+  m_PrefabInstance: {fileID: 5354289094007829595}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5603877535020012464 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5527264a082278e46aedbf28e52c95f9, type: 3}

@@ -53,8 +53,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.91, y: 1, z: 0.66}
-  m_Center: {x: 0, y: 0.54, z: 0}
+  m_Size: {x: 1.41, y: 2.03, z: 1.11}
+  m_Center: {x: 0, y: 1.05, z: -0.07}
 --- !u!205 &-1237809477238934779
 LODGroup:
   m_ObjectHideFlags: 0
@@ -125,6 +125,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7687277180854752150, guid: f828fffdbf186044c89bf287605d5694, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ccbb5a9de0884b14d81bc5f998018dbe, type: 2}
+    - target: {fileID: -4337207866367442589, guid: f828fffdbf186044c89bf287605d5694, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ccbb5a9de0884b14d81bc5f998018dbe, type: 2}
     - target: {fileID: 919132149155446097, guid: f828fffdbf186044c89bf287605d5694, type: 3}
       propertyPath: m_Name
       value: EggChair
@@ -133,6 +141,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 1860641818344424419, guid: f828fffdbf186044c89bf287605d5694, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 74a3de2088f70a24a971e1e1b4496c33, type: 2}
     - target: {fileID: 2448734117451779196, guid: f828fffdbf186044c89bf287605d5694, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647

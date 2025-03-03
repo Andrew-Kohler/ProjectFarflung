@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6641753842672185925}
   - component: {fileID: 2583377147807665769}
   - component: {fileID: -7636804237175126895}
+  - component: {fileID: 6932870317529575795}
+  - component: {fileID: 7516874868251163131}
   m_Layer: 0
   m_Name: Long Table
   m_TagString: Untagged
@@ -53,8 +55,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.5, y: 0.43, z: 0.73}
-  m_Center: {x: 0, y: 0.21, z: -0.06}
+  m_Size: {x: 1.96, y: 0.72, z: 0.73}
+  m_Center: {x: 0, y: 0.39, z: -0.27}
 --- !u!205 &-7636804237175126895
 LODGroup:
   m_ObjectHideFlags: 0
@@ -73,6 +75,48 @@ LODGroup:
     fadeTransitionWidth: 0
     renderers: []
   m_Enabled: 1
+--- !u!65 &6932870317529575795
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495353778749808201}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.84, y: 0.72, z: 0.99}
+  m_Center: {x: 1.36, y: 0.39, z: -0.14}
+--- !u!65 &7516874868251163131
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495353778749808201}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.84, y: 0.72, z: 0.99}
+  m_Center: {x: -1.36, y: 0.39, z: -0.14}
 --- !u!1001 &5256869008260624368
 PrefabInstance:
   m_ObjectHideFlags: 0
