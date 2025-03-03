@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Stores and manages progression data saved between scenes and sessions.
@@ -33,6 +34,14 @@ public class GameManager : MonoBehaviour
                 DontDestroyOnLoad(newManager);
                 _instance = newManager.GetComponent<GameManager>();
                 GameManager.DefaultSceneData(); // set scene data to defaults
+
+                // ensures controls are updated with player overrides
+                // loaded here so it always happens at the start and not after rebindings are needed
+                string rebindsJson = PlayerPrefs.GetString("rebinds");
+                InputSystem.actions.LoadBindingOverridesFromJson(rebindsJson);
+
+                _instance.InitializeGameData();
+                _instance.InitializeOptionsData();
             }
             // return new/existing instance
             return _instance;
@@ -389,18 +398,17 @@ public class GameManager : MonoBehaviour
     [System.Serializable]
     public class OptionsConfig
     {
-        // SETTINGS DATA
         // Volume
+        public float MainVolume;
         public float SFXVolume;
         public float MusicVolume;
-        // Graphics
-        public float Brightness;
-        // Controls
-        public float CamSensitivity;
+        public float LogVolume;
 
-        // --------------------------------------------------------- \\
-        // TODO: Add additional options data types here
-        // --------------------------------------------------------- \\
+        // Camera
+        public float Brightness;
+        public int FoV;
+        public float Sensitivity;
+        public bool CameraBobbing;
 
         /// <summary>
         /// Default constructor.
@@ -409,17 +417,46 @@ public class GameManager : MonoBehaviour
         public OptionsConfig()
         {
             // default values in case of missing values from read file
-            // Volume
-            SFXVolume = 1f;
-            MusicVolume = 1f;
-            // Graphics
-            Brightness = 1f;
-            // Controls
-            CamSensitivity = .5f;
 
-            // --------------------------------------------------------- \\
-            // TODO: Add default values for additional options data here
-            // --------------------------------------------------------- \\
+            // Volume
+            ResetVolumeToDefaults();
+
+            // Camera
+            ResetBrightness();
+            ResetFoV();
+            ResetSensitivity();
+            ResetBobbing();
+        }
+
+        /// <summary>
+        /// Can be called to reset all volume sliders to their default values
+        /// </summary>
+        public void ResetVolumeToDefaults()
+        {
+            MainVolume = 0.8f;
+            SFXVolume = 0.8f;
+            MusicVolume = 0.8f;
+            LogVolume = 0.8f;
+        }
+
+        public void ResetBrightness()
+        {
+            Brightness = 1f;
+        }
+
+        public void ResetFoV()
+        {
+            FoV = 60;
+        }
+
+        public void ResetSensitivity()
+        {
+            Sensitivity = 3f;
+        }
+
+        public void ResetBobbing()
+        {
+            CameraBobbing = true;
         }
     }
 
@@ -466,17 +503,37 @@ public class GameManager : MonoBehaviour
         Instance.OptionsData = newSaveData;
     }
 
-    // TODO: any custom public functions for options menu
-    // reset SFX sliders to defaults
-    // reset Controls to defaults
-    // etc...
-    //
-    // Note: if those reset to defaults functions are made,
-    // then the default initialization in the above function should be replaced by calls to the function where possible
+    /// <summary>
+    /// Returns volume level for SFX. Accounts for main volume reduction.
+    /// </summary>
+    public static float GetSFXVolume()
+    {
+        return Instance.OptionsData.SFXVolume * Instance.OptionsData.MainVolume;
+    }
+
+    /// <summary>
+    /// Returns volume level for Music. Accounts for main volume reduction.
+    /// </summary>
+    public static float GetMusicVolume()
+    {
+        return Instance.OptionsData.MusicVolume * Instance.OptionsData.MainVolume;
+    }
+
+    /// <summary>
+    /// Returns volume level for Audio Logs. Accounts for main volume reduction.
+    /// </summary>
+    public static float GetLogVolume()
+    {
+        return Instance.OptionsData.LogVolume * Instance.OptionsData.MainVolume;
+    }
     #endregion
 
     private void OnApplicationQuit()
     {
+        // save controls rebindings
+        string rebindsJson = InputSystem.actions.SaveBindingOverridesAsJson();
+        PlayerPrefs.SetString("rebinds", rebindsJson);
+
         // Save OPTIONS DATA to file
         string optionsData = JsonUtility.ToJson(Instance.OptionsData);
         string optionsPath = Application.persistentDataPath + "/OptionsData.json";

@@ -11,6 +11,10 @@ using UnityEditor;
 /// </summary>
 public class StartMenuHandler : MonoBehaviour
 {
+    [Header("Options Navigation")]
+    [SerializeField, Tooltip("Enabled/DIsabled to swap between start menu and options menu")]
+    private GameObject _optionsContainer;
+
     [Header("Credits Navigation")]
     [SerializeField, Tooltip("Enabled/Disabled to swap between main menu and credits.")]
     private GameObject _mainMenuContainer;
@@ -80,9 +84,8 @@ public class StartMenuHandler : MonoBehaviour
     /// </summary>
     public void OptionsButton()
     {
-        // TODO: interface with pause/options canvas once its created
-        // Modified Pause Canvas is able to enable itself when this is toggled on
-        // GameManager.Instance.IsPaused = true;
+        // bypasses pause menu of pause/options canvas
+        _optionsContainer.SetActive(true);
     }
 
     /// <summary>
