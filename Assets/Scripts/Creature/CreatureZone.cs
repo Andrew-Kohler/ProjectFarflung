@@ -8,28 +8,32 @@ using UnityEngine;
 public class CreatureZone : MonoBehaviour
 {
     [Header("Configuration")]
-    [SerializeField, Tooltip("List of Colliders that comprise the CreatureZone.")]
-    private CreatureZoneCollider[] _colliders;
-    [SerializeField, Tooltip("Spawn zone options for spawning the creature. The farthest location will be prioritized")]
-    private Transform[] _spawnLocations;
     [SerializeField, Tooltip("Corresponding PoweredLight that must be off for the creture to be able to spawn.")]
     private PoweredLight _correspondingLight;
 
     [Header("References")]
     [SerializeField, Tooltip("Used to spawn/despawn creature functionality.")]
     private CreatureMotion _creature;
+    [SerializeField, Tooltip("Parent of spawn locations for the creature.")]
+    private GameObject _spawnLocationsParent;
+    [SerializeField, Tooltip("Parent of colliders used to fetch colliders on start.")]
+    private GameObject _collidersParent;
 
+    private Transform[] _spawnLocations;
+    private CreatureZoneCollider[] _colliders;
     private bool _isPlayerContained = false;
 
     private void Awake()
     {
         // Precondition: at least one spawn location
+        _spawnLocations = _spawnLocationsParent.GetComponentsInChildren<Transform>();
         if (_spawnLocations.Length == 0)
-            throw new System.Exception("Invalid Creature Zone Configuration: MUST have at least one spawn location");
+            throw new System.Exception("Invalid Creature Zone Configuration: MUST have at least one spawn location transform.");
 
         // Precondition: at least one collider
+        _colliders = _collidersParent.GetComponentsInChildren<CreatureZoneCollider>();
         if (_colliders.Length == 0)
-            throw new System.Exception("Invalid Creature Zone Configuration: MUST have at least one associated CreatureZoneCollider.");
+            throw new System.Exception("Invalid Creature Zone Configuration: MUST have at least one associated CreatureZoneCollider contained in Colliders object.");
     }
 
     // Update is called once per frame
