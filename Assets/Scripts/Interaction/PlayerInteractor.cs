@@ -36,17 +36,32 @@ public class PlayerInteractor : MonoBehaviour
     void Update()
     {
         ray = new Ray(this.transform.position, transform.forward * _raycastDistance);
-        //Debug.DrawRay(this.transform.position, transform.forward * _raycastDistance, Color.green);
-        if (Physics.Raycast(ray, out hit, _raycastDistance, LayerMask.GetMask("Interactable")))
+        Debug.DrawRay(this.transform.position, transform.forward * _raycastDistance, Color.green);
+        if (Physics.Raycast(ray, out hit, _raycastDistance, LayerMask.GetMask("Interactable", "Default")))
         {
-            _canInteract = true;
-            _obj = hit.collider.gameObject.GetComponent<Interactable>();
-            _obj.ShowVFX();
+            if (hit.collider.CompareTag("Interactable")){
+                _canInteract = true;
+                if (_obj == null)
+                {
+                    _obj = hit.collider.gameObject.GetComponent<Interactable>();
+                    _obj.ShowVFX();
+                }
+            }
+            else
+            {
+                _canInteract = false;
+                if (_obj != null)
+                {
+                    _obj.HideVFX();
+                    _obj = null;
+                }
+            }
+            
         }
         else
         {
             _canInteract = false;
-            if(_obj != null)
+            if (_obj != null)
             {
                 _obj.HideVFX();
                 _obj = null;
