@@ -26,7 +26,9 @@ public class CreatureZone : MonoBehaviour
     private void Awake()
     {
         // Precondition: at least one spawn location
-        _spawnLocations = _spawnLocationsParent.GetComponentsInChildren<Transform>();
+        _spawnLocations = new Transform[_spawnLocationsParent.transform.childCount];
+        for (int i = 0; i < _spawnLocations.Length; i++)
+            _spawnLocations[i] = _spawnLocationsParent.transform.GetChild(i);
         if (_spawnLocations.Length == 0)
             throw new System.Exception("Invalid Creature Zone Configuration: MUST have at least one spawn location transform.");
 
