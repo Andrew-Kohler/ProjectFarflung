@@ -124,13 +124,9 @@ public class FileTabController : MonoBehaviour
     {
         // unbind input updating
         _upArrow.started -= context => FileInteraction();
-        _upArrow.Disable();
         _rightArrow.started -= context => FileInteraction();
-        _rightArrow.Disable();
         _downArrow.started -= context => FileInteraction();
-        _downArrow.Disable();
         _leftArrow.started -= context => FileInteraction();
-        _leftArrow.Disable();
 
         TabClose();
     }

@@ -75,13 +75,9 @@ public class MapTabController : MonoBehaviour
 
         // unbind input updating
         _upArrow.started -= context => UpdateFloor();
-        _upArrow.Disable();
         _rightArrow.started -= context => UpdateFloor();
-        _rightArrow.Disable();
         _downArrow.started -= context => UpdateFloor();
-        _downArrow.Disable();
         _leftArrow.started -= context => UpdateFloor();
-        _leftArrow.Disable();
     }
 
     void Start()
