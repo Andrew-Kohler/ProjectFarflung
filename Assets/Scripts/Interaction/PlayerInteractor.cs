@@ -71,7 +71,7 @@ public class PlayerInteractor : MonoBehaviour
 
     private void Interact()
     {
-        if (_canInteract)
+        if (_canInteract && GameManager.Instance.PlayerEnabled)
         {
             _obj.GetComponent<Interactable>().InteractEffects();
         }

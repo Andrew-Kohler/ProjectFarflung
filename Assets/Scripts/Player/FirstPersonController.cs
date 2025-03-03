@@ -59,7 +59,6 @@ namespace StarterAssets
 		private float _rotationVelocity;
 		private float _verticalVelocity;
 		private float _terminalVelocity = 53.0f;
-		private bool _canMove = true;
 
 		// timeout deltatime
 		private float _jumpTimeoutDelta;
@@ -85,16 +84,6 @@ namespace StarterAssets
 				return false;
 				#endif
 			}
-		}
-
-        private void OnEnable()
-        {
-			TerminalInteractable.playerActiveStateChange += ToggleCanMove;
-        }
-
-        private void OnDisable()
-        {
-			TerminalInteractable.playerActiveStateChange -= ToggleCanMove;
 		}
 
         private void Awake()
@@ -123,7 +112,7 @@ namespace StarterAssets
 
 		private void Update()
 		{
-            if (_canMove)
+            if (GameManager.Instance.PlayerEnabled)
             {
 				JumpAndGravity();
 				GroundedCheck();
@@ -134,7 +123,7 @@ namespace StarterAssets
 
 		private void LateUpdate()
 		{
-			if(_canMove)
+			if(GameManager.Instance.PlayerEnabled)
 				CameraRotation();
 		}
 
@@ -281,9 +270,5 @@ namespace StarterAssets
 			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
 		}
 
-		private void ToggleCanMove(bool state)
-        {
-			_canMove = state;
-        }
 	}
 }

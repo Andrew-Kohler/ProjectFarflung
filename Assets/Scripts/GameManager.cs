@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     // Current list of player's Log objects
     public List<Log> FoundLogs;
 
+    // Whether the player is allowed to do anything right now
+    public bool PlayerEnabled = true;
+
     // public accessor of instance
     public static GameManager Instance
     {
