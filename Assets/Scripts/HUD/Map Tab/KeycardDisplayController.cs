@@ -28,25 +28,41 @@ public class KeycardDisplayController : MonoBehaviour
     private float _localKeyCount = 0;   // Used for seeing if there's a difference in GameManager & updating the visual here
     private int _currentIndex = 0;      // What key is currently selected
 
-    private InputAction _arrowAction;
+    // move input actions
+    private InputAction _upArrow;
+    private InputAction _rightArrow;
+    private InputAction _downArrow;
+    private InputAction _leftArrow;
 
     private void OnEnable()
     {
-        InputSystem.actions.FindAction("Arrows").started += context => KeyInteraction();
+        // bind input updating
+        _upArrow = InputSystem.actions.FindAction("HUDUp");
+        _upArrow.started += context => KeyInteraction();
+        _upArrow.Enable();
+        _rightArrow = InputSystem.actions.FindAction("HUDRight");
+        _rightArrow.started += context => KeyInteraction();
+        _rightArrow.Enable();
+        _downArrow = InputSystem.actions.FindAction("HUDDown");
+        _downArrow.started += context => KeyInteraction();
+        _downArrow.Enable();
+        _leftArrow = InputSystem.actions.FindAction("HUDLeft");
+        _leftArrow.started += context => KeyInteraction();
+        _leftArrow.Enable();
     }
 
     private void OnDisable()
     {
-        InputSystem.actions.FindAction("Arrows").started -= context => KeyInteraction();
+        // unbind input updating
+        _upArrow.started -= context => KeyInteraction();
+        _rightArrow.started -= context => KeyInteraction();
+        _downArrow.started -= context => KeyInteraction();
+        _leftArrow.started -= context => KeyInteraction();
     }
 
     void Start()
     {
         _hlg = _keyParent.GetComponent<HorizontalLayoutGroup>();
-
-        // Arrow keys
-        _arrowAction = InputSystem.actions.FindAction("Arrows");
-        _arrowAction.Enable();
     }
 
     // Update is called once per frame
@@ -65,7 +81,19 @@ public class KeycardDisplayController : MonoBehaviour
 
     private void KeyInteraction()
     {
-        Vector2 arrowInput = _arrowAction.ReadValue<Vector2>();
+        // Read inputs
+        int xInput = 0;
+        int yInput = 0;
+        if (_rightArrow.ReadValue<float>() > 0.5f)
+            xInput++;
+        if (_leftArrow.ReadValue<float>() > 0.5f)
+            xInput--;
+        if (_upArrow.ReadValue<float>() > 0.5f)
+            yInput++;
+        if (_downArrow.ReadValue<float>() > 0.5f)
+            yInput--;
+        Vector2 arrowInput = new Vector2(xInput, yInput);
+
         if (arrowInput.x > 0)
         {
             _currentIndex++;
