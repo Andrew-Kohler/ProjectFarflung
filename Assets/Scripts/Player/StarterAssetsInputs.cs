@@ -34,27 +34,35 @@ namespace StarterAssets
 			_moveForward = InputSystem.actions.FindAction("MoveForward");
 			_moveForward.started += UpdateMoveInput;
 			_moveForward.canceled += UpdateMoveInput;
+			_moveForward.Enable();
 			_moveRight = InputSystem.actions.FindAction("MoveRight");
 			_moveRight.started += UpdateMoveInput;
 			_moveRight.canceled += UpdateMoveInput;
+			_moveRight.Enable();
 			_moveBackward = InputSystem.actions.FindAction("MoveBackward");
 			_moveBackward.started += UpdateMoveInput;
 			_moveBackward.canceled += UpdateMoveInput;
+			_moveBackward.Enable();
 			_moveLeft = InputSystem.actions.FindAction("MoveLeft");
 			_moveLeft.started += UpdateMoveInput;
 			_moveLeft.canceled += UpdateMoveInput;
+			_moveLeft.Enable();
 		}
         private void OnDisable()
         {
 			// unbind input updating
 			_moveForward.started += UpdateMoveInput;
 			_moveForward.canceled += UpdateMoveInput;
+			_moveForward.Disable();
 			_moveRight.started += UpdateMoveInput;
 			_moveRight.canceled += UpdateMoveInput;
+			_moveRight.Disable();
 			_moveBackward.started += UpdateMoveInput;
 			_moveBackward.canceled += UpdateMoveInput;
+			_moveBackward.Disable();
 			_moveLeft.started += UpdateMoveInput;
 			_moveLeft.canceled += UpdateMoveInput;
+			_moveLeft.Disable();
 		}
 
         private void UpdateMoveInput(InputAction.CallbackContext context)
