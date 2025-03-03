@@ -11,6 +11,8 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField] protected LookAtConstraint _eLookAt;
     protected Transform _camTransform;
     protected bool _isActiveCoroutine = false;
+
+    protected IEnumerator _currentHideCoroutine;
     protected void Start()
     {
         ConstraintSource src = new ConstraintSource();
@@ -26,18 +28,23 @@ public abstract class Interactable : MonoBehaviour
         
     }
 
-    public void ShowVFX()
+    public virtual void ShowVFX()
     {
-        StopAllCoroutines();
+        if(_currentHideCoroutine != null)
+            StopCoroutine(_currentHideCoroutine);
         _isActiveCoroutine = false;
         _vfx.SetActive(true);
         _vfx.GetComponent<Animator>().Play("Appear");
     }
 
-    public void HideVFX()
+    public virtual void HideVFX()
     {
-        if(!_isActiveCoroutine)
-            StartCoroutine(DoHideVFX());
+        if (!_isActiveCoroutine)
+        {
+            _currentHideCoroutine = DoHideVFX();
+            StartCoroutine(_currentHideCoroutine);
+        }
+            
     }
 
     private IEnumerator DoHideVFX()

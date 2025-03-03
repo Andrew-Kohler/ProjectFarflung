@@ -14,7 +14,9 @@ public class PoweredDoor : PoweredElement
     private bool IsOpen;
     [SerializeField, Tooltip("Whether the door is broken (beyond any power or electrical repair)")]
     private bool IsBroken;
-    
+    [SerializeField, Tooltip("Distance the player needs to go from a door before it autocloses")]
+    private float _doorCloseDistance = 6f;
+
 
     private void Start() // Set the key type on each of the door panels
     {
@@ -23,6 +25,7 @@ public class PoweredDoor : PoweredElement
             doorPanels[i].RequiredKey = this.RequiredKey;
             doorPanels[i].IsOpen = this.IsOpen;
             doorPanels[i].IsBroken = this.IsBroken;
+            doorPanels[i].DoorCloseDistance = this._doorCloseDistance;
         }
     }
 

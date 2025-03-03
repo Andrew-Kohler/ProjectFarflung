@@ -35,7 +35,7 @@ Transform:
   - {fileID: 483951942246819590}
   - {fileID: 1368975448856585653}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &5625386149350956315
 BoxCollider:
@@ -76,10 +76,11 @@ MonoBehaviour:
   _wireBoxIdentifier: 
   doorPanels:
   - {fileID: 6301874696814177089}
-  - {fileID: 5427432749132982995}
+  - {fileID: 3826929600264295126}
   RequiredKey: 0
   IsOpen: 0
   IsBroken: 0
+  _doorCloseDistance: 6
 --- !u!65 &7707721495598292427
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -233,6 +234,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e44c479ecb22cf9419d0e2f91b8eb025, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8131509351805305884}
+    - targetCorrespondingSourceObject: {fileID: 5787872636278187269, guid: e44c479ecb22cf9419d0e2f91b8eb025, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8821902709384441853}
+    - targetCorrespondingSourceObject: {fileID: -2144751712349565698, guid: e44c479ecb22cf9419d0e2f91b8eb025, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4941314237482955740}
   m_SourcePrefab: {fileID: 100100000, guid: e44c479ecb22cf9419d0e2f91b8eb025, type: 3}
 --- !u!4 &1368975448856585653 stripped
 Transform:
@@ -265,6 +272,58 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &4983107543828932443 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5787872636278187269, guid: e44c479ecb22cf9419d0e2f91b8eb025, type: 3}
+  m_PrefabInstance: {fileID: 1546188877682606686}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &8821902709384441853
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4983107543828932443}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.8116418, y: 1.6642481, z: 0.10540663}
+  m_Center: {x: -1.3654292, y: 0.085119665, z: -0.035754263}
+--- !u!1 &8595512662724497056 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -2144751712349565698, guid: e44c479ecb22cf9419d0e2f91b8eb025, type: 3}
+  m_PrefabInstance: {fileID: 1546188877682606686}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &4941314237482955740
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8595512662724497056}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.82377803, y: 1.6642481, z: 0.10540667}
+  m_Center: {x: -2.001416, y: 0.085119665, z: -0.035754263}
 --- !u!1001 &6689276287895933591
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -337,6 +396,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7624287842345500737, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
+      propertyPath: Element
+      value: 
+      objectReference: {fileID: 4965146530036814926}
+    - target: {fileID: 7624287842345500737, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
+      propertyPath: DoorAnim
+      value: 
+      objectReference: {fileID: 8131509351805305884}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -347,9 +414,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6512841599045629329, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
   m_PrefabInstance: {fileID: 6689276287895933591}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5427432749132982995 stripped
+--- !u!114 &3826929600264295126 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1695332597701261380, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7624287842345500737, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
   m_PrefabInstance: {fileID: 6689276287895933591}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

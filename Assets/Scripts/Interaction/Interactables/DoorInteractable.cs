@@ -7,13 +7,15 @@ public class DoorInteractable : Interactable
     [Header("General Controls")]
     [Tooltip("Sibling interactable (switch on the other side of the door)")]
     public DoorInteractable Sibling;
+    [HideInInspector]
+    public BoxCollider Col; // Collider the player interacts with
     [Tooltip("Door element")]
     public PoweredDoor Element; // Door powered element
     [Tooltip("Door animator")]
     public Animator DoorAnim;
-    [Tooltip("Open state of the door")]
+    [HideInInspector, Tooltip("Open state of the door")]
     public bool IsOpen;   // If the door is open, you can't double open it, silly
-    [SerializeField, Tooltip("If the door is broken (will not open AT ALL)")]
+    [HideInInspector, Tooltip("If the door is broken (will not open AT ALL)")]
     public bool IsBroken;
 
     // If a door is:
@@ -22,8 +24,11 @@ public class DoorInteractable : Interactable
     // OPEN and BROKEN:         This is never closing, ever.
     // OPEN and NOT BROKEN:     Will close after a while, why would you do this?
 
-    private float _doorCloseDistance = 6f;
+    [HideInInspector]
+    public float DoorCloseDistance;
+    [HideInInspector]
     public bool IsActiveDoorCoroutine;
+    [HideInInspector]
     public PoweredDoor.KeyType RequiredKey;
     
     
@@ -36,6 +41,7 @@ public class DoorInteractable : Interactable
         {
             throw new System.Exception("Door cannot exist without being a PoweredDoor.");
         }
+        Col = this.GetComponent<BoxCollider>();
 
         // Set the default state of the door
         DoorAnim.speed = 1f;
@@ -51,8 +57,10 @@ public class DoorInteractable : Interactable
         // Update keeps track of player position and closes the door when they get too far away
         if (IsOpen && !IsActiveDoorCoroutine)
         {
-            if(Vector3.Distance(this.transform.position, _camTransform.position) > _doorCloseDistance)
+            if(Vector3.Distance(this.transform.position, _camTransform.position) > DoorCloseDistance)
             {
+                Col.enabled = true;
+                Sibling.Col.enabled = true;
                 StartCoroutine(DoDoorChange());
             }
         }
@@ -60,10 +68,12 @@ public class DoorInteractable : Interactable
 
     public override void InteractEffects()
     {
-        if (Element.IsPowered() && !IsBroken && !IsActiveDoorCoroutine) // If the zone of the door is powered and not deus ex machina disabled
+        if (Element.IsPowered() && !IsBroken && !IsActiveDoorCoroutine && !IsOpen) // If the zone of the door is powered and not deus ex machina disabled
         {
             if (RequiredKey.ToString() == "Default" || GameManager.Instance.SceneData.Keys.Contains(RequiredKey.ToString())) // If they have the key
             {
+                Col.enabled = false;
+                Sibling.Col.enabled = false;
                 StartCoroutine(DoDoorChange()); // Change the door state
             }
         }
