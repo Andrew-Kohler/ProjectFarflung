@@ -86,8 +86,6 @@ public class FileTabController : MonoBehaviour
     private float _fileNodeDistance = 120f; // How far apart the file nodes are from each other
     private Log _selectedLog;
 
-    private InputAction _arrowAction;
-
     // Some control variables
     private bool _isActiveCoroutine; // Prevents navigation coroutines from overlapping
     private bool _isLogOpen;         // Is there a log open?
@@ -97,23 +95,48 @@ public class FileTabController : MonoBehaviour
                                          // Necessary because selectedLog can be affected by things other than direct player input.
     private IEnumerator _currentTimelineCoroutine;
     private IEnumerator _currentSubtitleCoroutine;
+
+    // move input actions
+    private InputAction _upArrow;
+    private InputAction _rightArrow;
+    private InputAction _downArrow;
+    private InputAction _leftArrow;
+
     private void OnEnable()
     {
-        InputSystem.actions.FindAction("Arrows").started += context => FileInteraction();
+        // bind input updating
+        _upArrow = InputSystem.actions.FindAction("HUDUp");
+        _upArrow.started += context => FileInteraction();
+        _upArrow.Enable();
+        _rightArrow = InputSystem.actions.FindAction("HUDRight");
+        _rightArrow.started += context => FileInteraction();
+        _rightArrow.Enable();
+        _downArrow = InputSystem.actions.FindAction("HUDDown");
+        _downArrow.started += context => FileInteraction();
+        _downArrow.Enable();
+        _leftArrow = InputSystem.actions.FindAction("HUDLeft");
+        _leftArrow.started += context => FileInteraction();
+        _leftArrow.Enable();
+
         TabOpen();
     }
-
     private void OnDisable()
     {
-        InputSystem.actions.FindAction("Arrows").started -= context => FileInteraction();
+        // unbind input updating
+        _upArrow.started -= context => FileInteraction();
+        _upArrow.Disable();
+        _rightArrow.started -= context => FileInteraction();
+        _rightArrow.Disable();
+        _downArrow.started -= context => FileInteraction();
+        _downArrow.Disable();
+        _leftArrow.started -= context => FileInteraction();
+        _leftArrow.Disable();
+
         TabClose();
     }
+
     void Start()
     {
-        // Arrow keys
-        _arrowAction = InputSystem.actions.FindAction("Arrows");
-        _arrowAction.Enable();
-
         // Audio tab setup
         _source = GetComponent<AudioSource>();
         _bars = new List<GameObject>();
@@ -144,7 +167,17 @@ public class FileTabController : MonoBehaviour
     private void FileInteraction()
     {
         // Read inputs
-        Vector2 arrowInput = _arrowAction.ReadValue<Vector2>();
+        int xInput = 0;
+        int yInput = 0;
+        if (_rightArrow.ReadValue<float>() > 0.5f)
+            xInput++;
+        if (_leftArrow.ReadValue<float>() > 0.5f)
+            xInput--;
+        if (_upArrow.ReadValue<float>() > 0.5f)
+            yInput++;
+        if (_downArrow.ReadValue<float>() > 0.5f)
+            yInput--;
+        Vector2 arrowInput = new Vector2(xInput, yInput);
 
         // If a movement coroutine isn't running, this tab is open, and there's at least one log to look at
         if (!_isActiveCoroutine && this.isActiveAndEnabled && GameManager.Instance.SceneData.FoundLogNames.Count > 0)

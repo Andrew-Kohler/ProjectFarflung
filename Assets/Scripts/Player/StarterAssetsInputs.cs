@@ -51,17 +51,17 @@ namespace StarterAssets
         private void OnDisable()
         {
 			// unbind input updating
-			_moveForward.started += UpdateMoveInput;
-			_moveForward.canceled += UpdateMoveInput;
+			_moveForward.started -= UpdateMoveInput;
+			_moveForward.canceled -= UpdateMoveInput;
 			_moveForward.Disable();
-			_moveRight.started += UpdateMoveInput;
-			_moveRight.canceled += UpdateMoveInput;
+			_moveRight.started -= UpdateMoveInput;
+			_moveRight.canceled -= UpdateMoveInput;
 			_moveRight.Disable();
-			_moveBackward.started += UpdateMoveInput;
-			_moveBackward.canceled += UpdateMoveInput;
+			_moveBackward.started -= UpdateMoveInput;
+			_moveBackward.canceled -= UpdateMoveInput;
 			_moveBackward.Disable();
-			_moveLeft.started += UpdateMoveInput;
-			_moveLeft.canceled += UpdateMoveInput;
+			_moveLeft.started -= UpdateMoveInput;
+			_moveLeft.canceled -= UpdateMoveInput;
 			_moveLeft.Disable();
 		}
 

@@ -44,28 +44,50 @@ public class MapTabController : MonoBehaviour
     private int _currentFloor;      // The floor the player is on
     private int _currentHUDFloor;   // The floor the HUD is displaying
 
-    private InputAction _arrowAction;
+    // move input actions
+    private InputAction _upArrow;
+    private InputAction _rightArrow;
+    private InputAction _downArrow;
+    private InputAction _leftArrow;
 
     private void OnEnable()
     {
         MapRaycaster.onPassthrough += UpdateHUDMap;
-        InputSystem.actions.FindAction("Arrows").started += context => UpdateFloor();
+
+        // bind input updating
+        _upArrow = InputSystem.actions.FindAction("HUDUp");
+        _upArrow.started += context => UpdateFloor();
+        _upArrow.Enable();
+        _rightArrow = InputSystem.actions.FindAction("HUDRight");
+        _rightArrow.started += context => UpdateFloor();
+        _rightArrow.Enable();
+        _downArrow = InputSystem.actions.FindAction("HUDDown");
+        _downArrow.started += context => UpdateFloor();
+        _downArrow.Enable();
+        _leftArrow = InputSystem.actions.FindAction("HUDLeft");
+        _leftArrow.started += context => UpdateFloor();
+        _leftArrow.Enable();
     }
 
     private void OnDisable()
     {
         MapRaycaster.onPassthrough -= UpdateHUDMap;
-        InputSystem.actions.FindAction("Arrows").started -= context => UpdateFloor();
+
+        // unbind input updating
+        _upArrow.started -= context => UpdateFloor();
+        _upArrow.Disable();
+        _rightArrow.started -= context => UpdateFloor();
+        _rightArrow.Disable();
+        _downArrow.started -= context => UpdateFloor();
+        _downArrow.Disable();
+        _leftArrow.started -= context => UpdateFloor();
+        _leftArrow.Disable();
     }
 
     void Start()
     {
         // Lore height of the floors
         _baselinePlayerHeight = _mainHUD.PlayerTransform.position.y;
-
-        // Arrow keys
-        _arrowAction = InputSystem.actions.FindAction("Arrows");
-        _arrowAction.Enable();
 
         // Update the floor we're on, the floor the HUD is on, and the floor being shown by the HUD
         _currentFloor = GameManager.Instance.SceneData.Floor;
@@ -223,7 +245,19 @@ public class MapTabController : MonoBehaviour
 
     private void UpdateFloor() // Switches floors when the up or down arrows are hit
     {
-        Vector2 arrowInput = _arrowAction.ReadValue<Vector2>();
+        // Read inputs
+        int xInput = 0;
+        int yInput = 0;
+        if (_rightArrow.ReadValue<float>() > 0.5f)
+            xInput++;
+        if (_leftArrow.ReadValue<float>() > 0.5f)
+            xInput--;
+        if (_upArrow.ReadValue<float>() > 0.5f)
+            yInput++;
+        if (_downArrow.ReadValue<float>() > 0.5f)
+            yInput--;
+        Vector2 arrowInput = new Vector2(xInput, yInput);
+
         if (arrowInput.y > 0)
         {
             _currentHUDFloor++;

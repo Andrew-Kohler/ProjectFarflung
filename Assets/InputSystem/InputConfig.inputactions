@@ -78,6 +78,42 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "HUDUp",
+                    "type": "Button",
+                    "id": "3a5c1026-b2d7-48b8-93ab-eb8a34fded62",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HUDRight",
+                    "type": "Button",
+                    "id": "3cdae9e5-9ef9-4b74-bb40-900cf71d8822",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HUDDown",
+                    "type": "Button",
+                    "id": "d1eb11b7-9a43-435d-9f38-73d22c57cbf0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HUDLeft",
+                    "type": "Button",
+                    "id": "061966ee-0bab-4d04-9aed-b962f4c873ec",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Tab",
                     "type": "Button",
                     "id": "f2be6377-4f06-42c6-b7ae-8758c35ad19f",
@@ -85,15 +121,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Arrows",
-                    "type": "Value",
-                    "id": "756a72b3-5c02-4b9b-82cb-aa05ac23460a",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 },
                 {
                     "name": "Interact",
@@ -169,105 +196,6 @@
                     "action": "Tab",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "Arrows",
-                    "id": "e56fa7d3-db63-4553-9c57-99a0796368d4",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Arrows",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "59dfcd33-b954-42fc-b8c4-6f60017a4c74",
-                    "path": "<Keyboard>/upArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";KeyboardMouse",
-                    "action": "Arrows",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "up",
-                    "id": "ad0e66ef-3153-4bce-9900-6cae4014d506",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";KeyboardMouse",
-                    "action": "Arrows",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "d9ad9dad-adae-4789-a372-be23a3b850a1",
-                    "path": "<Keyboard>/downArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";KeyboardMouse",
-                    "action": "Arrows",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "bec5146d-3b15-4bd4-ac55-460f32c7f9ce",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";KeyboardMouse",
-                    "action": "Arrows",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "2712b5b0-6b74-4ed1-9855-a9ee9967f1fe",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";KeyboardMouse",
-                    "action": "Arrows",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "ab8e69a1-6ce6-4c33-98c7-7c46229bc67a",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";KeyboardMouse",
-                    "action": "Arrows",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "43dba057-75aa-440b-9a36-410dc94f5e03",
-                    "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";KeyboardMouse",
-                    "action": "Arrows",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "785758fa-0a4b-40bd-967b-d78a44c8b8fc",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";KeyboardMouse",
-                    "action": "Arrows",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
@@ -420,6 +348,94 @@
                     "processors": "",
                     "groups": ";KeyboardMouse",
                     "action": "MoveLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b903fcc0-78c3-4b9e-aeef-731011f243a2",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "HUDUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5beb4206-b994-404f-a9d4-e4266711b376",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "HUDUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4e1d9fcd-a781-481c-b77a-cb13e348657d",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "HUDRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5d868f07-5ff6-455e-a906-87e111435b91",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "HUDRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4c6c20ee-c6b4-4fb2-8bb7-34bf9ddd26a9",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "HUDDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a37f089a-8ec6-45c9-9a0c-e90dfc6a3bf0",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "HUDDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d7187a26-9f1a-4800-b807-f09afa442b75",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "HUDLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f15c7268-5626-4010-9a72-c750216a5a1f",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "HUDLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
