@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Stores and manages progression data saved between scenes and sessions.
@@ -33,6 +34,11 @@ public class GameManager : MonoBehaviour
                 DontDestroyOnLoad(newManager);
                 _instance = newManager.GetComponent<GameManager>();
                 GameManager.DefaultSceneData(); // set scene data to defaults
+
+                // ensures controls are updated with player overrides
+                // loaded here so it always happens at the start and not after rebindings are needed
+                string rebindsJson = PlayerPrefs.GetString("rebinds");
+                InputSystem.actions.LoadBindingOverridesFromJson(rebindsJson);
 
                 _instance.InitializeGameData();
                 _instance.InitializeOptionsData();
@@ -516,6 +522,10 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        // save controls rebindings
+        string rebindsJson = InputSystem.actions.SaveBindingOverridesAsJson();
+        PlayerPrefs.SetString("rebinds", rebindsJson);
+
         // Save OPTIONS DATA to file
         string optionsData = JsonUtility.ToJson(Instance.OptionsData);
         string optionsPath = Application.persistentDataPath + "/OptionsData.json";
