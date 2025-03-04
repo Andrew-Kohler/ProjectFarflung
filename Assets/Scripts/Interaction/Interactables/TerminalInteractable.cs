@@ -4,6 +4,12 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.InputSystem;
 
+// To Do
+// Update the map tab to finally show terminals
+// Paste this over to make the wire box work
+// Flip some switches
+// Call it a PR
+
 public class TerminalInteractable : Interactable
 {
     [SerializeField, Tooltip("The terminal")] 
@@ -52,14 +58,26 @@ public class TerminalInteractable : Interactable
 
     public override void InteractEffects()
     {
+        StartCoroutine(DoTerminalInteract());
+    }
+
+    private void ReenablePlayer()
+    {
+        if (_inUse)
+        {
+            StartCoroutine(DoReenablePlayer());
+        }
+    }
+
+    private IEnumerator DoTerminalInteract()
+    {
+
         HideVFX(); // Hide the interaction VFX
 
         GameManager.Instance.PlayerEnabled = false; // Disable the player
 
         Cursor.visible = true;                      // Free the cursor
         Cursor.lockState = CursorLockMode.None;
-
-        _inUse = true;  // Tell the terminal it's being used
 
         onLockedInteractionTerminal?.Invoke(true); // Invoke the event to let the HUD know what's up
 
@@ -74,14 +92,10 @@ public class TerminalInteractable : Interactable
             _puzzleCam.gameObject.SetActive(true);
             _lockedOnUse = true;
         }
-    }
 
-    private void ReenablePlayer()
-    {
-        if (_inUse)
-        {
-            StartCoroutine(DoReenablePlayer());
-        }
+        yield return new WaitForEndOfFrame();
+
+        _inUse = true;  // Tell the terminal it's being used
     }
 
     private IEnumerator DoReenablePlayer()
