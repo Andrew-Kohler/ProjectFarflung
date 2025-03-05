@@ -47,7 +47,7 @@ public class CreatureManager : MonoBehaviour
     // unfortunately these cannot be configured from inspector because I chose to make this a singleton manager
     private const float SPEED_INCREASE_FACTOR = 0.2f;
     private const float SPEED_DECREASE_FACTOR = 0.4f;
-    private const float STUN_DURATION = 1.5f;
+    private const float STUN_DURATION = 2.0f;
 
     public Transform PlayerTransform { get; private set; }
 
