@@ -35,12 +35,16 @@ public class HUDController : MonoBehaviour
         InputSystem.actions.FindAction("Tab").canceled += context => _active = false;
 
         TerminalInteractable.onLockedInteractionTerminal += HUDBlink;
+        WireBoxInteractable.onLockedInteractionWirebox += HUDBlink;
     }
 
     private void OnDisable()
     {
         InputSystem.actions.FindAction("Tab").started -= context => TabSwitch();
         InputSystem.actions.FindAction("Tab").canceled -= context => _active = false;
+
+        TerminalInteractable.onLockedInteractionTerminal -= HUDBlink;
+        WireBoxInteractable.onLockedInteractionWirebox -= HUDBlink;
     }
 
     private void Start()

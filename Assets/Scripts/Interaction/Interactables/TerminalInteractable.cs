@@ -4,12 +4,6 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.InputSystem;
 
-// To Do
-// Update the map tab to finally show terminals
-// Paste this over to make the wire box work
-// Flip some switches
-// Call it a PR
-
 public class TerminalInteractable : Interactable
 {
     [SerializeField, Tooltip("The terminal")] 
