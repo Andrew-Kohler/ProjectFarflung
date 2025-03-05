@@ -93,6 +93,11 @@ public class ControlsRemapping : MonoBehaviour
         // update string if empty binding
         if (_altDisplayTexts[controlToReset].text == "")
             _altDisplayTexts[controlToReset].text = "--";
+
+        // check for duplicate bindings
+        DuplicateBindingCheck(controlToReset, false);
+        if (_altDisplayTexts[controlToReset].text != "--") // only check alt if default is NOT empty
+            DuplicateBindingCheck(controlToReset, true);
     }
 
     /// <summary>
