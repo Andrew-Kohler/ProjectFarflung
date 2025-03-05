@@ -89,10 +89,21 @@ public class FlashlightController : MonoBehaviour
         // indicates player is NOT holding down key for stun
         _isHeld = false;
 
-        // functionally toggle light states
-        _isOn = !_isOn;
-        _leftLight.enabled = _isOn;
-        _rightLight.enabled = _isOn;
+        // turning flashlight off
+        if (_isOn)
+        {
+            _isOn = false;
+            _leftLight.enabled = false;
+            _rightLight.enabled = false;
+        }
+        // turning flashlight on
+        // prevent one frame flicker of flashlight (due to new coroutine for flashlight shut off)
+        else if (!_isOn && GameManager.FlashlightCharge > 0)
+        {
+            _isOn = true;
+            _leftLight.enabled = true;
+            _rightLight.enabled = true;
+        }
 
         // TODO: SFX for button release
     }
@@ -116,9 +127,8 @@ public class FlashlightController : MonoBehaviour
             if (GameManager.FlashlightCharge < 0)
             {
                 GameManager.FlashlightCharge = 0;
-                _isOn = false;
-                _leftLight.enabled = false;
-                _rightLight.enabled = false;
+
+                StartCoroutine(DoFlashlightForceOff());
             }
         }
 
@@ -172,5 +182,23 @@ public class FlashlightController : MonoBehaviour
         _leftLight.range = _defaultLightRange;
         _rightLight.range = _defaultLightRange;
         _stunTrigger.enabled = false;
+    }
+
+    /// <summary>
+    /// Returns flashlight to off state due to out of battery.
+    /// In case of a stun flash, it allows the flash to play out fully before actually disabling the light.
+    /// </summary>
+    private IEnumerator DoFlashlightForceOff()
+    {
+        yield return new WaitUntil(IsStunInactive);
+
+        _isOn = false;
+        _leftLight.enabled = false;
+        _rightLight.enabled = false;
+    }
+
+    private bool IsStunInactive()
+    {
+        return !_stunTrigger.enabled;
     }
 }
