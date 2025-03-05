@@ -14,6 +14,16 @@ public class FlashlightController : MonoBehaviour
     private float _maxChargeDuration;
     [SerializeField, Tooltip("Intensity with which light lags behind camera rotation.")]
     private float _lightPivotSharpness;
+    
+    [Header("Stun Functionality")]
+    [SerializeField, Tooltip("Duration of holding the key before the flashlight stun blast will occur.")]
+    private float _stunHoldDuration;
+    [SerializeField, Tooltip("Duration that the stun works for. Should be SHORTER than stun hold duration.")]
+    private float _stunDuration;
+    [SerializeField, Tooltip("range of light components during flash mode.")]
+    private float _stunLightRange;
+    [SerializeField, Tooltip("amount of battery consumed on stun use. Full battery is 1.")]
+    private float _stunBatteryCost;
 
     [Header("Lights / References")]
     [SerializeField, Tooltip("Used to enable/disable actual left light element.")]
@@ -28,9 +38,18 @@ public class FlashlightController : MonoBehaviour
     private Collider _stunTrigger;
 
     private Quaternion _prevPivotRot;
+    private float _defaultLightRange;
+
+    private void Awake()
+    {
+        _defaultLightRange = _leftLight.range;
+    }
 
     #region CONTROLS
     private bool _isOn = false;
+
+    private bool _isHeld = false;
+    private float _heldTimer = 0f;
 
     private void OnEnable()
     {
@@ -45,23 +64,35 @@ public class FlashlightController : MonoBehaviour
     }
 
     /// <summary>
+    /// Initial press of flashlight key.
     /// Plays click SFX for initial button press
     /// </summary>
     private void FlashlightClick(InputAction.CallbackContext context)
     {
+        // start timer for stun blast
+        _isHeld = true;
+        _heldTimer = 0f;
+
         // TODO: SFX for button initial press
     }
 
     /// <summary>
+    /// Release of flashlight key.
     /// Enables flashlight functionally on release of button press
     /// </summary>
     private void ToggleFlashlight(InputAction.CallbackContext context)
     {
+        // do NOT turn light off on release if we just stun blasted
+        if (_heldTimer > _stunHoldDuration)
+            return;
+
+        // indicates player is NOT holding down key for stun
+        _isHeld = false;
+
         // functionally toggle light states
         _isOn = !_isOn;
         _leftLight.enabled = _isOn;
         _rightLight.enabled = _isOn;
-        _stunTrigger.enabled = _isOn;
 
         // TODO: SFX for button release
     }
@@ -75,6 +106,7 @@ public class FlashlightController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(GameManager.FlashlightCharge);
         // decrease battery charge
         if (_isOn)
         {
@@ -87,7 +119,6 @@ public class FlashlightController : MonoBehaviour
                 _isOn = false;
                 _leftLight.enabled = false;
                 _rightLight.enabled = false;
-                _stunTrigger.enabled = false;
             }
         }
 
@@ -104,5 +135,42 @@ public class FlashlightController : MonoBehaviour
         _rightLightPivot.transform.localRotation = newRot;
         // save pivot for next frame
         _prevPivotRot = _leftLightPivot.transform.rotation;
+
+        // check for stun burst
+        // must be on already for stun holding charge to work
+        if (_isHeld && _isOn)
+        {
+            // activate burst
+            if (_heldTimer > _stunHoldDuration)
+            {
+                _leftLight.range = _stunLightRange;
+                _rightLight.range = _stunLightRange;
+                _stunTrigger.enabled = true;
+
+                _isHeld = false;
+
+                // consume charge
+                GameManager.FlashlightCharge -= _stunBatteryCost;
+                if (GameManager.FlashlightCharge < 0)
+                    GameManager.FlashlightCharge = 0;
+
+                StartCoroutine(DoReturnToNormal());
+            }
+
+            // get closer to activating burst next frame
+            _heldTimer += Time.deltaTime;
+        }
+    }
+
+    /// <summary>
+    /// Returns flashlight range to normal after delay.
+    /// </summary>
+    private IEnumerator DoReturnToNormal()
+    {
+        yield return new WaitForSeconds(_stunDuration);
+
+        _leftLight.range = _defaultLightRange;
+        _rightLight.range = _defaultLightRange;
+        _stunTrigger.enabled = false;
     }
 }

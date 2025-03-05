@@ -45,7 +45,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
-  m_Range: 15
+  m_Range: 12.5
   m_SpotAngle: 50
   m_InnerSpotAngle: 4
   m_CookieSize: 10
@@ -146,7 +146,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1.5
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -223,8 +223,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37fbc4890baf5db4cb9271a12000b17e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxChargeDuration: 30
+  _maxChargeDuration: 90
   _lightPivotSharpness: 8
+  _stunHoldDuration: 1
+  _stunDuration: 0.5
+  _stunLightRange: 30
+  _stunBatteryCost: 0.25
   _leftLight: {fileID: 7565683518033406030}
   _leftLightPivot: {fileID: 8536664500985002125}
   _rightLight: {fileID: 9012052654320639282}
@@ -275,7 +279,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
-  m_Range: 15
+  m_Range: 12.5
   m_SpotAngle: 50
   m_InnerSpotAngle: 4
   m_CookieSize: 10

@@ -48,7 +48,6 @@ public class CreatureManager : MonoBehaviour
     private const float SPEED_INCREASE_FACTOR = 0.2f;
     private const float SPEED_DECREASE_FACTOR = 0.4f;
     private const float STUN_DURATION = 1.5f;
-    private const float STUN_COOLDOWN = 4.5f; // after regaining control, creature cannot be stunned again during this period
 
     public Transform PlayerTransform { get; private set; }
 
@@ -75,7 +74,6 @@ public class CreatureManager : MonoBehaviour
     }
 
     private bool _isStunned = false;
-    private bool _isStunnable = true;
 
     // Update is called once per frame
     void Update()
@@ -126,10 +124,9 @@ public class CreatureManager : MonoBehaviour
     public void TryStunCreature()
     {
         // conduct stun logic ONLY if it is able to be stunned again
-        if (!_isStunned && _isStunnable)
+        if (!_isStunned)
         {
             _isStunned = true;
-            _isStunnable = false;
 
             StartCoroutine(DoStunCreature());
 
@@ -138,10 +135,6 @@ public class CreatureManager : MonoBehaviour
                 yield return new WaitForSeconds(STUN_DURATION);
 
                 _isStunned = false;
-
-                yield return new WaitForSeconds(STUN_COOLDOWN);
-
-                _isStunnable = true;
             }
         }
     }
