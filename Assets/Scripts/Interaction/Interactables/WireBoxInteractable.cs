@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 
 // To Do
 // Reset wirebox if you back out of it halfway though the puzzle
-// Figure out why the nodes don't work
 
 public class WireBoxInteractable : Interactable
 {
@@ -22,6 +21,7 @@ public class WireBoxInteractable : Interactable
 
     private CinemachineVirtualCamera _mainCam;
     private bool _inUse = false;        // If player uses this wirebox (to prevent constantly reactivating exit keybind)
+    private BoxCollider _col;
 
     public static event OnLockedInteraction onLockedInteractionWirebox;
 
@@ -43,6 +43,7 @@ public class WireBoxInteractable : Interactable
         }
 
         base.Start();
+        _col = GetComponent<BoxCollider>();
         _mainCam = Camera.main.GetComponent<CinemachineBrain>().
             ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
     }
@@ -80,6 +81,8 @@ public class WireBoxInteractable : Interactable
         _wireboxCam.gameObject.SetActive(true);
         _mainCam.gameObject.SetActive(false);
 
+        _col.enabled = false;
+
         _wirebox.EnablePuzzle(); // Enable the puzzle
 
         yield return new WaitForEndOfFrame();
@@ -99,16 +102,22 @@ public class WireBoxInteractable : Interactable
 
         _inUse = false;
 
-        if(_wireManager.GetSelectedWire() != null) // Deselect a wire, if one is held
+        if(!final)
+            _col.enabled = true;
+
+        if (_wireManager.GetSelectedWire() != null) // Deselect a wire, if one is held
             _wireManager.DeselectWire(_wireManager.GetSelectedWire());
+
+        _nodeManager.DestroyCurrentWire();
         //_nodeManager.DeselectFirstNode();
         //_wirebox.DisablePuzzle(); // Disable the puzzle
 
         yield return new WaitForEndOfFrame();
         GameManager.Instance.PlayerEnabled = true;
 
+        /*yield return new WaitForSeconds(2f);
         if (final)  // If the player completed the puzzle, they shan't do it again
-            Destroy(gameObject);
+            Destroy(gameObject);*/
     }
 
 }

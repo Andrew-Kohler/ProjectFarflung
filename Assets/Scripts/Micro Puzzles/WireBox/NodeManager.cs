@@ -195,4 +195,12 @@ public class NodeManager : MonoBehaviour
             _firstNode.DeselectVisual();
         _firstNode = null;
     }
+
+    // Used to complete cleanup when a player backs out of a box puzzle
+    public void DestroyCurrentWire()
+    {
+        if(_currConnection is not null)
+            Destroy(_currConnection);
+        _currConnection = null;
+    }
 }
