@@ -14,6 +14,10 @@ public class SyncPhysicalButton : MonoBehaviour
     private Material[] _materials;
     [SerializeField, Tooltip("Corresponding toggle that this button should match.")]
     private Toggle _toggle;
+    [SerializeField, Tooltip("Animation that will play when material swaps.")]
+    private Animator _animator;
+    [SerializeField, Tooltip("Animation names for physical button animations. Used for calling animations from script.")]
+    private string[] _triggers;
 
     private bool _currState;
 
@@ -30,6 +34,8 @@ public class SyncPhysicalButton : MonoBehaviour
         // must be in start because initial toggle states are configured in Awake() of LightPuzzleHandler
         UpdateMaterial();
 
+        //Get the animator that will control the press animantions
+        _animator = GetComponentInChildren<Animator>();
         _currState = _toggle.isOn;
     }
 
@@ -50,5 +56,9 @@ public class SyncPhysicalButton : MonoBehaviour
     private void UpdateMaterial()
     {
         _button.material = _materials[_toggle.isOn ? 1 : 0];
+
+        //make sure there is an animator assigned, updates button animation state based on material set
+        if(_animator != null) 
+        _animator.SetTrigger(_triggers[_toggle.isOn ? 1 : 0]);
     }
 }
