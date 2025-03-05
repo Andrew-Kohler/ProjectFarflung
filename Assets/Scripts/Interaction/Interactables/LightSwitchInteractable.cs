@@ -2,17 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightSwitchInteractable : MonoBehaviour
+public class LightSwitchInteractable : Interactable
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField, Tooltip("Associated light")] private PoweredLight _light;
+    new void Start()
     {
-        
+        base.Start();
     }
 
     // Update is called once per frame
-    void Update()
+    new void Update()
     {
-        
+
+    }
+
+    public override void InteractEffects()
+    {
+        _light.FlipPowerSwitch();
     }
 }
