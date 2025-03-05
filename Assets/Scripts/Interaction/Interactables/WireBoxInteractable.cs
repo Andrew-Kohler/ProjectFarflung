@@ -4,9 +4,6 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.InputSystem;
 
-// To Do
-// Reset wirebox if you back out of it halfway though the puzzle
-
 public class WireBoxInteractable : Interactable
 {
     [Header("Wire Box Specifics")]
