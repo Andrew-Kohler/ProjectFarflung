@@ -24,17 +24,36 @@ public class HUDController : MonoBehaviour
 
     bool active = false;
 
+    #region Controls Bindings
     private void OnEnable()
     {
-        InputSystem.actions.FindAction("Tab").started += context => TabSwitch();
-        InputSystem.actions.FindAction("Tab").canceled += context => active = false;
+        InputSystem.actions.FindAction("Tab").started += DoTabSwitch;
+        InputSystem.actions.FindAction("Tab").canceled += SetActiveFalse;
     }
 
     private void OnDisable()
     {
-        InputSystem.actions.FindAction("Tab").started -= context => TabSwitch();
-        InputSystem.actions.FindAction("Tab").canceled -= context => active = false;
+        InputSystem.actions.FindAction("Tab").started -= DoTabSwitch;
+        InputSystem.actions.FindAction("Tab").canceled -= SetActiveFalse;
     }
+
+    /// <summary>
+    /// Simply calls TabSwitch() function.
+    /// Necessary to avoid memory leak
+    /// </summary>
+    private void DoTabSwitch(InputAction.CallbackContext context)
+    {
+        TabSwitch();
+    }
+
+    /// <summary>
+    /// Necessary to avoid memory leak.
+    /// </summary>
+    private void SetActiveFalse(InputAction.CallbackContext context)
+    {
+        active = false;
+    }
+    #endregion
 
     // Update is called once per frame
     void Update()
