@@ -12,6 +12,7 @@ public class SceneTransitionHandler : MonoBehaviour
     [SerializeField, Tooltip("Used to trigger animations for scene enter/exit")]
     private Animator _anim;
 
+    private bool _isDoneEnter = false; // becomes true once new scene is fully faded in
     private bool _isDoneTransitioning = false;
 
     /// <summary>
@@ -35,10 +36,26 @@ public class SceneTransitionHandler : MonoBehaviour
     }
 
     /// <summary>
-    /// Called by animation event at end of fade out animation
+    /// Called by animation event at end of fade out animation.
     /// </summary>
     public void SetDoneTransitioning()
     {
         _isDoneTransitioning = true;
+    }
+
+    /// <summary>
+    /// Called by animation event at end of fade out animation.
+    /// </summary>
+    public void SetDoneEnter()
+    {
+        _isDoneEnter = true;
+    }
+
+    /// <summary>
+    /// Returns whether the current scene has finished fading IN.
+    /// </summary>
+    public bool IsDoneEnter()
+    {
+        return _isDoneEnter;
     }
 }

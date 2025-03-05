@@ -31,6 +31,16 @@ public class BrightnessSlider : MonoBehaviour
         _displayText.text = GameManager.Instance.OptionsData.Brightness.ToString("#0.00");
     }
 
+    private void Update()
+    {
+        // ensure slider updates if values modified from outside source (i.e. reset to defaults button)
+        if (GameManager.Instance.OptionsData.Brightness.ToString("#0.00") != RemapNonlinear(_slider.value).ToString("#0.00"))
+        {
+            _slider.SetValueWithoutNotify(InverseRemapNonlinear(GameManager.Instance.OptionsData.Brightness));
+            _displayText.text = RemapNonlinear(_slider.value).ToString("#0.00");
+        }
+    }
+
     /// <summary>
     /// Called by slider change event. Interfaces with game manager based on remapped value.
     /// </summary>
@@ -67,5 +77,13 @@ public class BrightnessSlider : MonoBehaviour
     {
         // appropriate inverse square root function
         return Mathf.Sqrt((brightnessVal - _minBrightness) / (_maxBrightness - _minBrightness));
+    }
+
+    /// <summary>
+    /// Called by the reset brightness button.
+    /// </summary>
+    public void ResetBrightness()
+    {
+        GameManager.Instance.OptionsData.ResetBrightness();
     }
 }

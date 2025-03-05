@@ -27,6 +27,9 @@ public class ApplyPostProcessingSettings : MonoBehaviour
     {
         // avoid applying value every frame
         if (_currVal != GameManager.Instance.OptionsData.Brightness)
+        {
             _exposure.keyValue.value = GameManager.Instance.OptionsData.Brightness;
+            _currVal = GameManager.Instance.OptionsData.Brightness;
+        }
     }
 }
