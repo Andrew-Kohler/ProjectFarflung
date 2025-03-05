@@ -16,7 +16,8 @@ public class SyncPhysicalButton : MonoBehaviour
     private Toggle _toggle;
     [SerializeField, Tooltip("Animation that will play when material swaps.")]
     private Animator _animator;
-    public string[] _triggers;
+    [SerializeField, Tooltip("Animation names for physical button animations. Used for calling animations from script.")]
+    private string[] _triggers;
 
     private bool _currState;
 
