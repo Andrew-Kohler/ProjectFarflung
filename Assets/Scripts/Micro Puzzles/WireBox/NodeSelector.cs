@@ -64,10 +64,8 @@ public class NodeSelector : ClickableObject
             }
             else
             {
-                //remove this since neutral case isnt happening anymore?
-                    _nodeModels[0].SetActive(false);
-                    _nodeModels[1].SetActive(true);
-                    _nodeModels[2].SetActive(false);
+                // no neutral nodes allowed
+                throw new System.Exception("Incorrect Wire Box Node: CANNOT have neutral (zero charge) nodes.");
             }
         }
     }
