@@ -36,6 +36,8 @@ public class FlashlightController : MonoBehaviour
     private GameObject _rightLightPivot;
     [SerializeField, Tooltip("Used to enable/disable light stun trigger when light is on.")]
     private Collider _stunTrigger;
+    [SerializeField, Tooltip("Used to get vertical flashlight angle.")]
+    private GameObject _cameraRoot;
 
     private Quaternion _prevPivotRot;
     private float _defaultLightRange;
@@ -117,7 +119,6 @@ public class FlashlightController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(GameManager.FlashlightCharge);
         // decrease battery charge
         if (_isOn)
         {
@@ -136,8 +137,8 @@ public class FlashlightController : MonoBehaviour
 
         // necessary so previous local can be fetched in terms of current forward
         _leftLightPivot.transform.rotation = _prevPivotRot;
-        // goal is always 0, 0, 0 (forward)
-        Quaternion goal = Quaternion.identity;
+        // goal is always 0, 0, 0 (forward) PLUS VERTICAL ANGLE
+        Quaternion goal = Quaternion.Euler(_cameraRoot.transform.rotation.eulerAngles.x, 0, 0);
         // lerp between previous angle (in terms of current local frame)
         Quaternion newRot = Quaternion.Lerp(_leftLightPivot.transform.localRotation, goal, 1f - Mathf.Exp(-_lightPivotSharpness * Time.deltaTime));
         // update local rotations
