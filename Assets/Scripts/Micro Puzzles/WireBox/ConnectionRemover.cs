@@ -22,6 +22,7 @@ public class ConnectionRemover : ClickableObject
     /// </summary>
     public void Initialize(WireSelector correspondingWire, NodeSelector node1, NodeSelector node2)
     {
+        _wireSelector = correspondingWire;
         _connectedNodes = new NodeSelector[2];
         _connectedNodes[0] = node1;
         _connectedNodes[1] = node2;
