@@ -7,7 +7,6 @@ using UnityEngine;
 /// </summary>
 public class ConnectionRemover : ClickableObject
 {
-    private Renderer _renderer;
     private WireSelector _wireSelector;
     private NodeSelector[] _connectedNodes; // used to properly unassign their references to each other on destroy
 
@@ -16,10 +15,6 @@ public class ConnectionRemover : ClickableObject
         // Precondition: child of proper container
         if (transform.parent is null || transform.parent.gameObject.name != "Wire Connection(Clone)")
             throw new System.Exception("Incorrect Connection Prefab, wire model (and ConnectionRemover) MUST be a child of Wire Connection empty.");
-
-        // Precondition: renderer component
-        if (!TryGetComponent(out _renderer))
-            throw new System.Exception("Wire Connection MUST have Renderer component.");
     }
 
     /// <summary>
