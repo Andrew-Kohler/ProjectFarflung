@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WireManager : MonoBehaviour
 {
+    public NodeManager NodeManager;
+
     private WireSelector[] _wires;
     private WireSelector _currWire = null;  // null = none selected
 

@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe893a0f86ef02e4b85f9848a4ad15ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NodeManager: {fileID: 1548174471276762994}
 --- !u!1818360609 &2718796704130141444
 RotationConstraint:
   m_ObjectHideFlags: 0
@@ -308,9 +309,17 @@ PrefabInstance:
       value: 0.43
       objectReference: {fileID: 0}
     - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: StuckTape
+      value: 
+      objectReference: {fileID: 8301686791508098415}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
       propertyPath: _stuckTape
       value: 
       objectReference: {fileID: 8301686791508098415}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: UnstuckTape
+      value: 
+      objectReference: {fileID: 5914580897664869635}
     - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
       propertyPath: _unStuckTape
       value: 
@@ -429,9 +438,17 @@ PrefabInstance:
       value: 0.23
       objectReference: {fileID: 0}
     - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: StuckTape
+      value: 
+      objectReference: {fileID: 2907334871308689696}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
       propertyPath: _stuckTape
       value: 
       objectReference: {fileID: 2907334871308689696}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: UnstuckTape
+      value: 
+      objectReference: {fileID: 6881940641545904848}
     - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
       propertyPath: _unStuckTape
       value: 
@@ -708,9 +725,17 @@ PrefabInstance:
       value: 0.32
       objectReference: {fileID: 0}
     - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: StuckTape
+      value: 
+      objectReference: {fileID: 1356216741700842849}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
       propertyPath: _stuckTape
       value: 
       objectReference: {fileID: 1356216741700842849}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: UnstuckTape
+      value: 
+      objectReference: {fileID: 4184538290962519619}
     - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
       propertyPath: _unStuckTape
       value: 
@@ -1202,9 +1227,17 @@ PrefabInstance:
       value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: StuckTape
+      value: 
+      objectReference: {fileID: 5692771436179898642}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
       propertyPath: _stuckTape
       value: 
       objectReference: {fileID: 5692771436179898642}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: UnstuckTape
+      value: 
+      objectReference: {fileID: 4108917466455069451}
     - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
       propertyPath: _unStuckTape
       value: 

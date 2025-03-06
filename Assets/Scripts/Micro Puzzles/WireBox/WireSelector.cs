@@ -44,6 +44,10 @@ public class WireSelector : ClickableObject
         // Selection
         else
             _wireManager.SelectNewWire(this);
+
+
+        // no matter what, this click should remove any first node connection made on a node of the board
+        _wireManager.NodeManager.DeselectFirstNode();
     }
 
     /// <summary>
