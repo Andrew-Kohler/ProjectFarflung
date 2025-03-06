@@ -7,6 +7,8 @@ public class WireManager : MonoBehaviour
     private WireSelector[] _wires;
     private WireSelector _currWire = null;  // null = none selected
 
+    
+
     private void Awake()
     {
         _wires = GetComponentsInChildren<WireSelector>();
@@ -55,6 +57,8 @@ public class WireManager : MonoBehaviour
     {
         _currWire.DeselectVisual();
         _currWire.gameObject.SetActive(false);
+        _currWire._stuckTape.SetActive(false);
+        _currWire._unStuckTape.SetActive(true);
         _currWire = null;
     }
 }

@@ -19,6 +19,10 @@ public class WireBoxHandler : MonoBehaviour
     NodeSelector _outputNode;
     [SerializeField, Tooltip("Objects to disable when puzzle is inactive (functional components).")]
     private GameObject[] _functionalObjects;
+    [SerializeField, Tooltip("Objects to indicate whether puzzle is won. (emissive portions only).")]
+    private GameObject[] _indicatorLights;
+    [SerializeField, Tooltip("Materials for indicating if puzzle is won. 0 = not won, 1 = won")]
+    private Material[] _indicatorMaterials;
 
     private void Awake()
     {
@@ -83,6 +87,10 @@ public class WireBoxHandler : MonoBehaviour
     /// </summary>
     private void DisablePuzzle()
     {
+        //toggle lights to green to indicate solving
+        _indicatorLights[0].GetComponent<Renderer>().material = _indicatorMaterials[1];
+        _indicatorLights[1].GetComponent<Renderer>().material = _indicatorMaterials[1];
+
         foreach (GameObject obj in _functionalObjects)
             obj.SetActive(false);
         this.enabled = false;

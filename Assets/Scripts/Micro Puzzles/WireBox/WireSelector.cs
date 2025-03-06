@@ -16,6 +16,12 @@ public class WireSelector : ClickableObject
     [SerializeField, Tooltip("Thickness of selected outline, according to Outline.cs.")]
     private float _outlineWidth;
 
+    [Header("Tape Configuration")]
+    [SerializeField, Tooltip("Stuck tape object.")]
+    public GameObject _stuckTape;
+    [SerializeField, Tooltip("Un-Stuck tape object.")]
+    public GameObject _unStuckTape;
+
     private WireManager _wireManager;
     private Outline _outline;
     private bool _isSelected = false;
@@ -25,6 +31,7 @@ public class WireSelector : ClickableObject
         // Precondition: must be contained by WireManager
         if (transform.parent is null || !transform.parent.TryGetComponent(out _wireManager))
             throw new System.Exception("Incorrect wire configuration. A WireSelector MUST be a child of a WireManager.");
+
 
         _outline = gameObject.AddComponent<Outline>();
         _outline.OutlineWidth = 0; // no outline by default

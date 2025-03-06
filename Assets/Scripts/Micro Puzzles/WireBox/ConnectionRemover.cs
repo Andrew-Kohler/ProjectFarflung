@@ -8,7 +8,7 @@ using UnityEngine;
 public class ConnectionRemover : ClickableObject
 {
     private Renderer _renderer;
-    private GameObject _wireSelector;
+    private WireSelector _wireSelector;
     private NodeSelector[] _connectedNodes; // used to properly unassign their references to each other on destroy
 
     private void Awake()
@@ -27,10 +27,11 @@ public class ConnectionRemover : ClickableObject
     /// </summary>
     public void Initialize(WireSelector correspondingWire, NodeSelector node1, NodeSelector node2)
     {
-        _wireSelector = correspondingWire.gameObject;
+        _wireSelector = correspondingWire;
 
+        Renderer wireRenderer = correspondingWire.GetComponentInChildren<Renderer>();
         // match wire to corresponding material
-        if (!correspondingWire.TryGetComponent(out Renderer wireRenderer))
+        if (wireRenderer == null)
             throw new System.Exception("Incorrect Wire Selector Configuration. Must have a renderer component with corresponding material.");
         _renderer.material = wireRenderer.material;
 
@@ -42,7 +43,9 @@ public class ConnectionRemover : ClickableObject
     public override void OnObjectClick()
     {
         // re-enable wire on wire board
-        _wireSelector.SetActive(true);
+        _wireSelector.gameObject.SetActive(true);
+        _wireSelector._stuckTape.SetActive(true);
+        _wireSelector._unStuckTape.SetActive(false);
 
         // remove node connections for connection processing
         _connectedNodes[0].RemoveConnection(_connectedNodes[1]);
