@@ -54,6 +54,13 @@ public class NodeManager : MonoBehaviour
             {
                 // parented to node manager
                 _currConnection = Instantiate(_wireConnectionPrefab, transform);
+
+                // match wire to corresponding material
+                Renderer wireRenderer = _currConnection.GetComponentInChildren<Renderer>();
+                Renderer selectedRenderer = _wireManager.GetSelectedWire().GetComponentInChildren<Renderer>();
+                if (wireRenderer is null || selectedRenderer is null)
+                    throw new System.Exception("BOTH wire removers and wire selectors MUST have a renderer component in their children.");
+                wireRenderer.material = selectedRenderer.material;
             }
 
             // update connection
@@ -85,14 +92,6 @@ public class NodeManager : MonoBehaviour
     private void ShowWire(Vector3 originPos, Vector3 endPos)
     {
         //Materials
-
-        // match wire to corresponding material
-        if (_currConnection.GetComponentInChildren<Renderer>() == null)
-            throw new System.Exception("Incorrect Wire Selector Configuration. Must have a renderer component with corresponding material.");
-
-        Renderer wireRenderer = _currConnection.GetComponentInChildren<Renderer>();
-        
-        wireRenderer.material = _wireManager.GetSelectedWire().GetComponentInChildren<Renderer>().material;
 
         // Max Length
         float maxLength = _wireManager.GetSelectedWire().Length - _maxLengthVisualOffset;
