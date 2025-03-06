@@ -55,7 +55,7 @@ public class NodeManager : MonoBehaviour
                 // parented to node manager
                 _currConnection = Instantiate(_wireConnectionPrefab, transform);
 
-                // match wire to corresponding material
+                // match wire to corresponding MATERIAL
                 Renderer wireRenderer = _currConnection.GetComponentInChildren<Renderer>();
                 Renderer selectedRenderer = _wireManager.GetSelectedWire().GetComponentInChildren<Renderer>();
                 if (wireRenderer is null || selectedRenderer is null)
@@ -91,8 +91,6 @@ public class NodeManager : MonoBehaviour
     /// </summary>
     private void ShowWire(Vector3 originPos, Vector3 endPos)
     {
-        //Materials
-
         // Max Length
         float maxLength = _wireManager.GetSelectedWire().Length - _maxLengthVisualOffset;
         if (Vector3.Distance(endPos, originPos) > maxLength) // 10x scale factor from unity coords to length unit
