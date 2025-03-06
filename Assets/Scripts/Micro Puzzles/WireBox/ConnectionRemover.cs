@@ -27,14 +27,6 @@ public class ConnectionRemover : ClickableObject
     /// </summary>
     public void Initialize(WireSelector correspondingWire, NodeSelector node1, NodeSelector node2)
     {
-        _wireSelector = correspondingWire;
-
-        Renderer wireRenderer = correspondingWire.GetComponentInChildren<Renderer>();
-        // match wire to corresponding material
-        if (wireRenderer == null)
-            throw new System.Exception("Incorrect Wire Selector Configuration. Must have a renderer component with corresponding material.");
-        _renderer.material = wireRenderer.material;
-
         _connectedNodes = new NodeSelector[2];
         _connectedNodes[0] = node1;
         _connectedNodes[1] = node2;

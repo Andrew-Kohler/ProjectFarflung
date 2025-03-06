@@ -85,6 +85,11 @@ public class NodeManager : MonoBehaviour
     private void ShowWire(Vector3 originPos, Vector3 endPos)
     {
         //Materials
+
+        // match wire to corresponding material
+        if (_currConnection.GetComponentInChildren<Renderer>() == null)
+            throw new System.Exception("Incorrect Wire Selector Configuration. Must have a renderer component with corresponding material.");
+
         Renderer wireRenderer = _currConnection.GetComponentInChildren<Renderer>();
         
         wireRenderer.material = _wireManager.GetSelectedWire().GetComponentInChildren<Renderer>().material;
