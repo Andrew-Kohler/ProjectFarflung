@@ -32,7 +32,6 @@ public class WireSelector : ClickableObject
         if (transform.parent is null || !transform.parent.TryGetComponent(out _wireManager))
             throw new System.Exception("Incorrect wire configuration. A WireSelector MUST be a child of a WireManager.");
 
-
         _outline = gameObject.AddComponent<Outline>();
         _outline.OutlineWidth = 0; // no outline by default
     }
