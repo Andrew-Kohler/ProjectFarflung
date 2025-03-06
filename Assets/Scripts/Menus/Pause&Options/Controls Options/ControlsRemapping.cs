@@ -160,9 +160,6 @@ public class ControlsRemapping : MonoBehaviour
             _altDisplayTexts[controlToUnbind].text = "--";
         else
             _displayTexts[controlToUnbind].text = "--";
-
-        // so it can actually be used again - if this wasn't here, it would break one control when the other was unbound
-        InputSystem.actions.FindAction(actionToUnbind).Enable();
     }
 
     /// <summary>
@@ -204,9 +201,6 @@ public class ControlsRemapping : MonoBehaviour
             // Delete duplicate bindings
             DuplicateBindingCheck(controlToUpdate, isAlt);
         }
-
-        // so it can actually be used again
-        InputSystem.actions.FindAction(actionToUpdate).Enable();
     }
 
     /// <summary>
