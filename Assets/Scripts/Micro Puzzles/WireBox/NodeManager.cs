@@ -84,6 +84,11 @@ public class NodeManager : MonoBehaviour
     /// </summary>
     private void ShowWire(Vector3 originPos, Vector3 endPos)
     {
+        //Materials
+        Renderer wireRenderer = _currConnection.GetComponentInChildren<Renderer>();
+        
+        wireRenderer.material = _wireManager.GetSelectedWire().GetComponentInChildren<Renderer>().material;
+
         // Max Length
         float maxLength = _wireManager.GetSelectedWire().Length - _maxLengthVisualOffset;
         if (Vector3.Distance(endPos, originPos) > maxLength) // 10x scale factor from unity coords to length unit
