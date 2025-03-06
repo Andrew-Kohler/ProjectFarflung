@@ -10,8 +10,7 @@ public class BodyToggleSync : MonoBehaviour
     [SerializeField, Tooltip("Object that should not be highlighted or used for collider detection, but need to be activated for visuals.")]
     GameObject _inOutBody;
 
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
         //if node is a in/out node also turn on the body
         if (_inOutNode.activeSelf == true)
