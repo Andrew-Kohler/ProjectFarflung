@@ -91,6 +91,9 @@ public class WireBoxHandler : MonoBehaviour
         _indicatorLights[0].GetComponent<Renderer>().material = _indicatorMaterials[1];
         _indicatorLights[1].GetComponent<Renderer>().material = _indicatorMaterials[1];
 
+        // TODO: INTERACTIONS!!! - if possible delay the disabling till after animation completes so you don't see stuff disappear
+        // the reason for disabling at all is because the mouse raycast checks on each clickable object are fairly costly and probably not good to keep going throughout the whole scene play
+
         foreach (GameObject obj in _functionalObjects)
             obj.SetActive(false);
         this.enabled = false;
@@ -105,5 +108,7 @@ public class WireBoxHandler : MonoBehaviour
         foreach (GameObject obj in _functionalObjects)
             obj.SetActive(true);
         this.enabled = true;
+
+        // animation call can go here for opening puzzle??
     }
 }
