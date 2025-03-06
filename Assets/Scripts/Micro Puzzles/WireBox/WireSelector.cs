@@ -18,9 +18,9 @@ public class WireSelector : ClickableObject
 
     [Header("Tape Configuration")]
     [SerializeField, Tooltip("Stuck tape object.")]
-    public GameObject _stuckTape;
+    public GameObject StuckTape;
     [SerializeField, Tooltip("Un-Stuck tape object.")]
-    public GameObject _unStuckTape;
+    public GameObject UnstuckTape;
 
     private WireManager _wireManager;
     private Outline _outline;
