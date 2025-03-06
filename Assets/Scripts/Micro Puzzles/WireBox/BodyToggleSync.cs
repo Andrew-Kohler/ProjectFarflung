@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Bypasses the Outline script in a sneaky way so that the bade of the in/out nodes don't receive an outline.
+/// </summary>
 public class BodyToggleSync : MonoBehaviour
 {
     [Header("InNode Objects")]
