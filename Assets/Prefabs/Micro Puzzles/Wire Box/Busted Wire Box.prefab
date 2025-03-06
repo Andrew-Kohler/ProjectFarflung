@@ -9270,7 +9270,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8572033328704182526}
-  m_LocalRotation: {x: -0, y: 0.28446776, z: -0, w: 0.95868564}
+  m_LocalRotation: {x: -0, y: 0.25881937, z: -0, w: 0.96592575}
   m_LocalPosition: {x: 0.854, y: 0.5, z: 0.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9282,7 +9282,7 @@ Transform:
   - {fileID: 1251290727927163227}
   m_Father: {fileID: 603470267818670798}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -100, z: 0}
 --- !u!114 &5444889096373542974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9305,15 +9305,15 @@ RotationConstraint:
   m_Enabled: 1
   serializedVersion: 2
   m_Weight: 1
-  m_RotationAtRest: {x: 0, y: 0, z: 0}
-  m_RotationOffset: {x: 0, y: 0, z: 0}
+  m_RotationAtRest: {x: 0, y: -100.00001, z: 0}
+  m_RotationOffset: {x: 0, y: -100.00001, z: 0}
   m_AffectRotationX: 1
   m_AffectRotationY: 1
   m_AffectRotationZ: 1
   m_Active: 1
   m_IsLocked: 1
   m_Sources:
-  - sourceTransform: {fileID: 8026055394088058095}
+  - sourceTransform: {fileID: 4908881031805423775}
     weight: 1
 --- !u!1 &8865808847394458052
 GameObject:
@@ -10167,6 +10167,11 @@ BoxCollider:
 --- !u!1 &3335302886971629744 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6162975491388636692, guid: 0d70af9de82a11b42a46fb4bba66bf83, type: 3}
+  m_PrefabInstance: {fileID: 302258205077070172}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4908881031805423775 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4624650867666760131, guid: 0d70af9de82a11b42a46fb4bba66bf83, type: 3}
   m_PrefabInstance: {fileID: 302258205077070172}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7053742423836377567 stripped
