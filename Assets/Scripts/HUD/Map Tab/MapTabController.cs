@@ -44,16 +44,17 @@ public class MapTabController : MonoBehaviour
     private int _currentFloor;      // The floor the player is on
     private int _currentHUDFloor;   // The floor the HUD is displaying
 
+    // game manager vars
+    private int _visitationL1Length; // Kept because OnDisable tab cleanup calls the GameManager after it's destroyed
+    private int _visitationL2Length;
+    private int _visitationL3Length;
+
+    #region Controls Bindings
     // move input actions
     private InputAction _upArrow;
     private InputAction _rightArrow;
     private InputAction _downArrow;
     private InputAction _leftArrow;
-
-    // game manager vars
-    private int _visitationL1Length; // Kept because OnDisable tab cleanup calls the GameManager after it's destroyed
-    private int _visitationL2Length;
-    private int _visitationL3Length;
 
     private void OnEnable()
     {
@@ -61,16 +62,16 @@ public class MapTabController : MonoBehaviour
 
         // bind input updating
         _upArrow = InputSystem.actions.FindAction("HUDUp");
-        _upArrow.started += context => UpdateFloor();
+        _upArrow.started += DoUpdateFloor;
         _upArrow.Enable();
         _rightArrow = InputSystem.actions.FindAction("HUDRight");
-        _rightArrow.started += context => UpdateFloor();
+        _rightArrow.started += DoUpdateFloor;
         _rightArrow.Enable();
         _downArrow = InputSystem.actions.FindAction("HUDDown");
-        _downArrow.started += context => UpdateFloor();
+        _downArrow.started += DoUpdateFloor;
         _downArrow.Enable();
         _leftArrow = InputSystem.actions.FindAction("HUDLeft");
-        _leftArrow.started += context => UpdateFloor();
+        _leftArrow.started += DoUpdateFloor;
         _leftArrow.Enable();
     }
 
@@ -80,10 +81,20 @@ public class MapTabController : MonoBehaviour
 
         // unbind input updating
         _upArrow.started -= context => UpdateFloor();
-        _rightArrow.started -= context => UpdateFloor();
-        _downArrow.started -= context => UpdateFloor();
-        _leftArrow.started -= context => UpdateFloor();
+        _rightArrow.started -= DoUpdateFloor;
+        _downArrow.started -= DoUpdateFloor;
+        _leftArrow.started -= DoUpdateFloor;
     }
+
+    /// <summary>
+    /// Simply calls UpdateFloor function.
+    /// Necessary to avoid memory leak.
+    /// </summary>
+    private void DoUpdateFloor(InputAction.CallbackContext context)
+    {
+        UpdateFloor();
+    }
+    #endregion
 
     void Start()
     {
