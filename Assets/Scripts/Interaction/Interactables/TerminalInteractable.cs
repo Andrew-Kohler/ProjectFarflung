@@ -6,8 +6,11 @@ using UnityEngine.InputSystem;
 
 public class TerminalInteractable : Interactable
 {
+    [Header("Terminal Specifics")]
     [SerializeField, Tooltip("The terminal")] 
     private TerminalConfiguration _terminal;
+    [SerializeField, Tooltip("The animator")]
+    private Animator _terminalAnim;
     [SerializeField, Tooltip("The camera aimed at the terminal interface")]
     private CinemachineVirtualCamera _terminalCam;
     [SerializeField, Tooltip("The camera aimed at the light puzzle")]
@@ -16,6 +19,8 @@ public class TerminalInteractable : Interactable
     private CinemachineVirtualCamera _mainCam;
     private bool _inUse = false;        // If player uses this terminal (to prevent constantly reactivating exit keybind)
     private bool _lockedOnUse = false;  // If the player uses this terminal and it's initially locked
+
+    private BoxCollider _col;
 
     public static event OnLockedInteraction onLockedInteractionTerminal;
 
@@ -34,6 +39,8 @@ public class TerminalInteractable : Interactable
         base.Start();
         _mainCam = Camera.main.GetComponent<CinemachineBrain>().
             ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
+        _terminalAnim.speed = 0f;
+        _col = GetComponent<BoxCollider>();
     }
 
     new void Update()
@@ -65,6 +72,9 @@ public class TerminalInteractable : Interactable
 
     private IEnumerator DoTerminalInteract()
     {
+        _terminalAnim.ResetTrigger("TerminalStandby");
+        _terminalAnim.ResetTrigger("TerminalWake");
+        _terminalAnim.ResetTrigger("TerminalSleep");
 
         HideVFX(); // Hide the interaction VFX
 
@@ -87,26 +97,39 @@ public class TerminalInteractable : Interactable
             _lockedOnUse = true;
         }
 
+        _terminalAnim.speed = 1f;
+        _terminalAnim.SetTrigger("TerminalWake");
+
         yield return new WaitForEndOfFrame();
 
         _inUse = true;  // Tell the terminal it's being used
+
+        _col.enabled = false;
+        yield return new WaitForSeconds(1.875f);
+        _terminalAnim.SetTrigger("TerminalStandby"); // Once the start animation has played, enter standby
     }
 
     private IEnumerator DoReenablePlayer()
     {
-        _mainCam.gameObject.SetActive(true);
+        _mainCam.gameObject.SetActive(true);        // Right the cameras
         _puzzleCam.gameObject.SetActive(false);
         _terminalCam.gameObject.SetActive(false);
 
-        Cursor.visible = false;
+        Cursor.visible = false;                     // Right the cursor
         Cursor.lockState = CursorLockMode.Locked;
 
-        onLockedInteractionTerminal?.Invoke(false);
+        onLockedInteractionTerminal?.Invoke(false); // Right the HUD
 
         _inUse = false;
 
+        _terminalAnim.SetTrigger("TerminalStandby");    // Right the terminal
+        _terminalAnim.SetTrigger("TerminalSleep");
+
         yield return new WaitForEndOfFrame();
-        GameManager.Instance.PlayerEnabled = true;
+        GameManager.Instance.PlayerEnabled = true;      // Free the player
+
+        yield return new WaitForSeconds(2.25f);        // Only reenable interaction after the animation ends
+        _col.enabled = true;
     }
 
 }

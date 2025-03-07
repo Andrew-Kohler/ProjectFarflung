@@ -6617,6 +6617,7 @@ MonoBehaviour:
   _vfx: {fileID: 1394939743}
   _eLookAt: {fileID: 56838921}
   _terminal: {fileID: 2001025603}
+  _terminalAnim: {fileID: 1638026892}
   _terminalCam: {fileID: 1239339371}
   _puzzleCam: {fileID: 1297601010}
 --- !u!65 &447295137
@@ -57282,7 +57283,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1239339370}
   m_LocalRotation: {x: -0, y: 0.9733305, z: 0.22940746, w: 0}
-  m_LocalPosition: {x: 0, y: 0.5535363, z: 0.6185395}
+  m_LocalPosition: {x: 0, y: 0.391, z: 0.75}
   m_LocalScale: {x: 1.2551624, y: 1.2551618, z: 1.2551619}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -63389,6 +63390,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2416140440825151618, guid: aa38d7b0e367ecc4aac915dcfe957879, type: 3}
+--- !u!95 &1638026892 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7018956463221943584, guid: 667bf944f7d69ec44baea2c3620a3353, type: 3}
+  m_PrefabInstance: {fileID: 46150471}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1658121619
 PrefabInstance:
   m_ObjectHideFlags: 0
