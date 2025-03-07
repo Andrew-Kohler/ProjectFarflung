@@ -96,6 +96,7 @@ public class FileTabController : MonoBehaviour
     private IEnumerator _currentTimelineCoroutine;
     private IEnumerator _currentSubtitleCoroutine;
 
+    #region Controls Binding
     // move input actions
     private InputAction _upArrow;
     private InputAction _rightArrow;
@@ -106,30 +107,41 @@ public class FileTabController : MonoBehaviour
     {
         // bind input updating
         _upArrow = InputSystem.actions.FindAction("HUDUp");
-        _upArrow.started += context => FileInteraction();
+        _upArrow.started += DoFileInteraction;
         _upArrow.Enable();
         _rightArrow = InputSystem.actions.FindAction("HUDRight");
-        _rightArrow.started += context => FileInteraction();
+        _rightArrow.started += DoFileInteraction;
         _rightArrow.Enable();
         _downArrow = InputSystem.actions.FindAction("HUDDown");
-        _downArrow.started += context => FileInteraction();
+        _downArrow.started += DoFileInteraction;
         _downArrow.Enable();
         _leftArrow = InputSystem.actions.FindAction("HUDLeft");
-        _leftArrow.started += context => FileInteraction();
+        _leftArrow.started += DoFileInteraction;
         _leftArrow.Enable();
 
         TabOpen();
     }
+
     private void OnDisable()
     {
         // unbind input updating
-        _upArrow.started -= context => FileInteraction();
-        _rightArrow.started -= context => FileInteraction();
-        _downArrow.started -= context => FileInteraction();
-        _leftArrow.started -= context => FileInteraction();
+        _upArrow.started -= DoFileInteraction;
+        _rightArrow.started -= DoFileInteraction;
+        _downArrow.started -= DoFileInteraction;
+        _leftArrow.started -= DoFileInteraction;
 
         TabClose();
     }
+
+    /// <summary>
+    /// simply calls the FileInteraction function.
+    /// Necessary to avoid memory leak.
+    /// </summary>
+    private void DoFileInteraction(InputAction.CallbackContext context)
+    {
+        FileInteraction();
+    }
+    #endregion
 
     void Start()
     {

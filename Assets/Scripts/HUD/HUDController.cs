@@ -29,10 +29,11 @@ public class HUDController : MonoBehaviour
 
     bool _active = false;
 
+    #region Controls Bindings
     private void OnEnable()
     {
-        InputSystem.actions.FindAction("Tab").started += context => TabSwitch();
-        InputSystem.actions.FindAction("Tab").canceled += context => _active = false;
+        InputSystem.actions.FindAction("Tab").started += DoTabSwitch;
+        InputSystem.actions.FindAction("Tab").canceled += SetActiveFalse;
 
         TerminalInteractable.onLockedInteractionTerminal += HUDBlink;
         WireBoxInteractable.onLockedInteractionWirebox += HUDBlink;
@@ -40,8 +41,8 @@ public class HUDController : MonoBehaviour
 
     private void OnDisable()
     {
-        InputSystem.actions.FindAction("Tab").started -= context => TabSwitch();
-        InputSystem.actions.FindAction("Tab").canceled -= context => _active = false;
+        InputSystem.actions.FindAction("Tab").started -= DoTabSwitch;
+        InputSystem.actions.FindAction("Tab").canceled -= SetActiveFalse;
 
         TerminalInteractable.onLockedInteractionTerminal -= HUDBlink;
         WireBoxInteractable.onLockedInteractionWirebox -= HUDBlink;
@@ -51,6 +52,24 @@ public class HUDController : MonoBehaviour
     {
         _hudControlAnim = GetComponent<Animator>();
     }
+
+    /// <summary>
+    /// Simply calls TabSwitch() function.
+    /// Necessary to avoid memory leak
+    /// </summary>
+    private void DoTabSwitch(InputAction.CallbackContext context)
+    {
+        TabSwitch();
+    }
+
+    /// <summary>
+    /// Necessary to avoid memory leak.
+    /// </summary>
+    private void SetActiveFalse(InputAction.CallbackContext context)
+    {
+        active = false;
+    }
+    #endregion
 
     // Update is called once per frame
     void Update()
