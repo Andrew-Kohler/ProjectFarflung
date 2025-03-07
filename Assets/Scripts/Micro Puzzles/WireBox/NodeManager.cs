@@ -57,7 +57,7 @@ public class NodeManager : MonoBehaviour
 
                 // match wire to corresponding MATERIAL
                 Renderer wireRenderer = _currConnection.GetComponentInChildren<Renderer>();
-                Renderer selectedRenderer = _wireManager.GetSelectedWire().WireModel.GetComponent<Renderer>();
+                Renderer selectedRenderer = _wireManager.GetSelectedWire().WireRenderer;
                 if (wireRenderer is null || selectedRenderer is null)
                     throw new System.Exception("BOTH wire removers and wire selectors MUST have a renderer component in their children.");
                 wireRenderer.material = selectedRenderer.material;

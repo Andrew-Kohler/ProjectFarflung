@@ -56,7 +56,7 @@ public class WireManager : MonoBehaviour
     public void ConsumeCurrentWire()
     {
         _currWire.DeselectVisual();
-        _currWire.WireModel.SetActive(false);
+        _currWire.gameObject.SetActive(false);
         _currWire.StuckTape.SetActive(false);
         _currWire.UnstuckTape.SetActive(true);
         _currWire = null;

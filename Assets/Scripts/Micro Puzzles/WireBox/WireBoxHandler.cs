@@ -35,8 +35,6 @@ public class WireBoxHandler : MonoBehaviour
         {
             DisablePuzzle();
         }
-
-        
     }
 
     // Update is called once per frame
@@ -96,6 +94,10 @@ public class WireBoxHandler : MonoBehaviour
 
         // TODO: INTERACTIONS!!! - disables all functional parts so that nodes/wires are visable on board but cant be clicked, fully disabling them to not be visable anymore once animation plays should still happen for performance sake
         // the reason for disabling at all is because the mouse raycast checks on each clickable object are fairly costly and probably not good to keep going throughout the whole scene play
+
+        // this can effectively replace the logic below if it is timed to be in sync with animation completion
+        /*foreach (GameObject obj in _functionalObjects)
+            obj.SetActive(false);*/
 
         //prevents use of any nodes/door wires left etc
         for (int i = 0; i < _functionalObjects.Length; i++)
