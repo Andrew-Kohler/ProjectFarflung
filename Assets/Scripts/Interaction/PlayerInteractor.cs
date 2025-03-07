@@ -15,16 +15,26 @@ public class PlayerInteractor : MonoBehaviour
 
     // Player Interactor: Checks for if the player is in radius of an interactable
 
+    #region Controls Bindings
     private void OnEnable()
     {
-        InputSystem.actions.FindAction("Interact").started += context => Interact(); 
+        InputSystem.actions.FindAction("Interact").started += DoInteract; 
     }
 
     private void OnDisable()
     {
-        InputSystem.actions.FindAction("Interact").started -= context => Interact();
+        InputSystem.actions.FindAction("Interact").started -= DoInteract;
     }
 
+    /// <summary>
+    /// Simply calls Interact() function.
+    /// Necessary to avoid memory leak.
+    /// </summary>
+    private void DoInteract(InputAction.CallbackContext context)
+    {
+        Interact();
+    }
+    #endregion
 
     // Start is called before the first frame update
     void Start()

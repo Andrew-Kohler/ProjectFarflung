@@ -7,8 +7,7 @@ using UnityEngine;
 /// </summary>
 public class ConnectionRemover : ClickableObject
 {
-    private Renderer _renderer;
-    private GameObject _wireSelector;
+    private WireSelector _wireSelector;
     private NodeSelector[] _connectedNodes; // used to properly unassign their references to each other on destroy
 
     private void Awake()
@@ -16,10 +15,6 @@ public class ConnectionRemover : ClickableObject
         // Precondition: child of proper container
         if (transform.parent is null || transform.parent.gameObject.name != "Wire Connection(Clone)")
             throw new System.Exception("Incorrect Connection Prefab, wire model (and ConnectionRemover) MUST be a child of Wire Connection empty.");
-
-        // Precondition: renderer component
-        if (!TryGetComponent(out _renderer))
-            throw new System.Exception("Wire Connection MUST have Renderer component.");
     }
 
     /// <summary>
@@ -27,13 +22,7 @@ public class ConnectionRemover : ClickableObject
     /// </summary>
     public void Initialize(WireSelector correspondingWire, NodeSelector node1, NodeSelector node2)
     {
-        _wireSelector = correspondingWire.gameObject;
-
-        // match wire to corresponding material
-        if (!correspondingWire.TryGetComponent(out Renderer wireRenderer))
-            throw new System.Exception("Incorrect Wire Selector Configuration. Must have a renderer component with corresponding material.");
-        _renderer.material = wireRenderer.material;
-
+        _wireSelector = correspondingWire;
         _connectedNodes = new NodeSelector[2];
         _connectedNodes[0] = node1;
         _connectedNodes[1] = node2;
@@ -42,7 +31,9 @@ public class ConnectionRemover : ClickableObject
     public override void OnObjectClick()
     {
         // re-enable wire on wire board
-        _wireSelector.SetActive(true);
+        _wireSelector.gameObject.SetActive(true);
+        _wireSelector.StuckTape.SetActive(true);
+        _wireSelector.UnstuckTape.SetActive(false);
 
         // remove node connections for connection processing
         _connectedNodes[0].RemoveConnection(_connectedNodes[1]);
