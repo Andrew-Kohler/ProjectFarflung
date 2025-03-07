@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -18,11 +16,11 @@ public class WireSelector : ClickableObject
 
     [Header("Model Configuration")]
     [SerializeField, Tooltip("Stuck tape object.")]
-    public GameObject _stuckTape;
+    public GameObject StuckTape;
     [SerializeField, Tooltip("Un-Stuck tape object.")]
-    public GameObject _unstuckTape;
+    public GameObject UnstuckTape;
     [SerializeField, Tooltip("Wire object for outline controls.")]
-    public GameObject _wireModel;
+    public GameObject WireModel;
 
     private WireManager _wireManager;
     private Outline _outline;
@@ -34,7 +32,7 @@ public class WireSelector : ClickableObject
         if (transform.parent is null || !transform.parent.TryGetComponent(out _wireManager))
             throw new System.Exception("Incorrect wire configuration. A WireSelector MUST be a child of a WireManager.");
 
-        _outline = _wireModel.AddComponent<Outline>();
+        _outline = WireModel.AddComponent<Outline>();
         _outline.OutlineWidth = 0; // no outline by default
     }
 
