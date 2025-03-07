@@ -67,7 +67,7 @@ public class HUDController : MonoBehaviour
     /// </summary>
     private void SetActiveFalse(InputAction.CallbackContext context)
     {
-        active = false;
+        _active = false;
     }
     #endregion
 
