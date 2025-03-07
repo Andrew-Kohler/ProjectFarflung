@@ -19,7 +19,7 @@ public class WireBoxHandler : MonoBehaviour
     NodeSelector _outputNode;
     [SerializeField, Tooltip("Objects to disable when puzzle is inactive (functional components).")]
     private GameObject[] _functionalObjects;
-    [SerializeField, Tooltip("Objects to indicate whether puzzle is won. (emissive portions only).")]
+    [SerializeField, Tooltip("Light objects to indicate whether puzzle is won. (emissive portions only).")]
     private GameObject[] _indicatorLights;
     [SerializeField, Tooltip("Materials for indicating if puzzle is won. 0 = not won, 1 = won")]
     private Material[] _indicatorMaterials;
@@ -35,6 +35,8 @@ public class WireBoxHandler : MonoBehaviour
         {
             DisablePuzzle();
         }
+
+        
     }
 
     // Update is called once per frame
@@ -91,11 +93,24 @@ public class WireBoxHandler : MonoBehaviour
         _indicatorLights[0].GetComponent<Renderer>().material = _indicatorMaterials[1];
         _indicatorLights[1].GetComponent<Renderer>().material = _indicatorMaterials[1];
 
-        // TODO: INTERACTIONS!!! - if possible delay the disabling till after animation completes so you don't see stuff disappear
+
+        // TODO: INTERACTIONS!!! - disables all functional parts so that nodes/wires are visable on board but cant be clicked, fully disabling them to not be visable anymore once animation plays should still happen for performance sake
         // the reason for disabling at all is because the mouse raycast checks on each clickable object are fairly costly and probably not good to keep going throughout the whole scene play
 
         foreach (GameObject obj in _functionalObjects)
-            obj.SetActive(false);
+        {
+                WireSelector tempWireSelector = obj.GetComponentInChildren<WireSelector>();
+                NodeSelector tempNodeSelector = obj.GetComponentInChildren<NodeSelector>();
+                if (tempWireSelector != null)
+                {
+                    tempWireSelector.enabled = false;
+                }
+                else if (tempNodeSelector != null)
+                {
+                    tempNodeSelector.enabled = false;
+                }
+            
+        }
         this.enabled = false;
     }
 
