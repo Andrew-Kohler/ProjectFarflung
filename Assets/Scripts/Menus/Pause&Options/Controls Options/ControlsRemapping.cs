@@ -93,6 +93,11 @@ public class ControlsRemapping : MonoBehaviour
         // update string if empty binding
         if (_altDisplayTexts[controlToReset].text == "")
             _altDisplayTexts[controlToReset].text = "--";
+
+        // check for duplicate bindings
+        DuplicateBindingCheck(controlToReset, false);
+        if (_altDisplayTexts[controlToReset].text != "--") // only check alt if default is NOT empty
+            DuplicateBindingCheck(controlToReset, true);
     }
 
     /// <summary>
@@ -155,9 +160,6 @@ public class ControlsRemapping : MonoBehaviour
             _altDisplayTexts[controlToUnbind].text = "--";
         else
             _displayTexts[controlToUnbind].text = "--";
-
-        // so it can actually be used again - if this wasn't here, it would break one control when the other was unbound
-        InputSystem.actions.FindAction(actionToUnbind).Enable();
     }
 
     /// <summary>
@@ -199,9 +201,6 @@ public class ControlsRemapping : MonoBehaviour
             // Delete duplicate bindings
             DuplicateBindingCheck(controlToUpdate, isAlt);
         }
-
-        // so it can actually be used again
-        InputSystem.actions.FindAction(actionToUpdate).Enable();
     }
 
     /// <summary>
