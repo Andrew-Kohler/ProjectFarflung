@@ -21,10 +21,8 @@ public class NodeSelector : ClickableObject
     private float _outlineWidth;
     [SerializeField, Tooltip("Used to configure text to match voltage customization.")]
     private TextMeshProUGUI _voltageText;
-    [SerializeField, Tooltip("Used to set the material of the node.")]
-    private Renderer _renderer;
-    [SerializeField, Tooltip("Materials for different charge types of node. 0 = negative, 1 = neutral, 2 = positive")]
-    private Material[] _nodeMaterials;
+    [SerializeField, Tooltip("Models for different charge types of node. 0 = negative, 1 = end node, 2 = positive")]
+    private GameObject[] _nodeModels;
 
     private NodeSelector _connection1 = null;
     private NodeSelector _connection2 = null;
@@ -43,14 +41,35 @@ public class NodeSelector : ClickableObject
 
         // voltage text configuration (never changes)
         _voltageText.text = (VoltageDifference >= 0 ? "+" : "-") + (int) Mathf.Abs(VoltageDifference) + "V";
-        // node color by voltage
-        if (VoltageDifference < 0)
-            _renderer.material = _nodeMaterials[0];
-        else if (VoltageDifference > 0)
-            _renderer.material = _nodeMaterials[2];
+        // node color/model by voltage
+        if (IsEndNode == true)
+        {
+            _nodeModels[0].SetActive(false);
+            _nodeModels[1].SetActive(true);
+            _nodeModels[2].SetActive(false);
+        }
         else
-            _renderer.material = _nodeMaterials[1];
+        {
+            if (VoltageDifference < 0)
+            {
+                _nodeModels[0].SetActive(true);
+                _nodeModels[1].SetActive(false);
+                _nodeModels[2].SetActive(false);
+            }
+            else if (VoltageDifference > 0)
+            {
+                _nodeModels[0].SetActive(false);
+                _nodeModels[1].SetActive(false);
+                _nodeModels[2].SetActive(true);
+            }
+            else
+            {
+                // no neutral nodes allowed
+                throw new System.Exception("Incorrect Wire Box Node: CANNOT have neutral (zero charge) nodes.");
+            }
+        }
     }
+       
 
     public override void OnObjectClick()
     {

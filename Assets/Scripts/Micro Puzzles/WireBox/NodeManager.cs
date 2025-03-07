@@ -54,6 +54,13 @@ public class NodeManager : MonoBehaviour
             {
                 // parented to node manager
                 _currConnection = Instantiate(_wireConnectionPrefab, transform);
+
+                // match wire to corresponding MATERIAL
+                Renderer wireRenderer = _currConnection.GetComponentInChildren<Renderer>();
+                Renderer selectedRenderer = _wireManager.GetSelectedWire().WireRenderer;
+                if (wireRenderer is null || selectedRenderer is null)
+                    throw new System.Exception("BOTH wire removers and wire selectors MUST have a renderer component in their children.");
+                wireRenderer.material = selectedRenderer.material;
             }
 
             // update connection
@@ -135,11 +142,10 @@ public class NodeManager : MonoBehaviour
         // CANCEL CONNECTION
         else if (_firstNode == clickedNode)
         {
-            DeselectFirstNode();
-
             // ensure display wire is removed
             Destroy(_currConnection);
-            _currConnection = null;
+
+            DeselectFirstNode();
         }
         // COMPLETE CONNECTION - range and obstruction permitting
         else if (Vector3.Distance(clickedNode.transform.position, _firstNode.transform.position) < _wireManager.GetSelectedWire().Length)
@@ -178,7 +184,6 @@ public class NodeManager : MonoBehaviour
 
             // sever control over these connections (the wire has been placed)
             DeselectFirstNode();
-            _currConnection = null;
 
             // consume the current selected wire from the wire rack
             _wireManager.ConsumeCurrentWire();
@@ -188,11 +193,15 @@ public class NodeManager : MonoBehaviour
     /// <summary>
     /// Used to cancel first node selection.
     /// Used on re-press and when wire type is de-selected.
+    /// Also called when a new wire type is picked.
     /// </summary>
-    private void DeselectFirstNode()
+    public void DeselectFirstNode()
     {
         if (_firstNode is not null)
             _firstNode.DeselectVisual();
         _firstNode = null;
+
+        // requires new first click to make new connection
+        _currConnection = null;
     }
 }
