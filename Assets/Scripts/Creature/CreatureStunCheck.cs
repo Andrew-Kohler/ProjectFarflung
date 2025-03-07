@@ -7,8 +7,6 @@ using UnityEngine;
 /// </summary>
 public class CreatureStunCheck : MonoBehaviour
 {
-    private bool _isStunReady = false;
-
     // we only care about enter due to how the trigger is enabled/disabled
     private void OnTriggerEnter(Collider other)
     {
