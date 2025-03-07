@@ -110,12 +110,9 @@ MonoBehaviour:
   _indicatorLights:
   - {fileID: 7053742423836377567}
   - {fileID: 3335302886971629744}
-  _winLights: []
   _indicatorMaterials:
   - {fileID: 2100000, guid: 1fbe89d30efe09a4cb56cc96a8487255, type: 2}
   - {fileID: 2100000, guid: 4b62730ad72ce6641904f3556ae5bae1, type: 2}
-  _outlineWidth: 5
-  _solvedOutline: {r: 0, g: 0.9604411, b: 1, a: 0}
 --- !u!1 &8572033328704182526
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,6 +308,14 @@ PrefabInstance:
       value: 0.43
       objectReference: {fileID: 0}
     - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: StuckTape
+      value: 
+      objectReference: {fileID: 8573046266989455000}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: WireModel
+      value: 
+      objectReference: {fileID: 6215321454630141738}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
       propertyPath: _stuckTape
       value: 
       objectReference: {fileID: 8573046266989455000}
@@ -318,6 +323,10 @@ PrefabInstance:
       propertyPath: _wireModel
       value: 
       objectReference: {fileID: 6215321454630141738}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: UnstuckTape
+      value: 
+      objectReference: {fileID: 1781913608285263154}
     - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
       propertyPath: _unstuckTape
       value: 
@@ -451,6 +460,14 @@ PrefabInstance:
       value: 0.23
       objectReference: {fileID: 0}
     - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: StuckTape
+      value: 
+      objectReference: {fileID: 2281561890087328125}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: WireModel
+      value: 
+      objectReference: {fileID: 880126151740502211}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
       propertyPath: _stuckTape
       value: 
       objectReference: {fileID: 2281561890087328125}
@@ -458,6 +475,10 @@ PrefabInstance:
       propertyPath: _wireModel
       value: 
       objectReference: {fileID: 880126151740502211}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: UnstuckTape
+      value: 
+      objectReference: {fileID: 5722386442602943174}
     - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
       propertyPath: _unstuckTape
       value: 
@@ -749,6 +770,14 @@ PrefabInstance:
       value: 0.32
       objectReference: {fileID: 0}
     - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: StuckTape
+      value: 
+      objectReference: {fileID: 3070225477781694116}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: WireModel
+      value: 
+      objectReference: {fileID: 4002065512083494967}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
       propertyPath: _stuckTape
       value: 
       objectReference: {fileID: 3070225477781694116}
@@ -756,6 +785,10 @@ PrefabInstance:
       propertyPath: _wireModel
       value: 
       objectReference: {fileID: 4002065512083494967}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: UnstuckTape
+      value: 
+      objectReference: {fileID: 8221433985072014768}
     - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
       propertyPath: _unstuckTape
       value: 
@@ -1088,6 +1121,14 @@ PrefabInstance:
       value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: StuckTape
+      value: 
+      objectReference: {fileID: 4082680975831427759}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: WireModel
+      value: 
+      objectReference: {fileID: 4680450530722777562}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
       propertyPath: _stuckTape
       value: 
       objectReference: {fileID: 4082680975831427759}
@@ -1095,6 +1136,10 @@ PrefabInstance:
       propertyPath: _wireModel
       value: 
       objectReference: {fileID: 4680450530722777562}
+    - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
+      propertyPath: UnstuckTape
+      value: 
+      objectReference: {fileID: 5453465246959683366}
     - target: {fileID: 6857303744738545690, guid: 78fad09c9cdc8f44fbc528a6d851880f, type: 3}
       propertyPath: _unstuckTape
       value: 
