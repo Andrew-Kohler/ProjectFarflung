@@ -97,19 +97,32 @@ public class WireBoxHandler : MonoBehaviour
         // TODO: INTERACTIONS!!! - disables all functional parts so that nodes/wires are visable on board but cant be clicked, fully disabling them to not be visable anymore once animation plays should still happen for performance sake
         // the reason for disabling at all is because the mouse raycast checks on each clickable object are fairly costly and probably not good to keep going throughout the whole scene play
 
-        foreach (GameObject obj in _functionalObjects)
+        //prevents use of any nodes/door wires left etc
+        for (int i = 0; i < _functionalObjects.Length; i++)
         {
-                WireSelector tempWireSelector = obj.GetComponentInChildren<WireSelector>();
-                NodeSelector tempNodeSelector = obj.GetComponentInChildren<NodeSelector>();
+            Transform[] objChildren = _functionalObjects[i].GetComponentsInChildren<Transform>();
+            foreach (Transform child in objChildren)
+            {
+                WireSelector tempWireSelector = child.GetComponentInChildren<WireSelector>();
+                NodeSelector tempNodeSelector = child.GetComponentInChildren<NodeSelector>();
+
                 if (tempWireSelector != null)
                 {
+                    //turns off ability to select wire
                     tempWireSelector.enabled = false;
                 }
                 else if (tempNodeSelector != null)
                 {
+                    //turns off ability to select nodes
                     tempNodeSelector.enabled = false;
                 }
-            
+                else if (child.name == "Wire Connection(Clone)") {
+                    //stops removal of wires after game stop
+                    Collider tempWireCollider = child.GetComponentInChildren<Collider>();
+                    tempWireCollider.enabled = false;
+                }
+
+            }
         }
         this.enabled = false;
     }
