@@ -28,6 +28,7 @@ public class KeycardDisplayController : MonoBehaviour
     private float _localKeyCount = 0;   // Used for seeing if there's a difference in GameManager & updating the visual here
     private int _currentIndex = 0;      // What key is currently selected
 
+    #region Controls Bindings
     // move input actions
     private InputAction _upArrow;
     private InputAction _rightArrow;
@@ -38,27 +39,37 @@ public class KeycardDisplayController : MonoBehaviour
     {
         // bind input updating
         _upArrow = InputSystem.actions.FindAction("HUDUp");
-        _upArrow.started += context => KeyInteraction();
+        _upArrow.started += DoKeyInteraction;
         _upArrow.Enable();
         _rightArrow = InputSystem.actions.FindAction("HUDRight");
-        _rightArrow.started += context => KeyInteraction();
+        _rightArrow.started += DoKeyInteraction;
         _rightArrow.Enable();
         _downArrow = InputSystem.actions.FindAction("HUDDown");
-        _downArrow.started += context => KeyInteraction();
+        _downArrow.started += DoKeyInteraction;
         _downArrow.Enable();
         _leftArrow = InputSystem.actions.FindAction("HUDLeft");
-        _leftArrow.started += context => KeyInteraction();
+        _leftArrow.started += DoKeyInteraction;
         _leftArrow.Enable();
     }
 
     private void OnDisable()
     {
         // unbind input updating
-        _upArrow.started -= context => KeyInteraction();
-        _rightArrow.started -= context => KeyInteraction();
-        _downArrow.started -= context => KeyInteraction();
-        _leftArrow.started -= context => KeyInteraction();
+        _upArrow.started -= DoKeyInteraction;
+        _rightArrow.started -= DoKeyInteraction;
+        _downArrow.started -= DoKeyInteraction;
+        _leftArrow.started -= DoKeyInteraction;
     }
+
+    /// <summary>
+    /// Simply calls KeyInteraction() function.
+    /// Necessary to avoid memory leak.
+    /// </summary>
+    private void DoKeyInteraction(InputAction.CallbackContext context)
+    {
+        KeyInteraction();
+    }
+    #endregion
 
     void Start()
     {
