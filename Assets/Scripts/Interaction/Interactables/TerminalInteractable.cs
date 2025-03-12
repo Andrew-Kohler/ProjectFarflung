@@ -105,6 +105,7 @@ public class TerminalInteractable : Interactable
         _inUse = true;  // Tell the terminal it's being used
 
         _col.enabled = false;
+
         yield return new WaitForSeconds(1.875f);
         _terminalAnim.SetTrigger("TerminalStandby"); // Once the start animation has played, enter standby
     }
