@@ -52,8 +52,6 @@ public class WireBoxInteractable : Interactable
 
         _wireboxAnim.speed = 0f;
         _col = GetComponent<BoxCollider>();
-        _mainCam = Camera.main.GetComponent<CinemachineBrain>().
-            ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
     }
 
     new void Update()
@@ -76,6 +74,12 @@ public class WireBoxInteractable : Interactable
 
     private IEnumerator DoWireboxInteract()
     {
+        if (_mainCam == null)
+        {
+            _mainCam = Camera.main.GetComponent<CinemachineBrain>().
+            ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
+        }
+
         _wireboxAnim.ResetTrigger("BreakerOpen");
         _wireboxAnim.ResetTrigger("BreakerClose");
 

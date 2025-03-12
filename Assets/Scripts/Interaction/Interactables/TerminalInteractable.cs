@@ -44,8 +44,7 @@ public class TerminalInteractable : Interactable
     new void Start()
     {
         base.Start();
-        _mainCam = Camera.main.GetComponent<CinemachineBrain>().
-            ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
+        
         _terminalAnim.speed = 0f;
         _col = GetComponent<BoxCollider>();
     }
@@ -79,6 +78,12 @@ public class TerminalInteractable : Interactable
 
     private IEnumerator DoTerminalInteract()
     {
+        if(_mainCam == null)
+        {
+            _mainCam = Camera.main.GetComponent<CinemachineBrain>().
+            ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
+        }
+
         _terminalAnim.ResetTrigger("TerminalStandby");
         _terminalAnim.ResetTrigger("TerminalWake");
         _terminalAnim.ResetTrigger("TerminalSleep");

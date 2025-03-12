@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     // Whether the player is allowed to do anything right now
     public bool PlayerEnabled = true;
 
+    // The index of the point the player should be positioned at when they load into a scene
+    public int LoadPoint = 0;
+
     // public accessor of instance
     public static GameManager Instance
     {
