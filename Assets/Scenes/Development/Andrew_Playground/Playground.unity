@@ -11782,7 +11782,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 3.86
   m_Range: 14.54
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -82932,15 +82932,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 603470267818670798, guid: f6c774c775d689e4b9cdb01ba761591e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5669
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 603470267818670798, guid: f6c774c775d689e4b9cdb01ba761591e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5669
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 603470267818670798, guid: f6c774c775d689e4b9cdb01ba761591e, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5669
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 603470267818670798, guid: f6c774c775d689e4b9cdb01ba761591e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -82982,6 +82982,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 603470267818670798, guid: f6c774c775d689e4b9cdb01ba761591e, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1548174471276762994, guid: f6c774c775d689e4b9cdb01ba761591e, type: 3}
+      propertyPath: _maxLengthVisualOffset
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 1671831205425472546, guid: f6c774c775d689e4b9cdb01ba761591e, type: 3}
+      propertyPath: Length
+      value: 0.08
+      objectReference: {fileID: 0}
     - target: {fileID: 4308548517910704939, guid: f6c774c775d689e4b9cdb01ba761591e, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.96592575
@@ -82994,6 +83006,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.y
       value: 0.25881937
       objectReference: {fileID: 0}
+    - target: {fileID: 4891517149346474511, guid: f6c774c775d689e4b9cdb01ba761591e, type: 3}
+      propertyPath: _interactable
+      value: 
+      objectReference: {fileID: 1353880249}
     - target: {fileID: 4891517149346474511, guid: f6c774c775d689e4b9cdb01ba761591e, type: 3}
       propertyPath: IdentifierName
       value: TestBox
@@ -83014,6 +83030,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Busted Wire Box
       objectReference: {fileID: 0}
+    - target: {fileID: 5392405705518727032, guid: f6c774c775d689e4b9cdb01ba761591e, type: 3}
+      propertyPath: Length
+      value: 0.17
+      objectReference: {fileID: 0}
     - target: {fileID: 6040657581022785012, guid: f6c774c775d689e4b9cdb01ba761591e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 1.3109203e-14
@@ -83025,6 +83045,14 @@ PrefabInstance:
     - target: {fileID: 6040657581022785012, guid: f6c774c775d689e4b9cdb01ba761591e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 6.3236843e-16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6716990769977210444, guid: f6c774c775d689e4b9cdb01ba761591e, type: 3}
+      propertyPath: Length
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6819951859273295459, guid: f6c774c775d689e4b9cdb01ba761591e, type: 3}
+      propertyPath: Length
+      value: 0.23
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

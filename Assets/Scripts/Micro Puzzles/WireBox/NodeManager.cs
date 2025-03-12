@@ -101,7 +101,7 @@ public class NodeManager : MonoBehaviour
 
             // SCALE
             Vector3 scale = _currConnection.transform.localScale;
-            scale.x = maxLength * 10f; // 10x scale factor from unit coords to length units
+            scale.x = maxLength * 20f; // 10x scale factor from unit coords to length units
             _currConnection.transform.localScale = scale;
         }
         // Within Length Limit
@@ -112,7 +112,7 @@ public class NodeManager : MonoBehaviour
 
             // SCALE
             Vector3 scale = _currConnection.transform.localScale;
-            scale.x = Vector3.Distance(endPos, originPos) * 10f; // 10x scale factor from unity coords to grid units
+            scale.x = Vector3.Distance(endPos, originPos) * 20f; // 10x scale factor from unity coords to grid units
             _currConnection.transform.localScale = scale;
         }
 
