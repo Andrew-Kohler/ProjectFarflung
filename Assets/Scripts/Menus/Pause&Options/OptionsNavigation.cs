@@ -46,7 +46,7 @@ public class OptionsNavigation : MonoBehaviour
         if (!_isMainMenu)
         {
             // Ensure always starts on controls tab whenever re-opening options menu
-            InputSystem.actions.FindAction("Escape").started += context => ToControls();
+            InputSystem.actions.FindAction("Escape").started += ContextToControls;
             InputSystem.actions.FindAction("Escape").Enable();
         }
     }
@@ -56,9 +56,14 @@ public class OptionsNavigation : MonoBehaviour
         // in main menu escape key does NOTHING
         if (!_isMainMenu)
         {
-            InputSystem.actions.FindAction("Escape").started -= context => ToControls();
+            InputSystem.actions.FindAction("Escape").started -= ContextToControls;
             InputSystem.actions.FindAction("Escape").Disable();
         }
+    }
+
+    private void ContextToControls(InputAction.CallbackContext context)
+    {
+        ToControls();
     }
 
     #region Button Functions

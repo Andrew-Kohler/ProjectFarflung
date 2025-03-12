@@ -24,15 +24,22 @@ public class TerminalInteractable : Interactable
 
     public static event OnLockedInteraction onLockedInteractionTerminal;
 
+    #region Controls Bindings
     private void OnEnable()
     {
-        InputSystem.actions.FindAction("Interact").started += context => ReenablePlayer();
+        InputSystem.actions.FindAction("Interact").started += ContextReenablePlayer;
     }
 
     private void OnDisable()
     {
-        InputSystem.actions.FindAction("Interact").started -= context => ReenablePlayer();
+        InputSystem.actions.FindAction("Interact").started -= ContextReenablePlayer;
     }
+
+    private void ContextReenablePlayer(InputAction.CallbackContext context)
+    {
+        ReenablePlayer();
+    }
+    #endregion
 
     new void Start()
     {

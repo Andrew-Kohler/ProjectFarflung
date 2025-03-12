@@ -24,15 +24,22 @@ public class WireBoxInteractable : Interactable
 
     public static event OnLockedInteraction onLockedInteractionWirebox;
 
+    #region Controls Bindings
     private void OnEnable()
     {
-        InputSystem.actions.FindAction("Interact").started += context => ReenablePlayer(false);
+        InputSystem.actions.FindAction("Interact").started += ContextReenablePlayer;
     }
 
     private void OnDisable()
     {
-        InputSystem.actions.FindAction("Interact").started -= context => ReenablePlayer(false);
+        InputSystem.actions.FindAction("Interact").started -= ContextReenablePlayer;
     }
+
+    private void ContextReenablePlayer(InputAction.CallbackContext context)
+    {
+        ReenablePlayer(false);
+    }
+    #endregion
 
     new void Start()
     {
