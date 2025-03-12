@@ -15,6 +15,8 @@ public class WireBoxInteractable : Interactable
     private NodeManager _nodeManager;
     [SerializeField, Tooltip("The camera aimed at the box")]
     private CinemachineVirtualCamera _wireboxCam;
+    [SerializeField, Tooltip("The box animator")]
+    private Animator _wireboxAnim;
 
     private CinemachineVirtualCamera _mainCam;
     private bool _inUse = false;        // If player uses this wirebox (to prevent constantly reactivating exit keybind)
@@ -40,6 +42,8 @@ public class WireBoxInteractable : Interactable
         }
 
         base.Start();
+
+        _wireboxAnim.speed = 0f;
         _col = GetComponent<BoxCollider>();
         _mainCam = Camera.main.GetComponent<CinemachineBrain>().
             ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>();
@@ -65,6 +69,9 @@ public class WireBoxInteractable : Interactable
 
     private IEnumerator DoWireboxInteract()
     {
+        _wireboxAnim.ResetTrigger("BreakerOpen");
+        _wireboxAnim.ResetTrigger("BreakerClose");
+
         HideVFX(); // Hide the interaction VFX
 
         GameManager.Instance.PlayerEnabled = false; // Disable the player
@@ -82,6 +89,9 @@ public class WireBoxInteractable : Interactable
 
         _wirebox.EnablePuzzle(); // Enable the puzzle
 
+        _wireboxAnim.speed = 1f;
+        _wireboxAnim.SetTrigger("BreakerOpen"); // Play the animation
+
         yield return new WaitForEndOfFrame();
 
         _inUse = true;  // Tell the box it's being used
@@ -89,6 +99,8 @@ public class WireBoxInteractable : Interactable
 
     private IEnumerator DoReenablePlayer(bool final)
     {
+        _wireboxAnim.SetTrigger("BreakerClose");
+
         _mainCam.gameObject.SetActive(true);
         _wireboxCam.gameObject.SetActive(false);
 
@@ -99,18 +111,17 @@ public class WireBoxInteractable : Interactable
 
         _inUse = false;
 
-        if(!final)
-            _col.enabled = true;
-
         if (_wireManager.GetSelectedWire() != null) // Deselect a wire, if one is held
             _wireManager.DeselectWire(_wireManager.GetSelectedWire());
 
         _nodeManager.DestroyCurrentWire();
-        //_nodeManager.DeselectFirstNode();
-        //_wirebox.DisablePuzzle(); // Disable the puzzle
 
         yield return new WaitForEndOfFrame();
         GameManager.Instance.PlayerEnabled = true;
+
+        yield return new WaitForSeconds(1.5f);        // Only reenable interaction after the animation ends
+        if (!final)
+            _col.enabled = true;
 
         /*yield return new WaitForSeconds(2f);
         if (final)  // If the player completed the puzzle, they shan't do it again
