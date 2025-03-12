@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -15,6 +13,14 @@ public class WireSelector : ClickableObject
     [Header("Visual")]
     [SerializeField, Tooltip("Thickness of selected outline, according to Outline.cs.")]
     private float _outlineWidth;
+
+    [Header("Model Configuration")]
+    [SerializeField, Tooltip("Stuck tape object.")]
+    public GameObject StuckTape;
+    [SerializeField, Tooltip("Un-Stuck tape object.")]
+    public GameObject UnstuckTape;
+    [SerializeField, Tooltip("Main wire renderer for fetching material to be placed on newly placed wire.")]
+    public Renderer WireRenderer;
 
     private WireManager _wireManager;
     private Outline _outline;
@@ -38,6 +44,10 @@ public class WireSelector : ClickableObject
         // Selection
         else
             _wireManager.SelectNewWire(this);
+
+
+        // no matter what, this click should remove any first node connection made on a node of the board
+        _wireManager.NodeManager.DeselectFirstNode();
     }
 
     /// <summary>

@@ -21,6 +21,10 @@ public class WireBoxHandler : MonoBehaviour
     private GameObject[] _functionalObjects;
     [SerializeField, Tooltip("Interaction object")]
     WireBoxInteractable _interactable;
+    [SerializeField, Tooltip("Light objects to indicate whether puzzle is won. (emissive portions only).")]
+    private GameObject[] _indicatorLights;
+    [SerializeField, Tooltip("Materials for indicating if puzzle is won. 0 = not won, 1 = won")]
+    private Material[] _indicatorMaterials;
 
     private void Awake()
     {
@@ -88,8 +92,45 @@ public class WireBoxHandler : MonoBehaviour
     /// </summary>
     public void DisablePuzzle()
     {
-        foreach (GameObject obj in _functionalObjects)
-            obj.SetActive(false);
+        //toggle lights to green to indicate solving
+        _indicatorLights[0].GetComponent<Renderer>().material = _indicatorMaterials[1];
+        _indicatorLights[1].GetComponent<Renderer>().material = _indicatorMaterials[1];
+
+
+        // TODO: INTERACTIONS!!! - disables all functional parts so that nodes/wires are visable on board but cant be clicked, fully disabling them to not be visable anymore once animation plays should still happen for performance sake
+        // the reason for disabling at all is because the mouse raycast checks on each clickable object are fairly costly and probably not good to keep going throughout the whole scene play
+
+        // this can effectively replace the logic below if it is timed to be in sync with animation completion
+        /*foreach (GameObject obj in _functionalObjects)
+            obj.SetActive(false);*/
+
+        //prevents use of any nodes/door wires left etc
+        for (int i = 0; i < _functionalObjects.Length; i++)
+        {
+            Transform[] objChildren = _functionalObjects[i].GetComponentsInChildren<Transform>();
+            foreach (Transform child in objChildren)
+            {
+                WireSelector tempWireSelector = child.GetComponentInChildren<WireSelector>();
+                NodeSelector tempNodeSelector = child.GetComponentInChildren<NodeSelector>();
+
+                if (tempWireSelector != null)
+                {
+                    //turns off ability to select wire
+                    tempWireSelector.enabled = false;
+                }
+                else if (tempNodeSelector != null)
+                {
+                    //turns off ability to select nodes
+                    tempNodeSelector.enabled = false;
+                }
+                else if (child.name == "Wire Connection(Clone)") {
+                    //stops removal of wires after game stop
+                    Collider tempWireCollider = child.GetComponentInChildren<Collider>();
+                    tempWireCollider.enabled = false;
+                }
+
+            }
+        }
         this.enabled = false;
     }
 
@@ -102,5 +143,7 @@ public class WireBoxHandler : MonoBehaviour
         foreach (GameObject obj in _functionalObjects)
             obj.SetActive(true);
         this.enabled = true;
+
+        // animation call can go here for opening puzzle??
     }
 }

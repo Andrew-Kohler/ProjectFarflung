@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WireManager : MonoBehaviour
 {
+    public NodeManager NodeManager;
+
     private WireSelector[] _wires;
     private WireSelector _currWire = null;  // null = none selected
 
@@ -55,6 +57,8 @@ public class WireManager : MonoBehaviour
     {
         _currWire.DeselectVisual();
         _currWire.gameObject.SetActive(false);
+        _currWire.StuckTape.SetActive(false);
+        _currWire.UnstuckTape.SetActive(true);
         _currWire = null;
     }
 }
