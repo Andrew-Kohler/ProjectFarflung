@@ -64,7 +64,14 @@ public class CreatureMotion : MonoBehaviour
 
         // move/rotate object
         transform.position = farthestOption.position;
-        transform.rotation = farthestOption.rotation;
+
+        // set creature to face player when initially spawned
+        Vector3 playerPos = CreatureManager.Instance.PlayerTransform.position;
+        playerPos.y = 0; // don't track with player jumps
+        Vector3 dirToPlayer = playerPos - transform.position;
+        Quaternion goalRot = transform.rotation;
+        goalRot.SetLookRotation(dirToPlayer, Vector3.up);
+        transform.rotation = goalRot;
 
         gameObject.SetActive(true);
 

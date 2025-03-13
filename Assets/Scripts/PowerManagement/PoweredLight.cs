@@ -9,15 +9,17 @@ public class PoweredLight : PoweredElement
 {
     [Header("Light")]
     [SerializeField, Tooltip("Light component for enabling/disabling light source.")]
-    private Light _light;
+    private Light[] _lights;
 
     protected override void DisablePoweredElement()
     {
-        _light.enabled = false;
+        foreach (Light elem in _lights)
+            elem.enabled = false;
     }
 
     protected override void EnablePoweredElement()
     {
-        _light.enabled = true;
+        foreach (Light elem in _lights)
+            elem.enabled = true;
     }
 }
