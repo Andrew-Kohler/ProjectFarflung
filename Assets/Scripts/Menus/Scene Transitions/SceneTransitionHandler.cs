@@ -11,9 +11,23 @@ public class SceneTransitionHandler : MonoBehaviour
 {
     [SerializeField, Tooltip("Used to trigger animations for scene enter/exit")]
     private Animator _anim;
+    [SerializeField, Tooltip("List of transforms used to correctly place the player in this scene")]
+    private List<GameObject> _loadSpots;
+    [SerializeField, Tooltip("Player transform")]
+    private Transform _playerTransform;
 
     private bool _isDoneEnter = false; // becomes true once new scene is fully faded in
     private bool _isDoneTransitioning = false;
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
     /// <summary>
     /// Function that should be used to activate any scene transition in the game.
@@ -33,6 +47,12 @@ public class SceneTransitionHandler : MonoBehaviour
         yield return new WaitUntil(() => _isDoneTransitioning);
 
         SceneManager.LoadScene(sceneName);
+    }
+
+    // Sets the player to their correct position
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        _playerTransform.position = _loadSpots[GameManager.Instance.LoadPoint].transform.position;
     }
 
     /// <summary>

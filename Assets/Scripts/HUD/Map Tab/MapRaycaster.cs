@@ -71,17 +71,22 @@ public class MapRaycaster : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        collision.GetComponent<Image>().color = _activeColor;
+        if (GameManager.Instance.PlayerEnabled)
+        {
+            collision.GetComponent<Image>().color = _activeColor;
 
-        // The index of a room is stored as the first character of its name
-        onPassthrough?.Invoke(int.Parse(collision.gameObject.name.Substring(0, 1)));
-        // The canon name of the room is stored in the rest of the string
-        _tabController.SetLocationText(collision.gameObject.name.Substring(1, collision.gameObject.name.Length - 1));
+            // The index of a room is stored as the first character of its name
+            onPassthrough?.Invoke(int.Parse(collision.gameObject.name.Substring(0, 1)));
+            // The canon name of the room is stored in the rest of the string
+            _tabController.SetLocationText(collision.gameObject.name.Substring(1, collision.gameObject.name.Length - 1));
+        }
+       
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        collision.GetComponent<Image>().color = _inactiveColor;
+        if(GameManager.Instance.PlayerEnabled)
+            collision.GetComponent<Image>().color = _inactiveColor;
     }
 
     public void ToggleState(bool currentFloor)

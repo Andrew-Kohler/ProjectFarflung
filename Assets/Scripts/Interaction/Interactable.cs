@@ -13,6 +13,8 @@ public abstract class Interactable : MonoBehaviour
     protected bool _isActiveCoroutine = false;
 
     protected IEnumerator _currentHideCoroutine;
+
+    public delegate void OnLockedInteraction(bool start);
     protected void Start()
     {
         ConstraintSource src = new ConstraintSource();

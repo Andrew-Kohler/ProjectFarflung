@@ -86,7 +86,7 @@ namespace StarterAssets
 			}
 		}
 
-		private void Awake()
+        private void Awake()
 		{
 			// get a reference to our main camera
 			if (_mainCamera == null)
@@ -112,14 +112,19 @@ namespace StarterAssets
 
 		private void Update()
 		{
-			JumpAndGravity();
-			GroundedCheck();
-			Move();
+            if (GameManager.Instance.PlayerEnabled)
+            {
+				JumpAndGravity();
+				GroundedCheck();
+				Move();
+			}
+			
 		}
 
 		private void LateUpdate()
 		{
-			CameraRotation();
+			if(GameManager.Instance.PlayerEnabled)
+				CameraRotation();
 		}
 
 		private void GroundedCheck()
@@ -264,5 +269,6 @@ namespace StarterAssets
 			// when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
 			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
 		}
+
 	}
 }

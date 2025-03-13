@@ -80,7 +80,7 @@ public class MapTabController : MonoBehaviour
         MapRaycaster.onPassthrough -= UpdateHUDMap;
 
         // unbind input updating
-        _upArrow.started -= context => UpdateFloor();
+        _upArrow.started -= DoUpdateFloor;
         _rightArrow.started -= DoUpdateFloor;
         _downArrow.started -= DoUpdateFloor;
         _leftArrow.started -= DoUpdateFloor;
