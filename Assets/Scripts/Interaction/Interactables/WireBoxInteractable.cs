@@ -22,6 +22,8 @@ public class WireBoxInteractable : Interactable
     private bool _inUse = false;        // If player uses this wirebox (to prevent constantly reactivating exit keybind)
     private BoxCollider _col;
 
+    private bool _initialInteractiongOngoing = false; // Used to lock the player out of interrupting the animation
+
     public static event OnLockedInteraction onLockedInteractionWirebox;
 
     #region Controls Bindings
@@ -66,7 +68,7 @@ public class WireBoxInteractable : Interactable
 
     public void ReenablePlayer(bool final)
     {
-        if (_inUse)
+        if (_inUse && !_initialInteractiongOngoing)
         {
             StartCoroutine(DoReenablePlayer(final));
         }
@@ -74,6 +76,7 @@ public class WireBoxInteractable : Interactable
 
     private IEnumerator DoWireboxInteract()
     {
+        _initialInteractiongOngoing = true;
         if (_mainCam == null)
         {
             _mainCam = Camera.main.GetComponent<CinemachineBrain>().
@@ -106,6 +109,9 @@ public class WireBoxInteractable : Interactable
         yield return new WaitForEndOfFrame();
 
         _inUse = true;  // Tell the box it's being used
+
+        yield return new WaitForSeconds(2.7f);
+        _initialInteractiongOngoing = false;
     }
 
     private IEnumerator DoReenablePlayer(bool final)

@@ -20,6 +20,8 @@ public class TerminalInteractable : Interactable
     private bool _inUse = false;        // If player uses this terminal (to prevent constantly reactivating exit keybind)
     private bool _lockedOnUse = false;  // If the player uses this terminal and it's initially locked
 
+    private bool _initialInteractiongOngoing = false; // Used to lock the player out of interrupting the animation
+
     private BoxCollider _col;
 
     public static event OnLockedInteraction onLockedInteractionTerminal;
@@ -70,7 +72,7 @@ public class TerminalInteractable : Interactable
 
     private void ReenablePlayer()
     {
-        if (_inUse)
+        if (_inUse && !_initialInteractiongOngoing)
         {
             StartCoroutine(DoReenablePlayer());
         }
@@ -78,6 +80,7 @@ public class TerminalInteractable : Interactable
 
     private IEnumerator DoTerminalInteract()
     {
+        _initialInteractiongOngoing = true;
         if(_mainCam == null)
         {
             _mainCam = Camera.main.GetComponent<CinemachineBrain>().
@@ -120,6 +123,7 @@ public class TerminalInteractable : Interactable
 
         yield return new WaitForSeconds(1.875f);
         _terminalAnim.SetTrigger("TerminalStandby"); // Once the start animation has played, enter standby
+        _initialInteractiongOngoing = false;
     }
 
     private IEnumerator DoReenablePlayer()
