@@ -21,7 +21,7 @@ public class SceneTransitionHandler : MonoBehaviour
     public void LoadScene(string sceneName)
     {
         _anim.Play("FadeExit");
-
+        GameManager.Instance.PlayerEnabled = false;
         StartCoroutine(DoTransition(sceneName));
     }
 
@@ -51,6 +51,7 @@ public class SceneTransitionHandler : MonoBehaviour
     public void SetDoneEnter()
     {
         _isDoneEnter = true;
+        GameManager.Instance.PlayerEnabled = true;
     }
 
     /// <summary>
