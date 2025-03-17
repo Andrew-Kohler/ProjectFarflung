@@ -56,6 +56,12 @@ public class PlayerInteractor : MonoBehaviour
                     _obj = hit.collider.gameObject.GetComponent<Interactable>();
                     _obj.ShowVFX();
                 }
+                else if (!hit.collider.gameObject.Equals(_obj.gameObject)){ // Accounting for case where two interactables overlap
+                    _obj.HideVFX();
+                    _obj = null;
+                    _obj = hit.collider.gameObject.GetComponent<Interactable>();
+                    _obj.ShowVFX();
+                }
             }
             else
             {
