@@ -18,11 +18,8 @@ public class VitalsInitializer : MonoBehaviour
     /// <summary>
     /// Called during respawn process, handling the functional update of health and update of the display
     /// </summary>
-    public void Awake()
+    public void Start()
     {
-        // functionally decrement health
-        GameManager.Instance.SceneData.RemainingLives--;
-
         // fill amount
         _healthFill.fillAmount = (float)GameManager.Instance.SceneData.RemainingLives / GameManager.MAX_LIVES;
 
@@ -34,8 +31,8 @@ public class VitalsInitializer : MonoBehaviour
         if (healthR > 0.66f)
             _healthText.text = ">vitals\nregular";
         else if (healthR > 0.33f)
-            _healthText.text = "vitals\nmoderate";
+            _healthText.text = ">vitals\nmoderate";
         else
-            _healthText.text = "vitals\ncritical";
+            _healthText.text = ">vitals\ncritical";
     }
 }
