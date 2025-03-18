@@ -21,7 +21,8 @@ public class SceneTransitionHandler : MonoBehaviour
     public void LoadScene(string sceneName)
     {
         _anim.Play("FadeExit");
-
+        // lock player controls until end of next scene enter
+        GameManager.Instance.PlayerEnabled = false;
         StartCoroutine(DoTransition(sceneName));
     }
 
@@ -36,7 +37,7 @@ public class SceneTransitionHandler : MonoBehaviour
     }
 
     /// <summary>
-    /// Called by animation event at end of fade out animation.
+    /// Called by animation event at end of FADE-OUT animation.
     /// </summary>
     public void SetDoneTransitioning()
     {
@@ -44,11 +45,13 @@ public class SceneTransitionHandler : MonoBehaviour
     }
 
     /// <summary>
-    /// Called by animation event at end of fade out animation.
+    /// Called by animation event at end of FADE-IN animation.
     /// </summary>
     public void SetDoneEnter()
     {
         _isDoneEnter = true;
+        // restore controls for new scene that was just entered
+        GameManager.Instance.PlayerEnabled = true;
     }
 
     /// <summary>

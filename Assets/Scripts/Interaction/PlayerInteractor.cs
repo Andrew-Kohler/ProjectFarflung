@@ -56,6 +56,12 @@ public class PlayerInteractor : MonoBehaviour
                     _obj = hit.collider.gameObject.GetComponent<Interactable>();
                     _obj.ShowVFX();
                 }
+                else if (!hit.collider.gameObject.Equals(_obj.gameObject)){ // Accounting for case where two interactables overlap
+                    _obj.HideVFX();
+                    _obj = null;
+                    _obj = hit.collider.gameObject.GetComponent<Interactable>();
+                    _obj.ShowVFX();
+                }
             }
             else
             {
@@ -81,7 +87,7 @@ public class PlayerInteractor : MonoBehaviour
 
     private void Interact()
     {
-        if (_canInteract)
+        if (_canInteract && GameManager.Instance.PlayerEnabled)
         {
             _obj.GetComponent<Interactable>().InteractEffects();
         }

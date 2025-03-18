@@ -19,6 +19,12 @@ public class GameManager : MonoBehaviour
     // Current list of player's Log objects
     public List<Log> FoundLogs;
 
+    // Whether the player is allowed to do anything right now
+    public bool PlayerEnabled = false; // starts false since scene enter sets it to true
+
+    // The index of the point the player should be positioned at when they load into a scene
+    public int LoadPoint = 0;
+
     // public accessor of instance
     public static GameManager Instance
     {

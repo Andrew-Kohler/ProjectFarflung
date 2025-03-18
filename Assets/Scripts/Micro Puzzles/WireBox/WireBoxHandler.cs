@@ -19,6 +19,8 @@ public class WireBoxHandler : MonoBehaviour
     NodeSelector _outputNode;
     [SerializeField, Tooltip("Objects to disable when puzzle is inactive (functional components).")]
     private GameObject[] _functionalObjects;
+    [SerializeField, Tooltip("Interaction object")]
+    WireBoxInteractable _interactable;
     [SerializeField, Tooltip("Light objects to indicate whether puzzle is won. (emissive portions only).")]
     private GameObject[] _indicatorLights;
     [SerializeField, Tooltip("Materials for indicating if puzzle is won. 0 = not won, 1 = won")]
@@ -77,7 +79,10 @@ public class WireBoxHandler : MonoBehaviour
             // ensure power elements update accordingly
             WireBoxFixed?.Invoke();
 
-            // TODO: camera pan out and box close
+            // Give the player back control and disable further access to the puzzle
+            _interactable.ReenablePlayer(true); 
+
+            // TODO: box close
         }
     }
 
@@ -85,7 +90,7 @@ public class WireBoxHandler : MonoBehaviour
     /// Disables all functional portions of the wire box puzzle.
     /// Prevents computations from taking place while the puzzle is inactive.
     /// </summary>
-    private void DisablePuzzle()
+    public void DisablePuzzle()
     {
         //toggle lights to green to indicate solving
         _indicatorLights[0].GetComponent<Renderer>().material = _indicatorMaterials[1];
@@ -133,7 +138,7 @@ public class WireBoxHandler : MonoBehaviour
     /// Enables all functional portions of the wire box puzzle.
     /// Useful when entering puzzle (i.e. activating it).
     /// </summary>
-    private void EnablePuzzle()
+    public void EnablePuzzle()
     {
         foreach (GameObject obj in _functionalObjects)
             obj.SetActive(true);

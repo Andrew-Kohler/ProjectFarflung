@@ -8,7 +8,6 @@ using Unity.Mathematics;
 
 public class HUDController : MonoBehaviour
 {
-
     // Routing all of the player components through here so we don't have to dig around in the tabs
     public Transform PlayerTransform;
     public Transform CameraRotTransform;
@@ -16,25 +15,42 @@ public class HUDController : MonoBehaviour
     [Header("HUD Tab Navigation")]
     [SerializeField] private Animator _hudNavAnim;
     [SerializeField] private List<Image> _hudImages; // -2, -1, 0, 1, 2
+    [SerializeField] private GameObject _tabSwapParent;
 
     [Header("HUD Tabs")]
     [SerializeField] private List<GameObject> _tabs;
 
+    [Header("Interact Tab")]
+    [SerializeField] private GameObject _interactTab;
+    private Animator _hudControlAnim;
+    private bool _canSwitchTabs = true;    // Disables the ability to change tabs when interacting with stuff
+
     private int currentTab = 0;
 
-    bool active = false;
+    bool _active = false;
 
     #region Controls Bindings
     private void OnEnable()
     {
         InputSystem.actions.FindAction("Tab").started += DoTabSwitch;
         InputSystem.actions.FindAction("Tab").canceled += SetActiveFalse;
+
+        TerminalInteractable.onLockedInteractionTerminal += HUDBlink;
+        WireBoxInteractable.onLockedInteractionWirebox += HUDBlink;
     }
 
     private void OnDisable()
     {
         InputSystem.actions.FindAction("Tab").started -= DoTabSwitch;
         InputSystem.actions.FindAction("Tab").canceled -= SetActiveFalse;
+
+        TerminalInteractable.onLockedInteractionTerminal -= HUDBlink;
+        WireBoxInteractable.onLockedInteractionWirebox -= HUDBlink;
+    }
+
+    private void Start()
+    {
+        _hudControlAnim = GetComponent<Animator>();
     }
 
     /// <summary>
@@ -51,7 +67,7 @@ public class HUDController : MonoBehaviour
     /// </summary>
     private void SetActiveFalse(InputAction.CallbackContext context)
     {
-        active = false;
+        _active = false;
     }
     #endregion
 
@@ -63,15 +79,20 @@ public class HUDController : MonoBehaviour
 
     private void TabSwitch()
     {
-        if (!active)
+        if (!_active && _canSwitchTabs)
         {
             StartCoroutine(DoTabSwitch());
         }
     }
 
+    private void HUDBlink(bool start)
+    {
+        StartCoroutine(DoHUDBlink(start));
+    }
+
     private IEnumerator DoTabSwitch()
     {
-        active = true;
+        _active = true;
 
         _tabs[currentTab].SetActive(false);
         currentTab++;
@@ -95,5 +116,33 @@ public class HUDController : MonoBehaviour
         yield return new WaitForSeconds(.25f);
         
         yield return null;
+    }
+
+    private IEnumerator DoHUDBlink(bool start)
+    {
+        _hudControlAnim.Play("BlinkDown");
+        yield return new WaitForSeconds(7f / 12);
+
+        // Turn everything on or off between blinks
+        if (start)
+        {
+            _interactTab.SetActive(true);
+
+            _tabs[currentTab].SetActive(false);
+            _tabSwapParent.SetActive(false);
+
+            _canSwitchTabs = false;
+        }
+        else
+        {
+            _interactTab.SetActive(false);
+
+            _tabs[currentTab].SetActive(true);
+            _tabSwapParent.SetActive(true);
+
+            _canSwitchTabs = true;
+        }
+        _hudControlAnim.Play("BlinkUp");
+
     }
 }
