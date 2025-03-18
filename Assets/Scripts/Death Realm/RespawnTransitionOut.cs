@@ -13,6 +13,10 @@ public class RespawnTransitionOut : MonoBehaviour
 
     public void DoTransitionOut()
     {
+        // exit death realm data - AND save game state again now that you are out
+        GameManager.Instance.SceneData.IsInDeathRealm = false;
+        GameManager.Instance.SaveSceneDataToGameData();
+
         _handler.LoadScene(_sceneName);
     }
 }
