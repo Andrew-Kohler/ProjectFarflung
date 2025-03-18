@@ -32034,11 +32034,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!1 &1060048677 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8616685848737228372, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
-  m_PrefabInstance: {fileID: 5393215579111688471}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1076410446
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -63238,19 +63233,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8997996947095583982, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
   m_PrefabInstance: {fileID: 5393215579111688471}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1804965312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1060048677}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3a81fa1819f0464bb219f9348c642a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _loadSpotParent: {fileID: 1265491350}
 --- !u!1 &1817528575
 GameObject:
   m_ObjectHideFlags: 0
@@ -84021,6 +84003,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1677782612496741172, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+      propertyPath: _loadSpotParent
+      value: 
+      objectReference: {fileID: 1265491350}
     - target: {fileID: 8616685848737228371, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: _transitionHandler
       value: 
@@ -84088,10 +84074,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8616685848737228372, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1804965312}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
 --- !u!1001 &7248211766888921872
 PrefabInstance:
