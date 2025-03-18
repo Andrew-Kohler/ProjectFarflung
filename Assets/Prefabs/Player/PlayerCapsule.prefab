@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 5420857361349278248}
   - component: {fileID: 8616685848737228376}
   - component: {fileID: 2945220349784704136}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: PlayerCapsule
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _loadSpotParent: {fileID: 0}
+  _terminals: []
 --- !u!143 &8616685848737228382
 CharacterController:
   m_ObjectHideFlags: 0
