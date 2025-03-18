@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public bool PlayerEnabled = false; // starts false since scene enter sets it to true
 
     // The index of the point the player should be positioned at when they load into a scene
-    public int LoadPoint = 0;
+    public int LoadPoint = -1; // -1 means logic will default to using resume logic (i.e. picking based on terminal or default pos for station).
 
     // public accessor of instance
     public static GameManager Instance
@@ -109,9 +109,9 @@ public class GameManager : MonoBehaviour
 
         // RESUME DATA
         // terminal to load in front of on resume (-1 indicates no terminal - goes with default spawn pos instead)
-        private int SaveTerminal;
+        public int SaveTerminal;
         // determines scene to load (0 = Hangar, 1 = Floor1, 2 = Floor2, 3 = Floor4, -1 = Death Realm)
-        private int SaveScene;
+        public int SaveScene;
 
         /// <summary>
         /// Default constructor.

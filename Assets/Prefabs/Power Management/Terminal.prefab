@@ -266,10 +266,11 @@ Transform:
   m_LocalScale: {x: 0.65529, y: 0.65529, z: 0.65529}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 969210009761853409}
   - {fileID: 4539339306175569260}
   - {fileID: 3981230310418274719}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &274923484696418617
 MonoBehaviour:
@@ -285,6 +286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ZoneIndex: 0
   PowerSystem: {fileID: 0}
+  SpawnPos: {fileID: 969210009761853409}
 --- !u!114 &2236959753785211981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -667,6 +669,37 @@ LookAtConstraint:
   m_Sources:
   - sourceTransform: {fileID: 0}
     weight: 1
+--- !u!1 &6052026806942806430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 969210009761853409}
+  m_Layer: 0
+  m_Name: Terminal Respawn Transform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &969210009761853409
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6052026806942806430}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5436624061989759974}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &7426202197799490410
 GameObject:
   m_ObjectHideFlags: 0
