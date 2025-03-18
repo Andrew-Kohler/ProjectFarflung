@@ -114,6 +114,7 @@ public class FileTabController : MonoBehaviour
         _rightArrow.Enable();
         _downArrow = InputSystem.actions.FindAction("HUDDown");
         _downArrow.started += DoFileInteraction;
+        _downArrow.canceled += ResetAudioPitch;
         _downArrow.Enable();
         _leftArrow = InputSystem.actions.FindAction("HUDLeft");
         _leftArrow.started += DoFileInteraction;
@@ -167,6 +168,7 @@ public class FileTabController : MonoBehaviour
             UpdateAudioSlider();
             UpdateAudioWaveform();
         }
+
     }
 
     /// <summary>
@@ -248,10 +250,23 @@ public class FileTabController : MonoBehaviour
                         _textLogText.text = _selectedLog.textParas[_textLogIndex];
                         _textLogPageCounter.text = (_textLogIndex + 1) + "/" + _selectedLog.textParas.Count;
                     }
+                    if(_selectedLog.type == Log.LogType.Audio)
+                    {
+                        _source.pitch = 2f;
+                    }
+                    
                 }
                 
             }
+
+            
+
         }
+    }
+
+    private void ResetAudioPitch(InputAction.CallbackContext context)
+    {
+        _source.pitch = 1f;
     }
 
     // Listens for a change in the file count when the file tab is open
