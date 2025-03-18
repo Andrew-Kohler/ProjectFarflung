@@ -15,9 +15,15 @@ public class PlayerAutoInteractor : MonoBehaviour
     RaycastHit hit;
     Ray ray;
 
+    private bool _isDone = false;
+
     // Update is called once per frame
     void Update()
     {
+        // prevent this from triggering twice
+        if (_isDone)
+            return;
+
         ray = new Ray(this.transform.position, transform.forward * _raycastDistance);
         Debug.DrawRay(this.transform.position, transform.forward * _raycastDistance, Color.green);
         if (Physics.Raycast(ray, out hit, _raycastDistance, LayerMask.GetMask("Interactable", "Default")))
@@ -27,6 +33,7 @@ public class PlayerAutoInteractor : MonoBehaviour
             {
                 _obj = hit.collider.gameObject.GetComponent<RespawnAutoInteractable>();
                 _obj.InteractEffects();
+                _isDone = true;
             }
             else
             {
