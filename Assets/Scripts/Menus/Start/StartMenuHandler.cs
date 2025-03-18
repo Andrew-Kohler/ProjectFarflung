@@ -37,6 +37,10 @@ public class StartMenuHandler : MonoBehaviour
 
     private void Awake()
     {
+        // free control over the mouse
+        // necessary for when coming back from death realm death ending
+        Cursor.lockState = CursorLockMode.None;
+
         // Only show resume button if there is save data to resume with
         if (!GameManager.Instance.SceneData.NewGameStarted)
         {
