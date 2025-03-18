@@ -112,6 +112,9 @@ public class GameManager : MonoBehaviour
         public int SaveTerminal;
         // determines scene to load (0 = Hangar, 1 = Floor1, 2 = Floor2, 3 = Floor4, -1 = Death Realm)
         public int SaveScene;
+        // saved independent of SaveScene so it does not override previous scene data.
+        // by saving this separate, players are not able to simply quit and reload to 'undie'
+        public bool IsInDeathRealm;
 
         /// <summary>
         /// Default constructor.
@@ -168,6 +171,7 @@ public class GameManager : MonoBehaviour
             // RESUME DATA
             SaveTerminal = -1; // no save terminal by default
             SaveScene = 1; // start on Floor 1
+            IsInDeathRealm = false;
         }
 
         /// <summary>
@@ -225,6 +229,7 @@ public class GameManager : MonoBehaviour
             // RESUME DATA
             SaveTerminal = other.SaveTerminal;
             SaveScene = other.SaveScene;
+            IsInDeathRealm = other.IsInDeathRealm;
         }
     }
 

@@ -28,6 +28,12 @@ public class PlayerPositionLoader : MonoBehaviour
                         "The player will simply remain where they were placed in editor.");
                     return;
                 }
+
+                // default load spot
+                Transform defaultLoadSpot = _loadSpotParent.transform.GetChild(0);
+                transform.position = defaultLoadSpot.position;
+                transform.rotation = defaultLoadSpot.rotation;
+                return;
             }
 
             foreach (TerminalConfiguration terminal in _terminals)
