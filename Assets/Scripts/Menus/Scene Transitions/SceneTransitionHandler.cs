@@ -38,27 +38,34 @@ public class SceneTransitionHandler : MonoBehaviour
         // special case of dynamically picking scene based on save data (used for resume from start and respawn from Death Realm).
         if (sceneName == "Resume")
         {
-            switch(GameManager.Instance.SceneData.SaveScene)
+            // load death realm
+            if (GameManager.Instance.SceneData.IsInDeathRealm)
             {
-                case -1:
-                    SceneManager.LoadScene("DeathRealm");
-                    break;
-                case 0:
-                    SceneManager.LoadScene("Hangar");
-                    break;
-                case 1:
-                    SceneManager.LoadScene("Floor1");
-                    break;
-                case 2:
-                    SceneManager.LoadScene("Floor2");
-                    break;
-                case 3:
-                    SceneManager.LoadScene("Command");
-                    break;
-                default:
-                    throw new System.Exception("Invalid GameManager SaveScene index: must be between -1 and 3.");
+                SceneManager.LoadScene("DeathRealm");
+            }
+            // load specific level scene
+            else
+            {
+                switch (GameManager.Instance.SceneData.SaveScene)
+                {
+                    case 0:
+                        SceneManager.LoadScene("Hangar");
+                        break;
+                    case 1:
+                        SceneManager.LoadScene("Floor1");
+                        break;
+                    case 2:
+                        SceneManager.LoadScene("Floor2");
+                        break;
+                    case 3:
+                        SceneManager.LoadScene("Command");
+                        break;
+                    default:
+                        throw new System.Exception("Invalid GameManager SaveScene index: must be between -1 and 3.");
+                }
             }
         }
+        // otherwise load scene normally
         else
             SceneManager.LoadScene(sceneName);
     }
