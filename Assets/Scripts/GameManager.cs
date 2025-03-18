@@ -107,12 +107,11 @@ public class GameManager : MonoBehaviour
         // List of names of keys the player has picked up
         public List<string> Keys;
 
-        // previous save terminal (or none in case of game start)
-        // etc...
-
-        // --------------------------------------------------------- \\
-        // TODO: Add additional progression data types here
-        // --------------------------------------------------------- \\
+        // RESUME DATA
+        // terminal to load in front of on resume (-1 indicates no terminal - goes with default spawn pos instead)
+        private int SaveTerminal;
+        // determines scene to load (0 = Hangar, 1 = Floor1, 2 = Floor2, 3 = Floor4, -1 = Death Realm)
+        private int SaveScene;
 
         /// <summary>
         /// Default constructor.
@@ -166,9 +165,9 @@ public class GameManager : MonoBehaviour
             // KEYCARDS
             Keys = new List<string>();
 
-            // --------------------------------------------------------- \\
-            // TODO: Add default values for additional progression data here
-            // --------------------------------------------------------- \\
+            // RESUME DATA
+            SaveTerminal = -1; // no save terminal by default
+            SaveScene = 1; // start on Floor 1
         }
 
         /// <summary>
@@ -222,9 +221,10 @@ public class GameManager : MonoBehaviour
 
             // KEYS
             Keys = new List<string>(other.Keys);
-            // --------------------------------------------------------- \\
-            // TODO: Add additional progression data value copies here
-            // --------------------------------------------------------- \\
+
+            // RESUME DATA
+            SaveTerminal = other.SaveTerminal;
+            SaveScene = other.SaveScene;
         }
     }
 
