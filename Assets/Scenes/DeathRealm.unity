@@ -280,6 +280,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1313089044 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4135013735270702863, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+  m_PrefabInstance: {fileID: 5393215579111688471}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1683942198 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5306277824455247560, guid: 9fcd557e28e5a434294a415a5f46958a, type: 3}
+  m_PrefabInstance: {fileID: 2082915231}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eae814ce23cc2ba44ae86a894634462f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2082915231
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2369,9 +2385,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4237664057837714261}
   - component: {fileID: 4827269980759951301}
+  - component: {fileID: 4827269980759951302}
   m_Layer: 0
-  m_Name: Respawn 'Terminal' (TempAstroFIRSTPOV)
-  m_TagString: Untagged
+  m_Name: Respawn 'Terminal' (TempAstroFIRSTPOV Model)
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -2399,6 +2416,21 @@ CapsuleCollider:
   m_Height: 1.5348562
   m_Direction: 1
   m_Center: {x: -0, y: 0.7033767, z: 0}
+--- !u!114 &4827269980759951302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4827269980759951300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca041104de16a2541b1a698315c032b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sceneName: Playground
+  _loadSpot: 0
+  _handler: {fileID: 1683942198}
 --- !u!4 &4889941746261458430
 Transform:
   m_ObjectHideFlags: 0
@@ -2696,13 +2728,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4676545958147597682, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
     m_RemovedGameObjects:
     - {fileID: 5393215578589016642, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
     - {fileID: 5282489168986466425, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
     - {fileID: 7466454270169136005, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4135013735270702863, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8338988565591873056}
   m_SourcePrefab: {fileID: 100100000, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
 --- !u!1 &5457387126386845189
 GameObject:
@@ -3963,6 +3999,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4135013735270702856, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
   m_PrefabInstance: {fileID: 5393215579111688471}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8338988565591873056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313089044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe5f064538c4cf14fa6b8fdd69fbf889, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _raycastDistance: 1
 --- !u!23 &8388598785454849016
 MeshRenderer:
   m_ObjectHideFlags: 0
