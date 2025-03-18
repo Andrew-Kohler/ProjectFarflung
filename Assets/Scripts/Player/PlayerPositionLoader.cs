@@ -1,40 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Handles assigning the player to an initial position based on a set of load transforms and an index set by the previous scene.
 /// </summary>
 public class PlayerPositionLoader : MonoBehaviour
 {
-    [SerializeField, Tooltip("Parent of transforms used to correctly place the player in this scene")]
+    [SerializeField, Tooltip("Parent of transforms used to correctly place the player in this scene; if unassigned, this script will be ignored.")]
     private GameObject _loadSpotParent;
-    private List<GameObject> _loadSpots;
-
-    private Transform _playerTransform;
 
     void Start()
     {
-        _playerTransform = GetComponent<Transform>();
-        _loadSpots = new List<GameObject>();
-
-        // Precondition: assigned load parent
-        if (_loadSpotParent is null)
-            throw new System.Exception("Player does not have load spots assigned");
-        // Precondition: at least one load transform contained
-        if (_loadSpotParent.transform.childCount == 0)
-            throw new System.Exception("Load spot parent has no spots to load the player to");
+        // If there is no load parent OR the load parent has no children, then simply do not move the player
+        // this allows improperly configured scenes to still be used for testing
+        // Note: 'is null' does not work on GameObjects due to how Unity handles game object null references - this weird way works instead
+        if (!_loadSpotParent || _loadSpotParent.transform.childCount == 0)
+        {
+            Debug.LogWarning("PlayerPositionLoader will not work because there is either no load spot parent assigned, or it contains no children transforms. " +
+                "The player will simply remain where they were placed in editor.");
+            return;
+        }
 
         // Get all the different points
+        List<GameObject> loadSpots = new List<GameObject>();
         for (int i = 0; i < _loadSpotParent.transform.childCount; i++) 
-            _loadSpots.Add(_loadSpotParent.transform.GetChild(i).gameObject);
+            loadSpots.Add(_loadSpotParent.transform.GetChild(i).gameObject);
 
-        // Precondition: must be index in bounds
-        if (GameManager.Instance.LoadPoint >= _loadSpots.Count)
-            throw new System.Exception("Attempting to load Loadpoint index #" + GameManager.Instance.LoadPoint + ". But LoadPoints only contains " + _loadSpots.Count + " load spots.");
+        // Precondition: must be index in bounds (within rangeis acceptable)
+        if (GameManager.Instance.LoadPoint >= loadSpots.Count || GameManager.Instance.LoadPoint < 0)
+            throw new System.Exception("Attempting to load Loadpoint index #" + GameManager.Instance.LoadPoint + ". But LoadPoints only contains " + loadSpots.Count + " load spots.");
         
         // move player to load spot - the actual functionality!
-        _playerTransform.position = _loadSpots[GameManager.Instance.LoadPoint].transform.position;
+        transform.position = loadSpots[GameManager.Instance.LoadPoint].transform.position;
     }
 }
