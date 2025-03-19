@@ -38,6 +38,9 @@ public class SceneTransitionHandler : MonoBehaviour
         // special case of dynamically picking scene based on save data (used for resume from start and respawn from Death Realm).
         if (sceneName == "Resume")
         {
+            // Resume functionality requires that no override load point is being used
+            GameManager.Instance.LoadPoint = -1;
+
             // load death realm
             if (GameManager.Instance.SceneData.IsInDeathRealm)
             {
