@@ -162,6 +162,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1276743248157441918}
   - component: {fileID: 8061570771452208166}
+  - component: {fileID: 7774259411738526867}
   m_Layer: 5
   m_Name: Player HUD
   m_TagString: Untagged
@@ -220,6 +221,27 @@ MonoBehaviour:
   - {fileID: 3229711456078491190}
   - {fileID: 7681943940033176740}
   _interactTab: {fileID: 5385105583853312497}
+--- !u!95 &7774259411738526867
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606520322367299996}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f41aecfd95c58cb4983ed46d036c6040, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &681185772118831262
 GameObject:
   m_ObjectHideFlags: 0
