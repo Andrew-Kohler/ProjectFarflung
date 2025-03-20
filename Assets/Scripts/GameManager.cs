@@ -133,6 +133,8 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < VisitationList1F.Length; i++)
                 VisitationList1F[i] = false;
 
+            VisitationList1F[0] = true; // Tram station is where the game opens
+
             VisitationList2F = new bool[3];
             for (int i = 0; i < VisitationList2F.Length; i++)
                 VisitationList2F[i] = false;
@@ -184,7 +186,7 @@ public class GameManager : MonoBehaviour
             RemainingLives = other.RemainingLives;
 
             Floor = other.Floor;
-            VisitationList1F = new bool[5]; 
+            VisitationList1F = new bool[33]; 
             for (int i = 0; i<VisitationList1F.Length; i++)
                 VisitationList1F[i] = other.VisitationList1F[i];
 
