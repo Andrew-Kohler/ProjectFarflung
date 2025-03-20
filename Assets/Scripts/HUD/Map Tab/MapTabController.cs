@@ -320,24 +320,24 @@ public class MapTabController : MonoBehaviour
     private IEnumerator DoUpdateFlavorText()
     {
         _isFlavorAnimRunning = true;
-        _flavorText.text = ">Farflung Station\n> stationindex 7804 - F\n> recordedpopulation 38\n" +
-            "> ERROR: network offline, cannot update from station servers\n> deadreckoning enabled";
+        _flavorText.text = ">Farflung Station\n>stationindex 7804-F\n>recordedpopulation 38\n" +
+            ">ERROR: network offline, cannot update from station servers\n>deadreckoning enabled";
         yield return new WaitForSeconds(10f);
 
         float connectionCount = 0f;
 
         while(connectionCount < 9f)
         {
-            _flavorText.text = ">Farflung Station\n> stationindex 7804 - F\n> recordedpopulation 38\n" +
+            _flavorText.text = ">Farflung Station\n> stationindex 7804-F\n> recordedpopulation 38\n" +
             "> \\ Attemping to connect to network...";
             yield return new WaitForSeconds(.25f);
-            _flavorText.text = ">Farflung Station\n> stationindex 7804 - F\n> recordedpopulation 38\n" +
+            _flavorText.text = ">Farflung Station\n> stationindex 7804-F\n> recordedpopulation 38\n" +
                 "> | Attemping to connect to network...";
             yield return new WaitForSeconds(.25f);
-            _flavorText.text = ">Farflung Station\n> stationindex 7804 - F\n> recordedpopulation 38\n" +
+            _flavorText.text = ">Farflung Station\n> stationindex 7804-F\n> recordedpopulation 38\n" +
                 "> / Attemping to connect to network...";
             yield return new WaitForSeconds(.25f);
-            _flavorText.text = ">Farflung Station\n> stationindex 7804 - F\n> recordedpopulation 38\n" +
+            _flavorText.text = ">Farflung Station\n> stationindex 7804-F\n> recordedpopulation 38\n" +
                 "> - Attemping to connect to network...";
             yield return new WaitForSeconds(.25f);
             connectionCount++;

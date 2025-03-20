@@ -125,11 +125,11 @@ public class GameManager : MonoBehaviour
             // HEADS-UP DISPLAY (HUD)
 
             NarrativeTimestamp = 0;                   
-            RemainingLives = 9;
+            RemainingLives = 1;
 
             Floor = 1;
             // Center, top, left, bottom, right
-            VisitationList1F = new bool[5]; 
+            VisitationList1F = new bool[33]; 
             for (int i = 0; i < VisitationList1F.Length; i++)
                 VisitationList1F[i] = false;
 

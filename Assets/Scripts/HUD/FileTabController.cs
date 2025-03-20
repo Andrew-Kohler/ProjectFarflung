@@ -87,7 +87,8 @@ public class FileTabController : MonoBehaviour
     private Log _selectedLog;
 
     // Some control variables
-    private bool _isActiveCoroutine; // Prevents navigation coroutines from overlapping
+    private bool _isActiveCoroutineUpDown; // Prevents navigation coroutines from overlapping
+    private bool _isActiveCoroutineLeftRight; // Prevents navigation coroutines from overlapping
     private bool _isLogOpen;         // Is there a log open?
     private int _textLogIndex;       // What page of an open text log we're on 
     private int _localFileCount = 0;     // The last local count of how many files there are (if there's a difference, list gets updated)
@@ -95,6 +96,7 @@ public class FileTabController : MonoBehaviour
                                          // Necessary because selectedLog can be affected by things other than direct player input.
     private IEnumerator _currentTimelineCoroutine;
     private IEnumerator _currentSubtitleCoroutine;
+    private IEnumerator _currentOpenCloseCoroutine;
 
     #region Controls Binding
     // move input actions
@@ -129,6 +131,7 @@ public class FileTabController : MonoBehaviour
         _upArrow.started -= DoFileInteraction;
         _rightArrow.started -= DoFileInteraction;
         _downArrow.started -= DoFileInteraction;
+        _downArrow.canceled -= ResetAudioPitch;
         _leftArrow.started -= DoFileInteraction;
 
         TabClose();
@@ -190,10 +193,16 @@ public class FileTabController : MonoBehaviour
         Vector2 arrowInput = new Vector2(xInput, yInput);
 
         // If a movement coroutine isn't running, this tab is open, and there's at least one log to look at
-        if (!_isActiveCoroutine && this.isActiveAndEnabled && GameManager.Instance.SceneData.FoundLogNames.Count > 0)
+        if (this.isActiveAndEnabled && GameManager.Instance.SceneData.FoundLogNames.Count > 0 && !_isActiveCoroutineLeftRight)
         {
             if (arrowInput.x > 0 && GameManager.Instance.SceneData.LogIndex < GameManager.Instance.SceneData.FoundLogNames.Count - 1) // Moving to the right
             {
+                if (_isActiveCoroutineUpDown) // Allows L/R presses to interrupt opening and closing animations
+                {
+                    StopCoroutine(_currentOpenCloseCoroutine);
+                    //CloseCurrentLogFast();
+                }
+
                 // Start the change animations and change the index
                 _nodeDisplayList[GameManager.Instance.SceneData.LogIndex].Shrink();
                 GameManager.Instance.SceneData.LogIndex++;
@@ -208,6 +217,13 @@ public class FileTabController : MonoBehaviour
             }
             else if (arrowInput.x < 0 && GameManager.Instance.SceneData.LogIndex > 0) // Moving to the left
             {
+
+                if (_isActiveCoroutineUpDown)
+                {
+                    StopCoroutine(_currentOpenCloseCoroutine);
+                    //CloseCurrentLogFast();
+                }
+
                 // Start the change animations and change the index
                 _nodeDisplayList[GameManager.Instance.SceneData.LogIndex].Shrink();
                 GameManager.Instance.SceneData.LogIndex--;
@@ -381,9 +397,10 @@ public class FileTabController : MonoBehaviour
     /// </summary>
     private void CurrentLogDisplay(bool show)
     {
-        if (!_isActiveCoroutine)
+        if (!_isActiveCoroutineUpDown)
         {
-            StartCoroutine(DoDisplayCurrentLog(show));
+            _currentOpenCloseCoroutine = DoDisplayCurrentLog(show);
+            StartCoroutine(_currentOpenCloseCoroutine);
         }
     }
 
@@ -392,7 +409,7 @@ public class FileTabController : MonoBehaviour
     /// </summary>
     private IEnumerator DoDisplayCurrentLog(bool show)
     {
-        _isActiveCoroutine = true; // Prevent anything from overlapping this
+        _isActiveCoroutineUpDown = true; // Prevent anything from overlapping this
 
         // If we're closing the log, hide the content before the animation
         if (!show)
@@ -420,7 +437,7 @@ public class FileTabController : MonoBehaviour
         else
             _fileDisplayAnim.Play("CloseLog");
 
-        yield return new WaitForSeconds(5f / 6f);
+        yield return new WaitForSeconds(5f / 6f); 
 
         // If we're opening a log, show the content after the animation
         if (show)
@@ -448,7 +465,7 @@ public class FileTabController : MonoBehaviour
             }
         }
 
-        _isActiveCoroutine = false;
+        _isActiveCoroutineUpDown = false;
     }
 
     /// <summary>
@@ -459,6 +476,8 @@ public class FileTabController : MonoBehaviour
         _textLogDisplayParent.SetActive(false);
         _imgDisplayParent.SetActive(false);
         _audioDisplayParent.SetActive(false);
+        _fileDisplayAnim.Play("Static");
+        _isActiveCoroutineUpDown = false;
         _timeSlider.value = 0;
         if(_source.isPlaying)
             _source.Stop();
@@ -511,7 +530,7 @@ public class FileTabController : MonoBehaviour
     /// </summary>
     private IEnumerator DoLerpXTimed(GameObject obj, float startX, float endX, float duration)
     {
-        _isActiveCoroutine = true; // Prevent anything (like opening a log mid switch) from overlapping this
+        _isActiveCoroutineLeftRight = true; // Prevent anything (like opening a log mid switch) from overlapping this
         float timeElapsed = 0;
         CloseCurrentLogFast();
 
@@ -523,7 +542,7 @@ public class FileTabController : MonoBehaviour
         }
         obj.transform.localPosition = new Vector2(endX, obj.transform.localPosition.y);
 
-        _isActiveCoroutine = false;
+        _isActiveCoroutineLeftRight = false;
     }
 
     /// <summary>
@@ -556,9 +575,11 @@ public class FileTabController : MonoBehaviour
             _nodeDisplayList = new List<FileNode>();
         }
 
-        if(_localFileCount != GameManager.Instance.FoundLogs.Count)
+        // Regenerates the list if there is a new log, OR if the list was left at an incorrect position / misaligned
+        if(_localFileCount != GameManager.Instance.FoundLogs.Count || _isActiveCoroutineLeftRight)
         {
-            if(_localFileCount == 0) // If this is the first log picked up, we need to set _lastSelected (as it's normally set when the arrow keys are pressed)
+            _isActiveCoroutineLeftRight = false;
+            if (_localFileCount == 0) // If this is the first log picked up, we need to set _lastSelected (as it's normally set when the arrow keys are pressed)
             {
                 _lastSelected = GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex];
             }
