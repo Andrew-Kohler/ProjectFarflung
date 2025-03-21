@@ -209,6 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerTransform: {fileID: 0}
   CameraRotTransform: {fileID: 0}
+  FlashlightController: {fileID: 0}
   _hudNavAnim: {fileID: 5983157929488195843}
   _hudImages:
   - {fileID: 7752662855302854022}
@@ -1983,10 +1984,6 @@ PrefabInstance:
     - target: {fileID: 5816914269451954804, guid: bd77a50ffae39a3438dc2483c4bd7ce4, type: 3}
       propertyPath: m_Name
       value: Home Tab
-      objectReference: {fileID: 0}
-    - target: {fileID: 5816914269451954804, guid: bd77a50ffae39a3438dc2483c4bd7ce4, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8097947144369989188, guid: bd77a50ffae39a3438dc2483c4bd7ce4, type: 3}
       propertyPath: m_Pivot.x

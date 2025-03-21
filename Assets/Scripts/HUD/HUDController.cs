@@ -11,6 +11,7 @@ public class HUDController : MonoBehaviour
     // Routing all of the player components through here so we don't have to dig around in the tabs
     public Transform PlayerTransform;
     public Transform CameraRotTransform;
+    [HideInInspector] public FlashlightController FlashlightController;
 
     [Header("HUD Tab Navigation")]
     [SerializeField] private Animator _hudNavAnim;
@@ -51,6 +52,7 @@ public class HUDController : MonoBehaviour
     private void Start()
     {
         _hudControlAnim = GetComponent<Animator>();
+        FlashlightController = PlayerTransform.GetComponentInChildren<FlashlightController>();
     }
 
     /// <summary>

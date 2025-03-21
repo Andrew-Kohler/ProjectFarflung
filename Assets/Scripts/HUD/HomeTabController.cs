@@ -39,6 +39,7 @@ public class HomeTabController : MonoBehaviour
         UpdateNarrativeTime();
         UpdateRotationGauge();
         UpdateVitals();
+        UpdateFlashlightBattery();
     }
 
     private void UpdateNarrativeTime() // Updates the indicator of narratively passed time
@@ -118,5 +119,10 @@ public class HomeTabController : MonoBehaviour
             _healthReadout.text = ">vitals critical\n>damage to frontal lobe\n>genetic basis corrupted" +
                 "\n>urgently seek medical assistance";
         }
+    }
+
+    private void UpdateFlashlightBattery()
+    {
+        _lightFill.fillAmount = GameManager.FlashlightCharge;
     }
 }
