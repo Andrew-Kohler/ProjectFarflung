@@ -80,6 +80,9 @@ public class TerminalInteractable : Interactable
 
     private IEnumerator DoTerminalInteract()
     {
+        // Save data at terminal open
+        GameManager.Instance.SaveAtTerminal(_terminal.ZoneIndex);
+
         _initialInteractiongOngoing = true;
         if(_mainCam == null)
         {
@@ -128,6 +131,9 @@ public class TerminalInteractable : Interactable
 
     private IEnumerator DoReenablePlayer()
     {
+        // Save data on terminal exit
+        GameManager.Instance.SaveAtTerminal(_terminal.ZoneIndex);
+
         _mainCam.gameObject.SetActive(true);        // Right the cameras
         _puzzleCam.gameObject.SetActive(false);
         _terminalCam.gameObject.SetActive(false);

@@ -37,6 +37,10 @@ public class StartMenuHandler : MonoBehaviour
 
     private void Awake()
     {
+        // free control over the mouse
+        // necessary for when coming back from death realm death ending
+        Cursor.lockState = CursorLockMode.None;
+
         // Only show resume button if there is save data to resume with
         if (!GameManager.Instance.SceneData.NewGameStarted)
         {
@@ -60,8 +64,6 @@ public class StartMenuHandler : MonoBehaviour
         else
         {
             GameManager.Instance.ResetGameData(); // new progression data
-            GameManager.Instance.SceneData.NewGameStarted = true;
-            GameManager.Instance.SaveSceneDataToGameData(); // ensure new save state transfers not only to scene data but also to game data
             
             // load brightness config scene
             _transitionHandler.LoadScene(_brightnessConfigSceneName);
@@ -131,8 +133,7 @@ public class StartMenuHandler : MonoBehaviour
     public void ConfirmNewGame()
     {
         GameManager.Instance.ResetGameData(); // new progression data
-        GameManager.Instance.SceneData.NewGameStarted = true;
-        GameManager.Instance.SaveSceneDataToGameData(); // ensure new save state transfers not only to scene data but also to game data
+
         // load brightness config scene
         _transitionHandler.LoadScene(_brightnessConfigSceneName);
     }

@@ -12,6 +12,8 @@ public class TerminalConfiguration : MonoBehaviour
     public int ZoneIndex;
     [Tooltip("Scene reference to the power system for retrieving data to display.")]
     public PowerSystem PowerSystem;
+    [Tooltip("Transform for spawning in front of terminal upon scene load / resume.")]
+    public Transform SpawnPos;
 
     private void Awake()
     {
@@ -22,5 +24,9 @@ public class TerminalConfiguration : MonoBehaviour
         // Precondition: proper zone index
         if (ZoneIndex < 0 || ZoneIndex >= GameManager.Instance.SceneData.PoweredZones.Length || ZoneIndex >= GameManager.Instance.SceneData.TerminalUnlocks.Length)
             throw new System.Exception("Invalid Terminal Index: must be in range of powered zones list in game manager.");
+
+        // Precondition: assigned spawn pos
+        if (SpawnPos is null)
+            throw new System.Exception("Invalid Terminal Spawn Pos: no reference found.");
     }
 }

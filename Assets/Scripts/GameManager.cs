@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Stores and manages progression data saved between scenes and sessions.
@@ -23,7 +24,7 @@ public class GameManager : MonoBehaviour
     public bool PlayerEnabled = false; // starts false since scene enter sets it to true
 
     // The index of the point the player should be positioned at when they load into a scene
-    public int LoadPoint = 0;
+    public int LoadPoint = -1; // -1 means logic will default to using resume logic (i.e. picking based on terminal or default pos for station).
 
     // public accessor of instance
     public static GameManager Instance
@@ -107,12 +108,14 @@ public class GameManager : MonoBehaviour
         // List of names of keys the player has picked up
         public List<string> Keys;
 
-        // previous save terminal (or none in case of game start)
-        // etc...
-
-        // --------------------------------------------------------- \\
-        // TODO: Add additional progression data types here
-        // --------------------------------------------------------- \\
+        // RESUME DATA
+        // terminal to load in front of on resume (-1 indicates no terminal - goes with default spawn pos instead)
+        public int SaveTerminal;
+        // determines scene to load (0 = Hangar, 1 = Floor1, 2 = Floor2, 3 = Command)
+        public int SaveScene;
+        // saved independent of SaveScene so it does not override previous scene data.
+        // by saving this separate, players are not able to simply quit and reload to 'undie'
+        public bool IsInDeathRealm;
 
         /// <summary>
         /// Default constructor.
@@ -168,9 +171,10 @@ public class GameManager : MonoBehaviour
             // KEYCARDS
             Keys = new List<string>();
 
-            // --------------------------------------------------------- \\
-            // TODO: Add default values for additional progression data here
-            // --------------------------------------------------------- \\
+            // RESUME DATA
+            SaveTerminal = -1; // no save terminal by default
+            SaveScene = 1; // start on Floor 1
+            IsInDeathRealm = false;
         }
 
         /// <summary>
@@ -224,9 +228,11 @@ public class GameManager : MonoBehaviour
 
             // KEYS
             Keys = new List<string>(other.Keys);
-            // --------------------------------------------------------- \\
-            // TODO: Add additional progression data value copies here
-            // --------------------------------------------------------- \\
+
+            // RESUME DATA
+            SaveTerminal = other.SaveTerminal;
+            SaveScene = other.SaveScene;
+            IsInDeathRealm = other.IsInDeathRealm;
         }
     }
 
@@ -325,6 +331,36 @@ public class GameManager : MonoBehaviour
     {
         // copy of scene data, NOT using same reference
         Instance.GameData = new ProgressionData(Instance.SceneData);
+    }
+
+    /// <summary>
+    /// Saves current scene and terminal index, and then copies scene data to game data.
+    /// </summary>
+    public void SaveAtTerminal(int terminalIndex)
+    {
+        // terminal index
+        Instance.SceneData.SaveTerminal = terminalIndex;
+
+        // scene index - manually coded
+        switch (SceneManager.GetActiveScene().name)
+        {
+            case "Hangar":
+                Instance.SceneData.SaveScene = 0;
+                break;
+            case "Floor1":
+                Instance.SceneData.SaveScene = 1;
+                break;
+            case "Floor2":
+                Instance.SceneData.SaveScene = 2;
+                break;
+            case "Command":
+                Instance.SceneData.SaveScene = 3;
+                break;
+            default:
+                throw new Exception("SaveAtTerminal function can ONLY be called from main level scenes (Hangar, Floor1, Floor2, Command");
+        }
+
+        SaveSceneDataToGameData();
     }
 
     /// <summary>
