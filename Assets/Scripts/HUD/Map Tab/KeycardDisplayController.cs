@@ -24,8 +24,16 @@ public class KeycardDisplayController : MonoBehaviour
     [SerializeField, Tooltip("Text of selected key")]
     private TextMeshProUGUI _selectedKeyText;
 
+    [Header("Keybinds/Accessiblity")]
+    [SerializeField, Tooltip("Prefabs for left and right arrow at the end of the list")]
+    private GameObject _leftArrowBind;
+    [SerializeField] private GameObject _rightArrowBind;
+
+    private int _lowestIndex = 0;
+    private int _highestIndex;
+
     private List<GameObject> _keyObjects; // For moving the selector from one to another
-    private float _localKeyCount = 0;   // Used for seeing if there's a difference in GameManager & updating the visual here
+    private int _localKeyCount = 0;   // Used for seeing if there's a difference in GameManager & updating the visual here
     private int _currentIndex = 0;      // What key is currently selected
 
     #region Controls Bindings
@@ -109,9 +117,9 @@ public class KeycardDisplayController : MonoBehaviour
         {
             _currentIndex++;
 
-            if (_currentIndex > GameManager.Instance.SceneData.Keys.Count - 1)
+            if (_currentIndex > _highestIndex)
             {
-                _currentIndex = GameManager.Instance.SceneData.Keys.Count - 1; // Infinite scrolling is NOT enabled, that's too easy and useful for a horror interface
+                _currentIndex = _highestIndex; // Infinite scrolling is NOT enabled, that's too easy and useful for a horror interface
             }
             else
             {
@@ -121,9 +129,9 @@ public class KeycardDisplayController : MonoBehaviour
         else if (arrowInput.x < 0)
         {
             _currentIndex--;
-            if (_currentIndex < 0)
+            if (_currentIndex < _lowestIndex)
             {
-                _currentIndex = 0;
+                _currentIndex = _lowestIndex;
             }
             else
             {
@@ -136,9 +144,20 @@ public class KeycardDisplayController : MonoBehaviour
     {
         _selector.transform.position = _keyObjects[_currentIndex].transform.position;
         _selector.SetActive(true);
-        _selectedKeyText.text = GameManager.Instance.SceneData.Keys[_currentIndex];
-        _selectedKeyIcon.sprite =
+        if(_keyObjects.Count >= 2)
+        {
+            _selectedKeyText.text = GameManager.Instance.SceneData.Keys[_currentIndex - 1];
+            _selectedKeyIcon.sprite =
+            _keycardInfoSprites[_keycardInfoStrings.FindIndex(x => x == GameManager.Instance.SceneData.Keys[_currentIndex - 1])];
+        }
+        else
+        {
+            _selectedKeyText.text = GameManager.Instance.SceneData.Keys[_currentIndex];
+            _selectedKeyIcon.sprite =
             _keycardInfoSprites[_keycardInfoStrings.FindIndex(x => x == GameManager.Instance.SceneData.Keys[_currentIndex])];
+        }
+        
+        
     }
 
     public void TabOpen()
@@ -155,6 +174,19 @@ public class KeycardDisplayController : MonoBehaviour
             _hlg = _keyParent.GetComponent<HorizontalLayoutGroup>();
             _hlg.enabled = true;
 
+            if(_localKeyCount >= 2) // If we have at least 2 keys, we need the left and right arrows to be added to the list
+            {
+                _lowestIndex = 1; // Set the lowest and highest navigable incidies correctly so the player can't select the arrows
+                
+                GameObject newArrow1 = Instantiate(_leftArrowBind, _keyParent.transform, false);
+                _keyObjects.Add(newArrow1);
+
+                if (_currentIndex < _lowestIndex) // Taking care that any changes in highest/lowest indices don't break anything
+                {
+                    _currentIndex = _lowestIndex;
+                }
+            }
+
             for (int i = 0; i < GameManager.Instance.SceneData.Keys.Count; i++)
             {
                 // Instantiate a Key prefab at a position
@@ -164,9 +196,23 @@ public class KeycardDisplayController : MonoBehaviour
                 // Set the key's color corresponding to what it is
                 int currentInspectorIndex = _keycardInfoStrings.FindIndex(x => x == GameManager.Instance.SceneData.Keys[i]);
                 newKey.GetComponent<Image>().color = _keycardInfoColors[currentInspectorIndex];
-
+                Debug.Log("Added key");
             }
-            
+
+            if (_localKeyCount >= 2)
+            {
+                GameObject newArrow2 = Instantiate(_rightArrowBind, _keyParent.transform, false);
+                _keyObjects.Add(newArrow2);
+                _highestIndex = _keyObjects.Count - 2;
+
+                if (_currentIndex > _highestIndex)
+                {
+                    _currentIndex = _highestIndex;
+                }
+            }
+
+
+            UpdateSelection();
             StartCoroutine(DoTabOpenEnd());
             
         }
