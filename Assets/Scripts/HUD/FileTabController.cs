@@ -23,6 +23,8 @@ public class FileTabController : MonoBehaviour
     private GameObject _downKeybindOpenLog;
     [SerializeField, Tooltip("The text explaining how to close a log")]
     private GameObject _upKeybindCloseLog;
+    [SerializeField, Tooltip("The text explaining how to navigate left and right in the log list")]
+    private GameObject _lrKeybindNavLog;
 
     [Header("Hard Drive Capacity")]
     [SerializeField, Tooltip("Made up file sizes for text, audio, and image logs")]
@@ -298,6 +300,11 @@ public class FileTabController : MonoBehaviour
         {
             TabOpen();
         }
+
+        if (GameManager.Instance.FoundLogs.Count >= 2)
+        {
+            _lrKeybindNavLog.SetActive(true);
+        }
     }
 
     // Updates the metadata text on the side of the screen, and also keeps track of which log is selected
@@ -514,6 +521,7 @@ public class FileTabController : MonoBehaviour
 
         // Internal variable / animation /text resets
         _downKeybindOpenLog.SetActive(true);
+        _upKeybindCloseLog.SetActive(false);
         _fileDisplayAnim.Play("Static");
         _isActiveCoroutineUpDown = false;
         _isLogOpen = false;
