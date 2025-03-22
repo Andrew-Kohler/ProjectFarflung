@@ -19,6 +19,10 @@ public class FileTabController : MonoBehaviour
     private TextMeshProUGUI _sideText;
     [SerializeField, Tooltip("Animator for showing files")]
     private Animator _fileDisplayAnim;
+    [SerializeField, Tooltip("The text explaining how to open a log")]
+    private GameObject _downKeybindOpenLog;
+    [SerializeField, Tooltip("The text explaining how to close a log")]
+    private GameObject _upKeybindCloseLog;
 
     [Header("Hard Drive Capacity")]
     [SerializeField, Tooltip("Made up file sizes for text, audio, and image logs")]
@@ -48,6 +52,8 @@ public class FileTabController : MonoBehaviour
     private TextMeshProUGUI _textLogText;
     [SerializeField, Tooltip("Page counter of log")]
     private TextMeshProUGUI _textLogPageCounter;
+    [SerializeField, Tooltip("Keybind text for scrolling")]
+    private GameObject _downKeybindScroll;
 
     [Header("Image Log Display")]
     [SerializeField, Tooltip("Parent of image display")]
@@ -378,17 +384,13 @@ public class FileTabController : MonoBehaviour
         for (int i = 0; i < _selectedLog.subtitleTiming.Count; i++)
         {
             _subText.text = _selectedLog.textParas[i];
+            
             if (i + 1 < _selectedLog.subtitleTiming.Count)
             {
-                yield return new WaitForSeconds(_selectedLog.subtitleTiming[i + 1] - _selectedLog.subtitleTiming[i]);
-            }
-            else
-            {
-                yield return new WaitForSeconds(_source.clip.length - _selectedLog.subtitleTiming[i]);
+                yield return new WaitUntil(() => _source.time >= _selectedLog.subtitleTiming[i + 1]);
             }
 
         }
-        _subText.text = "";
     }
     #endregion
 
@@ -414,6 +416,7 @@ public class FileTabController : MonoBehaviour
         // If we're closing the log, hide the content before the animation
         if (!show)
         {
+            _upKeybindCloseLog.SetActive(false);
             if (_selectedLog.type == Log.LogType.Text)
             {
                 _textLogDisplayParent.SetActive(false);
@@ -430,24 +433,44 @@ public class FileTabController : MonoBehaviour
                 _source.Stop();
             }
         }
+        else // When opening a log, hide the text explaining how to do so
+        {
+            _downKeybindOpenLog.SetActive(false);
+        }
 
         // Play the animation
         if (show)
+        {
             _fileDisplayAnim.Play("ShowLog");
+            _nodeDisplayList[GameManager.Instance.SceneData.LogIndex].ShowLog();
+        }
+
         else
+        {
             _fileDisplayAnim.Play("CloseLog");
+            _nodeDisplayList[GameManager.Instance.SceneData.LogIndex].CloseLog();
+        }
+            
 
         yield return new WaitForSeconds(5f / 6f); 
 
         // If we're opening a log, show the content after the animation
         if (show)
         {
+            _upKeybindCloseLog.SetActive(true); // Show the text saying how to close the log
             if (_selectedLog.type == Log.LogType.Text) // If it's a text log, make the text shown the first segment of the log
             {
                 _textLogDisplayParent.SetActive(true);
                 _textLogIndex = 0;
                 _textLogText.text = _selectedLog.textParas[_textLogIndex];
                 _textLogPageCounter.text = "1/" + _selectedLog.textParas.Count;
+
+                // If there isn't a need to scroll, don't show how
+                if (_selectedLog.textParas.Count > 1)
+                    _downKeybindScroll.SetActive(true);
+                else
+                    _downKeybindScroll.SetActive(false);
+                
             }
             else if (_selectedLog.type == Log.LogType.Image)
             {
@@ -464,6 +487,10 @@ public class FileTabController : MonoBehaviour
                 StartCoroutine(_currentSubtitleCoroutine);
             }
         }
+        else // If a log has finished closing, once again display the text saying how to open it
+        {
+            _downKeybindOpenLog.SetActive(true);
+        }
 
         _isActiveCoroutineUpDown = false;
     }
@@ -473,16 +500,22 @@ public class FileTabController : MonoBehaviour
     /// </summary>
     private void CloseCurrentLogFast()
     {
+        // Hide all possible displays
         _textLogDisplayParent.SetActive(false);
         _imgDisplayParent.SetActive(false);
         _audioDisplayParent.SetActive(false);
-        _fileDisplayAnim.Play("Static");
-        _isActiveCoroutineUpDown = false;
+        
+        //Audio log specific resets
         _timeSlider.value = 0;
         if(_source.isPlaying)
             _source.Stop();
         if (_currentSubtitleCoroutine != null)
             StopCoroutine(_currentSubtitleCoroutine);
+
+        // Internal variable / animation /text resets
+        _downKeybindOpenLog.SetActive(true);
+        _fileDisplayAnim.Play("Static");
+        _isActiveCoroutineUpDown = false;
         _isLogOpen = false;
     }
 

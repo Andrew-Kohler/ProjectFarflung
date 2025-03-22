@@ -8,22 +8,34 @@ public class ControlsTextHUD : MonoBehaviour
 {
     [SerializeField, Tooltip("Used to update text")]
     private TextMeshProUGUI _text;
-    [SerializeField, Tooltip("Scenario of use (0=default, 1=tab)")]
+    [SerializeField, Tooltip("Scenario of use (0=default, 1=tab, 2=text scroll, 3=audio FFWD, 4=view log, 5=close log)")]
     private int _scenario = 0;
     [SerializeField, Tooltip("Used to read action bindings")]
     private InputActionReference _actions;
 
     private void OnEnable()
     {
+
+        string action = ReadAction();
         switch (_scenario)
         {
             case 0:
-                string action0 = ReadAction();
-                _text.text = action0.ToUpper();
+                _text.text = action.ToUpper();
                 break;
             case 1:
-                string action1 = ReadAction();
-                _text.text = "PRESS " + action1.ToUpper() + " TO NAVIGATE INTERFACE";
+                _text.text = "PRESS " + action.ToUpper() + " TO NAVIGATE INTERFACE";
+                break;
+            case 2:
+                _text.text = "PRESS " + action.ToUpper() + " TO SCROLL";
+                break;
+            case 3:
+                _text.text = "HOLD " + action.ToUpper() + " FOR 2X PLAYBACK";
+                break;
+            case 4:
+                _text.text = "PRESS " + action.ToUpper() + " TO VIEW";
+                break;
+            case 5:
+                _text.text = "PRESS " + action.ToUpper() + " TO CLOSE";
                 break;
             default:
                 _text.text = "Wuh oh";

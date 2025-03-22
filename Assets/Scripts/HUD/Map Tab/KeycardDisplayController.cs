@@ -196,7 +196,6 @@ public class KeycardDisplayController : MonoBehaviour
                 // Set the key's color corresponding to what it is
                 int currentInspectorIndex = _keycardInfoStrings.FindIndex(x => x == GameManager.Instance.SceneData.Keys[i]);
                 newKey.GetComponent<Image>().color = _keycardInfoColors[currentInspectorIndex];
-                Debug.Log("Added key");
             }
 
             if (_localKeyCount >= 2)
