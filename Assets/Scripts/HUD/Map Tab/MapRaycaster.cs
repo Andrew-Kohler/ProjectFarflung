@@ -75,12 +75,19 @@ public class MapRaycaster : MonoBehaviour
         {
             collision.GetComponent<Image>().color = _activeColor;
 
-            // The index of a room is stored as the first character of its name
-            onPassthrough?.Invoke(int.Parse(collision.gameObject.name.Substring(0, 1)));
+            // The index of a room is stored as the first 2 characters of its name
+            onPassthrough?.Invoke(int.Parse(collision.gameObject.name.Substring(0, 2)));
             // The canon name of the room is stored in the rest of the string
-            _tabController.SetLocationText(collision.gameObject.name.Substring(1, collision.gameObject.name.Length - 1));
+
+            _tabController.SetLocationText(collision.gameObject.name.Substring(2, collision.gameObject.name.Length - 2));
         }
        
+    }
+
+    private void OnTriggerStay2D(Collider2D collision) // For when a player spawns into a trigger, since they didn't 'enter' it
+    {
+        collision.GetComponent<Image>().color = _activeColor;
+        _tabController.SetLocationText(collision.gameObject.name.Substring(2, collision.gameObject.name.Length - 2));
     }
 
     private void OnTriggerExit2D(Collider2D collision)

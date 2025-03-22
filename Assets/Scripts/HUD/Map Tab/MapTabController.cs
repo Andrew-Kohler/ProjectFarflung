@@ -20,6 +20,8 @@ public class MapTabController : MonoBehaviour
     [Header("Supplemental Text")]
     [SerializeField] private TextMeshProUGUI _coordsText;
     [SerializeField] private TextMeshProUGUI _locationText;
+    [SerializeField] private TextMeshProUGUI _flavorText;
+    private bool _isFlavorAnimRunning = false;
 
     [Header("Ranges of Motion")]
     // The X and Y (or X and Z) ranges that (a) the dot can move within in the HUD and (b) the player can move within in the game
@@ -92,7 +94,8 @@ public class MapTabController : MonoBehaviour
     /// </summary>
     private void DoUpdateFloor(InputAction.CallbackContext context)
     {
-        UpdateFloor();
+        if(_mapTabContents.activeSelf)
+            UpdateFloor();
     }
     #endregion
 
@@ -217,6 +220,7 @@ public class MapTabController : MonoBehaviour
     void Update()
     {
         UpdatePosition();
+        UpdateFlavorText();
     }
 
     private void UpdatePosition() // Updating position dot
@@ -303,6 +307,43 @@ public class MapTabController : MonoBehaviour
                 _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(true);
             }
         }   
+    }
+
+    private void UpdateFlavorText()
+    {
+        if (!_isFlavorAnimRunning)
+        {
+            StartCoroutine(DoUpdateFlavorText());
+        }
+    }
+
+    private IEnumerator DoUpdateFlavorText()
+    {
+        _isFlavorAnimRunning = true;
+        _flavorText.text = ">Farflung Station\n>stationindex 7804-F\n>recordedpopulation 38\n" +
+            ">ERROR: network offline, cannot update from station servers\n>deadreckoning enabled";
+        yield return new WaitForSeconds(10f);
+
+        float connectionCount = 0f;
+
+        while(connectionCount < 9f)
+        {
+            _flavorText.text = ">Farflung Station\n> stationindex 7804-F\n> recordedpopulation 38\n" +
+            "> \\ Attemping to connect to network...";
+            yield return new WaitForSeconds(.25f);
+            _flavorText.text = ">Farflung Station\n> stationindex 7804-F\n> recordedpopulation 38\n" +
+                "> | Attemping to connect to network...";
+            yield return new WaitForSeconds(.25f);
+            _flavorText.text = ">Farflung Station\n> stationindex 7804-F\n> recordedpopulation 38\n" +
+                "> / Attemping to connect to network...";
+            yield return new WaitForSeconds(.25f);
+            _flavorText.text = ">Farflung Station\n> stationindex 7804-F\n> recordedpopulation 38\n" +
+                "> - Attemping to connect to network...";
+            yield return new WaitForSeconds(.25f);
+            connectionCount++;
+        }
+        _isFlavorAnimRunning = false;
+
     }
 
     public void SetLocationText(string txt)

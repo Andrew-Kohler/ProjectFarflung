@@ -136,7 +136,7 @@ CharacterController:
   m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.25
-  m_SkinWidth: 0.02
+  m_SkinWidth: 0.035
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!114 &8616685848737228371
@@ -151,20 +151,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55919ac34a26952479f3fc91f777b2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 4
+  MoveSpeed: 3
   SprintSpeed: 6
   RotationSpeed: 3
   SpeedChangeRate: 10
-  JumpHeight: 1.2
+  JumpHeight: 0.4
   Gravity: -15
   JumpTimeout: 0.1
   FallTimeout: 0.15
   Grounded: 1
   GroundedOffset: -0.14
-  GroundedRadius: 0.5
+  GroundedRadius: 0.29
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 262144
   CinemachineCameraTarget: {fileID: 4135013735270702863}
   TopClamp: 89
   BottomClamp: -89
