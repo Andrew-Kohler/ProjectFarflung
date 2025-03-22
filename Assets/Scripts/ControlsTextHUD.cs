@@ -37,6 +37,9 @@ public class ControlsTextHUD : MonoBehaviour
             case 5:
                 _text.text = "PRESS " + action.ToUpper() + " TO CLOSE";
                 break;
+            case 6:
+                _text.text = "SUIT DISPLAY MINIMIZED * PRESS " + action.ToUpper() + " TO RESTORE DISPLAY";
+                break;
             default:
                 _text.text = "Wuh oh";
                 break;

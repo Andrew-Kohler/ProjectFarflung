@@ -17,6 +17,8 @@ public class HUDController : MonoBehaviour
     [SerializeField] private Animator _hudNavAnim;
     [SerializeField] private List<Image> _hudImages; // -2, -1, 0, 1, 2
     [SerializeField] private GameObject _tabSwapParent;
+    [SerializeField] private GameObject _tabSwapText;
+
 
     [Header("HUD Tabs")]
     [SerializeField] private List<GameObject> _tabs;
@@ -132,6 +134,7 @@ public class HUDController : MonoBehaviour
 
             _tabs[currentTab].SetActive(false);
             _tabSwapParent.SetActive(false);
+            _tabSwapText.SetActive(false);
 
             _canSwitchTabs = false;
         }
@@ -141,6 +144,7 @@ public class HUDController : MonoBehaviour
 
             _tabs[currentTab].SetActive(true);
             _tabSwapParent.SetActive(true);
+            _tabSwapText.SetActive(true);
 
             _canSwitchTabs = true;
         }
