@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9079336537281977382}
+  - component: {fileID: -3512794751990570312}
+  - component: {fileID: 3498509050855233868}
   m_Layer: 0
   m_Name: HangerColumn
   m_TagString: Untagged
@@ -32,6 +34,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &-3512794751990570312
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3345459614594978}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.05
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 0}
+    - renderer: {fileID: 0}
+    - renderer: {fileID: 0}
+    - renderer: {fileID: 0}
+    - renderer: {fileID: 0}
+    - renderer: {fileID: 0}
+  m_Enabled: 1
+--- !u!65 &3498509050855233868
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3345459614594978}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 23.184694, z: 5}
+  m_Center: {x: 0, y: -0.5, z: 0}
 --- !u!1001 &5973190397462120905
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -84,6 +131,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7637435728386455885, guid: 1af0960da710f5e4e8e9018e1e1ce253, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3f0d899c0dd540c459907303b34a0692, type: 2}
+    - target: {fileID: -3246404635642628365, guid: 1af0960da710f5e4e8e9018e1e1ce253, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bad1bb773fb4f0b41b45126f8008a60e, type: 2}
+    - target: {fileID: -2358760835210019783, guid: 1af0960da710f5e4e8e9018e1e1ce253, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 553dd6b2b210c4243b6a662baf817bf8, type: 2}
     - target: {fileID: 919132149155446097, guid: 1af0960da710f5e4e8e9018e1e1ce253, type: 3}
       propertyPath: m_Name
       value: HangerColumn

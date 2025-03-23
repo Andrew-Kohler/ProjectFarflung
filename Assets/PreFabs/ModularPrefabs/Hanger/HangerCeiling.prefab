@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6740622787599430218}
+  - component: {fileID: 1778101820750069143}
+  - component: {fileID: 2007513567161507174}
   m_Layer: 0
   m_Name: HangerCeiling
   m_TagString: Untagged
@@ -32,6 +34,49 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &1778101820750069143
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2899808663864293437}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.05
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 3902303928867121831}
+    - renderer: {fileID: 8790355453109144946}
+    - renderer: {fileID: 5091977235630057459}
+  m_Enabled: 1
+--- !u!64 &2007513567161507174
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2899808663864293437}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1460008113504916411, guid: 0bf982f8017250843b3cfcd96a3d1582, type: 3}
 --- !u!1001 &8074810249579592120
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -84,17 +129,48 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 716882224970134730, guid: 533b0803e815bc547983a51c9284265c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0dc633b7cf44fa241be8bf67aa6041de, type: 2}
     - target: {fileID: 919132149155446097, guid: 533b0803e815bc547983a51c9284265c, type: 3}
       propertyPath: m_Name
       value: HangerCeiling
       objectReference: {fileID: 0}
+    - target: {fileID: 3937601221938191947, guid: 533b0803e815bc547983a51c9284265c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3f0d899c0dd540c459907303b34a0692, type: 2}
+    - target: {fileID: 3937601221938191947, guid: 533b0803e815bc547983a51c9284265c, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 553dd6b2b210c4243b6a662baf817bf8, type: 2}
+    - target: {fileID: 5055494664466174751, guid: 533b0803e815bc547983a51c9284265c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0dc633b7cf44fa241be8bf67aa6041de, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 533b0803e815bc547983a51c9284265c, type: 3}
+--- !u!23 &3902303928867121831 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5055494664466174751, guid: 533b0803e815bc547983a51c9284265c, type: 3}
+  m_PrefabInstance: {fileID: 8074810249579592120}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5091977235630057459 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3937601221938191947, guid: 533b0803e815bc547983a51c9284265c, type: 3}
+  m_PrefabInstance: {fileID: 8074810249579592120}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8612505773448273491 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 533b0803e815bc547983a51c9284265c, type: 3}
+  m_PrefabInstance: {fileID: 8074810249579592120}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8790355453109144946 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 716882224970134730, guid: 533b0803e815bc547983a51c9284265c, type: 3}
   m_PrefabInstance: {fileID: 8074810249579592120}
   m_PrefabAsset: {fileID: 0}
