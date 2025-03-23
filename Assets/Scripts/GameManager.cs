@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
             // HEADS-UP DISPLAY (HUD)
 
             NarrativeTimestamp = 0;                   
-            RemainingLives = 1;
+            RemainingLives = MAX_LIVES;
 
             Floor = 1;
             // Center, top, left, bottom, right
