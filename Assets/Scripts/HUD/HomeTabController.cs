@@ -28,6 +28,7 @@ public class HomeTabController : MonoBehaviour
     [Header("Vitals")]
     // Health
     [SerializeField] private Image _healthFill;
+    [SerializeField] private TextMeshProUGUI _healthReadout;
 
     // Flashlight
     [SerializeField] private Image _lightFill;
@@ -38,6 +39,7 @@ public class HomeTabController : MonoBehaviour
         UpdateNarrativeTime();
         UpdateRotationGauge();
         UpdateVitals();
+        UpdateFlashlightBattery();
     }
 
     private void UpdateNarrativeTime() // Updates the indicator of narratively passed time
@@ -71,5 +73,56 @@ public class HomeTabController : MonoBehaviour
         _healthFill.fillAmount = (float)GameManager.Instance.SceneData.RemainingLives / GameManager.MAX_LIVES;
         float healthR = math.remap(GameManager.MAX_LIVES, 0, .7f, 0, GameManager.Instance.SceneData.RemainingLives);
         _healthFill.color = new Color(.7f, healthR, healthR);
+
+        if (_healthFill.fillAmount > .9f) // 1 
+        {
+            _healthReadout.text = ">vitals normal";
+        }
+        else if (_healthFill.fillAmount > .8f) // Below 90%
+        {
+            _healthReadout.text = ">vitals normal\n>minor leisons on left arm";
+        }
+        else if (_healthFill.fillAmount > .7f) // Below 80%
+        {
+            _healthReadout.text = ">vitals normal\n>minor leisons across upper body";
+        }
+        else if (_healthFill.fillAmount > .6f) // Below 70%
+        {
+            _healthReadout.text = ">vitals normal\n>minor leisons\n>bruising across ribs 8-12";
+        }
+        else if (_healthFill.fillAmount > .5f) // Below 60%
+        {
+            _healthReadout.text = ">vitals normal\n>unhealed leisons\n>bruising across ribcage";
+        }
+        else if (_healthFill.fillAmount > .4f) // Below 50%
+        {
+            _healthReadout.text = ">vitals irregular\n>brusing across body\n>blood viscocity abnormal" +
+                "\n>seek medical assistance";
+        }
+        else if (_healthFill.fillAmount > .3f) // Below 40%
+        {
+            _healthReadout.text = ">vitals irregular\n>degraded muscle mass\n>blood viscocity highly abnormal" +
+                "\n>seek medical assistance";
+        }
+        else if (_healthFill.fillAmount > .2f) // Below 30%
+        {
+            _healthReadout.text = ">vitals irregular\n>blood too thin to congeal\n>chromosonal irregularities detected" +
+                "\n>seek medical assistance";
+        }
+        else if (_healthFill.fillAmount > .1f) // Below 20%
+        {
+            _healthReadout.text = ">vitals irregular\n>brain activity irregular\n>chromosonal mutation ongoing" +
+                "\n>seek medical assistance";
+        }
+        else // Below 10%
+        {
+            _healthReadout.text = ">vitals critical\n>damage to frontal lobe\n>genetic basis corrupted" +
+                "\n>urgently seek medical assistance";
+        }
+    }
+
+    private void UpdateFlashlightBattery()
+    {
+        _lightFill.fillAmount = GameManager.FlashlightCharge;
     }
 }
