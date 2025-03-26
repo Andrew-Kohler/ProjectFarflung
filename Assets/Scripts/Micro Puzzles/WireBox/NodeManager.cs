@@ -218,4 +218,12 @@ public class NodeManager : MonoBehaviour
             Destroy(_currConnection);
         _currConnection = null;
     }
+
+    /// <summary>
+    /// Returns whether any wire selector is currently chosen
+    /// </summary>
+    public bool IsAnyWireSelected()
+    {
+        return _wireManager.GetSelectedWire() is not null;
+    }
 }

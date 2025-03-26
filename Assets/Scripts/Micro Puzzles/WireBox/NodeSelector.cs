@@ -193,7 +193,8 @@ public class NodeSelector : ClickableObject
     public override void OnObjectHover()
     {
         // selected visuals take priority
-        if (!_isSelected)
+        // also only show hover is a wire is first selected
+        if (!_isSelected && _nodeManager.IsAnyWireSelected())
         {
             _outline.OutlineWidth = _outlineWidth;
             _outline.OutlineColor = _hoverColor;
