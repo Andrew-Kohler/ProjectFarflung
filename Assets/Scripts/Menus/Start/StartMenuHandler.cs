@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -34,6 +36,14 @@ public class StartMenuHandler : MonoBehaviour
     private GameObject _resumeButton;
     [SerializeField, Tooltip("Enabled if new game would clear save data.")]
     private GameObject _newGameConfirmation;
+
+    [Header("Menu Aesthetics")]
+    [SerializeField, Tooltip("TMP object describing the function of a hovered button")]
+    private TextMeshProUGUI _modeText;
+    [SerializeField, Tooltip("Image providing a visual aid about the selected mode to fill space.")]
+    private Image _modeImage;
+    [SerializeField, Tooltip("List of different mode images")]
+    private List<Sprite> _modeImages;
 
     private void Awake()
     {
@@ -70,6 +80,13 @@ public class StartMenuHandler : MonoBehaviour
         }
     }
 
+    // Displays text and an image related to starting a new game
+    public void NewGameButtonHover()
+    {
+        _modeText.text = "> Begin a new playthrough.";
+        _modeImage.sprite = _modeImages[0];
+    }
+
     /// <summary>
     /// Resume Button Functionality.
     /// Loads level select scene.
@@ -78,6 +95,13 @@ public class StartMenuHandler : MonoBehaviour
     {
         // load level scene functionality
         _transitionHandler.LoadScene(_levelSceneName);
+    }
+
+    // Displays text and an image related to resuming a saved game
+    public void ResumeButtonHover()
+    {
+        _modeText.text = "> Continue from your last saved game.";
+        _modeImage.sprite = _modeImages[1];
     }
 
     /// <summary>
@@ -90,6 +114,13 @@ public class StartMenuHandler : MonoBehaviour
         _optionsContainer.SetActive(true);
     }
 
+    // Displays text and an image related to otpions
+    public void OptionsButtonHover()
+    {
+        _modeText.text = "> Change brightness, volume, and camera settings.";
+        _modeImage.sprite = _modeImages[2];
+    }
+
     /// <summary>
     /// Credits Button functionality.
     /// Disables main manu container and enables credits container.
@@ -98,6 +129,13 @@ public class StartMenuHandler : MonoBehaviour
     {
         _creditsContainer.SetActive(true);
         _mainMenuContainer.SetActive(false);
+    }
+
+    // Displays text and an image related to otpions
+    public void CreditsButtonHover()
+    {
+        _modeText.text = "> View the developer credits.";
+        _modeImage.sprite = _modeImages[3];
     }
 
     /// <summary>
@@ -111,6 +149,13 @@ public class StartMenuHandler : MonoBehaviour
         EditorApplication.ExitPlaymode();
 #endif
         Application.Quit();
+    }
+
+    // Displays text and an image related to otpions
+    public void QuitButtonHover()
+    {
+        _modeText.text = "> Exit the game.";
+        _modeImage.sprite = _modeImages[4];
     }
     #endregion
 
@@ -146,5 +191,17 @@ public class StartMenuHandler : MonoBehaviour
     {
         _newGameConfirmation.SetActive(false);
     }
+    #endregion
+
+    #region Animated Transitions
+
+    private IEnumerator DoInitialLoad()
+    {
+        // Fade in Farflung Games
+        // Fade out Games
+        // Fade out backer so that you can see the main menu
+        yield return null;
+    }
+
     #endregion
 }
