@@ -39,8 +39,13 @@ public class StartMenuHandler : MonoBehaviour
     [Header("New Game Functionality")]
     [SerializeField, Tooltip("Used to enable/disable resume button based on whether there is a save to resume.")]
     private GameObject _resumeButton;
-    [SerializeField, Tooltip("Enabled if new game would clear save data.")]
-    private GameObject _newGameConfirmation;
+    [SerializeField, Tooltip("Used if new game would clear save data.")]
+    private Animator _newGameConfirmationAnim;
+    [SerializeField, Tooltip("Confirm clearing save data")]
+    private Button _confirmButton;
+    [SerializeField, Tooltip("Go back on clearing save data")]
+    private Button _nevermindButton;
+    private IEnumerator _currentCloseCoroutine;
 
     [Header("Menu Aesthetics")]
     [SerializeField, Tooltip("TMP object describing the function of a hovered button")]
@@ -98,7 +103,10 @@ public class StartMenuHandler : MonoBehaviour
         // overriding previous save -> confirmation popup
         if (GameManager.Instance.SceneData.NewGameStarted)
         {
-            _newGameConfirmation.SetActive(true);
+            if(_currentCloseCoroutine != null)
+                StopCoroutine(_currentCloseCoroutine);
+            _newGameConfirmationAnim.gameObject.SetActive(true);
+            _newGameConfirmationAnim.Play("Popup");
         }
         // no save data being overriden
         else
@@ -236,7 +244,8 @@ public class StartMenuHandler : MonoBehaviour
     /// </summary>
     public void AbortNewGame()
     {
-        _newGameConfirmation.SetActive(false);
+        _currentCloseCoroutine = DoPopupClose();
+        StartCoroutine(_currentCloseCoroutine);
     }
     #endregion
 
@@ -271,6 +280,13 @@ public class StartMenuHandler : MonoBehaviour
         // Since update is being used, we have to be careful to not meet the end conditions at the same time when re-loading the credits
         yield return new WaitForEndOfFrame(); 
         _creditsOver = false;
+    }
+
+    private IEnumerator DoPopupClose()
+    {
+        _newGameConfirmationAnim.Play("Shrink");
+        yield return new WaitForSeconds(.333f);
+        _newGameConfirmationAnim.gameObject.SetActive(false);
     }
 
     #endregion
