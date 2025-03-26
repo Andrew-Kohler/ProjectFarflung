@@ -1,9 +1,24 @@
 fileFormatVersion: 2
-guid: e2c51e45e1dfa954ab8e59bbbea432a7
+guid: 7621106736b71b648b0091b219a39a24
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Indoor Lamps
+    second: {fileID: 2100000, guid: e9a048a5a5c2ccf41ba12091ba84c85d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RailAccent
+    second: {fileID: 2100000, guid: 24e7f1e8099fdff419aa9b4fabbdac35, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: White Furniture6
+    second: {fileID: 2100000, guid: 66b3496cbade83c45aabda194f16af4b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -61,10 +76,10 @@ ModelImporter:
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
-    secondaryUVAreaDistortion: 15
+    secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVMarginMethod: 1
-    secondaryUVMinLightmapResolution: 15
+    secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
@@ -90,7 +105,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 25
+    globalScale: 0.25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
