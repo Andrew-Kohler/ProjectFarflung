@@ -19,6 +19,10 @@ public class NodeSelector : ClickableObject
     [Header("Visuals")]
     [SerializeField, Tooltip("Thickness of selected outline, according to Outline.cs.")]
     private float _outlineWidth;
+    [SerializeField, Tooltip("Color of selected outline.")]
+    private Color _selectedColor;
+    [SerializeField, Tooltip("Color of hovered outline.")]
+    private Color _hoverColor;
     [SerializeField, Tooltip("Used to configure text to match voltage customization.")]
     private TextMeshProUGUI _voltageText;
     [SerializeField, Tooltip("Models for different charge types of node. 0 = negative, 1 = end node, 2 = positive")]
@@ -29,6 +33,8 @@ public class NodeSelector : ClickableObject
 
     private NodeManager _nodeManager;
     private Outline _outline;
+
+    private bool _isSelected = false;
 
     void Awake()
     {
@@ -86,6 +92,7 @@ public class NodeSelector : ClickableObject
     public void DeselectVisual()
     {
         _outline.OutlineWidth = 0;
+        _isSelected = false;
     }
 
     /// <summary>
@@ -94,6 +101,8 @@ public class NodeSelector : ClickableObject
     public void SelectVisual()
     {
         _outline.OutlineWidth = _outlineWidth;
+        _outline.OutlineColor = _selectedColor;
+        _isSelected = true;
     }
 
     /// <summary>
@@ -179,4 +188,25 @@ public class NodeSelector : ClickableObject
 
         return _connection1;
     }
+
+    #region Hover Outline
+    public override void OnObjectHover()
+    {
+        // selected visuals take priority
+        if (!_isSelected)
+        {
+            _outline.OutlineWidth = _outlineWidth;
+            _outline.OutlineColor = _hoverColor;
+        }
+    }
+
+    public override void OnObjectUnhover()
+    {
+        // selected visuals take priotity
+        if (!_isSelected)
+        {
+            _outline.OutlineWidth = 0;
+        }
+    }
+    #endregion
 }

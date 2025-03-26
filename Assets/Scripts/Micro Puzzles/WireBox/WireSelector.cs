@@ -13,6 +13,10 @@ public class WireSelector : ClickableObject
     [Header("Visual")]
     [SerializeField, Tooltip("Thickness of selected outline, according to Outline.cs.")]
     private float _outlineWidth;
+    [SerializeField, Tooltip("Color of selected outline.")]
+    private Color _selectedColor;
+    [SerializeField, Tooltip("Color of hovered outline.")]
+    private Color _hoverColor;
 
     [Header("Model Configuration")]
     [SerializeField, Tooltip("Stuck tape object.")]
@@ -65,6 +69,26 @@ public class WireSelector : ClickableObject
     public void SelectVisual()
     {
         _outline.OutlineWidth = _outlineWidth;
+        _outline.OutlineColor = _selectedColor;
         _isSelected = true;
+    }
+
+    public override void OnObjectHover()
+    {
+        // selected visual takes priority over hover
+        if (!_isSelected)
+        {
+            _outline.OutlineWidth = _outlineWidth;
+            _outline.OutlineColor = _hoverColor;
+        }
+    }
+
+    public override void OnObjectUnhover()
+    {
+        // selected visual takes priority over hover
+        if (!_isSelected)
+        {
+            _outline.OutlineWidth = 0;
+        }
     }
 }

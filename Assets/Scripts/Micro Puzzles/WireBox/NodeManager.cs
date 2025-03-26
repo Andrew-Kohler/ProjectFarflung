@@ -22,6 +22,12 @@ public class NodeManager : MonoBehaviour
     [SerializeField, Tooltip("Used to dynamically create, position, and scale wire connection")]
     private GameObject _wireConnectionPrefab;
 
+    [Header("Connection Remover Visuals")]
+    [SerializeField, Tooltip("Thickness of selected outline, according to Outline.cs on connection removers (placed wires).")]
+    private float _outlineWidth;
+    [SerializeField, Tooltip("Color of hover outline on connection remover (placed wires).")]
+    private Color _hoverColor;
+
     private InputAction _mousePosAction;
     private NodeSelector[] _nodes;
     private NodeSelector _firstNode = null; // null = none selected
@@ -176,7 +182,7 @@ public class NodeManager : MonoBehaviour
             ShowWire(_firstNode.transform.position, clickedNode.transform.position);
             // properly initialize completed connection
             ConnectionRemover newConnection = _currConnection.transform.GetChild(0).gameObject.AddComponent<ConnectionRemover>();
-            newConnection.Initialize(_wireManager.GetSelectedWire(), _firstNode, clickedNode);
+            newConnection.Initialize(_wireManager.GetSelectedWire(), _firstNode, clickedNode, _outlineWidth, _hoverColor);
 
             // assign wire connections (for charge calculations) - two way reference
             _firstNode.AssignConnection(clickedNode);
