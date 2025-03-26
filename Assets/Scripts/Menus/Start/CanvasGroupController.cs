@@ -29,29 +29,50 @@ public class CanvasGroupController : MonoBehaviour
 
     public void FadeOut(float time)
     {
+        _currentFadeOut = DoFadeOut(time);
+        if (_currentFadeIn != null)
+            StopCoroutine(_currentFadeIn);
+        StartCoroutine(_currentFadeOut);
+    }
 
+    public void ToggleInteractable(bool interact)
+    {
+        _group.interactable = interact;
+    }
+    public void ToggleBlocker(bool block)
+    {
+        _group.blocksRaycasts = block;
     }
 
     private IEnumerator DoFadeIn(float time)
     {
-        float increment = (1 - _group.alpha) / time * 60;
-        // 1 unit, over 3 seconds (with 60 frames a second)
-        while (_group.alpha < 1.0f)
+        _group = GetComponent<CanvasGroup>();
+        float timeToTake = time;
+        float timeElapsed = 0;
+        float initial = _group.alpha;
+        while (time > 0f)
         {
-            _group.alpha += increment;
-            yield return null;
+            _group.alpha = Mathf.Lerp(initial, 1, timeElapsed / timeToTake);
+            yield return new WaitForSeconds(Time.deltaTime);
+            time -= Time.deltaTime;
+            timeElapsed += Time.deltaTime;
         }
         _group.alpha = 1.0f;
     }
 
     private IEnumerator DoFadeOut(float time)
     {
-        float increment = (0 + _group.alpha) / time * 60;
-        // 1 unit, over 3 seconds (with 60 frames a second)
-        while (_group.alpha > 0f)
+        _group = GetComponent<CanvasGroup>();
+
+        float timeToTake = time;
+        float timeElapsed = 0;
+        float initial = _group.alpha;
+        while (time > 0f)
         {
-            _group.alpha -= increment;
-            yield return null;
+            _group.alpha = Mathf.Lerp(initial, 0, timeElapsed / timeToTake);
+            yield return new WaitForSeconds(Time.deltaTime);
+            time -= Time.deltaTime;
+            timeElapsed += Time.deltaTime;
         }
         _group.alpha = 0.0f;
     }

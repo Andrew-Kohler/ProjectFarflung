@@ -18,10 +18,15 @@ public class StartMenuHandler : MonoBehaviour
     private GameObject _optionsContainer;
 
     [Header("Credits Navigation")]
-    [SerializeField, Tooltip("Enabled/Disabled to swap between main menu and credits.")]
-    private GameObject _mainMenuContainer;
-    [SerializeField, Tooltip("Enabled/Disabled to swap between main menu and credits.")]
-    private GameObject _creditsContainer;
+    [SerializeField, Tooltip("Faded in/out to swap between main menu and credits.")]
+    private CanvasGroupController _mainMenuGroup;
+    [SerializeField, Tooltip("Faded in/out to swap between main menu and credits.")]
+    private CanvasGroupController _creditsGroup;
+    [SerializeField, Tooltip("Animator for credits")]
+    private Animator _creditsAnim;
+    [SerializeField, Tooltip("Fade time between main and credits")]
+    private float _creditsFadeTime = 2f;
+    private bool _creditsOver = true;
 
     [Header("Scene Transitions")]
     [SerializeField, Tooltip("Used to make calls to smooth scene transitions.")]
@@ -45,6 +50,20 @@ public class StartMenuHandler : MonoBehaviour
     [SerializeField, Tooltip("List of different mode images")]
     private List<Sprite> _modeImages;
 
+    [Header("Scene Intro Sequence")]
+    [SerializeField, Tooltip("Toggle for whether this plays (for editor work)")]
+    private bool _doOpen = true;
+    [SerializeField, Tooltip("Parent of the cutscene (off by default)")]
+    private GameObject _cutsceneParent;
+    [SerializeField, Tooltip("CanvasGroupController for full logo")]
+    private CanvasGroupController _fullLogoGroup;
+    [SerializeField, Tooltip("CanvasGroupController for 'Games'")]
+    private CanvasGroupController _gamesGroup;
+    [SerializeField, Tooltip("CanvasGroupController for back backer")]
+    private CanvasGroupController _backerGroup;
+
+
+
     private void Awake()
     {
         // free control over the mouse
@@ -55,6 +74,17 @@ public class StartMenuHandler : MonoBehaviour
         if (!GameManager.Instance.SceneData.NewGameStarted)
         {
             _resumeButton.SetActive(false);
+        }
+
+        StartCoroutine(DoInitialLoad());
+    }
+
+    private void Update()
+    {
+        if(_creditsAnim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && !_creditsOver)
+        {
+            _creditsOver = true;
+            BackButton();
         }
     }
 
@@ -117,18 +147,29 @@ public class StartMenuHandler : MonoBehaviour
     // Displays text and an image related to otpions
     public void OptionsButtonHover()
     {
-        _modeText.text = "> Change brightness, volume, and camera settings.";
+        _modeText.text = "> Change control, audio, and camera settings.";
         _modeImage.sprite = _modeImages[2];
     }
 
     /// <summary>
     /// Credits Button functionality.
-    /// Disables main manu container and enables credits container.
+    /// Fades out main manu container and fades in credits container.
     /// </summary>
     public void CreditsButton()
     {
-        _creditsContainer.SetActive(true);
-        _mainMenuContainer.SetActive(false);
+        // Restart the animation and fade the menus in and out
+        _creditsAnim.Play("Scroll", 0, 0);
+        _creditsGroup.FadeIn(_creditsFadeTime);
+        _mainMenuGroup.FadeOut(_creditsFadeTime);
+
+        // Correctly sets Canvas Group settings so appropriate layer can be interacted with
+        _mainMenuGroup.ToggleInteractable(false);
+        _mainMenuGroup.ToggleBlocker(false);
+        _creditsGroup.ToggleInteractable(true);
+        _creditsGroup.ToggleBlocker(true);
+
+        StartCoroutine(DoCreditsLoadDelay());
+        
     }
 
     // Displays text and an image related to otpions
@@ -162,12 +203,18 @@ public class StartMenuHandler : MonoBehaviour
     #region Credits Buttons
     /// <summary>
     /// Button used for returning back to the main menu (from credits).
-    /// Disables credits container and enables main menu container.
+    /// Fades out credits container and fades in main menu container.
     /// </summary>
     public void BackButton()
     {
-        _creditsContainer.SetActive(false);
-        _mainMenuContainer.SetActive(true);
+        _creditsGroup.FadeOut(_creditsFadeTime);
+        _mainMenuGroup.FadeIn(_creditsFadeTime);
+
+        // Correctly sets Canvas Group settings so appropriate layer can be interacted with
+        _mainMenuGroup.ToggleInteractable(true);
+        _mainMenuGroup.ToggleBlocker(true);
+        _creditsGroup.ToggleInteractable(false);
+        _creditsGroup.ToggleBlocker(false);
     }
     #endregion
 
@@ -197,10 +244,33 @@ public class StartMenuHandler : MonoBehaviour
 
     private IEnumerator DoInitialLoad()
     {
-        // Fade in Farflung Games
-        // Fade out Games
-        // Fade out backer so that you can see the main menu
+        if (_doOpen)
+        {
+            _cutsceneParent.SetActive(true);
+            // Fade in Farflung Games
+            yield return new WaitForSeconds(1f);
+            _fullLogoGroup.FadeIn(4f);
+            yield return new WaitForSeconds(6f);
+
+            // Fade out Games
+            _gamesGroup.FadeOut(4f);
+            yield return new WaitForSeconds(6f);
+
+            // Fade out backer so that you can see the main menu
+            _backerGroup.FadeOut(4f);
+            yield return new WaitForSeconds(2f);
+            _backerGroup.ToggleBlocker(false);
+        }
+        
+
         yield return null;
+    }
+
+    private IEnumerator DoCreditsLoadDelay()
+    {
+        // Since update is being used, we have to be careful to not meet the end conditions at the same time when re-loading the credits
+        yield return new WaitForEndOfFrame(); 
+        _creditsOver = false;
     }
 
     #endregion

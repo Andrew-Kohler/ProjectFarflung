@@ -244,7 +244,7 @@ public class FileTabController : MonoBehaviour
                 StartCoroutine(DoLerpXTimed(_fileNodeParent, _fileNodeParent.transform.localPosition.x, _fileNodeParent.transform.localPosition.x + _fileNodeDistance, _scrollTime));
             }
 
-            else if (arrowInput.y > 0) // Closing a log
+            else if (arrowInput.y > 0 && !_isActiveCoroutineUpDown) // Closing a log
             {
                 if (_isLogOpen)
                 {
@@ -253,7 +253,7 @@ public class FileTabController : MonoBehaviour
                 }
                 
             }
-            else if (arrowInput.y < 0) // Opening a log
+            else if (arrowInput.y < 0 && !_isActiveCoroutineUpDown) // Opening a log
             {
                 if (!_isLogOpen) // If there's not a log open, open the log
                 {
@@ -276,7 +276,7 @@ public class FileTabController : MonoBehaviour
                     }
                     if(_selectedLog.type == Log.LogType.Audio)
                     {
-                        _source.pitch = 2f;
+                        _source.pitch = 1.5f;
                     }
                     
                 }
@@ -522,7 +522,8 @@ public class FileTabController : MonoBehaviour
         // Internal variable / animation /text resets
         _downKeybindOpenLog.SetActive(true);
         _upKeybindCloseLog.SetActive(false);
-        _fileDisplayAnim.Play("Static");
+        if(_fileDisplayAnim.isActiveAndEnabled)
+            _fileDisplayAnim.Play("Static");
         _isActiveCoroutineUpDown = false;
         _isLogOpen = false;
     }

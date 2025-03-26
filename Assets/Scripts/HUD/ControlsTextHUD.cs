@@ -29,7 +29,7 @@ public class ControlsTextHUD : MonoBehaviour
                 _text.text = "PRESS " + action.ToUpper() + " TO SCROLL";
                 break;
             case 3:
-                _text.text = "HOLD " + action.ToUpper() + " FOR 2X PLAYBACK";
+                _text.text = "HOLD " + action.ToUpper() + " FOR 1.5X PLAYBACK";
                 break;
             case 4:
                 _text.text = "PRESS " + action.ToUpper() + " TO VIEW";
