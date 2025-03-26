@@ -32,11 +32,8 @@ public class WireBoxHandler : MonoBehaviour
         if (IdentifierName.Equals(""))
             throw new Exception("Incorrect Wire Box Configuration: MUST have non-empty identifier name.");
 
-        // TODO: replace with OFF by default always, only enabling itself on interaction (waiting for interaction system)
-        if (GameManager.Instance.SceneData.FixedWireBoxes.Contains(IdentifierName))
-        {
-            DisablePuzzle();
-        }
+        // disabled until interacted with (interaction system accounts for completion to block re-interaction)
+        DisablePuzzle();
     }
 
     // Update is called once per frame
@@ -74,6 +71,10 @@ public class WireBoxHandler : MonoBehaviour
             // mark puzzle as complete
             GameManager.Instance.SceneData.FixedWireBoxes.Add(IdentifierName);
 
+            //toggle lights to green to indicate solving
+            _indicatorLights[0].GetComponent<Renderer>().material = _indicatorMaterials[1];
+            _indicatorLights[1].GetComponent<Renderer>().material = _indicatorMaterials[1];
+
             DisablePuzzle();
 
             // ensure power elements update accordingly
@@ -90,10 +91,6 @@ public class WireBoxHandler : MonoBehaviour
     /// </summary>
     public void DisablePuzzle()
     {
-        //toggle lights to green to indicate solving
-        _indicatorLights[0].GetComponent<Renderer>().material = _indicatorMaterials[1];
-        _indicatorLights[1].GetComponent<Renderer>().material = _indicatorMaterials[1];
-
         // Disable all puzzle objects, ONCE BOX CLOSES
         // the reason for disabling at all is because the mouse raycast checks on each clickable object are fairly costly and probably not good to keep going throughout the whole scene play
         StartCoroutine(DoDisableAfterDelay());
