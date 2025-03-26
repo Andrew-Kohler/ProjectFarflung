@@ -184,6 +184,7 @@ GameObject:
   m_Component:
   - component: {fileID: 603470267818670798}
   - component: {fileID: 4891517149346474511}
+  - component: {fileID: 3076716561782300522}
   m_Layer: 0
   m_Name: Busted Wire Box
   m_TagString: Untagged
@@ -234,6 +235,27 @@ MonoBehaviour:
   _indicatorMaterials:
   - {fileID: 2100000, guid: 1fbe89d30efe09a4cb56cc96a8487255, type: 2}
   - {fileID: 2100000, guid: 4b62730ad72ce6641904f3556ae5bae1, type: 2}
+--- !u!65 &3076716561782300522
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5018329959776978198}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.4896097, y: 0.09054351, z: 0.8449478}
+  m_Center: {x: -0.03440714, y: -0.7, z: 0.07752609}
 --- !u!1 &5583214854877936866
 GameObject:
   m_ObjectHideFlags: 0
