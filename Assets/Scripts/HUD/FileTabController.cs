@@ -131,6 +131,7 @@ public class FileTabController : MonoBehaviour
         _leftArrow.Enable();
 
         TabOpen();
+        
     }
 
     private void OnDisable()
@@ -617,8 +618,13 @@ public class FileTabController : MonoBehaviour
             _nodeDisplayList = new List<FileNode>();
         }
 
+        if (GameManager.Instance.FoundLogs.Count >= 1)
+        {
+            _downKeybindOpenLog.SetActive(true);
+        }
+
         // Regenerates the list if there is a new log, OR if the list was left at an incorrect position / misaligned
-        if(_localFileCount != GameManager.Instance.FoundLogs.Count || _isActiveCoroutineLeftRight)
+        if (_localFileCount != GameManager.Instance.FoundLogs.Count || _isActiveCoroutineLeftRight)
         {
             _isActiveCoroutineLeftRight = false;
             if (_localFileCount == 0) // If this is the first log picked up, we need to set _lastSelected (as it's normally set when the arrow keys are pressed)

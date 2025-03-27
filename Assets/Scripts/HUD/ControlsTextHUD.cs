@@ -15,7 +15,17 @@ public class ControlsTextHUD : MonoBehaviour
 
     private void OnEnable()
     {
+        UpdateText();
+        PauseControls.onPauseClose += UpdateText;
+    }
 
+    private void OnDisable()
+    {
+        PauseControls.onPauseClose -= UpdateText;
+    }
+
+    private void UpdateText()
+    {
         string action = ReadAction();
         switch (_scenario)
         {

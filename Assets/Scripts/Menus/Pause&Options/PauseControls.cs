@@ -31,6 +31,10 @@ public class PauseControls : MonoBehaviour
 
     private InputActionMap _actionMap;
 
+    // Used to ensure that controls text updates when the pause menu is exited
+    public delegate void OnPauseClose();
+    public static event OnPauseClose onPauseClose;
+
     #region Pause Toggling
     private void OnEnable()
     {
@@ -51,6 +55,7 @@ public class PauseControls : MonoBehaviour
     {
         InputSystem.actions.FindAction("Escape").started -= TogglePause;
         InputSystem.actions.FindAction("Escape").Disable();
+        
     }
 
     /// <summary>
@@ -92,6 +97,7 @@ public class PauseControls : MonoBehaviour
     /// </summary>
     public void Resume()
     {
+        onPauseClose?.Invoke();
         _pauseMenu.SetActive(false);
         _optionsMenu.SetActive(false); // ensure options also closes if that was opened (i.e. closed from Escape press)
 

@@ -132,6 +132,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 274923484696418617, guid: 667bf944f7d69ec44baea2c3620a3353, type: 3}
+      propertyPath: ZoneIndex
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 274923484696418617, guid: 667bf944f7d69ec44baea2c3620a3353, type: 3}
       propertyPath: PowerSystem
       value: 
       objectReference: {fileID: 597415553}
@@ -83342,6 +83346,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pause & Options Menus
       objectReference: {fileID: 0}
+    - target: {fileID: 1041127907332957217, guid: 9fcd557e28e5a434294a415a5f46958a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5306277824455247560, guid: 9fcd557e28e5a434294a415a5f46958a, type: 3}
       propertyPath: _playerTransform
       value: 
@@ -83354,6 +83362,10 @@ PrefabInstance:
       propertyPath: _loadSpots.Array.data[0]
       value: 
       objectReference: {fileID: 1860057698}
+    - target: {fileID: 6192580445264173361, guid: 9fcd557e28e5a434294a415a5f46958a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -83909,10 +83921,6 @@ PrefabInstance:
     - target: {fileID: 8039750271902571984, guid: fb351cfc292f7dc4585150918f817d6a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8589315740905650893, guid: fb351cfc292f7dc4585150918f817d6a, type: 3}
-      propertyPath: m_text
-      value: HOLD DOWN FOR 1.5X PLAYBACK
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
