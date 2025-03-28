@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -16,10 +18,15 @@ public class StartMenuHandler : MonoBehaviour
     private GameObject _optionsContainer;
 
     [Header("Credits Navigation")]
-    [SerializeField, Tooltip("Enabled/Disabled to swap between main menu and credits.")]
-    private GameObject _mainMenuContainer;
-    [SerializeField, Tooltip("Enabled/Disabled to swap between main menu and credits.")]
-    private GameObject _creditsContainer;
+    [SerializeField, Tooltip("Faded in/out to swap between main menu and credits.")]
+    private CanvasGroupController _mainMenuGroup;
+    [SerializeField, Tooltip("Faded in/out to swap between main menu and credits.")]
+    private CanvasGroupController _creditsGroup;
+    [SerializeField, Tooltip("Animator for credits")]
+    private Animator _creditsAnim;
+    [SerializeField, Tooltip("Fade time between main and credits")]
+    private float _creditsFadeTime = 2f;
+    private bool _creditsOver = true;
 
     [Header("Scene Transitions")]
     [SerializeField, Tooltip("Used to make calls to smooth scene transitions.")]
@@ -32,8 +39,35 @@ public class StartMenuHandler : MonoBehaviour
     [Header("New Game Functionality")]
     [SerializeField, Tooltip("Used to enable/disable resume button based on whether there is a save to resume.")]
     private GameObject _resumeButton;
-    [SerializeField, Tooltip("Enabled if new game would clear save data.")]
-    private GameObject _newGameConfirmation;
+    [SerializeField, Tooltip("Used if new game would clear save data.")]
+    private Animator _newGameConfirmationAnim;
+    [SerializeField, Tooltip("Confirm clearing save data")]
+    private Button _confirmButton;
+    [SerializeField, Tooltip("Go back on clearing save data")]
+    private Button _nevermindButton;
+    private IEnumerator _currentCloseCoroutine;
+
+    [Header("Menu Aesthetics")]
+    [SerializeField, Tooltip("TMP object describing the function of a hovered button")]
+    private TextMeshProUGUI _modeText;
+    [SerializeField, Tooltip("Image providing a visual aid about the selected mode to fill space.")]
+    private Image _modeImage;
+    [SerializeField, Tooltip("List of different mode images")]
+    private List<Sprite> _modeImages;
+
+    [Header("Scene Intro Sequence")]
+    [SerializeField, Tooltip("Toggle for whether this plays (for editor work)")]
+    private bool _doOpen = true;
+    [SerializeField, Tooltip("Parent of the cutscene (off by default)")]
+    private GameObject _cutsceneParent;
+    [SerializeField, Tooltip("CanvasGroupController for full logo")]
+    private CanvasGroupController _fullLogoGroup;
+    [SerializeField, Tooltip("CanvasGroupController for 'Games'")]
+    private CanvasGroupController _gamesGroup;
+    [SerializeField, Tooltip("CanvasGroupController for back backer")]
+    private CanvasGroupController _backerGroup;
+
+
 
     private void Awake()
     {
@@ -45,6 +79,17 @@ public class StartMenuHandler : MonoBehaviour
         if (!GameManager.Instance.SceneData.NewGameStarted)
         {
             _resumeButton.SetActive(false);
+        }
+
+        StartCoroutine(DoInitialLoad());
+    }
+
+    private void Update()
+    {
+        if(_creditsAnim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && !_creditsOver)
+        {
+            _creditsOver = true;
+            BackButton();
         }
     }
 
@@ -58,7 +103,10 @@ public class StartMenuHandler : MonoBehaviour
         // overriding previous save -> confirmation popup
         if (GameManager.Instance.SceneData.NewGameStarted)
         {
-            _newGameConfirmation.SetActive(true);
+            if(_currentCloseCoroutine != null)
+                StopCoroutine(_currentCloseCoroutine);
+            _newGameConfirmationAnim.gameObject.SetActive(true);
+            _newGameConfirmationAnim.Play("Popup");
         }
         // no save data being overriden
         else
@@ -68,6 +116,13 @@ public class StartMenuHandler : MonoBehaviour
             // load brightness config scene
             _transitionHandler.LoadScene(_brightnessConfigSceneName);
         }
+    }
+
+    // Displays text and an image related to starting a new game
+    public void NewGameButtonHover()
+    {
+        _modeText.text = "> Begin a new playthrough.";
+        _modeImage.sprite = _modeImages[0];
     }
 
     /// <summary>
@@ -80,6 +135,13 @@ public class StartMenuHandler : MonoBehaviour
         _transitionHandler.LoadScene(_levelSceneName);
     }
 
+    // Displays text and an image related to resuming a saved game
+    public void ResumeButtonHover()
+    {
+        _modeText.text = "> Continue from your last saved game.";
+        _modeImage.sprite = _modeImages[1];
+    }
+
     /// <summary>
     /// Options Button Functionality.
     /// Opens Controls/Audio options, skipping the pause menu segment of the Pause Canvas.
@@ -90,14 +152,39 @@ public class StartMenuHandler : MonoBehaviour
         _optionsContainer.SetActive(true);
     }
 
+    // Displays text and an image related to otpions
+    public void OptionsButtonHover()
+    {
+        _modeText.text = "> Change control, audio, and camera settings.";
+        _modeImage.sprite = _modeImages[2];
+    }
+
     /// <summary>
     /// Credits Button functionality.
-    /// Disables main manu container and enables credits container.
+    /// Fades out main manu container and fades in credits container.
     /// </summary>
     public void CreditsButton()
     {
-        _creditsContainer.SetActive(true);
-        _mainMenuContainer.SetActive(false);
+        // Restart the animation and fade the menus in and out
+        _creditsAnim.Play("Scroll", 0, 0);
+        _creditsGroup.FadeIn(_creditsFadeTime);
+        _mainMenuGroup.FadeOut(_creditsFadeTime);
+
+        // Correctly sets Canvas Group settings so appropriate layer can be interacted with
+        _mainMenuGroup.ToggleInteractable(false);
+        _mainMenuGroup.ToggleBlocker(false);
+        _creditsGroup.ToggleInteractable(true);
+        _creditsGroup.ToggleBlocker(true);
+
+        StartCoroutine(DoCreditsLoadDelay());
+        
+    }
+
+    // Displays text and an image related to otpions
+    public void CreditsButtonHover()
+    {
+        _modeText.text = "> View the developer credits.";
+        _modeImage.sprite = _modeImages[3];
     }
 
     /// <summary>
@@ -112,17 +199,30 @@ public class StartMenuHandler : MonoBehaviour
 #endif
         Application.Quit();
     }
+
+    // Displays text and an image related to otpions
+    public void QuitButtonHover()
+    {
+        _modeText.text = "> Exit the game.";
+        _modeImage.sprite = _modeImages[4];
+    }
     #endregion
 
     #region Credits Buttons
     /// <summary>
     /// Button used for returning back to the main menu (from credits).
-    /// Disables credits container and enables main menu container.
+    /// Fades out credits container and fades in main menu container.
     /// </summary>
     public void BackButton()
     {
-        _creditsContainer.SetActive(false);
-        _mainMenuContainer.SetActive(true);
+        _creditsGroup.FadeOut(_creditsFadeTime);
+        _mainMenuGroup.FadeIn(_creditsFadeTime);
+
+        // Correctly sets Canvas Group settings so appropriate layer can be interacted with
+        _mainMenuGroup.ToggleInteractable(true);
+        _mainMenuGroup.ToggleBlocker(true);
+        _creditsGroup.ToggleInteractable(false);
+        _creditsGroup.ToggleBlocker(false);
     }
     #endregion
 
@@ -144,7 +244,50 @@ public class StartMenuHandler : MonoBehaviour
     /// </summary>
     public void AbortNewGame()
     {
-        _newGameConfirmation.SetActive(false);
+        _currentCloseCoroutine = DoPopupClose();
+        StartCoroutine(_currentCloseCoroutine);
     }
+    #endregion
+
+    #region Animated Transitions
+
+    private IEnumerator DoInitialLoad()
+    {
+        if (_doOpen)
+        {
+            _cutsceneParent.SetActive(true);
+            // Fade in Farflung Games
+            yield return new WaitForSeconds(1f);
+            _fullLogoGroup.FadeIn(4f);
+            yield return new WaitForSeconds(6f);
+
+            // Fade out Games
+            _gamesGroup.FadeOut(4f);
+            yield return new WaitForSeconds(6f);
+
+            // Fade out backer so that you can see the main menu
+            _backerGroup.FadeOut(4f);
+            yield return new WaitForSeconds(2f);
+            _backerGroup.ToggleBlocker(false);
+        }
+        
+
+        yield return null;
+    }
+
+    private IEnumerator DoCreditsLoadDelay()
+    {
+        // Since update is being used, we have to be careful to not meet the end conditions at the same time when re-loading the credits
+        yield return new WaitForEndOfFrame(); 
+        _creditsOver = false;
+    }
+
+    private IEnumerator DoPopupClose()
+    {
+        _newGameConfirmationAnim.Play("Shrink");
+        yield return new WaitForSeconds(.333f);
+        _newGameConfirmationAnim.gameObject.SetActive(false);
+    }
+
     #endregion
 }
