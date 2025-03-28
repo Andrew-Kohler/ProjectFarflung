@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1fc0b67e38adca94db0937e6e89dbc90
+guid: 1bfebfe1625018b47bff9c495408f5b9
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -8,22 +8,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: MetalTexture
-    second: {fileID: 2100000, guid: 12c89cde793cd05408f0f01e5797d04a, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: PlatformAccent
     second: {fileID: 2100000, guid: 490e61184ed4404438886dca7d58c1fd, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: PlatformDepth
-    second: {fileID: 2100000, guid: c6406c0586095bc44be9e5bd637a2ada, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: standardSurface1
-    second: {fileID: 2100000, guid: 490e61184ed4404438886dca7d58c1fd, type: 2}
+      name: TerminalEmissve
+    second: {fileID: 2100000, guid: d236015577f8e5e42a57ed109e1056dd, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -81,10 +71,10 @@ ModelImporter:
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
-    secondaryUVAreaDistortion: 15
+    secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVMarginMethod: 1
-    secondaryUVMinLightmapResolution: 15
+    secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
