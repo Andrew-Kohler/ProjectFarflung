@@ -131,6 +131,7 @@ public class FileTabController : MonoBehaviour
         _leftArrow.Enable();
 
         TabOpen();
+        
     }
 
     private void OnDisable()
@@ -244,7 +245,7 @@ public class FileTabController : MonoBehaviour
                 StartCoroutine(DoLerpXTimed(_fileNodeParent, _fileNodeParent.transform.localPosition.x, _fileNodeParent.transform.localPosition.x + _fileNodeDistance, _scrollTime));
             }
 
-            else if (arrowInput.y > 0) // Closing a log
+            else if (arrowInput.y > 0 && !_isActiveCoroutineUpDown) // Closing a log
             {
                 if (_isLogOpen)
                 {
@@ -253,7 +254,7 @@ public class FileTabController : MonoBehaviour
                 }
                 
             }
-            else if (arrowInput.y < 0) // Opening a log
+            else if (arrowInput.y < 0 && !_isActiveCoroutineUpDown) // Opening a log
             {
                 if (!_isLogOpen) // If there's not a log open, open the log
                 {
@@ -276,7 +277,7 @@ public class FileTabController : MonoBehaviour
                     }
                     if(_selectedLog.type == Log.LogType.Audio)
                     {
-                        _source.pitch = 2f;
+                        _source.pitch = 1.5f;
                     }
                     
                 }
@@ -522,7 +523,8 @@ public class FileTabController : MonoBehaviour
         // Internal variable / animation /text resets
         _downKeybindOpenLog.SetActive(true);
         _upKeybindCloseLog.SetActive(false);
-        _fileDisplayAnim.Play("Static");
+        if(_fileDisplayAnim.isActiveAndEnabled)
+            _fileDisplayAnim.Play("Static");
         _isActiveCoroutineUpDown = false;
         _isLogOpen = false;
     }
@@ -616,8 +618,13 @@ public class FileTabController : MonoBehaviour
             _nodeDisplayList = new List<FileNode>();
         }
 
+        if (GameManager.Instance.FoundLogs.Count >= 1)
+        {
+            _downKeybindOpenLog.SetActive(true);
+        }
+
         // Regenerates the list if there is a new log, OR if the list was left at an incorrect position / misaligned
-        if(_localFileCount != GameManager.Instance.FoundLogs.Count || _isActiveCoroutineLeftRight)
+        if (_localFileCount != GameManager.Instance.FoundLogs.Count || _isActiveCoroutineLeftRight)
         {
             _isActiveCoroutineLeftRight = false;
             if (_localFileCount == 0) // If this is the first log picked up, we need to set _lastSelected (as it's normally set when the arrow keys are pressed)

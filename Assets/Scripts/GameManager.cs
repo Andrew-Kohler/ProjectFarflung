@@ -357,7 +357,8 @@ public class GameManager : MonoBehaviour
                 Instance.SceneData.SaveScene = 3;
                 break;
             default:
-                throw new Exception("SaveAtTerminal function can ONLY be called from main level scenes (Hangar, Floor1, Floor2, Command");
+                Instance.SceneData.SaveScene = -1;
+                break;
         }
 
         SaveSceneDataToGameData();
