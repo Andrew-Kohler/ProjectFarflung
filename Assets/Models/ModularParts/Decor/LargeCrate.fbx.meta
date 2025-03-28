@@ -3,7 +3,22 @@ guid: f3d09eb19436b2a4b91976a4c1121a0e
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MetalTexture
+    second: {fileID: 2100000, guid: 490e61184ed4404438886dca7d58c1fd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PlatformAccent
+    second: {fileID: 2100000, guid: 56ae959505c40ae46b12e62503eebff9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Screws1
+    second: {fileID: 2100000, guid: 12c89cde793cd05408f0f01e5797d04a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -71,7 +86,7 @@ ModelImporter:
     strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
-    normalImportMode: 1
+    normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
