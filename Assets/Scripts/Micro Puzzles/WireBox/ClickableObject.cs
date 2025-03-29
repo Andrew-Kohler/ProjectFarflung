@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 /// </summary>
 public abstract class ClickableObject : MonoBehaviour
 {
+    private GameObject _target = null;
+
     protected virtual void OnEnable()
     {
         InputSystem.actions.FindAction("MousePress").started += CheckForClick;
@@ -23,29 +25,42 @@ public abstract class ClickableObject : MonoBehaviour
     /// </summary>
     private void CheckForClick(InputAction.CallbackContext context)
     {
-        if (gameObject == GetClickedObject())
+        if (gameObject == _target)
         {
             OnObjectClick();
         }
     }
 
-    /// <summary>
-    /// Returns the object clicked by the mouse
-    /// </summary>
-    private GameObject GetClickedObject()
+    private void Update()
     {
-        GameObject target = null;
+        GameObject prevTarget = _target;
+
         Vector3 mousePos = InputSystem.actions.FindAction("MousePosition").ReadValue<Vector2>();
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
         if (Physics.Raycast(ray.origin, ray.direction * 10, out RaycastHit hit))
-        {
-            target = hit.collider.gameObject;
-        }
-        return target;
+            _target = hit.collider.gameObject;
+        else
+            _target = null;
+
+        // check for on hover and on unhover
+        if (_target == gameObject && prevTarget != gameObject)
+            OnObjectHover();
+        else if (_target != gameObject && prevTarget == gameObject)
+            OnObjectUnhover();
     }
 
     /// <summary>
     /// Functionality for when the object is actually clicked.
     /// </summary>
     public abstract void OnObjectClick();
+
+    /// <summary>
+    /// Functionality for when the object is hovered over but not yet clicked.
+    /// </summary>
+    public abstract void OnObjectHover();
+
+    /// <summary>
+    /// Functionality for when the object is no longer hovered but was last frame.
+    /// </summary>
+    public abstract void OnObjectUnhover();
 }

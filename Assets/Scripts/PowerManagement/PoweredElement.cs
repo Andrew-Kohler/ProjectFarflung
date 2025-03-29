@@ -12,7 +12,7 @@ public abstract class PoweredElement : MonoBehaviour
     public int PowerDraw;
 
     [Header("OPTIONAL - Power Switch")]
-    [SerializeField, Tooltip("Index of the light switch corresponding with the PoweredLight. -1 if there is no switch.")]
+    [SerializeField, Tooltip("String identifier of the light switch corresponding with the PoweredLight. Empty if there is no switch.")]
     protected string _switchIdentifier = null;
     [SerializeField, Tooltip("Whether the default state of this element's light switch is off. Flips meaning of stored string in game manager for this switch.")]
     private bool _isSwitchOffByDefault;

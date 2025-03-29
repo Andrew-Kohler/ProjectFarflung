@@ -116,6 +116,9 @@ public class WireBoxInteractable : Interactable
 
     private IEnumerator DoReenablePlayer(bool final)
     {
+        // disable puzzle when it is closed
+        _wirebox.DisablePuzzle();
+
         _wireboxAnim.SetTrigger("BreakerClose");
 
         _mainCam.gameObject.SetActive(true);

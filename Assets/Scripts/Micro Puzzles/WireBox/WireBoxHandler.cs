@@ -32,11 +32,8 @@ public class WireBoxHandler : MonoBehaviour
         if (IdentifierName.Equals(""))
             throw new Exception("Incorrect Wire Box Configuration: MUST have non-empty identifier name.");
 
-        // TODO: replace with OFF by default always, only enabling itself on interaction (waiting for interaction system)
-        if (GameManager.Instance.SceneData.FixedWireBoxes.Contains(IdentifierName))
-        {
-            DisablePuzzle();
-        }
+        // disabled until interacted with (interaction system accounts for completion to block re-interaction)
+        DisablePuzzle();
     }
 
     // Update is called once per frame
@@ -74,15 +71,17 @@ public class WireBoxHandler : MonoBehaviour
             // mark puzzle as complete
             GameManager.Instance.SceneData.FixedWireBoxes.Add(IdentifierName);
 
+            //toggle lights to green to indicate solving
+            _indicatorLights[0].GetComponent<Renderer>().material = _indicatorMaterials[1];
+            _indicatorLights[1].GetComponent<Renderer>().material = _indicatorMaterials[1];
+
             DisablePuzzle();
 
             // ensure power elements update accordingly
             WireBoxFixed?.Invoke();
 
             // Give the player back control and disable further access to the puzzle
-            _interactable.ReenablePlayer(true); 
-
-            // TODO: box close
+            _interactable.ReenablePlayer(true);
         }
     }
 
@@ -92,45 +91,21 @@ public class WireBoxHandler : MonoBehaviour
     /// </summary>
     public void DisablePuzzle()
     {
-        //toggle lights to green to indicate solving
-        _indicatorLights[0].GetComponent<Renderer>().material = _indicatorMaterials[1];
-        _indicatorLights[1].GetComponent<Renderer>().material = _indicatorMaterials[1];
-
-
-        // TODO: INTERACTIONS!!! - disables all functional parts so that nodes/wires are visable on board but cant be clicked, fully disabling them to not be visable anymore once animation plays should still happen for performance sake
+        // Disable all puzzle objects, ONCE BOX CLOSES
         // the reason for disabling at all is because the mouse raycast checks on each clickable object are fairly costly and probably not good to keep going throughout the whole scene play
+        StartCoroutine(DoDisableAfterDelay());
+    }
 
-        // this can effectively replace the logic below if it is timed to be in sync with animation completion
-        /*foreach (GameObject obj in _functionalObjects)
-            obj.SetActive(false);*/
+    private IEnumerator DoDisableAfterDelay()
+    {
+        // give time for the box to close before objects are disabled
+        yield return new WaitForSeconds(1f);
+
+        // disables all the objects other than the box itself
+        foreach (GameObject obj in _functionalObjects)
+            obj.SetActive(false);
 
         //prevents use of any nodes/door wires left etc
-        for (int i = 0; i < _functionalObjects.Length; i++)
-        {
-            Transform[] objChildren = _functionalObjects[i].GetComponentsInChildren<Transform>();
-            foreach (Transform child in objChildren)
-            {
-                WireSelector tempWireSelector = child.GetComponentInChildren<WireSelector>();
-                NodeSelector tempNodeSelector = child.GetComponentInChildren<NodeSelector>();
-
-                if (tempWireSelector != null)
-                {
-                    //turns off ability to select wire
-                    tempWireSelector.enabled = false;
-                }
-                else if (tempNodeSelector != null)
-                {
-                    //turns off ability to select nodes
-                    tempNodeSelector.enabled = false;
-                }
-                else if (child.name == "Wire Connection(Clone)") {
-                    //stops removal of wires after game stop
-                    Collider tempWireCollider = child.GetComponentInChildren<Collider>();
-                    tempWireCollider.enabled = false;
-                }
-
-            }
-        }
         this.enabled = false;
     }
 
