@@ -12,6 +12,9 @@ public class CreatureMotion : MonoBehaviour
     private float _aggroDistance;
     [SerializeField, Tooltip("Rotation lerping speed to face the player.")]
     private float _rotationSharpness;
+    [SerializeField, Tooltip("Animator for the models motion.")]
+    private Animator _animator;
+
 
     // Update is called once per frame
     void Update()
@@ -23,7 +26,10 @@ public class CreatureMotion : MonoBehaviour
             || CreatureManager.Instance.CurrentSpeed > 0f))
         {
             CreatureManager.Instance.IsAggro = true;
+            
         }
+
+      
 
         // rotation lerping - ALWAYS active
         Vector3 playerPos = CreatureManager.Instance.PlayerTransform.position;
@@ -44,6 +50,32 @@ public class CreatureMotion : MonoBehaviour
             float angle = Vector3.Angle(transform.forward, dirToPlayer);
             float angleFactor = math.remap(0, 180, 1, 0, angle); // 0 degree difference = max speed; 180 degree difference = no speed
             transform.position += transform.forward * angleFactor * CreatureManager.Instance.CurrentSpeed * Time.deltaTime;
+            //updates creatures animation speed to be similar to its expected speed
+            _animator.SetFloat("speed", CreatureManager.Instance.CurrentSpeed);
+
+            _animator.SetBool("isStunned", false);
+            _animator.SetBool("isMoving", true);
+        }
+
+        //manage other animations
+        if (CreatureManager.Instance.CurrentSpeed > 0f) {
+            //clear all idle animation triggers
+            _animator.SetBool("isIdle", false);
+            _animator.SetBool("idleLeftTurn", false);
+            _animator.SetBool("idleRightTurn", false);
+
+            //start movement anim, speed handled above
+            _animator.SetBool("isMoving", true);
+        } 
+        else if (CreatureManager.Instance.CurrentSpeed == 0f && _animator.GetBool("isMoving") == true && CreatureManager.Instance.IsStunned == false) //triggers from moving to idling if speed goes down too much
+        {
+            _animator.SetBool("isMoving", false);
+            _animator.SetBool("isIdle", true);
+        }
+        if (CreatureManager.Instance.IsStunned == true) //handles stunning trigger
+        {
+            _animator.SetBool("isStunned", true);
+            _animator.SetBool("isMoving", false);
         }
     }
 
@@ -77,6 +109,11 @@ public class CreatureMotion : MonoBehaviour
         gameObject.SetActive(true);
 
         // TODO: smoother spawning with behavior delay and spawning animation
+        _animator.SetBool("isIdle", true);
+        _animator.SetBool("isLeft", true);
+        _animator.SetBool("isStunned", false);
+        _animator.SetBool("idleLeftTurn", true);
+        _animator.SetBool("idleRightTurn", false);
     }
 
     /// <summary>
@@ -87,10 +124,27 @@ public class CreatureMotion : MonoBehaviour
         // allow creature to slowly approach 0 speed again
         CreatureManager.Instance.IsAggro = false;
 
-        gameObject.SetActive(false);
-
         // TODO: smoother despawning with behavior freeze and despawn animation
+
+        //stop all motion
+        _animator.SetBool("isMoving", false);
+        _animator.SetBool("isStunned", false);
+        _animator.SetBool("isIdle", false);
+        _animator.SetBool("idleLeftTurn", false);
+        _animator.SetBool("idleRightTurn", false);
+        _animator.SetBool("isLooking", false);
+
+        //trigger despawn
+        _animator.SetBool("isDespawned", true);
+        //CreatureManager.Instance.CurrentSpeed = 0;
+        StartCoroutine (RunDespawnAnimation());
     }
+
+    IEnumerator RunDespawnAnimation() {
+        yield return new WaitForSeconds(_animator.GetCurrentAnimatorStateInfo(0).length);
+        gameObject.SetActive(false);
+    }
+
 
     /// <summary>
     /// Whether the creature is currently active and executing movement behavior.
