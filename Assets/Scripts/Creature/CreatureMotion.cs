@@ -126,22 +126,14 @@ public class CreatureMotion : MonoBehaviour
 
         // TODO: smoother despawning with behavior freeze and despawn animation
 
-        //stop all motion
-        _animator.SetBool("isMoving", false);
-        _animator.SetBool("isStunned", false);
-        _animator.SetBool("isIdle", false);
-        _animator.SetBool("idleLeftTurn", false);
-        _animator.SetBool("idleRightTurn", false);
-        _animator.SetBool("isLooking", false);
-
         //trigger despawn
         _animator.SetBool("isDespawned", true);
         //CreatureManager.Instance.CurrentSpeed = 0;
-        StartCoroutine (RunDespawnAnimation());
+        StartCoroutine (RunDespawnAnimation(_animator));
     }
 
-    IEnumerator RunDespawnAnimation() {
-        yield return new WaitForSeconds(_animator.GetCurrentAnimatorStateInfo(0).length);
+    IEnumerator RunDespawnAnimation(Animator animator) {
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length  + 1f);
         gameObject.SetActive(false);
     }
 
