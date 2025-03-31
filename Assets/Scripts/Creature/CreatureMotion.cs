@@ -25,19 +25,20 @@ public class CreatureMotion : MonoBehaviour
             CreatureManager.Instance.IsAggro = true;
         }
 
+        // rotation lerping - ALWAYS active
+        Vector3 playerPos = CreatureManager.Instance.PlayerTransform.position;
+        playerPos.y = 0; // don't track with player jumps
+        Vector3 dirToPlayer = playerPos - transform.position;
+
+        // LERP ROTATION
+        Quaternion goalRot = transform.rotation;
+        goalRot.SetLookRotation(dirToPlayer, Vector3.up);
+        // smooth motion - also scaled by creature move speed factor
+        transform.rotation = Quaternion.Lerp(transform.rotation, goalRot, 1f - Mathf.Exp(-_rotationSharpness * Time.deltaTime * (1f + CreatureManager.Instance.CurrentSpeed)));
+
         // motion lerping
         if (CreatureManager.Instance.IsAggro)
         {
-            Vector3 playerPos = CreatureManager.Instance.PlayerTransform.position;
-            playerPos.y = 0; // don't track with player jumps
-            Vector3 dirToPlayer = playerPos - transform.position;
-
-            // LERP ROTATION
-            Quaternion goalRot = transform.rotation;
-            goalRot.SetLookRotation(dirToPlayer, Vector3.up);
-            // smooth motion - also scaled by creature move speed factor
-            transform.rotation = Quaternion.Lerp(transform.rotation, goalRot, 1f - Mathf.Exp(-_rotationSharpness * Time.deltaTime * CreatureManager.Instance.CurrentSpeed));
-
             // LERP MOTION
             // slower speed when not looking directly at player
             float angle = Vector3.Angle(transform.forward, dirToPlayer);
