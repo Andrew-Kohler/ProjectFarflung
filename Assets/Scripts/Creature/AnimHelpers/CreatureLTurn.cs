@@ -9,7 +9,5 @@ public class CreatureLTurn : StateMachineBehaviour
     {
         animator.SetBool("idleLeftTurn", false);
         animator.SetBool("idleRightTurn", true);
-        animator.SetBool("isLeft", false);
-
     }
 }

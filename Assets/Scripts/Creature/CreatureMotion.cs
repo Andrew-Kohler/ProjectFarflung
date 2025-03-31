@@ -110,7 +110,6 @@ public class CreatureMotion : MonoBehaviour
 
         // TODO: smoother spawning with behavior delay and spawning animation
         _animator.SetBool("isIdle", true);
-        _animator.SetBool("isLeft", true);
         _animator.SetBool("isStunned", false);
         _animator.SetBool("idleLeftTurn", true);
         _animator.SetBool("idleRightTurn", false);
