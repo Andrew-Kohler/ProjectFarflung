@@ -12,6 +12,10 @@ public class CreatureMotion : MonoBehaviour
     private float _aggroDistance;
     [SerializeField, Tooltip("Rotation lerping speed to face the player.")]
     private float _rotationSharpness;
+    [SerializeField, Tooltip("Animator for the models motion.")]
+    private Animator _animator;
+
+    private bool _isCreatureActive = false;
 
     // Update is called once per frame
     void Update()
@@ -44,6 +48,38 @@ public class CreatureMotion : MonoBehaviour
             float angle = Vector3.Angle(transform.forward, dirToPlayer);
             float angleFactor = math.remap(0, 180, 1, 0, angle); // 0 degree difference = max speed; 180 degree difference = no speed
             transform.position += transform.forward * angleFactor * CreatureManager.Instance.CurrentSpeed * Time.deltaTime;
+            
+            //updates creatures chase animation speed to be similar to its expected speed
+            _animator.SetFloat("speed", CreatureManager.Instance.CurrentSpeed);
+        }
+
+        // ANIMATIONS -------------------
+
+        // stunning animation - takes priority!
+        if (CreatureManager.Instance.IsStunned == true)
+        {
+            // start stun anim
+            _animator.SetBool("isStunned", true);
+            // disable other anims
+            _animator.SetBool("isMoving", false);
+            // should not modify idle value to ensure it remains the same for creature stun during idle OR during chase
+        }
+        // moving animation (exiting idle)
+        else if (CreatureManager.Instance.CurrentSpeed > 0f) {
+            // start movement anim, speed handled above
+            _animator.SetBool("isMoving", true);
+            // disable other anims
+            _animator.SetBool("isIdle", false);
+            _animator.SetBool("isStunned", false);
+        } 
+        // idle animation - lowest priority (only of not stunned and not moving)
+        else if (CreatureManager.Instance.CurrentSpeed == 0f)
+        {
+            // start idle anim
+            _animator.SetBool("isIdle", true);
+            // disable other anims
+            _animator.SetBool("isStunned", false);
+            _animator.SetBool("isMoving", false);
         }
     }
 
@@ -74,9 +110,22 @@ public class CreatureMotion : MonoBehaviour
         goalRot.SetLookRotation(dirToPlayer, Vector3.up);
         transform.rotation = goalRot;
 
+        // activate creature object (for functionality & anims)
         gameObject.SetActive(true);
+        // activate creature motion script
+        enabled = true;
+        _isCreatureActive = true;
 
-        // TODO: smoother spawning with behavior delay and spawning animation
+        // ALWAYS enter on spawn animation
+        _animator.Play("Spawn");
+        // ensure proper starting of idle/turning/stun/chase logic
+        _animator.SetBool("isIdle", true);
+        _animator.SetBool("isMoving", false);
+        _animator.SetBool("isStunned", false);
+        _animator.SetBool("idleLeftTurn", true);
+        _animator.SetBool("idleRightTurn", false);
+        _animator.SetBool("isLooking", false);
+        _animator.SetBool("isDespawned", false);
     }
 
     /// <summary>
@@ -87,9 +136,29 @@ public class CreatureMotion : MonoBehaviour
         // allow creature to slowly approach 0 speed again
         CreatureManager.Instance.IsAggro = false;
 
-        gameObject.SetActive(false);
+        // deactivate creature motion script - freeze behavior
+        enabled = false;
+        _isCreatureActive = false;
 
-        // TODO: smoother despawning with behavior freeze and despawn animation
+        // trigger despawn animation
+        _animator.SetBool("isDespawned", true);
+        StartCoroutine(RunDespawnAnimation());
+    }
+
+    // ensures proper visual disabling of object after despawn animation
+    IEnumerator RunDespawnAnimation()
+    {
+        // wait for despawn anim to start
+        // since despawn is the only animation playing in reverse - check for negative speed
+        yield return new WaitUntil(() => _animator.GetCurrentAnimatorStateInfo(0).speed < 0);
+        
+        // wait for duration of despawn anim
+        yield return new WaitForSeconds(_animator.GetCurrentAnimatorClipInfo(0).Length);
+        
+        // properly disables the visibility of the creature in addition to functionality
+        // ONLY disables creature if creature was NOT re-enabled during this brief window
+        if (enabled == false)
+            gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -97,7 +166,7 @@ public class CreatureMotion : MonoBehaviour
     /// </summary>
     public bool IsCreatureActive()
     {
-        return gameObject.activeSelf;
+        return _isCreatureActive;
     }
     #endregion
 }

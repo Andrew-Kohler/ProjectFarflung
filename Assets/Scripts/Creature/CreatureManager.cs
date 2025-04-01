@@ -63,23 +63,23 @@ public class CreatureManager : MonoBehaviour
         get
         {
             // return 0 speed if stunned so it stops moving
-            if (_isStunned)
+            if (IsStunned)
                 return 0f;
             return _currentSpeed;
         }
-        private set
+        set
         {
             _currentSpeed = value;
         }
     }
 
-    private bool _isStunned = false;
+    public bool IsStunned = false;
 
     // Update is called once per frame
     void Update()
     {
         // prevent building speed while stunned
-        if (_isStunned)
+        if (IsStunned)
             return;
 
         // increase / decrease speed
@@ -124,9 +124,9 @@ public class CreatureManager : MonoBehaviour
     public void TryStunCreature()
     {
         // conduct stun logic ONLY if it is able to be stunned again
-        if (!_isStunned)
+        if (!IsStunned)
         {
-            _isStunned = true;
+            IsStunned = true;
 
             StartCoroutine(DoStunCreature());
 
@@ -134,8 +134,11 @@ public class CreatureManager : MonoBehaviour
             {
                 yield return new WaitForSeconds(STUN_DURATION);
 
-                _isStunned = false;
+                IsStunned = false;
             }
+
+            // stun causes aggro if creature was not already aggro
+            Instance.IsAggro = true;
         }
     }
     #endregion
