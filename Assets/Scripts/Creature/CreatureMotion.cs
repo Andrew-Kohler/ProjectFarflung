@@ -15,6 +15,8 @@ public class CreatureMotion : MonoBehaviour
     [SerializeField, Tooltip("Animator for the models motion.")]
     private Animator _animator;
 
+    private bool _isCreatureActive = false;
+
     // Update is called once per frame
     void Update()
     {
@@ -108,9 +110,9 @@ public class CreatureMotion : MonoBehaviour
 
         // activate creature object (for functionality & anims)
         gameObject.SetActive(true);
-
         // activate creature motion script
         enabled = true;
+        _isCreatureActive = true;
 
         // ALWAYS enter on spawn animation
         _animator.Play("Spawn");
@@ -134,6 +136,7 @@ public class CreatureMotion : MonoBehaviour
 
         // deactivate creature motion script - freeze behavior
         enabled = false;
+        _isCreatureActive = false;
 
         // trigger despawn animation
         _animator.SetBool("isDespawned", true);
@@ -143,8 +146,12 @@ public class CreatureMotion : MonoBehaviour
     // ensures proper visual disabling of object after despawn animation
     IEnumerator RunDespawnAnimation()
     {
-        // hard-coded: time includes transition to despawn animation AND entire despawn animation
-        yield return new WaitForSeconds(1.417f);
+        // wait for despawn anim to start
+        // since despawn is the only animation playing in reverse - check for negative speed
+        yield return new WaitUntil(() => _animator.GetCurrentAnimatorStateInfo(0).speed < 0);
+        
+        // wait for duration of despawn anim
+        yield return new WaitForSeconds(_animator.GetCurrentAnimatorClipInfo(0).Length);
         
         // properly disables the visibility of the creature in addition to functionality
         // ONLY disables creature if creature was NOT re-enabled during this brief window
@@ -157,7 +164,7 @@ public class CreatureMotion : MonoBehaviour
     /// </summary>
     public bool IsCreatureActive()
     {
-        return gameObject.activeSelf;
+        return _isCreatureActive;
     }
     #endregion
 }
