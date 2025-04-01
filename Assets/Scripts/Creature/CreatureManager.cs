@@ -136,6 +136,9 @@ public class CreatureManager : MonoBehaviour
 
                 IsStunned = false;
             }
+
+            // stun causes aggro if creature was not already aggro
+            Instance.IsAggro = true;
         }
     }
     #endregion
