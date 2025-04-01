@@ -15,7 +15,6 @@ public class CreatureMotion : MonoBehaviour
     [SerializeField, Tooltip("Animator for the models motion.")]
     private Animator _animator;
 
-
     // Update is called once per frame
     void Update()
     {
@@ -107,9 +106,13 @@ public class CreatureMotion : MonoBehaviour
         goalRot.SetLookRotation(dirToPlayer, Vector3.up);
         transform.rotation = goalRot;
 
+        // activate creature object (for functionality & anims)
         gameObject.SetActive(true);
 
-        // TODO: smoother spawning with behavior delay and spawning animation
+        // activate creature motion script
+        enabled = true;
+
+        // smoother spawning with behavior delay and spawning animation
         _animator.SetBool("isIdle", true);
         _animator.SetBool("isStunned", false);
         _animator.SetBool("idleLeftTurn", true);
@@ -124,19 +127,21 @@ public class CreatureMotion : MonoBehaviour
         // allow creature to slowly approach 0 speed again
         CreatureManager.Instance.IsAggro = false;
 
-        // TODO: smoother despawning with behavior freeze and despawn animation
+        // deactivate creature motion script - freeze behavior
+        enabled = false;
 
-        //trigger despawn
+        // trigger despawn animation
         _animator.SetBool("isDespawned", true);
-        //CreatureManager.Instance.CurrentSpeed = 0;
-        StartCoroutine (RunDespawnAnimation(_animator));
+        StartCoroutine(RunDespawnAnimation());
     }
 
-    IEnumerator RunDespawnAnimation(Animator animator) {
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length  + 1f);
+    // ensures proper visual disabling of object after despawn animation
+    IEnumerator RunDespawnAnimation()
+    {
+        yield return new WaitForSeconds(1.417f); // hard-coded: time includes transition to despawn animation AND entire despawn animation
+        // properly disables the visibility of the creature in addition to functionality
         gameObject.SetActive(false);
     }
-
 
     /// <summary>
     /// Whether the creature is currently active and executing movement behavior.
