@@ -26,10 +26,7 @@ public class CreatureMotion : MonoBehaviour
             || CreatureManager.Instance.CurrentSpeed > 0f))
         {
             CreatureManager.Instance.IsAggro = true;
-            
         }
-
-      
 
         // rotation lerping - ALWAYS active
         Vector3 playerPos = CreatureManager.Instance.PlayerTransform.position;
@@ -57,7 +54,9 @@ public class CreatureMotion : MonoBehaviour
             _animator.SetBool("isMoving", true);
         }
 
-        //manage other animations
+        // ANIMATIONS -------------------
+
+        // moving animation (exiting idle)
         if (CreatureManager.Instance.CurrentSpeed > 0f) {
             //clear all idle animation triggers
             _animator.SetBool("isIdle", false);
@@ -67,12 +66,14 @@ public class CreatureMotion : MonoBehaviour
             //start movement anim, speed handled above
             _animator.SetBool("isMoving", true);
         } 
-        else if (CreatureManager.Instance.CurrentSpeed == 0f && _animator.GetBool("isMoving") == true && CreatureManager.Instance.IsStunned == false) //triggers from moving to idling if speed goes down too much
+        // idle animation (exiting moving if speed has decreased enough) - stun var check ensures proper interaction with stun anim
+        else if (CreatureManager.Instance.CurrentSpeed == 0f && _animator.GetBool("isMoving") == true && CreatureManager.Instance.IsStunned == false)
         {
             _animator.SetBool("isMoving", false);
             _animator.SetBool("isIdle", true);
         }
-        if (CreatureManager.Instance.IsStunned == true) //handles stunning trigger
+        // stunning animation
+        if (CreatureManager.Instance.IsStunned == true)
         {
             _animator.SetBool("isStunned", true);
             _animator.SetBool("isMoving", false);
