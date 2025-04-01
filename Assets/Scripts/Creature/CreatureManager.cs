@@ -128,9 +128,7 @@ public class CreatureManager : MonoBehaviour
         {
             IsStunned = true;
 
-            //play stun anim
-
-            //StartCoroutine(DoStunCreature());
+            StartCoroutine(DoStunCreature());
 
             IEnumerator DoStunCreature()
             {
