@@ -112,11 +112,16 @@ public class CreatureMotion : MonoBehaviour
         // activate creature motion script
         enabled = true;
 
-        // smoother spawning with behavior delay and spawning animation
+        // ALWAYS enter on spawn animation
+        _animator.Play("Spawn");
+        // ensure proper starting of idle/turning/stun/chase logic
         _animator.SetBool("isIdle", true);
+        _animator.SetBool("isMoving", false);
         _animator.SetBool("isStunned", false);
         _animator.SetBool("idleLeftTurn", true);
         _animator.SetBool("idleRightTurn", false);
+        _animator.SetBool("isLooking", false);
+        _animator.SetBool("isDespawned", false);
     }
 
     /// <summary>
@@ -138,9 +143,13 @@ public class CreatureMotion : MonoBehaviour
     // ensures proper visual disabling of object after despawn animation
     IEnumerator RunDespawnAnimation()
     {
-        yield return new WaitForSeconds(1.417f); // hard-coded: time includes transition to despawn animation AND entire despawn animation
+        // hard-coded: time includes transition to despawn animation AND entire despawn animation
+        yield return new WaitForSeconds(1.417f);
+        
         // properly disables the visibility of the creature in addition to functionality
-        gameObject.SetActive(false);
+        // ONLY disables creature if creature was NOT re-enabled during this brief window
+        if (enabled == false)
+            gameObject.SetActive(false);
     }
 
     /// <summary>
