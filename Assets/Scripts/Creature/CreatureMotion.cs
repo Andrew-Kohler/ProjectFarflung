@@ -48,35 +48,37 @@ public class CreatureMotion : MonoBehaviour
             float angle = Vector3.Angle(transform.forward, dirToPlayer);
             float angleFactor = math.remap(0, 180, 1, 0, angle); // 0 degree difference = max speed; 180 degree difference = no speed
             transform.position += transform.forward * angleFactor * CreatureManager.Instance.CurrentSpeed * Time.deltaTime;
-            //updates creatures animation speed to be similar to its expected speed
+            
+            //updates creatures chase animation speed to be similar to its expected speed
             _animator.SetFloat("speed", CreatureManager.Instance.CurrentSpeed);
-
-            _animator.SetBool("isStunned", false);
-            _animator.SetBool("isMoving", true);
         }
 
         // ANIMATIONS -------------------
 
-        // moving animation (exiting idle)
-        if (CreatureManager.Instance.CurrentSpeed > 0f) {
-            //clear all idle animation triggers
-            _animator.SetBool("isIdle", false);
-            _animator.SetBool("idleLeftTurn", false);
-            _animator.SetBool("idleRightTurn", false);
-
-            //start movement anim, speed handled above
-            _animator.SetBool("isMoving", true);
-        } 
-        // idle animation (exiting moving if speed has decreased enough) - stun var check ensures proper interaction with stun anim
-        else if (CreatureManager.Instance.CurrentSpeed == 0f && _animator.GetBool("isMoving") == true && CreatureManager.Instance.IsStunned == false)
-        {
-            _animator.SetBool("isMoving", false);
-            _animator.SetBool("isIdle", true);
-        }
-        // stunning animation
+        // stunning animation - takes priority!
         if (CreatureManager.Instance.IsStunned == true)
         {
+            // start stun anim
             _animator.SetBool("isStunned", true);
+            // disable other anims
+            _animator.SetBool("isMoving", false);
+            // should not modify idle value to ensure it remains the same for creature stun during idle OR during chase
+        }
+        // moving animation (exiting idle)
+        else if (CreatureManager.Instance.CurrentSpeed > 0f) {
+            // start movement anim, speed handled above
+            _animator.SetBool("isMoving", true);
+            // disable other anims
+            _animator.SetBool("isIdle", false);
+            _animator.SetBool("isStunned", false);
+        } 
+        // idle animation - lowest priority (only of not stunned and not moving)
+        else if (CreatureManager.Instance.CurrentSpeed == 0f)
+        {
+            // start idle anim
+            _animator.SetBool("isIdle", true);
+            // disable other anims
+            _animator.SetBool("isStunned", false);
             _animator.SetBool("isMoving", false);
         }
     }
