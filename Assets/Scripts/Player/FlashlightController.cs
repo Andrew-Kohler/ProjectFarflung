@@ -22,6 +22,8 @@ public class FlashlightController : MonoBehaviour
     private float _stunDuration;
     [SerializeField, Tooltip("range of light components during flash mode.")]
     private float _stunLightRange;
+    [SerializeField, Tooltip("spot angle of light during flash mode.")]
+    private float _stunSpotAngle;
     [SerializeField, Tooltip("amount of battery consumed on stun use. Full battery is 1.")]
     private float _stunBatteryCost;
 
@@ -37,10 +39,12 @@ public class FlashlightController : MonoBehaviour
 
     private Quaternion _prevPivotRot;
     private float _defaultLightRange;
+    private float _defaultSpotAngle;
 
     private void Awake()
     {
         _defaultLightRange = _light.range;
+        _defaultSpotAngle = _light.spotAngle;
     }
 
     #region CONTROLS
@@ -148,6 +152,8 @@ public class FlashlightController : MonoBehaviour
             if (_heldTimer > _stunHoldDuration)
             {
                 _light.range = _stunLightRange;
+                _light.spotAngle = _stunSpotAngle;
+
                 _stunTrigger.enabled = true;
 
                 _isHeld = false;
@@ -173,6 +179,7 @@ public class FlashlightController : MonoBehaviour
         yield return new WaitForSeconds(_stunDuration);
 
         _light.range = _defaultLightRange;
+        _light.spotAngle = _defaultSpotAngle;
         _stunTrigger.enabled = false;
     }
 
