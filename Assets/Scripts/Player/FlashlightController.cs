@@ -57,12 +57,19 @@ public class FlashlightController : MonoBehaviour
     {
         InputSystem.actions.FindAction("ToggleFlashlight").started += FlashlightClick;
         InputSystem.actions.FindAction("ToggleFlashlight").canceled += ToggleFlashlight;
+
+        // prevents light from being on and draining battery during terminal / wirebox puzzles
+        TerminalInteractable.onLockedInteractionTerminal += OverrideFlashlightOff;
+        WireBoxInteractable.onLockedInteractionWirebox += OverrideFlashlightOff;
     }
 
     private void OnDisable()
     {
         InputSystem.actions.FindAction("ToggleFlashlight").started -= FlashlightClick;
         InputSystem.actions.FindAction("ToggleFlashlight").canceled -= ToggleFlashlight;
+
+        TerminalInteractable.onLockedInteractionTerminal -= OverrideFlashlightOff;
+        WireBoxInteractable.onLockedInteractionWirebox -= OverrideFlashlightOff;
     }
 
     /// <summary>
@@ -71,6 +78,10 @@ public class FlashlightController : MonoBehaviour
     /// </summary>
     private void FlashlightClick(InputAction.CallbackContext context)
     {
+        // skip functionality if player is in light puzzle, terminal, or wire box
+        if (!GameManager.Instance.PlayerEnabled)
+            return;
+
         // start timer for stun blast
         _isHeld = true;
         _heldTimer = 0f;
@@ -84,8 +95,13 @@ public class FlashlightController : MonoBehaviour
     /// </summary>
     private void ToggleFlashlight(InputAction.CallbackContext context)
     {
+        // skip functionality if player is in light puzzle, terminal, or wire box
+        if (!GameManager.Instance.PlayerEnabled)
+            return;
+
         // do NOT turn light off on release if we just stun blasted
-        if (_heldTimer > _stunHoldDuration)
+        // ALSO skip functionality if this is triggering without held as true (i.e. initial click was made when in terminal, wire box, etc.)
+        if (_heldTimer > _stunHoldDuration || !_isHeld)
             return;
 
         // indicates player is NOT holding down key for stun
@@ -198,5 +214,29 @@ public class FlashlightController : MonoBehaviour
     private bool IsStunInactive()
     {
         return !_stunTrigger.enabled;
+    }
+
+    /// <summary>
+    /// Ensures flashlight is properly turned OFF.
+    /// This is called by interactor script events for when a light puzzle, terminal, or wire box is opened.
+    /// </summary>
+    public void OverrideFlashlightOff(bool isEnter)
+    {
+        // we only care about the interactions that ENTER the locked state - not the exit of the locked state
+        if (!isEnter)
+            return;
+
+        // functionally turn off flashlight
+        _isOn = false;
+        _light.enabled = false;
+
+        // cancel is held state
+        _isHeld = false;
+        _heldTimer = 0;
+
+        // ensure stun state is properly ended
+        _light.range = _defaultLightRange;
+        _light.spotAngle = _defaultSpotAngle;
+        _stunTrigger.enabled = false;
     }
 }
