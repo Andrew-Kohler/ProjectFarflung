@@ -16,6 +16,9 @@ public class DeathRealmTransitionOut : MonoBehaviour
         GameManager.Instance.SceneData.IsInDeathRealm = false;
         GameManager.Instance.SaveSceneDataToGameData();
 
+        // restore flashlight battery on respawn since you respawn at a terminal
+        GameManager.FlashlightCharge = 1f;
+
         _handler.LoadScene("Resume");
     }
 
