@@ -37,7 +37,8 @@ public abstract class ClickableObject : MonoBehaviour
 
         Vector3 mousePos = InputSystem.actions.FindAction("MousePosition").ReadValue<Vector2>();
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
-        if (Physics.Raycast(ray.origin, ray.direction * 10, out RaycastHit hit))
+        // ensure raycast ignores the WireBoxGrid layer by only checking the default layer (layer that clickable items are contained on)
+        if (Physics.Raycast(ray.origin, ray.direction * 10, out RaycastHit hit, 5f, LayerMask.GetMask("Default")))
             _target = hit.collider.gameObject;
         else
             _target = null;
