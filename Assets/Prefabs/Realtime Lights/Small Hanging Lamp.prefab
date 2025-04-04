@@ -104,6 +104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6043143757547025534}
   - component: {fileID: -4359251839475205049}
+  - component: {fileID: 2476258604220505005}
   m_Layer: 0
   m_Name: Small Hanging Lamp
   m_TagString: Untagged
@@ -126,7 +127,7 @@ Transform:
   - {fileID: 6930586189371290269}
   - {fileID: 886832399049258016}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!205 &-4359251839475205049
 LODGroup:
@@ -146,6 +147,24 @@ LODGroup:
     fadeTransitionWidth: 0
     renderers: []
   m_Enabled: 1
+--- !u!114 &2476258604220505005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7137454420271813740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ab7670244996d42a05361101d94700, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _litMaterial: {fileID: 2100000, guid: e9a048a5a5c2ccf41ba12091ba84c85d, type: 2}
+  _unlitMaterial: {fileID: 2100000, guid: a419a5ddeb774334694f33bf887f24ee, type: 2}
+  _light: {fileID: 8226531386584753087}
+  _renderers:
+  - {fileID: 1774726390623434574}
+  - {fileID: 6972627056602504789}
 --- !u!1001 &7468333870648743286
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -158,6 +177,14 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8689865580303840477, guid: daed30b346d1f264d8c1d2d40f58610d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -7363661155614727322, guid: daed30b346d1f264d8c1d2d40f58610d, type: 3}
+    - target: {fileID: -8689865580303840477, guid: daed30b346d1f264d8c1d2d40f58610d, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: e9a048a5a5c2ccf41ba12091ba84c85d, type: 2}
     - target: {fileID: -8679921383154817045, guid: daed30b346d1f264d8c1d2d40f58610d, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -283,8 +310,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: daed30b346d1f264d8c1d2d40f58610d, type: 3}
+--- !u!23 &1774726390623434574 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -70436733667794376, guid: daed30b346d1f264d8c1d2d40f58610d, type: 3}
+  m_PrefabInstance: {fileID: 7468333870648743286}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6930586189371290269 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: daed30b346d1f264d8c1d2d40f58610d, type: 3}
+  m_PrefabInstance: {fileID: 7468333870648743286}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6972627056602504789 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -8689865580303840477, guid: daed30b346d1f264d8c1d2d40f58610d, type: 3}
   m_PrefabInstance: {fileID: 7468333870648743286}
   m_PrefabAsset: {fileID: 0}
