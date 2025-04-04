@@ -17,9 +17,9 @@ public class PoweredDoor : PoweredElement
     [SerializeField, Tooltip("Distance the player needs to go from a door before it autocloses")]
     private float _doorCloseDistance = 6f;
 
-
-    private void Start() // Set the key type on each of the door panels
+    public void InitializeInteractable() 
     {
+        // Set the key type on each of the door panels
         for (int i = 0; i < doorPanels.Count; i++)
         {
             doorPanels[i].RequiredKey = this.RequiredKey;
@@ -31,17 +31,13 @@ public class PoweredDoor : PoweredElement
 
     protected override void DisablePoweredElement()
     {
-        for(int i = 0; i < doorPanels.Count; i++)
-        {
-            doorPanels[i].enabled = false;
-        }
+        // does nothing
+        // interactor script reads powered state directly to determine functionality
     }
 
     protected override void EnablePoweredElement()
     {
-        for (int i = 0; i < doorPanels.Count; i++)
-        {
-            doorPanels[i].enabled = true;
-        }
+        // does nothing
+        // interactor script reads powered state directly to determine functionality
     }
 }

@@ -41,6 +41,11 @@ public class DoorInteractable : Interactable
         {
             throw new System.Exception("Door cannot exist without being a PoweredDoor.");
         }
+
+        // ensure that all values are properly identical to those stored in the PoweredDoor (keycard, isOpen, isBroken, closeDistance)
+        // calling this here ensures 100% consistency regardless of start function execution order
+        Element.InitializeInteractable();
+
         Col = this.GetComponent<BoxCollider>();
 
         // Set the default state of the door
