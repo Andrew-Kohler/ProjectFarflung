@@ -154,6 +154,14 @@ namespace StarterAssets
 			}
 		}
 
+		/// <summary>
+		/// Used to change starting pitch for scene load.
+		/// </summary>
+		public void OverrideTargetPitch(float newPitch)
+        {
+			_cinemachineTargetPitch = newPitch;
+        }
+
 		private void Move()
 		{
 			if (!GameManager.Instance.PlayerEnabled) // Only care about vertical speed
