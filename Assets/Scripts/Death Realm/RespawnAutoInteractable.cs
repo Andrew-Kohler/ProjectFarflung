@@ -44,7 +44,7 @@ public class RespawnAutoInteractable : MonoBehaviour
         _playerAnim.speed = 1;
 
         // wait for camera to be for sure above the player
-        yield return new WaitUntil(() => Vector3.Distance(Camera.main.transform.position, _visorCam1.transform.position) < 0.5f);
+        yield return new WaitUntil(() => Vector3.Distance(Camera.main.transform.position, _visorCam1.transform.position) < 0.1f);
 
         _visorCam1.gameObject.SetActive(false);
         _visorCam2.gameObject.SetActive(true);
