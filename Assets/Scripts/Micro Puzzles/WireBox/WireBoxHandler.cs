@@ -39,6 +39,11 @@ public class WireBoxHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // skip detection of completion condition if already completed
+        // this prevents identifier from being added to the list MANY times
+        if (GameManager.Instance.SceneData.FixedWireBoxes.Contains(IdentifierName))
+            return;
+
         // puzzle not completed if end connection has no nodes
         if (!_outputNode.HasAnyConnections())
             return;
