@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9040012660936106964}
+  - component: {fileID: 8568142106760167425}
   m_Layer: 0
   m_Name: CommandDesk
   m_TagString: Untagged
@@ -28,14 +29,33 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 584195749110120351}
   - {fileID: 1103947601280448739}
   - {fileID: 6995668799450649264}
   - {fileID: 7983211861642945891}
-  - {fileID: 584195749110120351}
   - {fileID: 6911973916925430550}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &8568142106760167425
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6698131081038341568}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.05
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 3825299959019785133}
+  m_Enabled: 1
 --- !u!1 &7677790167430133482
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,6 +173,11 @@ PrefabInstance:
 --- !u!4 &1103947601280448739 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1bfebfe1625018b47bff9c495408f5b9, type: 3}
+  m_PrefabInstance: {fileID: 637464972830072584}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3825299959019785133 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -4769724286560987995, guid: 1bfebfe1625018b47bff9c495408f5b9, type: 3}
   m_PrefabInstance: {fileID: 637464972830072584}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1225191857946941840

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 569647800732070921}
   - component: {fileID: 2341512620976706862}
   - component: {fileID: 107868786547870491}
+  - component: {fileID: 2494785443467803325}
   m_Layer: 0
   m_Name: Desk
   m_TagString: Untagged
@@ -100,6 +101,30 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.64, y: 0.9, z: 0.29}
   m_Center: {x: 0.34, y: 0.45, z: 0.89}
+--- !u!205 &2494785443467803325
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6698131081038341568}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.05
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 3944673454120293204}
+    - renderer: {fileID: 4095232169278624976}
+    - renderer: {fileID: 4974156636946292901}
+    - renderer: {fileID: 6705744050731707859}
+    - renderer: {fileID: 1085985489949090980}
+    - renderer: {fileID: 1232181948495545225}
+  m_Enabled: 1
 --- !u!1001 &2866597475790580279
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -192,9 +217,34 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 8966635662150123240}
   m_SourcePrefab: {fileID: 100100000, guid: 9fd526a535995dc43b52412c48450fff, type: 3}
+--- !u!23 &1085985489949090980 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2943666663601704595, guid: 9fd526a535995dc43b52412c48450fff, type: 3}
+  m_PrefabInstance: {fileID: 2866597475790580279}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1232181948495545225 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -5273251430524868162, guid: 9fd526a535995dc43b52412c48450fff, type: 3}
+  m_PrefabInstance: {fileID: 2866597475790580279}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2324572408582376924 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9fd526a535995dc43b52412c48450fff, type: 3}
+  m_PrefabInstance: {fileID: 2866597475790580279}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3944673454120293204 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1258325826853124451, guid: 9fd526a535995dc43b52412c48450fff, type: 3}
+  m_PrefabInstance: {fileID: 2866597475790580279}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4095232169278624976 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2241979811199041255, guid: 9fd526a535995dc43b52412c48450fff, type: 3}
+  m_PrefabInstance: {fileID: 2866597475790580279}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4974156636946292901 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7120175806836542098, guid: 9fd526a535995dc43b52412c48450fff, type: 3}
   m_PrefabInstance: {fileID: 2866597475790580279}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &6516734984934339822 stripped
@@ -223,6 +273,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.1, y: 1.09, z: 2.09}
   m_Center: {x: 0.037432104, y: 0.01562497, z: -0.017987281}
+--- !u!23 &6705744050731707859 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -376149967849781276, guid: 9fd526a535995dc43b52412c48450fff, type: 3}
+  m_PrefabInstance: {fileID: 2866597475790580279}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4641056806713010171
 PrefabInstance:
   m_ObjectHideFlags: 0
