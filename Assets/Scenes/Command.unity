@@ -512,10 +512,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1400794753}
   - {fileID: 1637611548}
   - {fileID: 850193976}
   - {fileID: 1479894405}
-  - {fileID: 1400794753}
   - {fileID: 867378270}
   - {fileID: 530526697}
   - {fileID: 1321913334}
@@ -17055,7 +17055,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: GazerSign
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9061737811796495480, guid: c575f8e5a9514884da9759bacf9933dc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 2645779190553019001, guid: c575f8e5a9514884da9759bacf9933dc, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -18195,15 +18200,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5823960854184709877, guid: 90de32e095c39964bb8c01ad9c24e3c0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.312
+      value: -4.934
       objectReference: {fileID: 0}
     - target: {fileID: 5823960854184709877, guid: 90de32e095c39964bb8c01ad9c24e3c0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.826
+      value: 0.758
       objectReference: {fileID: 0}
     - target: {fileID: 5823960854184709877, guid: 90de32e095c39964bb8c01ad9c24e3c0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 25.619
+      value: 24.838
       objectReference: {fileID: 0}
     - target: {fileID: 5823960854184709877, guid: 90de32e095c39964bb8c01ad9c24e3c0, type: 3}
       propertyPath: m_LocalRotation.w
