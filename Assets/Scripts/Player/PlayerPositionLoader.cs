@@ -15,6 +15,8 @@ public class PlayerPositionLoader : MonoBehaviour
     private TerminalConfiguration[] _terminals; // list of references to avoid costly GetComponentInChildren calls
     [SerializeField, Tooltip("Angle of camera when loading to terminal - to ensure looking at terminal and not at the wall.")]
     private float _terminalCamAngle;
+    [SerializeField, Tooltip("Camera Follow transform, which is rotated when loading to a terminal")]
+    private Transform _followTransform;
     [SerializeField, Tooltip("Needed to override starting pitch on camera.")]
     private FirstPersonController _controller;
 
@@ -50,9 +52,7 @@ public class PlayerPositionLoader : MonoBehaviour
                     transform.rotation = terminal.SpawnPos.rotation;
 
                     // rotate camera follow transform to face terminal
-                    Transform followTransform = Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera.
-                        VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>().Follow;
-                    followTransform.Rotate(Vector3.right * _terminalCamAngle);
+                    _followTransform.Rotate(Vector3.right * _terminalCamAngle);
 
                     // ensure player controller does not override angle
                     _controller.OverrideTargetPitch(_terminalCamAngle);
