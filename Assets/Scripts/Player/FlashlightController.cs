@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// Controls enabling/disabling of flashlights with key presses.
+/// Controls enabling/disabling of flashlight with key presses.
 /// Tracks battery level and rotation of lights to follow player movement.
 /// </summary>
 public class FlashlightController : MonoBehaviour
@@ -22,18 +22,16 @@ public class FlashlightController : MonoBehaviour
     private float _stunDuration;
     [SerializeField, Tooltip("range of light components during flash mode.")]
     private float _stunLightRange;
+    [SerializeField, Tooltip("spot angle of light during flash mode.")]
+    private float _stunSpotAngle;
     [SerializeField, Tooltip("amount of battery consumed on stun use. Full battery is 1.")]
     private float _stunBatteryCost;
 
     [Header("Lights / References")]
     [SerializeField, Tooltip("Used to enable/disable actual left light element.")]
-    private Light _leftLight;
+    private Light _light;
     [SerializeField, Tooltip("Used to rotate left light.")]
-    private GameObject _leftLightPivot;
-    [SerializeField, Tooltip("Used to enable/disable actual right light element.")]
-    private Light _rightLight;
-    [SerializeField, Tooltip("Used to rotate right light.")]
-    private GameObject _rightLightPivot;
+    private GameObject _lightPivot;
     [SerializeField, Tooltip("Used to enable/disable light stun trigger when light is on.")]
     private Collider _stunTrigger;
     [SerializeField, Tooltip("Used to get vertical flashlight angle.")]
@@ -41,10 +39,12 @@ public class FlashlightController : MonoBehaviour
 
     private Quaternion _prevPivotRot;
     private float _defaultLightRange;
+    private float _defaultSpotAngle;
 
     private void Awake()
     {
-        _defaultLightRange = _leftLight.range;
+        _defaultLightRange = _light.range;
+        _defaultSpotAngle = _light.spotAngle;
     }
 
     #region CONTROLS
@@ -57,12 +57,19 @@ public class FlashlightController : MonoBehaviour
     {
         InputSystem.actions.FindAction("ToggleFlashlight").started += FlashlightClick;
         InputSystem.actions.FindAction("ToggleFlashlight").canceled += ToggleFlashlight;
+
+        // prevents light from being on and draining battery during terminal / wirebox puzzles
+        TerminalInteractable.onLockedInteractionTerminal += OverrideFlashlightOff;
+        WireBoxInteractable.onLockedInteractionWirebox += OverrideFlashlightOff;
     }
 
     private void OnDisable()
     {
         InputSystem.actions.FindAction("ToggleFlashlight").started -= FlashlightClick;
         InputSystem.actions.FindAction("ToggleFlashlight").canceled -= ToggleFlashlight;
+
+        TerminalInteractable.onLockedInteractionTerminal -= OverrideFlashlightOff;
+        WireBoxInteractable.onLockedInteractionWirebox -= OverrideFlashlightOff;
     }
 
     /// <summary>
@@ -71,6 +78,10 @@ public class FlashlightController : MonoBehaviour
     /// </summary>
     private void FlashlightClick(InputAction.CallbackContext context)
     {
+        // skip functionality if player is in light puzzle, terminal, or wire box
+        if (!GameManager.Instance.PlayerEnabled)
+            return;
+
         // start timer for stun blast
         _isHeld = true;
         _heldTimer = 0f;
@@ -84,8 +95,13 @@ public class FlashlightController : MonoBehaviour
     /// </summary>
     private void ToggleFlashlight(InputAction.CallbackContext context)
     {
+        // skip functionality if player is in light puzzle, terminal, or wire box
+        if (!GameManager.Instance.PlayerEnabled)
+            return;
+
         // do NOT turn light off on release if we just stun blasted
-        if (_heldTimer > _stunHoldDuration)
+        // ALSO skip functionality if this is triggering without held as true (i.e. initial click was made when in terminal, wire box, etc.)
+        if (_heldTimer > _stunHoldDuration || !_isHeld)
             return;
 
         // indicates player is NOT holding down key for stun
@@ -95,16 +111,14 @@ public class FlashlightController : MonoBehaviour
         if (_isOn)
         {
             _isOn = false;
-            _leftLight.enabled = false;
-            _rightLight.enabled = false;
+            _light.enabled = false;
         }
         // turning flashlight on
         // prevent one frame flicker of flashlight (due to new coroutine for flashlight shut off)
         else if (!_isOn && GameManager.FlashlightCharge > 0)
         {
             _isOn = true;
-            _leftLight.enabled = true;
-            _rightLight.enabled = true;
+            _light.enabled = true;
         }
 
         // TODO: SFX for button release
@@ -113,7 +127,7 @@ public class FlashlightController : MonoBehaviour
 
     private void Start()
     {
-        _prevPivotRot = _leftLightPivot.transform.rotation;
+        _prevPivotRot = _lightPivot.transform.rotation;
     }
 
     // Update is called once per frame
@@ -136,16 +150,15 @@ public class FlashlightController : MonoBehaviour
         // Delayed rotation of lights
 
         // necessary so previous local can be fetched in terms of current forward
-        _leftLightPivot.transform.rotation = _prevPivotRot;
+        _lightPivot.transform.rotation = _prevPivotRot;
         // goal is always 0, 0, 0 (forward) PLUS VERTICAL ANGLE
         Quaternion goal = Quaternion.Euler(_cameraRoot.transform.rotation.eulerAngles.x, 0, 0);
         // lerp between previous angle (in terms of current local frame)
-        Quaternion newRot = Quaternion.Lerp(_leftLightPivot.transform.localRotation, goal, 1f - Mathf.Exp(-_lightPivotSharpness * Time.deltaTime));
+        Quaternion newRot = Quaternion.Lerp(_lightPivot.transform.localRotation, goal, 1f - Mathf.Exp(-_lightPivotSharpness * Time.deltaTime));
         // update local rotations
-        _leftLightPivot.transform.localRotation = newRot;
-        _rightLightPivot.transform.localRotation = newRot;
+        _lightPivot.transform.localRotation = newRot;
         // save pivot for next frame
-        _prevPivotRot = _leftLightPivot.transform.rotation;
+        _prevPivotRot = _lightPivot.transform.rotation;
 
         // check for stun burst
         // must be on already for stun holding charge to work
@@ -154,8 +167,9 @@ public class FlashlightController : MonoBehaviour
             // activate burst
             if (_heldTimer > _stunHoldDuration)
             {
-                _leftLight.range = _stunLightRange;
-                _rightLight.range = _stunLightRange;
+                _light.range = _stunLightRange;
+                _light.spotAngle = _stunSpotAngle;
+
                 _stunTrigger.enabled = true;
 
                 _isHeld = false;
@@ -180,8 +194,8 @@ public class FlashlightController : MonoBehaviour
     {
         yield return new WaitForSeconds(_stunDuration);
 
-        _leftLight.range = _defaultLightRange;
-        _rightLight.range = _defaultLightRange;
+        _light.range = _defaultLightRange;
+        _light.spotAngle = _defaultSpotAngle;
         _stunTrigger.enabled = false;
     }
 
@@ -194,12 +208,35 @@ public class FlashlightController : MonoBehaviour
         yield return new WaitUntil(IsStunInactive);
 
         _isOn = false;
-        _leftLight.enabled = false;
-        _rightLight.enabled = false;
+        _light.enabled = false;
     }
 
     private bool IsStunInactive()
     {
         return !_stunTrigger.enabled;
+    }
+
+    /// <summary>
+    /// Ensures flashlight is properly turned OFF.
+    /// This is called by interactor script events for when a light puzzle, terminal, or wire box is opened.
+    /// </summary>
+    public void OverrideFlashlightOff(bool isEnter)
+    {
+        // we only care about the interactions that ENTER the locked state - not the exit of the locked state
+        if (!isEnter)
+            return;
+
+        // functionally turn off flashlight
+        _isOn = false;
+        _light.enabled = false;
+
+        // cancel is held state
+        _isHeld = false;
+        _heldTimer = 0;
+
+        // ensure stun state is properly ended
+        _light.range = _defaultLightRange;
+        _light.spotAngle = _defaultSpotAngle;
+        _stunTrigger.enabled = false;
     }
 }
