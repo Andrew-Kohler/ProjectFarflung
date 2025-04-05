@@ -79,7 +79,6 @@ public class NodeManager : MonoBehaviour
 
                 // fetch endpoints
                 Vector3 hitPos = hit.point;
-                hitPos.z = _currConnection.transform.position.z;
                 Vector3 nodePos = _firstNode.transform.position;
 
                 ShowWire(nodePos, hitPos);

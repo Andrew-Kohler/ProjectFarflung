@@ -44,6 +44,9 @@ public class SceneTransitionHandler : MonoBehaviour
             // load death realm
             if (GameManager.Instance.SceneData.IsInDeathRealm)
             {
+                // return mouse to first-person mode if not already
+                Cursor.lockState = CursorLockMode.Locked;
+
                 SceneManager.LoadScene("DeathRealm");
             }
             // load specific level scene
@@ -52,15 +55,27 @@ public class SceneTransitionHandler : MonoBehaviour
                 switch (GameManager.Instance.SceneData.SaveScene)
                 {
                     case 0:
+                        // return mouse to first-person mode if not already
+                        Cursor.lockState = CursorLockMode.Locked;
+
                         SceneManager.LoadScene("Hangar");
                         break;
                     case 1:
+                        // return mouse to first-person mode if not already
+                        Cursor.lockState = CursorLockMode.Locked;
+
                         SceneManager.LoadScene("Floor1");
                         break;
                     case 2:
+                        // return mouse to first-person mode if not already
+                        Cursor.lockState = CursorLockMode.Locked;
+
                         SceneManager.LoadScene("Floor2");
                         break;
                     case 3:
+                        // return mouse to first-person mode if not already
+                        Cursor.lockState = CursorLockMode.Locked;
+
                         SceneManager.LoadScene("Command");
                         break;
                     default:

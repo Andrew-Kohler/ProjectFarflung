@@ -83,6 +83,9 @@ public class TerminalInteractable : Interactable
         // Save data at terminal open
         GameManager.Instance.SaveAtTerminal(_terminal.ZoneIndex);
 
+        // restore flashlight battery
+        GameManager.FlashlightCharge = 1f;
+
         _initialInteractiongOngoing = true;
         if(_mainCam == null)
         {
