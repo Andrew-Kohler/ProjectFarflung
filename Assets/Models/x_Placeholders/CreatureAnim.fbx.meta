@@ -3,7 +3,27 @@ guid: 799ab4875fb4b7b429e67cf2e26a0565
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: bc578c647c276d44fb77b0e5e96d238b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model_EyeTexture
+    second: {fileID: 2100000, guid: bc578c647c276d44fb77b0e5e96d238b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model_ShadowManTexture
+    second: {fileID: 2100000, guid: cd5244df9d7d50445903b85ecc2e8c86, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model_eyeTexture2
+    second: {fileID: 2100000, guid: ab2b3f8a7cf8feb40acadc6cc3ae815f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -12,10 +32,10 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
-    resampleCurves: 1
+    resampleCurves: 0
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
-    motionNodeName: 
+    motionNodeName: Deformation/Joints/Root
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
@@ -25,9 +45,9 @@ ModelImporter:
     importAnimatedCustomProperties: 0
     importConstraints: 0
     animationCompression: 1
-    animationRotationError: 0.5
-    animationPositionError: 0.5
-    animationScaleError: 0.5
+    animationRotationError: 0
+    animationPositionError: 0
+    animationScaleError: 0
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
@@ -62,9 +82,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Idle/R turn
+      name: Idle R turn
       takeName: Take 001
-      internalID: 9067093048684652814
+      internalID: -998496362607748373
       firstFrame: 30
       lastFrame: 60
       wrapMode: 0
@@ -93,7 +113,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Idle Mid
       takeName: Take 001
-      internalID: -8481709605947105597
+      internalID: 3060872287085348379
       firstFrame: 60
       lastFrame: 90
       wrapMode: 0
@@ -103,7 +123,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 1
+      loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -120,9 +140,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Idle/L turn
+      name: Idle L turn
       takeName: Take 001
-      internalID: 1178167638873134046
+      internalID: 6641085478485924818
       firstFrame: 90
       lastFrame: 120
       wrapMode: 0
@@ -151,7 +171,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Idle full
       takeName: Take 001
-      internalID: 1950896874197824025
+      internalID: -5059006814000262888
       firstFrame: 30
       lastFrame: 120
       wrapMode: 0
@@ -160,7 +180,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -180,9 +200,9 @@ ModelImporter:
     - serializedVersion: 16
       name: Chase Padded
       takeName: Take 001
-      internalID: -2529017216748528031
+      internalID: 6234510843852800090
       firstFrame: 135
-      lastFrame: 198
+      lastFrame: 155
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -209,7 +229,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Chase
       takeName: Take 001
-      internalID: 5530032110195653110
+      internalID: -6788666626592393668
       firstFrame: 155
       lastFrame: 187
       wrapMode: 0
@@ -219,7 +239,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 1
+      loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
