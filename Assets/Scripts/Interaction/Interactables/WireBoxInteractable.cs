@@ -111,8 +111,6 @@ public class WireBoxInteractable : Interactable
         _col.enabled = false;
         _lockColState = true; // prevent collider from being re-enabled
 
-        _wirebox.EnablePuzzle(); // Enable the puzzle
-
         _wireboxAnim.speed = 1f;
         _wireboxAnim.SetTrigger("BreakerOpen"); // Play the animation
 
@@ -120,7 +118,11 @@ public class WireBoxInteractable : Interactable
 
         _inUse = true;  // Tell the box it's being used
 
-        yield return new WaitForSeconds(2.7f);
+        yield return new WaitForSeconds(1.5f);
+        // delay ensures text does not enable clipping through box lid early
+        _wirebox.EnablePuzzle(); // Enable the puzzle
+
+        yield return new WaitForSeconds(1.2f);
         _initialInteractiongOngoing = false;
     }
 
