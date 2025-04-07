@@ -58,11 +58,14 @@ public class GameManager : MonoBehaviour
     #region SCENE DATA
     // Static non-saved data (between scenes)
     public static float FlashlightCharge;
+    public static float StunHoldRatio;  // 0 = not holding flashlight input; 1 = max hold and stun is going off now
 
     private static void DefaultSceneData()
     {
         // since terminals are save points battery charge can always be full at start of a new session (no need to be saved)
         FlashlightCharge = 1f; // 1 = full charge; 0 = no charge
+
+        StunHoldRatio = 0f; // always starts at 0 until input adds to it
     }
     #endregion
 
