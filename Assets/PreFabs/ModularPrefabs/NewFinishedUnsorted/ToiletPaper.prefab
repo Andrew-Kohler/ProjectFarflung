@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5961727464420369843
 Transform:
@@ -105,13 +105,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7272911518199237601, guid: 6fbabafa513a104408d509ab65dadbb5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6fbabafa513a104408d509ab65dadbb5, type: 3}
       propertyPath: m_Name
       value: ToiletPaperRoll
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6fbabafa513a104408d509ab65dadbb5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 3209690677125675746, guid: 6fbabafa513a104408d509ab65dadbb5, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3209690677125675746, guid: 6fbabafa513a104408d509ab65dadbb5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
