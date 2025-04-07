@@ -73,7 +73,10 @@ LODGroup:
   m_LODs:
   - screenRelativeHeight: 0.05
     fadeTransitionWidth: 0
-    renderers: []
+    renderers:
+    - renderer: {fileID: 1046559643615755679}
+    - renderer: {fileID: 8607540123397259488}
+    - renderer: {fileID: 3903986021822007385}
   m_Enabled: 1
 --- !u!114 &1981613543590440733
 MonoBehaviour:
@@ -136,8 +139,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.840919, b: 0.511, a: 1}
-  m_Intensity: 1
-  m_Range: 15
+  m_Intensity: 1.2
+  m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -255,5 +258,15 @@ MeshRenderer:
 --- !u!4 &2964305355053115278 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7621106736b71b648b0091b219a39a24, type: 3}
+  m_PrefabInstance: {fileID: 3362479725234077797}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &3903986021822007385 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1766629196677597244, guid: 7621106736b71b648b0091b219a39a24, type: 3}
+  m_PrefabInstance: {fileID: 3362479725234077797}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8607540123397259488 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6475557640792686725, guid: 7621106736b71b648b0091b219a39a24, type: 3}
   m_PrefabInstance: {fileID: 3362479725234077797}
   m_PrefabAsset: {fileID: 0}
