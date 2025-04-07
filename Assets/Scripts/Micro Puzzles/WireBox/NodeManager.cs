@@ -188,6 +188,7 @@ public class NodeManager : MonoBehaviour
             clickedNode.AssignConnection(_firstNode);
 
             // sever control over these connections (the wire has been placed)
+            clickedNode.DeselectVisual(); // ensure hover outline is removed on wire placement
             DeselectFirstNode();
 
             // consume the current selected wire from the wire rack
