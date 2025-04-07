@@ -99,10 +99,14 @@ public class FlashlightController : MonoBehaviour
         if (!GameManager.Instance.PlayerEnabled)
             return;
 
-        // do NOT turn light off on release if we just stun blasted
+        // do NOT turn light off on release if we previously stun blasted
         // ALSO skip functionality if this is triggering without held as true (i.e. initial click was made when in terminal, wire box, etc.)
-        if (_heldTimer > _stunHoldDuration || !_isHeld)
+        // ALSO skip functionality if stun blast is currently occurring
+        if (_heldTimer > _stunHoldDuration || !_isHeld || _stunTrigger.enabled)
+        {
+            _isHeld = false;    // ensure stun doesn't go off twice - edge case
             return;
+        }
 
         // indicates player is NOT holding down key for stun
         _isHeld = false;
@@ -161,12 +165,15 @@ public class FlashlightController : MonoBehaviour
         _prevPivotRot = _lightPivot.transform.rotation;
 
         // check for stun burst
-        // must be on already for stun holding charge to work
-        if (_isHeld && _isOn)
+        if (_isHeld)    // no longer requires light to be on for charging to start
         {
             // activate burst
             if (_heldTimer > _stunHoldDuration)
             {
+                // actually turn the light on in case it wasn't already
+                _isOn = true;
+                _light.enabled = true;
+
                 _light.range = _stunLightRange;
                 _light.spotAngle = _stunSpotAngle;
 

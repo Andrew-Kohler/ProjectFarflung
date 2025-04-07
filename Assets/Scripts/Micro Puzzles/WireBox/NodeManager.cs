@@ -31,7 +31,6 @@ public class NodeManager : MonoBehaviour
     private InputAction _mousePosAction;
     private NodeSelector[] _nodes;
     private NodeSelector _firstNode = null; // null = none selected
-    private NodeSelector _secondNode = null; // null = none selected (this one is only based on hover and is only used for hover outline logic)
     private GameObject _currConnection = null;
 
     private void Awake()
