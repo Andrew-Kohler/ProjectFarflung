@@ -21,6 +21,7 @@ public class WireBoxInteractable : Interactable
     private CinemachineVirtualCamera _mainCam;
     private bool _inUse = false;        // If player uses this wirebox (to prevent constantly reactivating exit keybind)
     private BoxCollider _col;
+    private bool _lockColState = false;
 
     private bool _initialInteractiongOngoing = false; // Used to lock the player out of interrupting the animation
 
@@ -58,7 +59,15 @@ public class WireBoxInteractable : Interactable
 
     new void Update()
     {
+        // do not process enable/disable wire box interactable logic if currently in the box
+        if (_lockColState)
+            return;
 
+        // disable wire box if wire box is not in a lit zone
+        if (!_wirebox.LightZone.IsPowered())
+            _col.enabled = false;
+        else
+            _col.enabled = true;
     }
 
     public override void InteractEffects()
@@ -100,6 +109,7 @@ public class WireBoxInteractable : Interactable
         _mainCam.gameObject.SetActive(false);
 
         _col.enabled = false;
+        _lockColState = true; // prevent collider from being re-enabled
 
         _wirebox.EnablePuzzle(); // Enable the puzzle
 
@@ -141,7 +151,10 @@ public class WireBoxInteractable : Interactable
 
         yield return new WaitForSeconds(1.5f);        // Only reenable interaction after the animation ends
         if (!final)
+        {
             _col.enabled = true;
+            _lockColState = false; // allow collider properly update to match light zone again
+        }
 
         /*yield return new WaitForSeconds(2f);
         if (final)  // If the player completed the puzzle, they shan't do it again
