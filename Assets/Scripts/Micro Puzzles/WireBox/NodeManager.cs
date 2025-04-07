@@ -181,6 +181,11 @@ public class NodeManager : MonoBehaviour
             ShowWire(_firstNode.transform.position, clickedNode.transform.position);
             // properly initialize completed connection
             ConnectionRemover newConnection = _currConnection.transform.GetChild(0).gameObject.AddComponent<ConnectionRemover>();
+            // only enable connection collider once it is placed, so the preview wire does not inconsistently block clicks on other wires to remove them while a first node is selected
+            if (!newConnection.TryGetComponent(out Collider coll))
+                throw new System.Exception("New wire connection prefab reference MUST have a collider component (disabled by default).");
+            coll.enabled = true;
+            // initialize connection remover behavior
             newConnection.Initialize(_wireManager.GetSelectedWire(), _firstNode, clickedNode, _outlineWidth, _hoverColor);
 
             // assign wire connections (for charge calculations) - two way reference
