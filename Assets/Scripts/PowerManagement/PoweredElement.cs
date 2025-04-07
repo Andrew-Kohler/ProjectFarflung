@@ -21,7 +21,7 @@ public abstract class PoweredElement : MonoBehaviour
     [SerializeField, Tooltip("Used to determine if associated busted power box is fixed for power determination.")]
     private string _wireBoxIdentifier;
 
-    private bool _isSwitchOn;
+    private bool _isSwitchOn = true;
     private bool _isZoneOn;
 
     private void OnEnable()
