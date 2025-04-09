@@ -124,6 +124,7 @@ public class AudioManager : MonoBehaviour
     private AudioClip _sliderClick;
 
     private AudioClip _tabCycle;
+    private AudioClip _generalSoundHUD;
 
     private void LoadSFX()
     {
@@ -131,6 +132,7 @@ public class AudioManager : MonoBehaviour
         _sliderClick = Resources.Load<AudioClip>("SFX/SliderClick");
 
         _tabCycle = Resources.Load<AudioClip>("SFX/TabCycle");
+        _generalSoundHUD = Resources.Load<AudioClip>("SFX/GeneralSoundHUD");
     }
 
     public void PlayClickUI()
@@ -148,6 +150,11 @@ public class AudioManager : MonoBehaviour
     public void PlayTabCycle()
     {
         _sfxSource.PlayOneShot(_tabCycle, GameManager.GetSFXVolume());
+    }
+
+    public void PlayGeneralSoundHUD()
+    {
+        _sfxSource.PlayOneShot(_generalSoundHUD, GameManager.GetSFXVolume());
     }
     #endregion
 }

@@ -123,6 +123,9 @@ public class KeycardDisplayController : MonoBehaviour
             }
             else
             {
+                // general HUD SFX
+                AudioManager.Instance.PlayGeneralSoundHUD();
+
                 UpdateSelection();
             }
         }
@@ -135,6 +138,9 @@ public class KeycardDisplayController : MonoBehaviour
             }
             else
             {
+                // general HUD SFX
+                AudioManager.Instance.PlayGeneralSoundHUD();
+
                 UpdateSelection();
             }
         }
