@@ -52,6 +52,10 @@ public class BrightnessSlider : MonoBehaviour
         // update game manager
         GameManager.Instance.OptionsData.Brightness = newBrightness;
 
+        // Slider Click SFX - only when a visible change actually occurs
+        if (_displayText.text != newBrightness.ToString("#0.00"))
+            AudioManager.Instance.PlaySliderClick();
+
         // format display to two decimal places
         _displayText.text = newBrightness.ToString("#0.00");
     }
@@ -84,6 +88,9 @@ public class BrightnessSlider : MonoBehaviour
     /// </summary>
     public void ResetBrightness()
     {
+        // Click UI SFX
+        AudioManager.Instance.PlayClickUI();
+
         GameManager.Instance.OptionsData.ResetBrightness();
     }
 }
