@@ -69,7 +69,9 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySliderClick()
     {
-        _sfxSource.PlayOneShot(_sliderClick, GameManager.GetSFXVolume());
+        // only play slider click if not already playing a sound - this prevents insane click speed sounds that get REALLY loud
+        if (!_sfxSource.isPlaying)
+            _sfxSource.PlayOneShot(_sliderClick, GameManager.GetSFXVolume());
     }
     #endregion
 }

@@ -100,9 +100,8 @@ public class VolumeSlider : MonoBehaviour
                 break;
         }
 
-        // Slider click SFX - ONLY if a visible change has occured
-        if (_displayText.text != _slider.value.ToString("##0.") + "%")
-            AudioManager.Instance.PlaySliderClick();
+        // Slider click SFX
+        AudioManager.Instance.PlaySliderClick();
 
         // same formula for all types
         _displayText.text = _slider.value.ToString("##0.") + "%";

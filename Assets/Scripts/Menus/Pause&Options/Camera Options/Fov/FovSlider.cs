@@ -40,8 +40,7 @@ public class FovSlider : MonoBehaviour
         GameManager.Instance.OptionsData.FoV = Mathf.RoundToInt(_slider.value);
 
         // Slider Click SFX - only when a visual change occurs
-        if (_displayText.text != _slider.value.ToString("00."))
-            AudioManager.Instance.PlaySliderClick();
+        AudioManager.Instance.PlaySliderClick();
 
         _displayText.text = _slider.value.ToString("00.");
     }

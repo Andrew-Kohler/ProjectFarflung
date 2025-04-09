@@ -42,9 +42,8 @@ public class SensitivitySlider : MonoBehaviour
         // update saved value and text
         GameManager.Instance.OptionsData.Sensitivity = RemapNonlinear(_slider.value);
 
-        // Slider Click SFX - only when a change occurs
-        if (_displayText.text != RemapNonlinear(_slider.value).ToString("#0.00"))
-            AudioManager.Instance.PlaySliderClick();
+        // Slider Click SFX
+        AudioManager.Instance.PlaySliderClick();
 
         _displayText.text = RemapNonlinear(_slider.value).ToString("#0.00");
     }
