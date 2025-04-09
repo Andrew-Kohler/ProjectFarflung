@@ -22,13 +22,10 @@ public class PoweredZone : MonoBehaviour
         // fetch powered elements from children
         // easier configuration then assigning manually in inspector, and it only happens once per scene
         // true = includeInactive -- ensure it fetches even currently inactive children (important to work exactly properly between scenes
-        _poweredElements = transform.GetComponentsInChildren<PoweredElement>(true); 
-    }
+        _poweredElements = transform.GetComponentsInChildren<PoweredElement>(true);
 
-    // Start is called before the first frame update
-    void Start()
-    {
         // initial configuration
+        // this is located in Awake so that initialization happens between Awake and Start when non-scene power zones will be disabled again
         UpdatePowerStates();
     }
 

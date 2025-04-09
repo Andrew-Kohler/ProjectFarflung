@@ -175,7 +175,7 @@ MonoBehaviour:
   _wireManager: {fileID: 5444889096373542974}
   _wireConnectionPrefab: {fileID: 3882650512385996149, guid: 8e60f9d910dba964ebfba5e8a430f732, type: 3}
   _outlineWidth: 5
-  _hoverColor: {r: 0.3882353, g: 0.3882353, b: 0.3882353, a: 1}
+  _hoverColor: {r: 0.67058825, g: 0.67058825, b: 0.67058825, a: 1}
 --- !u!1 &5018329959776978198
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,6 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IdentifierName: TestBox
+  LightZone: {fileID: 0}
   _outputNode: {fileID: 1289446187476456764}
   _functionalObjects:
   - {fileID: 8572033328704182526}
@@ -5822,6 +5823,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -5918546815402055973, guid: 0d70af9de82a11b42a46fb4bba66bf83, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2832977449907878203}
+    - targetCorrespondingSourceObject: {fileID: -7907677091831063707, guid: 0d70af9de82a11b42a46fb4bba66bf83, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 852504376093594056}
   m_SourcePrefab: {fileID: 100100000, guid: 0d70af9de82a11b42a46fb4bba66bf83, type: 3}
 --- !u!4 &268930927968487095 stripped
 Transform:
@@ -5854,6 +5858,32 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &1617812237592476217 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7907677091831063707, guid: 0d70af9de82a11b42a46fb4bba66bf83, type: 3}
+  m_PrefabInstance: {fileID: 302258205077070172}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &852504376093594056
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1617812237592476217}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.4469814, y: 0.44600508, z: 0.029506946}
+  m_Center: {x: -0.21815571, y: 0.0015197073, z: 0.030308086}
 --- !u!1 &3021017302526068615 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -5918546815402055973, guid: 0d70af9de82a11b42a46fb4bba66bf83, type: 3}

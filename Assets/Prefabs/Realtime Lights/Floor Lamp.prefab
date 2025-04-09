@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2133644567693294595}
   - component: {fileID: 4576581768859079866}
   - component: {fileID: 6597727853956280086}
+  - component: {fileID: 1981613543590440733}
   m_Layer: 0
   m_Name: Floor Lamp
   m_TagString: Untagged
@@ -77,6 +78,23 @@ LODGroup:
     - renderer: {fileID: 8607540123397259488}
     - renderer: {fileID: 3903986021822007385}
   m_Enabled: 1
+--- !u!114 &1981613543590440733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5302651037861769469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ab7670244996d42a05361101d94700, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _litMaterial: {fileID: 2100000, guid: e9a048a5a5c2ccf41ba12091ba84c85d, type: 2}
+  _unlitMaterial: {fileID: 2100000, guid: a419a5ddeb774334694f33bf887f24ee, type: 2}
+  _light: {fileID: 5659016486523444547}
+  _renderers:
+  - {fileID: 1046559643615755679}
 --- !u!1 &7928207676536963408
 GameObject:
   m_ObjectHideFlags: 0

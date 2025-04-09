@@ -99,10 +99,17 @@ public class FlashlightController : MonoBehaviour
         if (!GameManager.Instance.PlayerEnabled)
             return;
 
-        // do NOT turn light off on release if we just stun blasted
+        // do NOT turn light off on release if we previously stun blasted (off of this same click)
         // ALSO skip functionality if this is triggering without held as true (i.e. initial click was made when in terminal, wire box, etc.)
-        if (_heldTimer > _stunHoldDuration || !_isHeld)
+        // ALSO skip functionality if stun blast is currently occurring
+        if (_heldTimer > _stunHoldDuration || !_isHeld || _stunTrigger.enabled)
+        {
+            _isHeld = false;    // ensure stun doesn't go off twice - edge case
             return;
+        }
+
+        // on mouse release, stun hold level resets to 0
+        GameManager.StunHoldRatio = 0f;
 
         // indicates player is NOT holding down key for stun
         _isHeld = false;
@@ -133,6 +140,10 @@ public class FlashlightController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // ensure hold ratio resets upon opening a box/terminal
+        if (!GameManager.Instance.PlayerEnabled)
+            GameManager.StunHoldRatio = 0f;
+
         // decrease battery charge
         if (_isOn)
         {
@@ -161,18 +172,23 @@ public class FlashlightController : MonoBehaviour
         _prevPivotRot = _lightPivot.transform.rotation;
 
         // check for stun burst
-        // must be on already for stun holding charge to work
-        if (_isHeld && _isOn)
+        if (_isHeld)    // no longer requires light to be on for charging to start
         {
             // activate burst
             if (_heldTimer > _stunHoldDuration)
             {
+                // actually turn the light on in case it wasn't already
+                _isOn = true;
+                _light.enabled = true;
+
                 _light.range = _stunLightRange;
                 _light.spotAngle = _stunSpotAngle;
 
                 _stunTrigger.enabled = true;
 
                 _isHeld = false;
+
+                GameManager.StunHoldRatio = 1f; // set stun hold ratio to max
 
                 // consume charge
                 GameManager.FlashlightCharge -= _stunBatteryCost;
@@ -184,6 +200,9 @@ public class FlashlightController : MonoBehaviour
 
             // get closer to activating burst next frame
             _heldTimer += Time.deltaTime;
+
+            // update stun hold ratio in game manager
+            GameManager.StunHoldRatio = Mathf.Clamp(_heldTimer / _stunHoldDuration, 0f, 1f);
         }
     }
 
@@ -197,6 +216,8 @@ public class FlashlightController : MonoBehaviour
         _light.range = _defaultLightRange;
         _light.spotAngle = _defaultSpotAngle;
         _stunTrigger.enabled = false;
+
+        GameManager.StunHoldRatio = 0f; // return hold value back to 0 - stun is over
     }
 
     /// <summary>

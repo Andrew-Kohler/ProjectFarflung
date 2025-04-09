@@ -158,7 +158,6 @@ public class NodeManager : MonoBehaviour
             // determine if there are obstructions
             // CANNOT be placed if there are node/wire obstructions
             Collider[] potentialObstructions = new Collider[64]; // should be excessive, but will ensure no important collisions are missed
-            CapsuleCollider collider = _currConnection.GetComponentInChildren<CapsuleCollider>();
             Vector3 pointTop = _firstNode.transform.position;
             Vector3 pointBot = clickedNode.transform.position;
             pointTop = pointTop + (pointBot - pointTop).normalized * _obstructionInwardOffset;
@@ -181,6 +180,11 @@ public class NodeManager : MonoBehaviour
             ShowWire(_firstNode.transform.position, clickedNode.transform.position);
             // properly initialize completed connection
             ConnectionRemover newConnection = _currConnection.transform.GetChild(0).gameObject.AddComponent<ConnectionRemover>();
+            // only enable connection collider once it is placed, so the preview wire does not inconsistently block clicks on other wires to remove them while a first node is selected
+            if (!newConnection.TryGetComponent(out Collider coll))
+                throw new System.Exception("New wire connection prefab reference MUST have a collider component (disabled by default).");
+            coll.enabled = true;
+            // initialize connection remover behavior
             newConnection.Initialize(_wireManager.GetSelectedWire(), _firstNode, clickedNode, _outlineWidth, _hoverColor);
 
             // assign wire connections (for charge calculations) - two way reference
@@ -188,6 +192,7 @@ public class NodeManager : MonoBehaviour
             clickedNode.AssignConnection(_firstNode);
 
             // sever control over these connections (the wire has been placed)
+            clickedNode.DeselectVisual(); // ensure hover outline is removed on wire placement
             DeselectFirstNode();
 
             // consume the current selected wire from the wire rack
@@ -218,6 +223,7 @@ public class NodeManager : MonoBehaviour
         _currConnection = null;
     }
 
+    #region ONLY used in node selector Hover logic
     /// <summary>
     /// Returns whether any wire selector is currently chosen
     /// </summary>
@@ -225,4 +231,44 @@ public class NodeManager : MonoBehaviour
     {
         return _wireManager.GetSelectedWire() is not null;
     }
+
+    /// <summary>
+    /// Returns whether any node selector is currently chosen for placing a wire.
+    /// </summary>
+    /// <returns></returns>
+    public bool IsFirstNodeSelected()
+    {
+        return _firstNode is not null;
+    }
+
+    public bool IsNodeInRange(NodeSelector nodeToCheck)
+    {
+        // return false if node is TOO FAR away
+        if (Vector3.Distance(nodeToCheck.transform.position, _firstNode.transform.position) >= _wireManager.GetSelectedWire().Length)
+            return false;
+
+        // determine if there are obstructions
+        // CANNOT be placed if there are node/wire obstructions
+        Collider[] potentialObstructions = new Collider[64]; // should be excessive, but will ensure no important collisions are missed
+        Vector3 pointTop = _firstNode.transform.position;
+        Vector3 pointBot = nodeToCheck.transform.position;
+        pointTop = pointTop + (pointBot - pointTop).normalized * _obstructionInwardOffset;
+        pointBot = pointBot + (pointTop - pointBot).normalized * _obstructionInwardOffset;
+        int numColls = Physics.OverlapCapsuleNonAlloc(pointTop, pointBot, _obstructionCheckRadius, potentialObstructions);
+        for (int i = 0; i < numColls; i++)
+        {
+            // (1) obstructed by ANY other connection (we implicitly know any ConnectionRemover is not the current once since it does not have a ConnectionRemover yet)
+            // (2) obstructed by ANY node that is not either endpoint
+            if (potentialObstructions[i].TryGetComponent(out ConnectionRemover connectionColl)
+                || (potentialObstructions[i].TryGetComponent(out NodeSelector nodeColl) && nodeColl != _firstNode && nodeColl != nodeToCheck))
+            {
+                // return false if node is obstructed
+                return false;
+            }
+        }
+
+        // if we got this far, the node is in range AND not obstructed
+        return true;
+    }
+    #endregion
 }

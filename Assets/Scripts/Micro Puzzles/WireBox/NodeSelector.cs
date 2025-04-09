@@ -194,7 +194,9 @@ public class NodeSelector : ClickableObject
     {
         // selected visuals take priority
         // also only show hover is a wire is first selected
-        if (!_isSelected && _nodeManager.IsAnyWireSelected())
+        // ALSO Only show hover if (1) no first node has been picked yet OR (2) second node is in range and not obstructed
+        if (!_isSelected && _nodeManager.IsAnyWireSelected()
+            && (!_nodeManager.IsFirstNodeSelected() || _nodeManager.IsNodeInRange(this)))
         {
             _outline.OutlineWidth = _outlineWidth;
             _outline.OutlineColor = _hoverColor;
