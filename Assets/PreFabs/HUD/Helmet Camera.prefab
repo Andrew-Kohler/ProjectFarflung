@@ -33,7 +33,7 @@ Transform:
   - {fileID: 8868931165901651662}
   - {fileID: 8353987847372001155}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &2464778307520606108
 Camera:
@@ -156,6 +156,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8868931165901651662}
   - component: {fileID: 4091625787401965299}
+  - component: {fileID: 2860638728994938091}
   m_Layer: 0
   m_Name: Helmet (Physical)
   m_TagString: Untagged
@@ -203,6 +204,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2860638728994938091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3679546276314175567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 339780c070ce8c640981e1f632b737f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4389253477389502421
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,6 +368,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: a9bce270f5e6b434fb35adb8400fe118, type: 3}
       propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: a9bce270f5e6b434fb35adb8400fe118, type: 3}
+      propertyPath: m_ReceiveShadows
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: a9bce270f5e6b434fb35adb8400fe118, type: 3}

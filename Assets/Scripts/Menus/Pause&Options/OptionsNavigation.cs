@@ -25,6 +25,14 @@ public class OptionsNavigation : MonoBehaviour
     [SerializeField, Tooltip("Used to enable/disable visuals tab.")]
     private GameObject _visualsTabObject;
 
+    [SerializeField, Tooltip("Used to mask controls button.")]
+    private GameObject _controlsTabMask;
+    [SerializeField, Tooltip("Used to mask volume button.")]
+    private GameObject _volumeTabMask;
+    [SerializeField, Tooltip("Used to mask visuals button.")]
+    private GameObject _visualsTabMask;
+
+
     [Header("Toggles")]
     [SerializeField, Tooltip("Used to reset toggle configuration when closed.")]
     private Toggle _controlsToggle;
@@ -80,6 +88,10 @@ public class OptionsNavigation : MonoBehaviour
         _controlsTabObject.SetActive(true);
         _volumeTabObject.SetActive(false);
         _visualsTabObject.SetActive(false);
+
+        _controlsTabMask.SetActive(false);
+        _volumeTabMask.SetActive(true);
+        _visualsTabMask.SetActive(true);
     }
 
     /// <summary>
@@ -90,16 +102,24 @@ public class OptionsNavigation : MonoBehaviour
         _controlsTabObject.SetActive(false);
         _volumeTabObject.SetActive(true);
         _visualsTabObject.SetActive(false);
+
+        _controlsTabMask.SetActive(true);
+        _volumeTabMask.SetActive(false);
+        _visualsTabMask.SetActive(true);
     }
 
     /// <summary>
-    /// Enables volume tab. Disables all others.
+    /// Enables visuals tab. Disables all others.
     /// </summary>
     public void ToVisuals()
     {
         _controlsTabObject.SetActive(false);
         _volumeTabObject.SetActive(false);
         _visualsTabObject.SetActive(true);
+
+        _controlsTabMask.SetActive(true);
+        _volumeTabMask.SetActive(true);
+        _visualsTabMask.SetActive(false);
     }
 
     /// <summary>

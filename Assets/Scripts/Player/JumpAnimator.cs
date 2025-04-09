@@ -28,6 +28,7 @@ public class JumpAnimator : MonoBehaviour
 
     private void PlayJump()
     {
-        _anim.Play("Hop", 0,0);
+        if(GameManager.Instance.OptionsData.CameraBobbing)
+            _anim.Play("Hop", 0,0);
     }
 }

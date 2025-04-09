@@ -21940,35 +21940,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Helmet Camera
       objectReference: {fileID: 0}
-    - target: {fileID: 4599843413982391528, guid: 73a582d1ab5f5ab45bf44df4439c0ea4, type: 3}
-      propertyPath: m_ReceiveShadows
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3679546276314175567, guid: 73a582d1ab5f5ab45bf44df4439c0ea4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 891471365}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73a582d1ab5f5ab45bf44df4439c0ea4, type: 3}
---- !u!1 &891471364 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3679546276314175567, guid: 73a582d1ab5f5ab45bf44df4439c0ea4, type: 3}
-  m_PrefabInstance: {fileID: 891471363}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &891471365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 891471364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 339780c070ce8c640981e1f632b737f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &947696523
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -72959,11 +72935,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6c774c775d689e4b9cdb01ba761591e, type: 3}
---- !u!1 &1860057698 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8210376153982755223, guid: 7b55dceb3ac70854a871e6dfea2bb818, type: 3}
-  m_PrefabInstance: {fileID: 2951723993050805160}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1947237482
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83284,26 +83255,6 @@ PrefabInstance:
     - target: {fileID: 330274479176131922, guid: 9fcd557e28e5a434294a415a5f46958a, type: 3}
       propertyPath: m_Name
       value: Pause & Options Menus
-      objectReference: {fileID: 0}
-    - target: {fileID: 1041127907332957217, guid: 9fcd557e28e5a434294a415a5f46958a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5306277824455247560, guid: 9fcd557e28e5a434294a415a5f46958a, type: 3}
-      propertyPath: _playerTransform
-      value: 
-      objectReference: {fileID: 1804965306}
-    - target: {fileID: 5306277824455247560, guid: 9fcd557e28e5a434294a415a5f46958a, type: 3}
-      propertyPath: _loadSpots.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5306277824455247560, guid: 9fcd557e28e5a434294a415a5f46958a, type: 3}
-      propertyPath: _loadSpots.Array.data[0]
-      value: 
-      objectReference: {fileID: 1860057698}
-    - target: {fileID: 6192580445264173361, guid: 9fcd557e28e5a434294a415a5f46958a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
