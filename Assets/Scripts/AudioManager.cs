@@ -54,15 +54,22 @@ public class AudioManager : MonoBehaviour
 
     #region SFX
     private AudioClip _clickUI;
+    private AudioClip _sliderClick;
 
     private void LoadSFX()
     {
         _clickUI = Resources.Load<AudioClip>("SFX/ClickUI");
+        _sliderClick = Resources.Load<AudioClip>("SFX/SliderClick");
     }
 
     public void PlayClickUI()
     {
         _sfxSource.PlayOneShot(_clickUI, GameManager.GetSFXVolume());
+    }
+
+    public void PlaySliderClick()
+    {
+        _sfxSource.PlayOneShot(_sliderClick, GameManager.GetSFXVolume());
     }
     #endregion
 }
