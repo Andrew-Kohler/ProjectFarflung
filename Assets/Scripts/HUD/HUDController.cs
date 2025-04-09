@@ -85,6 +85,9 @@ public class HUDController : MonoBehaviour
     {
         if (!_active && _canSwitchTabs)
         {
+            // tab cycle SFX
+            AudioManager.Instance.PlayTabCycle();
+
             StartCoroutine(DoTabSwitch());
         }
     }

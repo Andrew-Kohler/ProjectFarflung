@@ -123,10 +123,14 @@ public class AudioManager : MonoBehaviour
     private AudioClip _clickUI;
     private AudioClip _sliderClick;
 
+    private AudioClip _tabCycle;
+
     private void LoadSFX()
     {
         _clickUI = Resources.Load<AudioClip>("SFX/ClickUI");
         _sliderClick = Resources.Load<AudioClip>("SFX/SliderClick");
+
+        _tabCycle = Resources.Load<AudioClip>("SFX/TabCycle");
     }
 
     public void PlayClickUI()
@@ -139,6 +143,11 @@ public class AudioManager : MonoBehaviour
         // only play slider click if not already playing a sound - this prevents insane click speed sounds that get REALLY loud
         if (!_sfxSource.isPlaying)
             _sfxSource.PlayOneShot(_sliderClick, GameManager.GetSFXVolume());
+    }
+
+    public void PlayTabCycle()
+    {
+        _sfxSource.PlayOneShot(_tabCycle, GameManager.GetSFXVolume());
     }
     #endregion
 }
