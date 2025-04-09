@@ -86,7 +86,8 @@ public class FlashlightController : MonoBehaviour
         _isHeld = true;
         _heldTimer = 0f;
 
-        // TODO: SFX for button initial press
+        // flashlight click down SFX
+        AudioManager.Instance.PlayFlashlightClickDown();
     }
 
     /// <summary>
@@ -128,7 +129,8 @@ public class FlashlightController : MonoBehaviour
             _light.enabled = true;
         }
 
-        // TODO: SFX for button release
+        // flashlight click up SFX
+        AudioManager.Instance.PlayFlashlightClickUp();
     }
     #endregion
 
