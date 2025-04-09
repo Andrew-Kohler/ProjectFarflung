@@ -67,8 +67,6 @@ public class StartMenuHandler : MonoBehaviour
     [SerializeField, Tooltip("CanvasGroupController for back backer")]
     private CanvasGroupController _backerGroup;
 
-
-
     private void Awake()
     {
         // free control over the mouse
@@ -116,6 +114,9 @@ public class StartMenuHandler : MonoBehaviour
             // load brightness config scene
             _transitionHandler.LoadScene(_brightnessConfigSceneName);
         }
+
+        // Click SFX
+        AudioManager.Instance.PlayClickUI();
     }
 
     // Displays text and an image related to starting a new game
@@ -131,6 +132,9 @@ public class StartMenuHandler : MonoBehaviour
     /// </summary>
     public void ResumeButton()
     {
+        // Click SFX
+        AudioManager.Instance.PlayClickUI();
+
         // load level scene functionality
         _transitionHandler.LoadScene(_levelSceneName);
     }
@@ -148,6 +152,9 @@ public class StartMenuHandler : MonoBehaviour
     /// </summary>
     public void OptionsButton()
     {
+        // Click SFX
+        AudioManager.Instance.PlayClickUI();
+
         // bypasses pause menu of pause/options canvas
         _optionsContainer.SetActive(true);
     }
@@ -165,6 +172,9 @@ public class StartMenuHandler : MonoBehaviour
     /// </summary>
     public void CreditsButton()
     {
+        // Click SFX
+        AudioManager.Instance.PlayClickUI();
+
         // Restart the animation and fade the menus in and out
         _creditsAnim.Play("Scroll", 0, 0);
         _creditsGroup.FadeIn(_creditsFadeTime);
@@ -177,7 +187,6 @@ public class StartMenuHandler : MonoBehaviour
         _creditsGroup.ToggleBlocker(true);
 
         StartCoroutine(DoCreditsLoadDelay());
-        
     }
 
     // Displays text and an image related to otpions
@@ -223,6 +232,9 @@ public class StartMenuHandler : MonoBehaviour
         _mainMenuGroup.ToggleBlocker(true);
         _creditsGroup.ToggleInteractable(false);
         _creditsGroup.ToggleBlocker(false);
+
+        // Click SFX
+        AudioManager.Instance.PlayClickUI();
     }
     #endregion
 
@@ -232,6 +244,9 @@ public class StartMenuHandler : MonoBehaviour
     /// </summary>
     public void ConfirmNewGame()
     {
+        // Click SFX
+        AudioManager.Instance.PlayClickUI();
+
         GameManager.Instance.ResetGameData(); // new progression data
 
         // load brightness config scene
@@ -244,6 +259,9 @@ public class StartMenuHandler : MonoBehaviour
     /// </summary>
     public void AbortNewGame()
     {
+        // Click SFX
+        AudioManager.Instance.PlayClickUI();
+
         _currentCloseCoroutine = DoPopupClose();
         StartCoroutine(_currentCloseCoroutine);
     }
