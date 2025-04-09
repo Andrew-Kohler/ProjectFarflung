@@ -218,6 +218,9 @@ public class FileTabController : MonoBehaviour
                 _nodeDisplayList[GameManager.Instance.SceneData.LogIndex].Grow();
                 _lastSelected = GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex];
 
+                // general HUD SFX
+                AudioManager.Instance.PlayGeneralSoundHUD();
+
                 // Move the timeline
                 MoveTimeline(false);
 
@@ -238,6 +241,9 @@ public class FileTabController : MonoBehaviour
                 GameManager.Instance.SceneData.LogIndex--;
                 _nodeDisplayList[GameManager.Instance.SceneData.LogIndex].Grow();
                 _lastSelected = GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex];
+
+                // general HUD SFX
+                AudioManager.Instance.PlayGeneralSoundHUD();
 
                 MoveTimeline(false);
 
