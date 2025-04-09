@@ -125,6 +125,8 @@ public class AudioManager : MonoBehaviour
 
     private AudioClip _tabCycle;
     private AudioClip _generalSoundHUD;
+    private AudioClip _logOpen;
+    private AudioClip _logClose;
 
     private void LoadSFX()
     {
@@ -133,6 +135,8 @@ public class AudioManager : MonoBehaviour
 
         _tabCycle = Resources.Load<AudioClip>("SFX/TabCycle");
         _generalSoundHUD = Resources.Load<AudioClip>("SFX/GeneralSoundHUD");
+        _logOpen = Resources.Load<AudioClip>("SFX/LogOpen");
+        _logClose = Resources.Load<AudioClip>("SFX/LogClose");
     }
 
     public void PlayClickUI()
@@ -155,6 +159,16 @@ public class AudioManager : MonoBehaviour
     public void PlayGeneralSoundHUD()
     {
         _sfxSource.PlayOneShot(_generalSoundHUD, GameManager.GetSFXVolume());
+    }
+
+    public void PlayLogOpen()
+    {
+        _sfxSource.PlayOneShot(_logOpen, GameManager.GetSFXVolume());
+    }
+
+    public void PlayLogClose()
+    {
+        _sfxSource.PlayOneShot(_logClose, GameManager.GetSFXVolume());
     }
     #endregion
 }
