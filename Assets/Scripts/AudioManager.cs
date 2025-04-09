@@ -130,6 +130,7 @@ public class AudioManager : MonoBehaviour
 
     private AudioClip _flashlightClickDown;
     private AudioClip _flashlightClickUp;
+    private AudioClip _flashlightStun;
 
     private void LoadSFX()
     {
@@ -143,6 +144,7 @@ public class AudioManager : MonoBehaviour
 
         _flashlightClickDown = Resources.Load<AudioClip>("SFX/FlashlightClickDown");
         _flashlightClickUp = Resources.Load<AudioClip>("SFX/FlashlightClickUp");
+        _flashlightStun = Resources.Load<AudioClip>("SFX/FlashlightStun");
     }
 
     public void PlayClickUI()
@@ -185,6 +187,11 @@ public class AudioManager : MonoBehaviour
     public void PlayFlashlightClickUp()
     {
         _sfxSource.PlayOneShot(_flashlightClickUp, GameManager.GetSFXVolume());
+    }
+
+    public void PlayFlashlightStun()
+    {
+        _sfxSource.PlayOneShot(_flashlightStun, GameManager.GetSFXVolume());
     }
     #endregion
 }

@@ -198,6 +198,9 @@ public class FlashlightController : MonoBehaviour
                     GameManager.FlashlightCharge = 0;
 
                 StartCoroutine(DoReturnToNormal());
+
+                // stun SFX
+                AudioManager.Instance.PlayFlashlightStun();
             }
 
             // get closer to activating burst next frame
