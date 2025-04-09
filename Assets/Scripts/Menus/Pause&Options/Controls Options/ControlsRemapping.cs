@@ -170,8 +170,6 @@ public class ControlsRemapping : MonoBehaviour
     /// </summary>
     private void RemoveBinding(int controlToUnbind, bool isAlt)
     {
-        // UI Click SFX
-        AudioManager.Instance.PlayClickUI();
 
         string actionToUnbind = _actionReferences[controlToUnbind].action.name;
 
@@ -205,8 +203,6 @@ public class ControlsRemapping : MonoBehaviour
         }
         else // valid binding
         {
-            // UI Click SFX
-            AudioManager.Instance.PlayClickUI();
 
             // Update text
             if (isAlt) // alt binding
