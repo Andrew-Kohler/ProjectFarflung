@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Cinemachine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -51,6 +55,20 @@ namespace StarterAssets
 		[Tooltip("How far in degrees can you move the camera down")]
 		public float BottomClamp = -90.0f;
 
+		private CinemachineVirtualCamera _vMain;
+
+		[Header("Walk Bob Config")]
+		[Tooltip("Noise config for when the player is walking")]
+		public Cinemachine.NoiseSettings _walkNoise;
+		[Tooltip("Minimum amplitude the camera can bounce at (should be 0)")]
+		public float _minAmp = 0;
+		[Tooltip("Maximum amplitude the camera can bounce at")]
+		public float _maxAmp = 0.1f;
+		[Tooltip("Speed at which amplitude changes (speed of blending between walking and idle)")]
+		public float _ampIncrement = 0.01f;
+		private CinemachineBasicMultiChannelPerlin _noiseSettings;
+		private IEnumerator _currentAmplitudeCoroutine;
+
 		// cinemachine
 		private float _cinemachineTargetPitch;
 
@@ -74,6 +92,10 @@ namespace StarterAssets
 
 		private const float _threshold = 0.0025f;
 
+		// Broadcast when a jump is made
+		public delegate void OnJump();
+		public static event OnJump onJump;
+
 		private bool IsCurrentDeviceMouse
 		{
 			get
@@ -92,6 +114,8 @@ namespace StarterAssets
 			if (_mainCamera == null)
 			{
 				_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+				_vMain = GameObject.FindGameObjectWithTag("V-MainCam").GetComponent<CinemachineVirtualCamera>();
+				_noiseSettings = _vMain.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 			}
 		}
 
@@ -168,7 +192,13 @@ namespace StarterAssets
 			{
 				float targetSpeed = 0f;
 				_speed = targetSpeed;
-
+				if (_noiseSettings.m_AmplitudeGain != _minAmp)
+				{
+					if (_currentAmplitudeCoroutine != null)
+						StopCoroutine(_currentAmplitudeCoroutine);
+					_currentAmplitudeCoroutine = DoChangeAmplitudeGain(false);
+					StartCoroutine(_currentAmplitudeCoroutine);
+				}
 				// a reference to the players current horizontal velocity
 				float currentHorizontalSpeed = new Vector3(0f, 0.0f, 0f).magnitude;
 
@@ -188,8 +218,38 @@ namespace StarterAssets
 
 				// note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
 				// if there is no input, set the target speed to 0
-				if (_input.move == Vector2.zero) targetSpeed = 0.0f;
+				if (_input.move == Vector2.zero)
+				{
+					targetSpeed = 0.0f;
+					if(_noiseSettings.m_AmplitudeGain != _minAmp)
+                    {
+						if(_currentAmplitudeCoroutine != null)
+							StopCoroutine(_currentAmplitudeCoroutine);
+						_currentAmplitudeCoroutine = DoChangeAmplitudeGain(false);
+						StartCoroutine(_currentAmplitudeCoroutine);
+                    }
 
+				}
+                else
+                {
+                    if (GameManager.Instance.OptionsData.CameraBobbing)
+                    {
+						if (_noiseSettings.m_AmplitudeGain != _maxAmp)
+						{
+							if (_currentAmplitudeCoroutine != null)
+								StopCoroutine(_currentAmplitudeCoroutine);
+
+							_currentAmplitudeCoroutine = DoChangeAmplitudeGain(true);
+							StartCoroutine(_currentAmplitudeCoroutine);
+						}
+					}
+                    else
+                    {
+						_noiseSettings.m_AmplitudeGain = _minAmp;
+                    }
+					
+					
+				}
 				// a reference to the players current horizontal velocity
 				float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
@@ -246,6 +306,7 @@ namespace StarterAssets
 				{
 					// the square root of H * -2 * G = how much velocity needed to reach desired height
 					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+					onJump?.Invoke();
 				}
 
 				// jump timeout
@@ -294,6 +355,29 @@ namespace StarterAssets
 			// when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
 			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
 		}
+
+		private IEnumerator DoChangeAmplitudeGain(bool rise)
+        {
+            if (rise)
+            {
+				while (_noiseSettings.m_AmplitudeGain < _maxAmp) 
+                {
+					_noiseSettings.m_AmplitudeGain += _ampIncrement;
+					yield return null;
+                }
+				_noiseSettings.m_AmplitudeGain = _maxAmp;
+
+			}
+            else
+            {
+				while (_noiseSettings.m_AmplitudeGain > _minAmp)
+				{
+					_noiseSettings.m_AmplitudeGain -= _ampIncrement;
+					yield return null;
+				}
+				_noiseSettings.m_AmplitudeGain = _minAmp;
+			}
+        }
 
 	}
 }

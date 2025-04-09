@@ -270,7 +270,7 @@ Transform:
   - {fileID: 4539339306175569260}
   - {fileID: 3981230310418274719}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &274923484696418617
 MonoBehaviour:
@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd578b7aea11bb44f9f027cd6ecf84c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ZoneIndex: 0
+  ZoneIndex: 4
   PowerSystem: {fileID: 0}
   SpawnPos: {fileID: 969210009761853409}
 --- !u!114 &2236959753785211981
@@ -487,6 +487,7 @@ GameObject:
   - component: {fileID: 1966105105510846124}
   - component: {fileID: 4687094475113995144}
   - component: {fileID: 5969162816264533548}
+  - component: {fileID: 8851961076435287443}
   m_Layer: 7
   m_Name: E to Interact
   m_TagString: Untagged
@@ -646,7 +647,7 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1966105105510846124}
   m_maskType: 0
 --- !u!1183024399 &5969162816264533548
@@ -669,6 +670,23 @@ LookAtConstraint:
   m_Sources:
   - sourceTransform: {fileID: 0}
     weight: 1
+--- !u!114 &8851961076435287443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5810196504213673678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a4685ef2ccda7e43a531d680227238c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 0}
+  _textWorld: {fileID: 4687094475113995144}
+  _isCanvas: 0
+  _scenario: 0
+  _actions: {fileID: 5652569292725768737, guid: 4419d82f33d36e848b3ed5af4c8da37e, type: 3}
 --- !u!1 &6052026806942806430
 GameObject:
   m_ObjectHideFlags: 0
@@ -7948,14 +7966,14 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 1
+  prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0
+    scalar: 0.2
     minScalar: 0
     maxCurve:
       serializedVersion: 2
