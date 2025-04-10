@@ -270,7 +270,7 @@ Transform:
   - {fileID: 4539339306175569260}
   - {fileID: 3981230310418274719}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &274923484696418617
 MonoBehaviour:
@@ -5684,7 +5684,6 @@ GameObject:
   - component: {fileID: 5432520809424337937}
   - component: {fileID: 6727973400521261847}
   - component: {fileID: 6782056616780242748}
-  - component: {fileID: 4336712472162735815}
   m_Layer: 0
   m_Name: Terminal Glow
   m_TagString: Untagged
@@ -5757,28 +5756,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &4336712472162735815
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7893519618514126481}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8266506315432899394
 GameObject:
   m_ObjectHideFlags: 0
