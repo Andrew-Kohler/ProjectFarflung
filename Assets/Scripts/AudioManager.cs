@@ -31,6 +31,8 @@ public class AudioManager : MonoBehaviour
                 _instance._musicSource.loop = true;
                 // add audio source - footsteps
                 _instance._stepsSource = newManager.AddComponent<AudioSource>();
+                // add audio source - charge stun
+                _instance._chargeStunSource = newManager.AddComponent<AudioSource>();
                 // add audio source - SFX
                 _instance._sfxSource = newManager.AddComponent<AudioSource>();
 
@@ -38,6 +40,8 @@ public class AudioManager : MonoBehaviour
                 _instance.LoadMusic();
                 // load footsteps
                 _instance.LoadFootsteps();
+                // load charge stun
+                _instance.LoadChargeStun();
                 // ensure all audio files are loaded from resources
                 _instance.LoadSFX();
             }
@@ -48,6 +52,7 @@ public class AudioManager : MonoBehaviour
 
     private AudioSource _musicSource;
     private AudioSource _stepsSource;
+    private AudioSource _chargeStunSource;
     private AudioSource _sfxSource;
 
     #region Music / Ambient
@@ -116,6 +121,30 @@ public class AudioManager : MonoBehaviour
     public void PlayJumpSound()
     {
         _stepsSource.PlayOneShot(_footsteps[0], GameManager.GetSFXVolume());
+    }
+    #endregion
+
+    #region Charge Stun
+    private AudioClip _chargeStun;
+
+    private void LoadChargeStun()
+    {
+        _chargeStun = Resources.Load<AudioClip>("SFX/ChargeStun");
+    }
+
+    public void PlayChargeStun()
+    {
+        // prevent stacking up many one-shot charge sounds
+        _chargeStunSource.Stop();
+
+        // start playing in normal order
+        _chargeStunSource.pitch = 1;
+        _chargeStunSource.PlayOneShot(_chargeStun, GameManager.GetSFXVolume());
+    }
+
+    public void StopChargeStunSFX()
+    {
+        _chargeStunSource.pitch = -1;
     }
     #endregion
 

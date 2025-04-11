@@ -86,6 +86,9 @@ public class FlashlightController : MonoBehaviour
         _isHeld = true;
         _heldTimer = 0f;
 
+        // start flashlight stun charge SFX
+        AudioManager.Instance.PlayChargeStun();
+
         // flashlight click down SFX
         AudioManager.Instance.PlayFlashlightClickDown();
     }
@@ -106,6 +109,10 @@ public class FlashlightController : MonoBehaviour
         if (_heldTimer > _stunHoldDuration || !_isHeld || _stunTrigger.enabled)
         {
             _isHeld = false;    // ensure stun doesn't go off twice - edge case
+
+            // cancel charging stun SFX
+            AudioManager.Instance.StopChargeStunSFX();
+
             return;
         }
 
@@ -114,6 +121,9 @@ public class FlashlightController : MonoBehaviour
 
         // indicates player is NOT holding down key for stun
         _isHeld = false;
+
+        // cancel charging stun SFX
+        AudioManager.Instance.StopChargeStunSFX();
 
         // turning flashlight off
         if (_isOn)
@@ -189,6 +199,9 @@ public class FlashlightController : MonoBehaviour
                 _stunTrigger.enabled = true;
 
                 _isHeld = false;
+
+                // cancel charging stun SFX
+                AudioManager.Instance.StopChargeStunSFX();
 
                 GameManager.StunHoldRatio = 1f; // set stun hold ratio to max
 
