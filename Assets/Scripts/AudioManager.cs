@@ -181,6 +181,9 @@ public class AudioManager : MonoBehaviour
     private AudioClip _removeZap;
     private AudioClip _boxFix;
 
+    private AudioClip _doorOpen;
+    private AudioClip _doorClose;
+
     private void LoadSFX()
     {
         _clickUI = Resources.Load<AudioClip>("SFX/ClickUI");
@@ -224,6 +227,9 @@ public class AudioManager : MonoBehaviour
         _generalZap[2] = Resources.Load<AudioClip>("SFX/Zap3");
         _removeZap = Resources.Load<AudioClip>("SFX/Zap4");
         _boxFix = Resources.Load<AudioClip>("SFX/BoxFix");
+
+        _doorOpen = Resources.Load<AudioClip>("SFX/DoorOpen");
+        _doorClose = Resources.Load<AudioClip>("SFX/DoorClose");
     }
 
     public void PlayClickUI()
@@ -355,6 +361,16 @@ public class AudioManager : MonoBehaviour
     public void PlayBoxFix()
     {
         _sfxSource.PlayOneShot(_boxFix, GameManager.GetSFXVolume());
+    }
+
+    public void PlayDoorOpen()
+    {
+        _sfxSource.PlayOneShot(_doorOpen, GameManager.GetSFXVolume());
+    }
+
+    public void PlayDoorClose()
+    {
+        _sfxSource.PlayOneShot(_doorClose, GameManager.GetSFXVolume());
     }
     #endregion
 }

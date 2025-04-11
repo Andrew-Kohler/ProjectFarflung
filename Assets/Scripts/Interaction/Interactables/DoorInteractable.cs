@@ -67,6 +67,9 @@ public class DoorInteractable : Interactable
                 Col.enabled = true;
                 Sibling.Col.enabled = true;
                 StartCoroutine(DoDoorChange());
+
+                // door close SFX
+                AudioManager.Instance.PlayDoorClose();
             }
         }
     }
@@ -80,6 +83,13 @@ public class DoorInteractable : Interactable
                 Col.enabled = false;
                 Sibling.Col.enabled = false;
                 StartCoroutine(DoDoorChange()); // Change the door state
+
+                // Open Door SFX
+                AudioManager.Instance.PlayDoorOpen();
+            }
+            else
+            {
+
             }
         }
         else
