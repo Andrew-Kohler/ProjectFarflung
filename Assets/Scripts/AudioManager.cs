@@ -170,6 +170,11 @@ public class AudioManager : MonoBehaviour
     private AudioClip _terminalArrow;
     private AudioClip _gridOverload;
 
+    private AudioClip _boxOpen;
+    private AudioClip _boxClose;
+    private AudioClip _boxUnlatch;
+    private AudioClip _boxLatch;
+
     private void LoadSFX()
     {
         _clickUI = Resources.Load<AudioClip>("SFX/ClickUI");
@@ -195,6 +200,11 @@ public class AudioManager : MonoBehaviour
         _unpowerZone = Resources.Load<AudioClip>("SFX/UnpowerZone");
         _terminalArrow = Resources.Load<AudioClip>("SFX/TerminalArrow");
         _gridOverload = Resources.Load<AudioClip>("SFX/GridOverload");
+
+        _boxOpen = Resources.Load<AudioClip>("SFX/BoxOpen");
+        _boxClose = Resources.Load<AudioClip>("SFX/BoxClose");
+        _boxUnlatch = Resources.Load<AudioClip>("SFX/BoxUnlatch");
+        _boxLatch = Resources.Load<AudioClip>("SFX/BoxLatch");
     }
 
     public void PlayClickUI()
@@ -281,6 +291,26 @@ public class AudioManager : MonoBehaviour
     public void PlayGridOverload()
     {
         _sfxSource.PlayOneShot(_gridOverload, GameManager.GetSFXVolume());
+    }
+
+    public void PlayBoxOpen()
+    {
+        _sfxSource.PlayOneShot(_boxOpen, GameManager.GetSFXVolume());
+    }
+
+    public void PlayBoxClose()
+    {
+        _sfxSource.PlayOneShot(_boxClose, GameManager.GetSFXVolume());
+    }
+
+    public void PlayBoxUnlatch()
+    {
+        _sfxSource.PlayOneShot(_boxUnlatch, GameManager.GetSFXVolume());
+    }
+
+    public void PlayBoxLatch()
+    {
+        _sfxSource.PlayOneShot(_boxLatch, GameManager.GetSFXVolume());
     }
     #endregion
 }
