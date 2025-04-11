@@ -133,6 +133,9 @@ public class AudioManager : MonoBehaviour
     private AudioClip _flashlightStun;
 
     private AudioClip[] _lightButtonPress;
+    private AudioClip _terminalBoot;
+    private AudioClip _terminalOpen;
+    private AudioClip _terminalClose;
 
     private void LoadSFX()
     {
@@ -152,6 +155,9 @@ public class AudioManager : MonoBehaviour
         _lightButtonPress[0] = Resources.Load<AudioClip>("SFX/LightButton1");
         _lightButtonPress[1] = Resources.Load<AudioClip>("SFX/LightButton2");
         _lightButtonPress[2] = Resources.Load<AudioClip>("SFX/LightButton3");
+        _terminalBoot = Resources.Load<AudioClip>("SFX/TerminalBoot");
+        _terminalOpen = Resources.Load<AudioClip>("SFX/TerminalOpen");
+        _terminalClose = Resources.Load<AudioClip>("SFX/TerminalClose");
     }
 
     public void PlayClickUI()
@@ -204,6 +210,20 @@ public class AudioManager : MonoBehaviour
     public void PlayLightButtonPress()
     {
         _sfxSource.PlayOneShot(_lightButtonPress[Random.Range(0, _lightButtonPress.Length)], GameManager.GetSFXVolume());
+    }
+    public void PlayTerminalBoot()
+    {
+        _sfxSource.PlayOneShot(_terminalBoot, GameManager.GetSFXVolume());
+    }
+
+    public void PlayTerminalOpen()
+    {
+        _sfxSource.PlayOneShot(_terminalOpen, GameManager.GetSFXVolume());
+    }
+
+    public void PlayTerminalClose()
+    {
+        _sfxSource.PlayOneShot(_terminalClose, GameManager.GetSFXVolume());
     }
     #endregion
 }
