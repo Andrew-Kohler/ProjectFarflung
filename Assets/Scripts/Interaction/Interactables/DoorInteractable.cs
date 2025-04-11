@@ -89,12 +89,14 @@ public class DoorInteractable : Interactable
             }
             else
             {
-
+                // Door locked sfx (missing keycard)
+                AudioManager.Instance.PlayDoorLocked();
             }
         }
         else
         {
-            // Place for SFX in the future
+            // Door locked sfx (no power)
+            AudioManager.Instance.PlayDoorLocked();
         }
     }
 
