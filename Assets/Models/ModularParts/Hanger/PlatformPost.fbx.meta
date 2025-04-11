@@ -3,7 +3,12 @@ guid: 65636ba303c689a4f94e832f6dd0bcc5
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WallAccentTexture
+    second: {fileID: 2100000, guid: bad1bb773fb4f0b41b45126f8008a60e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.25
+    globalScale: 25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
