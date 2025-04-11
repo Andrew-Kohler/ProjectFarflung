@@ -481,7 +481,7 @@ public class GameManager : MonoBehaviour
         /// </summary>
         public void ResetVolumeToDefaults()
         {
-            MainVolume = 0.8f;
+            MainVolume = 1f;
             SFXVolume = 0.8f;
             MusicVolume = 0.8f;
             LogVolume = 0.8f;
