@@ -174,6 +174,9 @@ public class AudioManager : MonoBehaviour
     private AudioClip _boxClose;
     private AudioClip _boxUnlatch;
     private AudioClip _boxLatch;
+    private AudioClip _wireSelect;
+    private AudioClip[] _generalZap;
+    private AudioClip _removeZap;
 
     private void LoadSFX()
     {
@@ -205,6 +208,12 @@ public class AudioManager : MonoBehaviour
         _boxClose = Resources.Load<AudioClip>("SFX/BoxClose");
         _boxUnlatch = Resources.Load<AudioClip>("SFX/BoxUnlatch");
         _boxLatch = Resources.Load<AudioClip>("SFX/BoxLatch");
+        _wireSelect = Resources.Load<AudioClip>("SFX/WireSelect");
+        _generalZap = new AudioClip[3];
+        _generalZap[0] = Resources.Load<AudioClip>("SFX/Zap1");
+        _generalZap[1] = Resources.Load<AudioClip>("SFX/Zap2");
+        _generalZap[2] = Resources.Load<AudioClip>("SFX/Zap3");
+        _removeZap = Resources.Load<AudioClip>("SFX/Zap4");
     }
 
     public void PlayClickUI()
@@ -311,6 +320,21 @@ public class AudioManager : MonoBehaviour
     public void PlayBoxLatch()
     {
         _sfxSource.PlayOneShot(_boxLatch, GameManager.GetSFXVolume());
+    }
+
+    public void PlayWireSelect()
+    {
+        _sfxSource.PlayOneShot(_wireSelect, GameManager.GetSFXVolume());
+    }
+
+    public void PlayGeneralZap()
+    {
+        _sfxSource.PlayOneShot(_generalZap[Random.Range(0, _generalZap.Length)], GameManager.GetSFXVolume());
+    }
+
+    public void PlayRemoveZap()
+    {
+        _sfxSource.PlayOneShot(_removeZap, GameManager.GetSFXVolume());
     }
     #endregion
 }

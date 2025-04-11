@@ -48,6 +48,9 @@ public class ConnectionRemover : ClickableObject
         _connectedNodes[0].RemoveConnection(_connectedNodes[1]);
         _connectedNodes[1].RemoveConnection(_connectedNodes[0]);
 
+        // wire remove SFX
+        AudioManager.Instance.PlayRemoveZap();
+
         // destroy both the model AND its container
         Destroy(transform.parent.gameObject);
     }

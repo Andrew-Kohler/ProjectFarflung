@@ -44,10 +44,20 @@ public class WireSelector : ClickableObject
     {
         // Deselection
         if (_isSelected)
+        {
+            // deselect SFX
+            AudioManager.Instance.PlayWireSelect();
+
             _wireManager.DeselectWire(this);
+        }
         // Selection
         else
+        {
+            // select SFX
+            AudioManager.Instance.PlayWireSelect();
+
             _wireManager.SelectNewWire(this);
+        }
 
 
         // no matter what, this click should remove any first node connection made on a node of the board
