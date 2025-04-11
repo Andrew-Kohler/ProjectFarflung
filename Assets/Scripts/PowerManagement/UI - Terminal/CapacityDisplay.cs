@@ -38,13 +38,6 @@ public class CapacityDisplay : MonoBehaviour
         int newPower = _powerSystem.GetCurrentConsumption();
         if (newPower != _currPower)
         {
-            // check for grid shutdown
-            if (newPower > _powerSystem.GetCapacity())
-            {
-                _powerSystem.ShutdownGrid();
-                newPower = _powerSystem.GetCurrentConsumption(); // ensure stored power is updated to the new power after shutdown
-            }
-
             // update display and curr power tracker
             UpdateDisplay();
             _currPower = newPower;

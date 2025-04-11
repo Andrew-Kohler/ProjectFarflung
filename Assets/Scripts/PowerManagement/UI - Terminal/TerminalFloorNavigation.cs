@@ -76,6 +76,9 @@ public class TerminalFloorNavigation : MonoBehaviour
         if (_currUIFloor >= 2)
             throw new System.Exception("Cannot navigate up 1 floor when already on top floor. Player should not be able to do this.");
 
+        // terminal arrow SFX
+        AudioManager.Instance.PlayTerminalArrow();
+
         // enable / disable floors
         _floors[_currUIFloor].SetActive(false);
         _currUIFloor++;
@@ -98,6 +101,9 @@ public class TerminalFloorNavigation : MonoBehaviour
         // Precondition: CANNOT go up from 2
         if (_currUIFloor <= 0)
             throw new System.Exception("Cannot navigate down 1 floor when already on bottom floor. Player should not be able to do this.");
+
+        // terminal arrow SFX
+        AudioManager.Instance.PlayTerminalArrow();
 
         // enable / disable floors
         _floors[_currUIFloor].SetActive(false);
