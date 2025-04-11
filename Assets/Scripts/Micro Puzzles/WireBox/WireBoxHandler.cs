@@ -79,6 +79,9 @@ public class WireBoxHandler : MonoBehaviour
         // (2) charge total equals expected output charge
         if (currNode.IsEndNode && chargeTotal == _outputNode.VoltageDifference)
         {
+            // Fix Box SFX
+            AudioManager.Instance.PlayBoxFix();
+
             // mark puzzle as complete
             GameManager.Instance.SceneData.FixedWireBoxes.Add(IdentifierName);
 

@@ -177,6 +177,7 @@ public class AudioManager : MonoBehaviour
     private AudioClip _wireSelect;
     private AudioClip[] _generalZap;
     private AudioClip _removeZap;
+    private AudioClip _boxFix;
 
     private void LoadSFX()
     {
@@ -214,6 +215,7 @@ public class AudioManager : MonoBehaviour
         _generalZap[1] = Resources.Load<AudioClip>("SFX/Zap2");
         _generalZap[2] = Resources.Load<AudioClip>("SFX/Zap3");
         _removeZap = Resources.Load<AudioClip>("SFX/Zap4");
+        _boxFix = Resources.Load<AudioClip>("SFX/BoxFix");
     }
 
     public void PlayClickUI()
@@ -335,6 +337,11 @@ public class AudioManager : MonoBehaviour
     public void PlayRemoveZap()
     {
         _sfxSource.PlayOneShot(_removeZap, GameManager.GetSFXVolume());
+    }
+
+    public void PlayBoxFix()
+    {
+        _sfxSource.PlayOneShot(_boxFix, GameManager.GetSFXVolume());
     }
     #endregion
 }
