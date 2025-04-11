@@ -132,6 +132,8 @@ public class AudioManager : MonoBehaviour
     private AudioClip _flashlightClickUp;
     private AudioClip _flashlightStun;
 
+    private AudioClip[] _lightButtonPress;
+
     private void LoadSFX()
     {
         _clickUI = Resources.Load<AudioClip>("SFX/ClickUI");
@@ -145,6 +147,11 @@ public class AudioManager : MonoBehaviour
         _flashlightClickDown = Resources.Load<AudioClip>("SFX/FlashlightClickDown");
         _flashlightClickUp = Resources.Load<AudioClip>("SFX/FlashlightClickUp");
         _flashlightStun = Resources.Load<AudioClip>("SFX/FlashlightStun");
+
+        _lightButtonPress = new AudioClip[3];
+        _lightButtonPress[0] = Resources.Load<AudioClip>("SFX/LightButton1");
+        _lightButtonPress[1] = Resources.Load<AudioClip>("SFX/LightButton2");
+        _lightButtonPress[2] = Resources.Load<AudioClip>("SFX/LightButton3");
     }
 
     public void PlayClickUI()
@@ -192,6 +199,11 @@ public class AudioManager : MonoBehaviour
     public void PlayFlashlightStun()
     {
         _sfxSource.PlayOneShot(_flashlightStun, GameManager.GetSFXVolume());
+    }
+
+    public void PlayLightButtonPress()
+    {
+        _sfxSource.PlayOneShot(_lightButtonPress[Random.Range(0, _lightButtonPress.Length)], GameManager.GetSFXVolume());
     }
     #endregion
 }
