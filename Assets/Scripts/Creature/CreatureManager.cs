@@ -130,6 +130,9 @@ public class CreatureManager : MonoBehaviour
         // conduct stun logic ONLY if it is able to be stunned again
         if (!IsStunned)
         {
+            // creature stun SFX
+            AudioManager.Instance.PlayCreatureStun();
+
             IsStunned = true;
 
             StartCoroutine(DoStunCreature());

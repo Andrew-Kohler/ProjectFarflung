@@ -150,11 +150,13 @@ public class AudioManager : MonoBehaviour
     #region Creature
     AudioClip _creatureSpawn;
     AudioClip _creatureDespawn;
+    AudioClip _creatureStun;
 
     private void LoadCreature()
     {
         _creatureSpawn = Resources.Load<AudioClip>("Creature/CreatureSpawn");
         _creatureDespawn = Resources.Load<AudioClip>("Creature/CreatureDespawn");
+        _creatureStun = Resources.Load<AudioClip>("Creature/CreatureStun");
     }
 
     public void PlayCreatureSpawn()
@@ -168,6 +170,12 @@ public class AudioManager : MonoBehaviour
     {
         _creatureSource.Stop(); // prevent playing multiple creature sounds at once
         _creatureSource.PlayOneShot(_creatureDespawn, GameManager.GetSFXVolume());
+    }
+
+    public void PlayCreatureStun()
+    {
+        _creatureSource.Stop(); // prevent playing multiple creature sounds at once
+        _creatureSource.PlayOneShot(_creatureStun, GameManager.GetSFXVolume());
     }
     #endregion
 
