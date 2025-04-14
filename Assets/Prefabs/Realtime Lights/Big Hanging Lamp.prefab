@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2133644567693294595}
   - component: {fileID: 6597727853956280086}
+  - component: {fileID: 2668282356907866419}
   m_Layer: 0
   m_Name: Big Hanging Lamp
   m_TagString: Untagged
@@ -69,6 +70,28 @@ LODGroup:
     - renderer: {fileID: 2747489237213656866}
     - renderer: {fileID: 6737465222003486191}
   m_Enabled: 1
+--- !u!114 &2668282356907866419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5302651037861769469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ab7670244996d42a05361101d94700, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _litMaterial: {fileID: 2100000, guid: e9a048a5a5c2ccf41ba12091ba84c85d, type: 2}
+  _unlitMaterial: {fileID: 2100000, guid: a419a5ddeb774334694f33bf887f24ee, type: 2}
+  _light: {fileID: 5381831840003597872}
+  _renderers:
+  - {fileID: 8654281316042965975}
+  - {fileID: 1933140137592617576}
+  - {fileID: 7910889263329436998}
+  - {fileID: 8849528736609167664}
+  - {fileID: 3406270644985046591}
+  - {fileID: 8965752318235753537}
 --- !u!1 &7890668306371603254
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +117,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7890668306371603254}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.178, y: 2.9990005, z: -0.114}
+  m_LocalPosition: {x: -0.074, y: 2.876, z: 0.026}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
