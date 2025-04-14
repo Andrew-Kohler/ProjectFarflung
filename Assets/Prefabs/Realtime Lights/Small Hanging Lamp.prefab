@@ -104,6 +104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6043143757547025534}
   - component: {fileID: -4359251839475205049}
+  - component: {fileID: 4292769763064060566}
   m_Layer: 0
   m_Name: Small Hanging Lamp
   m_TagString: Untagged
@@ -153,6 +154,24 @@ LODGroup:
     - renderer: {fileID: 6972627056602504789}
     - renderer: {fileID: 1774726390623434574}
   m_Enabled: 1
+--- !u!114 &4292769763064060566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7137454420271813740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ab7670244996d42a05361101d94700, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _litMaterial: {fileID: 2100000, guid: e9a048a5a5c2ccf41ba12091ba84c85d, type: 2}
+  _unlitMaterial: {fileID: 2100000, guid: a419a5ddeb774334694f33bf887f24ee, type: 2}
+  _light: {fileID: 8226531386584753087}
+  _renderers:
+  - {fileID: 6972627056602504789}
+  - {fileID: 1774726390623434574}
 --- !u!1001 &7468333870648743286
 PrefabInstance:
   m_ObjectHideFlags: 0

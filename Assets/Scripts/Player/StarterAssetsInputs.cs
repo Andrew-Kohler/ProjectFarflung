@@ -47,6 +47,9 @@ namespace StarterAssets
 			_moveLeft.started += UpdateMoveInput;
 			_moveLeft.canceled += UpdateMoveInput;
 			_moveLeft.Enable();
+
+			// enter locked state upon being in this scene (enabling the player)
+			SetCursorState(true);
 		}
         private void OnDisable()
         {
@@ -152,7 +155,8 @@ namespace StarterAssets
 
 		private void OnApplicationFocus(bool hasFocus)
 		{
-			SetCursorState(cursorLocked);
+			// no longer focuses on application focus because player in pause menu should NOT refocus the mouse
+			// SetCursorState(cursorLocked);
 		}
 
 		private void SetCursorState(bool newState)

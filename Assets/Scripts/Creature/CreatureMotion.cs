@@ -31,7 +31,7 @@ public class CreatureMotion : MonoBehaviour
 
         // rotation lerping - ALWAYS active
         Vector3 playerPos = CreatureManager.Instance.PlayerTransform.position;
-        playerPos.y = 0; // don't track with player jumps
+        playerPos.y = transform.position.y; // don't track with player jumps, instead stay locked at the creature's y-level
         Vector3 dirToPlayer = playerPos - transform.position;
 
         // LERP ROTATION

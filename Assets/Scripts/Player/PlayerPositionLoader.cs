@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
+using StarterAssets;
 
 /// <summary>
 /// Handles assigning the player to an initial position based on a set of load transforms and an index set by the previous scene.
@@ -11,6 +13,12 @@ public class PlayerPositionLoader : MonoBehaviour
     private GameObject _loadSpotParent;
     [SerializeField, Tooltip("Used to determine if terminal to load to exists.")]
     private TerminalConfiguration[] _terminals; // list of references to avoid costly GetComponentInChildren calls
+    [SerializeField, Tooltip("Angle of camera when loading to terminal - to ensure looking at terminal and not at the wall.")]
+    private float _terminalCamAngle;
+    [SerializeField, Tooltip("Camera Follow transform, which is rotated when loading to a terminal")]
+    private Transform _followTransform;
+    [SerializeField, Tooltip("Needed to override starting pitch on camera.")]
+    private FirstPersonController _controller;
 
     void Start()
     {
@@ -42,6 +50,13 @@ public class PlayerPositionLoader : MonoBehaviour
                 {
                     transform.position = terminal.SpawnPos.position;
                     transform.rotation = terminal.SpawnPos.rotation;
+
+                    // rotate camera follow transform to face terminal
+                    _followTransform.Rotate(Vector3.right * _terminalCamAngle);
+
+                    // ensure player controller does not override angle
+                    _controller.OverrideTargetPitch(_terminalCamAngle);
+
                     return;
                 }
             }

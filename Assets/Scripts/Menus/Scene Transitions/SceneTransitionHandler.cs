@@ -15,11 +15,20 @@ public class SceneTransitionHandler : MonoBehaviour
     private bool _isDoneEnter = false; // becomes true once new scene is fully faded in
     private bool _isDoneTransitioning = false;
 
+    [HideInInspector]
+    public bool HasStartedTransitionOut = false;
+
     /// <summary>
     /// Function that should be used to activate any scene transition in the game.
     /// </summary>
     public void LoadScene(string sceneName)
     {
+        // do not load into scene if we have already started a different scene load
+        if (HasStartedTransitionOut)
+            return;
+
+        HasStartedTransitionOut = true;
+
         _anim.Play("FadeExit");
 
         // lock player controls until end of next scene enter

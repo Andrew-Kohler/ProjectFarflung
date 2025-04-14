@@ -19,16 +19,21 @@ public class CreatureStunCheck : MonoBehaviour
         {
             // TODO: any sequence involving the camera, creature, SFX, or anything else when the player is caught
 
-            // set death realm variable
-            GameManager.Instance.SceneData.IsInDeathRealm = true;
-
             // load death realm scene (no need for scene name due to 'Resume' functionality)
             if (!other.gameObject.TryGetComponent(out SceneTransitionRef player))
                 throw new System.Exception("Player MUST contain PlayerPositionLoader in any non Death Realm scene");
-            player.TransitionHandler.LoadScene("Resume");
 
-            // save scene data to game data to prevent quitting to 'undie'
-            GameManager.Instance.SaveSceneDataToGameData();
+            // only load scene and update game data if player had not already started scene transitioning out
+            if (!player.TransitionHandler.HasStartedTransitionOut)
+            {
+                player.TransitionHandler.LoadScene("Resume");
+
+                // set death realm variable
+                GameManager.Instance.SceneData.IsInDeathRealm = true;
+
+                // save scene data to game data to prevent quitting to 'undie'
+                GameManager.Instance.SaveSceneDataToGameData();
+            }
         }
     }
 }

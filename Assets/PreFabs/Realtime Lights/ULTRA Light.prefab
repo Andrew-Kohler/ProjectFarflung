@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4573797212764201475}
   - component: {fileID: -1261795919586110636}
+  - component: {fileID: 2063040138155861670}
   m_Layer: 0
   m_Name: ULTRA Light
   m_TagString: Untagged
@@ -55,6 +56,23 @@ LODGroup:
     - renderer: {fileID: 3908563235326892221}
     - renderer: {fileID: 6286789663863675686}
   m_Enabled: 1
+--- !u!114 &2063040138155861670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3021431997176443336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ab7670244996d42a05361101d94700, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _litMaterial: {fileID: 2100000, guid: e9a048a5a5c2ccf41ba12091ba84c85d, type: 2}
+  _unlitMaterial: {fileID: 2100000, guid: a419a5ddeb774334694f33bf887f24ee, type: 2}
+  _light: {fileID: 9058870895614510926}
+  _renderers:
+  - {fileID: 6286789663863675686}
 --- !u!1 &9048983918504989745
 GameObject:
   m_ObjectHideFlags: 0

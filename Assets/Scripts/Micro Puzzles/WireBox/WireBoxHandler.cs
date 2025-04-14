@@ -13,6 +13,8 @@ public class WireBoxHandler : MonoBehaviour
     [Header("Configuration")]
     [Tooltip("Name of this wire box puzzle state stored in game manager.")]
     public string IdentifierName;
+    [Tooltip("Light that must be on for the player to be permitted to interact with the wire box.")]
+    public PoweredLight LightZone;
 
     [Header("References")]
     [SerializeField, Tooltip("Output node from which success is checked from")]
@@ -28,6 +30,10 @@ public class WireBoxHandler : MonoBehaviour
 
     private void Awake()
     {
+        // Precondition: MUST be associated with a light to determine if interactor should be disabled
+        if (!LightZone)
+            throw new Exception("Wire Box MUST have a LightZone to correspond with whether the wire box interaction is permitted (cannot open box in the dark).");
+
         // Precondition: must have non-empty identifier name
         if (IdentifierName.Equals(""))
             throw new Exception("Incorrect Wire Box Configuration: MUST have non-empty identifier name.");
@@ -39,6 +45,11 @@ public class WireBoxHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // skip detection of completion condition if already completed
+        // this prevents identifier from being added to the list MANY times
+        if (GameManager.Instance.SceneData.FixedWireBoxes.Contains(IdentifierName))
+            return;
+
         // puzzle not completed if end connection has no nodes
         if (!_outputNode.HasAnyConnections())
             return;

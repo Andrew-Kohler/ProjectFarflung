@@ -90,10 +90,14 @@ public class CreatureManager : MonoBehaviour
         }
         else
         {
+            // new behavior: instantly reset aggro upon leaving a creature zone
+            CurrentSpeed = 0;
+
+            // OLD BEHAVIOR - keeping this here in case we want to revert
             // decrease speed without cap
-            CurrentSpeed -= SPEED_DECREASE_FACTOR * Time.deltaTime;
+            /*CurrentSpeed -= SPEED_DECREASE_FACTOR * Time.deltaTime;
             if (CurrentSpeed < 0)
-                CurrentSpeed = 0;
+                CurrentSpeed = 0;*/
         }
     }
     #endregion
