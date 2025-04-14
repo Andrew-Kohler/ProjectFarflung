@@ -90,6 +90,9 @@ public class CreatureMotion : MonoBehaviour
     /// </summary>
     public void SpawnCreature(Transform[] spawnLocations)
     {
+        // spawn SFX
+        AudioManager.Instance.PlayCreatureSpawn();
+
         // determine farthest spawn location
         Transform player = CreatureManager.Instance.PlayerTransform;
         Transform farthestOption = spawnLocations[0];
@@ -133,6 +136,9 @@ public class CreatureMotion : MonoBehaviour
     /// </summary>
     public void DespawnCreature()
     {
+        // despawn SFX
+        AudioManager.Instance.PlayCreatureDespawn();
+
         // allow creature to slowly approach 0 speed again
         CreatureManager.Instance.IsAggro = false;
 

@@ -29,20 +29,18 @@ public class AudioManager : MonoBehaviour
                 _instance._musicSource = newManager.AddComponent<AudioSource>();
                 _instance._musicSource.volume = GameManager.GetMusicVolume();
                 _instance._musicSource.loop = true;
-                // add audio source - footsteps
+                // add audio sources - footsteps, charge stun, creature
                 _instance._stepsSource = newManager.AddComponent<AudioSource>();
-                // add audio source - charge stun
                 _instance._chargeStunSource = newManager.AddComponent<AudioSource>();
+                _instance._creatureSource = newManager.AddComponent<AudioSource>();
                 // add audio source - SFX
                 _instance._sfxSource = newManager.AddComponent<AudioSource>();
 
-                // load music files
+                // load ALL files: music, footsteps, stun, creature, SFX
                 _instance.LoadMusic();
-                // load footsteps
                 _instance.LoadFootsteps();
-                // load charge stun
                 _instance.LoadChargeStun();
-                // ensure all audio files are loaded from resources
+                _instance.LoadCreature();
                 _instance.LoadSFX();
             }
             // return new/existing instance
@@ -53,6 +51,7 @@ public class AudioManager : MonoBehaviour
     private AudioSource _musicSource;
     private AudioSource _stepsSource;
     private AudioSource _chargeStunSource;
+    private AudioSource _creatureSource;
     private AudioSource _sfxSource;
 
     #region Music / Ambient
@@ -145,6 +144,30 @@ public class AudioManager : MonoBehaviour
     public void StopChargeStunSFX()
     {
         _chargeStunSource.pitch = -1;
+    }
+    #endregion
+
+    #region Creature
+    AudioClip _creatureSpawn;
+    AudioClip _creatureDespawn;
+
+    private void LoadCreature()
+    {
+        _creatureSpawn = Resources.Load<AudioClip>("Creature/CreatureSpawn");
+        _creatureDespawn = Resources.Load<AudioClip>("Creature/CreatureDespawn");
+    }
+
+    public void PlayCreatureSpawn()
+    {
+        // prevent multiple creature sounds at once
+        _creatureSource.Stop();
+        _creatureSource.PlayOneShot(_creatureSpawn, GameManager.GetSFXVolume());
+    }
+
+    public void PlayCreatureDespawn()
+    {
+        _creatureSource.Stop(); // prevent playing multiple creature sounds at once
+        _creatureSource.PlayOneShot(_creatureDespawn, GameManager.GetSFXVolume());
     }
     #endregion
 
