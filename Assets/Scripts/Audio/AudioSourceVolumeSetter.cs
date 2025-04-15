@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Handles reduction in creature pursuit volume while player has paused the game.
-/// ONLY USED IN THE DEATH REALM.
+/// Handles a floating audio source to make sure it has the proper volume level.
+/// Also reduces volume level while paused
 /// </summary>
-public class CreatureVolumeReducer : MonoBehaviour
+public class AudioSourceVolumeSetter : MonoBehaviour
 {
     [SerializeField, Tooltip("Used to control volume level of audio source.")]
     private AudioSource _audioSource;
