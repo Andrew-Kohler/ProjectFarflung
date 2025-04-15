@@ -85,11 +85,17 @@ public class CreatureManager : MonoBehaviour
         // increase / decrease speed
         if (IsAggro)
         {
+            // creature pursuit music track
+            AudioManager.Instance.QueueCreatureTrack();
+
             // increase speed without cap
             CurrentSpeed += SPEED_INCREASE_FACTOR * Time.deltaTime;
         }
         else
         {
+            // return to normal music track
+            AudioManager.Instance.QueueAmbientTrack();
+
             // new behavior: instantly reset aggro upon leaving a creature zone
             CurrentSpeed = 0;
 

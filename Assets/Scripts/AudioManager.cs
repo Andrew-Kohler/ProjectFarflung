@@ -58,11 +58,13 @@ public class AudioManager : MonoBehaviour
     #region Music / Ambient
     private AudioClip _startMusic;
     private AudioClip _ambientTrack;
+    private AudioClip _creatureTrack;
 
     private void LoadMusic()
     {
         _startMusic = Resources.Load<AudioClip>("Music_Ambient/HowIWonder");
         _ambientTrack = Resources.Load<AudioClip>("Music_Ambient/AmbientTrack");
+        _creatureTrack = Resources.Load<AudioClip>("Music_Ambient/CreatureTrack");
     }
 
     /// <summary>
@@ -89,6 +91,13 @@ public class AudioManager : MonoBehaviour
     public void QueueAmbientTrack()
     {
         QueueTrack(_ambientTrack);
+
+        // TODO: logic for reading current scene or save state for special case tracks
+    }
+
+    public void QueueCreatureTrack()
+    {
+        QueueTrack(_creatureTrack);
     }
 
     private const float VOLUME_CHANGE_RATE = 1.25f;  // rate at which volume fades & increases back when switching track
