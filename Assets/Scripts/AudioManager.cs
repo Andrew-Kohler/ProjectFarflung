@@ -59,6 +59,7 @@ public class AudioManager : MonoBehaviour
     private AudioClip _startMusic;
     private AudioClip _ambientTrack;
     private AudioClip _commandTrack;
+    private AudioClip _nearEndTrack;
     private AudioClip _creatureTrack;
 
     private void LoadMusic()
@@ -66,6 +67,7 @@ public class AudioManager : MonoBehaviour
         _startMusic = Resources.Load<AudioClip>("Music_Ambient/HowIWonder");
         _ambientTrack = Resources.Load<AudioClip>("Music_Ambient/AmbientTrack");
         _commandTrack = Resources.Load<AudioClip>("Music_Ambient/CommandTrack");
+        _nearEndTrack = Resources.Load<AudioClip>("Music_Ambient/NearEndTrack");
         _creatureTrack = Resources.Load<AudioClip>("Music_Ambient/CreatureTrack");
     }
 
@@ -93,12 +95,16 @@ public class AudioManager : MonoBehaviour
     public void QueueAmbientTrack()
     {
         // Dynamically determine conditions for playing special ambient tracks
-        if (SceneManager.GetActiveScene().name == "Command")    // Command-specific track
-            QueueTrack(_commandTrack);
-        else                                                    // standard track for floor1/floor2/hangar
-            QueueTrack(_ambientTrack);
 
-        // TODO: logic for reading current scene or save state for special case tracks
+        // Command-specific track
+        if (SceneManager.GetActiveScene().name == "Command")    
+            QueueTrack(_commandTrack);
+        // Near-end track
+        else if (GameManager.Instance.SceneData.Keys.Contains("NuclearGenerator") || GameManager.Instance.SceneData.Keys.Contains("MedCloset")) 
+            QueueTrack(_nearEndTrack);
+        // standard track for floor1/floor2/hangar
+        else
+            QueueTrack(_ambientTrack);
     }
 
     public void QueueCreatureTrack()
