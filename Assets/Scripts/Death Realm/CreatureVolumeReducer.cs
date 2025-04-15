@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Handles reduction in creature pursuit volume while player has paused the game
+/// Handles reduction in creature pursuit volume while player has paused the game.
+/// ONLY USED IN THE DEATH REALM.
 /// </summary>
 public class CreatureVolumeReducer : MonoBehaviour
 {
