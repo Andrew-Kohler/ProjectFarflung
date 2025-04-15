@@ -80,6 +80,9 @@ public class StartMenuHandler : MonoBehaviour
         }
 
         StartCoroutine(DoInitialLoad());
+
+        // play start menu music
+        AudioManager.Instance.QueueStartMusic();
     }
 
     private void Update()

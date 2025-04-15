@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Allows for static calls for all sound play calls
@@ -55,9 +56,153 @@ public class AudioManager : MonoBehaviour
     private AudioSource _sfxSource;
 
     #region Music / Ambient
+    private AudioClip _startMusic;
+    private AudioClip _ambientTrack;
+
     private void LoadMusic()
     {
+        _startMusic = Resources.Load<AudioClip>("Music_Ambient/HowIWonder");
+        _ambientTrack = Resources.Load<AudioClip>("Music_Ambient/AmbientTrack");
+    }
 
+    /// <summary>
+    /// Queues new track, but does NOTHING if that track is already playing
+    /// </summary>
+    private void QueueTrack(AudioClip track)
+    {
+        if (_currTrack != track)
+            _queueTrack = track;
+    }
+
+    public void CutMusic()
+    {
+        // stop music and clear queue
+        _currTrack = null;
+        _queueTrack = null;
+    }
+
+    public void QueueStartMusic()
+    {
+        QueueTrack(_startMusic);
+    }
+
+    public void QueueAmbientTrack()
+    {
+        QueueTrack(_ambientTrack);
+    }
+
+    private const float VOLUME_CHANGE_RATE = 1.25f;  // rate at which volume fades & increases back when switching track
+
+    // for queuing track change and managing current music / ambient track
+    private AudioClip _queueTrack = null;
+    private AudioClip _currTrack = null;
+    private bool _isPaused = false;
+
+    float _prevTime = 0f;
+
+    private void Update()
+    {
+        // this is necessary because 
+        float deltaTime = Time.realtimeSinceStartup - _prevTime;
+        _prevTime = Time.realtimeSinceStartup; // update prev time for next frame
+
+        // transition out to new queued track
+        if (_queueTrack is not null)
+        {
+            // slowly decrement volume down
+            _musicSource.volume -= VOLUME_CHANGE_RATE * deltaTime;
+
+            if (_musicSource.volume <= 0)
+            {
+                // switch track
+                _musicSource.volume = 0;
+                _musicSource.clip = _queueTrack;
+                _musicSource.Play(); // start playing new looping track
+
+                // clear queue
+                _currTrack = _queueTrack;
+                _queueTrack = null;
+            }
+        }
+        // standard track looping behavior
+        else if (_currTrack is not null)
+        {
+            // move towards 25% configured volume during pause
+            if (_isPaused)
+            {
+                if (_musicSource.volume > GameManager.GetMusicVolume() / 4f)
+                {
+                    float newVol = _musicSource.volume - VOLUME_CHANGE_RATE * deltaTime;
+                    if (newVol < GameManager.GetMusicVolume() / 4f)
+                        newVol = GameManager.GetMusicVolume() / 4f;
+                    _musicSource.volume = newVol;
+                }
+                // increasing to 25% should only occur on instant pause upon loading new track
+                else if (_musicSource.volume < GameManager.GetMusicVolume() / 4f)
+                {
+                    float newVol = _musicSource.volume +VOLUME_CHANGE_RATE * deltaTime;
+                    if (newVol > GameManager.GetMusicVolume() / 4f)
+                        newVol = GameManager.GetMusicVolume() / 4f;
+                    _musicSource.volume = newVol;
+                }
+            }
+            // ensure at full configuredvolume when NOT paused
+            else
+            {
+                // ensure at full volume
+                float newVol = _musicSource.volume + VOLUME_CHANGE_RATE * deltaTime;
+                if (newVol > GameManager.GetMusicVolume())
+                    newVol = GameManager.GetMusicVolume();
+                _musicSource.volume = newVol;
+            }
+        }
+        // no track to play - or music was stopped
+        else
+        {
+            if (_musicSource.volume > 0)
+            {
+                // decrease volume to zero
+                float newVol = _musicSource.volume - VOLUME_CHANGE_RATE * deltaTime;
+                if (newVol < 0f)
+                {
+                    _musicSource.volume = 0f;
+                    // also stop track since it has finished fading out
+                    _musicSource.Stop();
+                }
+                else
+                    _musicSource.volume = newVol;
+            }
+        }
+    }
+
+    private void OnEnable()
+    {
+        PauseControls.onPauseOpen += SetPauseOpen;
+        PauseControls.onPauseClose += SetPauseClose;
+        SceneManager.sceneLoaded += SetPauseOnLoad;
+    }
+
+    private void OnDisable()
+    {
+        PauseControls.onPauseOpen -= SetPauseOpen;
+        PauseControls.onPauseClose -= SetPauseClose;
+        SceneManager.sceneLoaded -= SetPauseOnLoad;
+    }
+
+    private void SetPauseOpen()
+    {
+        _isPaused = true;
+    }
+
+    private void SetPauseClose()
+    {
+        _isPaused = false;
+    }
+
+    private void SetPauseOnLoad(Scene scene, LoadSceneMode mode)
+    {
+        // ensure pause saved state properly reset between scenes for the sake of music/ambient reduction
+        _isPaused = false;
     }
     #endregion
 

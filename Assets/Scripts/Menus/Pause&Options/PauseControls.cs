@@ -32,6 +32,9 @@ public class PauseControls : MonoBehaviour
     private InputActionMap _actionMap;
 
     // Used to ensure that controls text updates when the pause menu is exited
+    // also used to reduce music/ambient volumes while paused
+    public delegate void OnPauseOpen();
+    public static event OnPauseOpen onPauseOpen;
     public delegate void OnPauseClose();
     public static event OnPauseClose onPauseClose;
 
@@ -87,9 +90,9 @@ public class PauseControls : MonoBehaviour
             Time.timeScale = 0;
             _actionMap.Disable();
 
-            // TODO: pause controls and time scale
-
             _isPaused = true;
+
+            onPauseOpen?.Invoke();
         }
     }
     #endregion
