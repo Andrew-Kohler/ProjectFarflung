@@ -23,6 +23,7 @@ public class CreatureAudio : MonoBehaviour
 
     private bool _prevCreatureActive = false;
     private AudioClip _currTrack = null;
+    private float _actualVol = 0;
 
     // Update is called once per frame
     void Update()
@@ -54,15 +55,16 @@ public class CreatureAudio : MonoBehaviour
         else if ((CreatureManager.Instance.IsAggro && _currTrack is not null && _currTrack == _pursuitTrack)
             || (!CreatureManager.Instance.IsAggro && _currTrack is not null && _currTrack == _idleTrack))    // fade into correct track
         {
-            float newVol = _audioSource.volume + (_fadeBetweenRate * Time.deltaTime);
+            float newVol = _actualVol + (_fadeBetweenRate * Time.deltaTime);
             if (newVol > GameManager.GetSFXVolume())
                 newVol = GameManager.GetSFXVolume();
-            _audioSource.volume = newVol;
+            _actualVol = newVol;
+            _audioSource.volume = Time.timeScale == 0 ? _actualVol / 4f : _actualVol;
         }
         else if ((CreatureManager.Instance.IsAggro && _currTrack is not null && _currTrack == _idleTrack)
             || (!CreatureManager.Instance.IsAggro && _currTrack is not null && _currTrack == _pursuitTrack))   // fade out of incorrect track
         {
-            float newVol = _audioSource.volume - (_fadeBetweenRate * Time.deltaTime);
+            float newVol = _actualVol - (_fadeBetweenRate * Time.deltaTime);
             if (newVol < 0)
             {
                 newVol = 0;
@@ -70,7 +72,8 @@ public class CreatureAudio : MonoBehaviour
                 _audioSource.clip = null;
                 _currTrack = null;
             }
-            _audioSource.volume = newVol;
+            _actualVol = newVol;
+            _audioSource.volume = Time.timeScale == 0 ? _actualVol / 4f : _actualVol;
         }
 
         _prevCreatureActive = _creature.IsCreatureActive();
