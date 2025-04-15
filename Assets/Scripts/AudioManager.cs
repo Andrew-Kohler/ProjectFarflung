@@ -58,6 +58,7 @@ public class AudioManager : MonoBehaviour
     #region Music / Ambient
     private AudioClip _startMusic;
     private AudioClip _ambientTrack;
+    private AudioClip _deathRealmTrack;
     private AudioClip _commandTrack;
     private AudioClip _nearEndTrack;
     private AudioClip _creatureTrack;
@@ -66,6 +67,7 @@ public class AudioManager : MonoBehaviour
     {
         _startMusic = Resources.Load<AudioClip>("Music_Ambient/HowIWonder");
         _ambientTrack = Resources.Load<AudioClip>("Music_Ambient/AmbientTrack");
+        _deathRealmTrack = Resources.Load<AudioClip>("Music_Ambient/DeathRealmTrack");
         _commandTrack = Resources.Load<AudioClip>("Music_Ambient/CommandTrack");
         _nearEndTrack = Resources.Load<AudioClip>("Music_Ambient/NearEndTrack");
         _creatureTrack = Resources.Load<AudioClip>("Music_Ambient/CreatureTrack");
@@ -97,10 +99,13 @@ public class AudioManager : MonoBehaviour
         // Dynamically determine conditions for playing special ambient tracks
 
         // Command-specific track
-        if (SceneManager.GetActiveScene().name == "Command")    
+        if (SceneManager.GetActiveScene().name == "Command")
             QueueTrack(_commandTrack);
+        // Death Realm-specific track
+        else if (SceneManager.GetActiveScene().name == "DeathRealm")
+            QueueTrack(_deathRealmTrack);
         // Near-end track
-        else if (GameManager.Instance.SceneData.Keys.Contains("NuclearGenerator") || GameManager.Instance.SceneData.Keys.Contains("MedCloset")) 
+        else if (GameManager.Instance.SceneData.Keys.Contains("NuclearGenerator") || GameManager.Instance.SceneData.Keys.Contains("MedCloset"))
             QueueTrack(_nearEndTrack);
         // standard track for floor1/floor2/hangar
         else
@@ -112,7 +117,7 @@ public class AudioManager : MonoBehaviour
         QueueTrack(_creatureTrack);
     }
 
-    private const float VOLUME_CHANGE_RATE = 1.25f;  // rate at which volume fades & increases back when switching track
+    private const float VOLUME_CHANGE_RATE = 0.5f;  // rate at which volume fades & increases back when switching track
 
     // for queuing track change and managing current music / ambient track
     private AudioClip _queueTrack = null;
