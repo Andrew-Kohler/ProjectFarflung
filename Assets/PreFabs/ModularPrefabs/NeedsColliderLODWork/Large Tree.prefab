@@ -51,18 +51,8 @@ LODGroup:
   - screenRelativeHeight: 0.05
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
+    - renderer: {fileID: 4657120708786026462}
+    - renderer: {fileID: 6129916309481616916}
   m_Enabled: 1
 --- !u!65 &1603961863951456552
 BoxCollider:
@@ -161,5 +151,15 @@ PrefabInstance:
 --- !u!4 &1518922520019392296 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 98838240078eda14ebc42c705676aaef, type: 3}
+  m_PrefabInstance: {fileID: 1341776398517645507}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4657120708786026462 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5926622875081230109, guid: 98838240078eda14ebc42c705676aaef, type: 3}
+  m_PrefabInstance: {fileID: 1341776398517645507}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6129916309481616916 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5156380648761706199, guid: 98838240078eda14ebc42c705676aaef, type: 3}
   m_PrefabInstance: {fileID: 1341776398517645507}
   m_PrefabAsset: {fileID: 0}

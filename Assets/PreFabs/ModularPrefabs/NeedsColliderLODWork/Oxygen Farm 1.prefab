@@ -51,18 +51,7 @@ LODGroup:
   - screenRelativeHeight: 0.05
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
-    - renderer: {fileID: 0}
+    - renderer: {fileID: 3367438981760508638}
   m_Enabled: 1
 --- !u!65 &8996277923979676118
 BoxCollider:
@@ -150,6 +139,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f46becd8b7368e54a8e9fb6eff37cbc2, type: 3}
+--- !u!23 &3367438981760508638 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: f46becd8b7368e54a8e9fb6eff37cbc2, type: 3}
+  m_PrefabInstance: {fileID: 4141656103048052314}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4535308671822633393 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f46becd8b7368e54a8e9fb6eff37cbc2, type: 3}
