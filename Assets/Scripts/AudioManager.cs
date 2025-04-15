@@ -395,6 +395,7 @@ public class AudioManager : MonoBehaviour
     private AudioClip _doorClose;
     private AudioClip _doorLocked;
 
+    private AudioClip _respawnInteract;
     private AudioClip _respawn;
 
     private void LoadSFX()
@@ -445,6 +446,7 @@ public class AudioManager : MonoBehaviour
         _doorClose = Resources.Load<AudioClip>("SFX/DoorClose");
         _doorLocked = Resources.Load<AudioClip>("SFX/DoorLocked");
 
+        _respawnInteract = Resources.Load<AudioClip>("SFX/RespawnInteract");
         _respawn = Resources.Load<AudioClip>("SFX/Respawn");
     }
 
@@ -592,6 +594,11 @@ public class AudioManager : MonoBehaviour
     public void PlayDoorLocked()
     {
         _sfxSource.PlayOneShot(_doorLocked, GameManager.GetSFXVolume());
+    }
+
+    public void PlayRespawnInteract()
+    {
+        _sfxSource.PlayOneShot(_respawnInteract, GameManager.GetSFXVolume());
     }
 
     public void PlayRespawn()
