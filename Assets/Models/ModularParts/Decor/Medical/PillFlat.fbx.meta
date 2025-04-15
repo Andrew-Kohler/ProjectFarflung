@@ -3,7 +3,12 @@ guid: f17b02957f9b40d40b465b8589875738
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PillTab
+    second: {fileID: 2100000, guid: 213c0acdd8972b44389d8e448df2995e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.25
+    globalScale: 25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

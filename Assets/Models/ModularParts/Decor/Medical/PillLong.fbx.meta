@@ -3,7 +3,17 @@ guid: 39e9a3f6211b81848836e0dd3a546ae0
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Red
+    second: {fileID: 2100000, guid: 5298b49d7560d8a429b8659f048ee749, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: White
+    second: {fileID: 2100000, guid: 4a1bd8af81b5ef44cbcc60df1165f2a9, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +100,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.25
+    globalScale: 25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
