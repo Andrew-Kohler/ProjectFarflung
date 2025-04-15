@@ -58,12 +58,14 @@ public class AudioManager : MonoBehaviour
     #region Music / Ambient
     private AudioClip _startMusic;
     private AudioClip _ambientTrack;
+    private AudioClip _commandTrack;
     private AudioClip _creatureTrack;
 
     private void LoadMusic()
     {
         _startMusic = Resources.Load<AudioClip>("Music_Ambient/HowIWonder");
         _ambientTrack = Resources.Load<AudioClip>("Music_Ambient/AmbientTrack");
+        _commandTrack = Resources.Load<AudioClip>("Music_Ambient/CommandTrack");
         _creatureTrack = Resources.Load<AudioClip>("Music_Ambient/CreatureTrack");
     }
 
@@ -90,7 +92,11 @@ public class AudioManager : MonoBehaviour
 
     public void QueueAmbientTrack()
     {
-        QueueTrack(_ambientTrack);
+        // Dynamically determine conditions for playing special ambient tracks
+        if (SceneManager.GetActiveScene().name == "Command")    // Command-specific track
+            QueueTrack(_commandTrack);
+        else                                                    // standard track for floor1/floor2/hangar
+            QueueTrack(_ambientTrack);
 
         // TODO: logic for reading current scene or save state for special case tracks
     }
