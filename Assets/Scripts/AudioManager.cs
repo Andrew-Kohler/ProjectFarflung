@@ -322,12 +322,14 @@ public class AudioManager : MonoBehaviour
     AudioClip _creatureSpawn;
     AudioClip _creatureDespawn;
     AudioClip _creatureStun;
+    AudioClip _creatureConsume;
 
     private void LoadCreature()
     {
         _creatureSpawn = Resources.Load<AudioClip>("Creature/CreatureSpawn");
         _creatureDespawn = Resources.Load<AudioClip>("Creature/CreatureDespawn");
         _creatureStun = Resources.Load<AudioClip>("Creature/CreatureStun");
+        _creatureConsume = Resources.Load<AudioClip>("Creature/CreatureConsume");
     }
 
     public void PlayCreatureSpawn()
@@ -347,6 +349,12 @@ public class AudioManager : MonoBehaviour
     {
         _creatureSource.Stop(); // prevent playing multiple creature sounds at once
         _creatureSource.PlayOneShot(_creatureStun, GameManager.GetSFXVolume());
+    }
+
+    public void PlayCreatureConsume()
+    {
+        _creatureSource.Stop(); // prevent multiple creature sounds at once
+        _creatureSource.PlayOneShot(_creatureConsume, GameManager.GetSFXVolume());
     }
     #endregion
 
@@ -386,6 +394,8 @@ public class AudioManager : MonoBehaviour
     private AudioClip _doorOpen;
     private AudioClip _doorClose;
     private AudioClip _doorLocked;
+
+    private AudioClip _respawn;
 
     private void LoadSFX()
     {
@@ -434,6 +444,8 @@ public class AudioManager : MonoBehaviour
         _doorOpen = Resources.Load<AudioClip>("SFX/DoorOpen");
         _doorClose = Resources.Load<AudioClip>("SFX/DoorClose");
         _doorLocked = Resources.Load<AudioClip>("SFX/DoorLocked");
+
+        _respawn = Resources.Load<AudioClip>("SFX/Respawn");
     }
 
     public void PlayClickUI()
@@ -580,6 +592,11 @@ public class AudioManager : MonoBehaviour
     public void PlayDoorLocked()
     {
         _sfxSource.PlayOneShot(_doorLocked, GameManager.GetSFXVolume());
+    }
+
+    public void PlayRespawn()
+    {
+        _sfxSource.PlayOneShot(_respawn, GameManager.GetSFXVolume());
     }
     #endregion
 }
