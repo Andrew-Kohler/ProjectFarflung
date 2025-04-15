@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Handles tracking global creature data, including speed data and player reference
@@ -86,7 +87,8 @@ public class CreatureManager : MonoBehaviour
         if (IsAggro)
         {
             // creature pursuit music track
-            AudioManager.Instance.QueueCreatureTrack();
+            if (SceneManager.GetActiveScene().name != "DeathRealm") // no pursuit music for creature in death realm
+                AudioManager.Instance.QueueCreatureTrack();
 
             // increase speed without cap
             CurrentSpeed += SPEED_INCREASE_FACTOR * Time.deltaTime;
