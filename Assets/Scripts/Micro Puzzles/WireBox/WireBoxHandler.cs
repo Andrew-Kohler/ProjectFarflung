@@ -30,6 +30,8 @@ public class WireBoxHandler : MonoBehaviour
     private Material[] _indicatorMaterials;
     [SerializeField, Tooltip("Used to configure text to match voltage total.")]
     private TextMeshProUGUI _currentVoltageText;
+    [SerializeField, Tooltip("The sparking particle system")]
+    public ParticleSystem _sparkParticles;
 
     private void Awake()
     {
@@ -48,6 +50,13 @@ public class WireBoxHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Spark Condition, not in fixed box + area is activated
+        if (!GameManager.Instance.SceneData.FixedWireBoxes.Contains(IdentifierName) && LightZone.IsPowered()) {
+            _sparkParticles.Play();
+        }
+        else 
+            _sparkParticles.Stop();
+            
         // skip detection of completion condition if already completed
         // this prevents identifier from being added to the list MANY times
         if (GameManager.Instance.SceneData.FixedWireBoxes.Contains(IdentifierName))
