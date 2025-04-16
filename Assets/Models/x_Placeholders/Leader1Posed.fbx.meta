@@ -3,7 +3,42 @@ guid: 855533f6bb0d8bf40a71c2a63e2b608d
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model1_model_AccentBody
+    second: {fileID: 2100000, guid: b9d3cfc344ac6114d92b67403724a1aa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model1_model_Dial
+    second: {fileID: 2100000, guid: 0a9079dad9c7e9042857bb7804e340e7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model1_model_MainBody
+    second: {fileID: 2100000, guid: 0a5c71fe80b8609458e1f7a13d8dd364, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model1_model_Metal
+    second: {fileID: 2100000, guid: 97bdd41aad2cbd94d8b59cb6145c3e5f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model1_model_Skin
+    second: {fileID: 2100000, guid: c6406c0586095bc44be9e5bd637a2ada, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model1_model_Visor1
+    second: {fileID: 2100000, guid: ca0ddde8e47cf1f45aa71a3e82afda99, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: model1_model_Void
+    second: {fileID: 2100000, guid: c6406c0586095bc44be9e5bd637a2ada, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +125,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.19999999
+    globalScale: 20
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

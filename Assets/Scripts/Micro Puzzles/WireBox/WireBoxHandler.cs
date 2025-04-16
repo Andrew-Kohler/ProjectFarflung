@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 /// <summary>
 /// Handles checking for puzzle completion, and updates progression data upon completion.
@@ -27,6 +28,8 @@ public class WireBoxHandler : MonoBehaviour
     private GameObject[] _indicatorLights;
     [SerializeField, Tooltip("Materials for indicating if puzzle is won. 0 = not won, 1 = won")]
     private Material[] _indicatorMaterials;
+    [SerializeField, Tooltip("Used to configure text to match voltage total.")]
+    private TextMeshProUGUI _currentVoltageText;
 
     private void Awake()
     {
@@ -65,7 +68,22 @@ public class WireBoxHandler : MonoBehaviour
         {
             chargeTotal += currNode.VoltageDifference;
             if (currNode.GetNextConnection(prevNode) is null)
+            {
                 cont = false;
+                _currentVoltageText.text = (chargeTotal >= 0 ? "+" : "-") + (int)Mathf.Abs(chargeTotal) + "V";
+                if (chargeTotal == 0)
+                {
+                    _currentVoltageText.color = Color.white;
+                }
+                else if (chargeTotal > 0)
+                {
+                    _currentVoltageText.color = Color.green;
+                }
+                else
+                {
+                    _currentVoltageText.color = Color.red;
+                }
+            }
             else
             {
                 NodeSelector temp = currNode;
