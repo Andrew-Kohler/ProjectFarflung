@@ -26,6 +26,9 @@ public class BobbingToggle : MonoBehaviour
     /// </summary>
     public void UpdateToggleValue()
     {
+        // play Click UI SFX
+        AudioManager.Instance.PlayClickUI();
+
         GameManager.Instance.OptionsData.CameraBobbing = _bobbingToggle.isOn;
         _displayText.text = GameManager.Instance.OptionsData.CameraBobbing ? "on" : "off";
     }

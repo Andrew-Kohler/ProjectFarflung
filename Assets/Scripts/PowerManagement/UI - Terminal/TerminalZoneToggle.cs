@@ -82,5 +82,23 @@ public class TerminalZoneToggle : MonoBehaviour
         _poweredIndicator.SetActive(_toggle.isOn);
         // ensure power elements are properly configured after UI press
         _powerSystem.PoweredZones[ZoneIndex].UpdatePowerStates();
+
+        // check for grid shutdown
+        if (_powerSystem.GetCurrentConsumption() > _powerSystem.GetCapacity())
+        {
+            _powerSystem.ShutdownGrid();
+
+            // grid shutdown SFX
+            AudioManager.Instance.PlayGridOverload();
+        }
+        // NOT shutting down grid
+        else
+        {
+            // play proper power/unpower zone SFX
+            if (GameManager.Instance.SceneData.PoweredZones[ZoneIndex] == true)
+                AudioManager.Instance.PlayPowerZone();
+            else
+                AudioManager.Instance.PlayUnpowerZone();
+        }
     }
 }

@@ -11,6 +11,12 @@ namespace StarterAssets
 #endif
 	public class FirstPersonController : MonoBehaviour
 	{
+		[Header("SFX")]
+		[Tooltip("Speed at which player must surpass before footstep SFX will play.")]
+		public float MoveSfxThreshold;
+
+		private bool _prevInputJump = false;
+
 		[Header("Player")]
 		[Tooltip("Move speed of the character in m/s")]
 		public float MoveSpeed = 4.0f;
@@ -127,9 +133,15 @@ namespace StarterAssets
 
 		private void GroundedCheck()
 		{
+			bool prevGrounded = Grounded;
+
 			// set sphere position, with offset
 			Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
 			Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
+
+			// footstep SFX - confirm play on timing of land (skips other footstep logic)
+			if (!prevGrounded && Grounded)
+				AudioManager.Instance.TryPlayFootsteps(true);
 		}
 
 		private void CameraRotation()
@@ -193,6 +205,11 @@ namespace StarterAssets
 				// a reference to the players current horizontal velocity
 				float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
+				// Try to play footstep sound since we are moving
+				// also make sure player is grounded
+				if (currentHorizontalSpeed > MoveSfxThreshold && Grounded)
+					AudioManager.Instance.TryPlayFootsteps();
+
 				float speedOffset = 0.1f;
 				float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
 
@@ -246,6 +263,10 @@ namespace StarterAssets
 				{
 					// the square root of H * -2 * G = how much velocity needed to reach desired height
 					_verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+
+					// footstep SFX - guaranteed to play on jump regardless of other footstep sounds
+					if (!_prevInputJump)
+						AudioManager.Instance.TryPlayFootsteps(true);
 				}
 
 				// jump timeout
@@ -274,6 +295,9 @@ namespace StarterAssets
 			{
 				_verticalVelocity += Gravity * Time.deltaTime;
 			}
+
+			// used for SFX logic
+			_prevInputJump = _input.jump;
 		}
 
 		private static float ClampAngle(float lfAngle, float lfMin, float lfMax)

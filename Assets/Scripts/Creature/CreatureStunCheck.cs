@@ -33,6 +33,9 @@ public class CreatureStunCheck : MonoBehaviour
 
                 // save scene data to game data to prevent quitting to 'undie'
                 GameManager.Instance.SaveSceneDataToGameData();
+
+                // creature consume SFX
+                AudioManager.Instance.PlayCreatureConsume();
             }
         }
     }

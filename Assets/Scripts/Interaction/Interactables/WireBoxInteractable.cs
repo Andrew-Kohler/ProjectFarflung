@@ -118,9 +118,15 @@ public class WireBoxInteractable : Interactable
 
         _inUse = true;  // Tell the box it's being used
 
+        // box unlatch SFX
+        AudioManager.Instance.PlayBoxUnlatch();
+
         yield return new WaitForSeconds(1.5f);
         // delay ensures text does not enable clipping through box lid early
         _wirebox.EnablePuzzle(); // Enable the puzzle
+
+        // Open Box SFX
+        AudioManager.Instance.PlayBoxOpen();
 
         yield return new WaitForSeconds(1.2f);
         _initialInteractiongOngoing = false;
@@ -151,7 +157,18 @@ public class WireBoxInteractable : Interactable
         yield return new WaitForEndOfFrame();
         GameManager.Instance.PlayerEnabled = true;
 
-        yield return new WaitForSeconds(1.5f);        // Only reenable interaction after the animation ends
+        yield return new WaitForSeconds(0.5f);
+
+        // box close SFX
+        AudioManager.Instance.PlayBoxClose();
+
+        yield return new WaitForSeconds(0.25f);
+
+        // box latch SFX
+        AudioManager.Instance.PlayBoxLatch();
+
+        yield return new WaitForSeconds(0.75f);        // Only reenable interaction after the animation ends
+
         if (!final)
         {
             _col.enabled = true;

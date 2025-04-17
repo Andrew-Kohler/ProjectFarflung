@@ -19,6 +19,9 @@ public class DeathRealmTransitionOut : MonoBehaviour
         // restore flashlight battery on respawn since you respawn at a terminal
         GameManager.FlashlightCharge = 1f;
 
+        // respawn SFX
+        AudioManager.Instance.PlayRespawn();
+
         _handler.LoadScene("Resume");
     }
 

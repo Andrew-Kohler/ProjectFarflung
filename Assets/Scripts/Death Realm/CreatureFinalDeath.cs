@@ -23,6 +23,9 @@ public class CreatureFinalDeath : MonoBehaviour
             GameManager.Instance.PlayerEnabled = false;
             _creature.enabled = false;
 
+            // creature consume SFX
+            AudioManager.Instance.PlayCreatureConsume();
+
             // start death animations in scene
             _anim.SetTrigger("Activate");
 
