@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4511929182020852995}
   - component: {fileID: 6152659048445826356}
   - component: {fileID: 4435607672545150138}
+  - component: {fileID: 7369163535994155402}
   m_Layer: 0
   m_Name: Oxygen Farm 2
   m_TagString: Untagged
@@ -72,8 +73,31 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.7360454, y: 3.2325306, z: 1.8394026}
-  m_Center: {x: 0.0050320327, y: 1.6430619, z: 0.06804603}
+  m_Size: {x: 1.7301819, y: 0.5299381, z: 1.7081857}
+  m_Center: {x: -0.06898436, y: 0.29176557, z: 0.030511498}
+--- !u!136 &7369163535994155402
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675829941045592108}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.59889436
+  m_Height: 4.186716
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.593358, z: 0}
 --- !u!1001 &5353925912222502490
 PrefabInstance:
   m_ObjectHideFlags: 0

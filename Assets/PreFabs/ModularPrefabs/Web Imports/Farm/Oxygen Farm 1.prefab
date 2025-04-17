@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 4511929182020852995}
   - component: {fileID: 6152659048445826356}
   - component: {fileID: 8996277923979676118}
+  - component: {fileID: 953117094198492642}
+  - component: {fileID: 7210294560151903967}
+  - component: {fileID: 7058498245500269927}
   m_Layer: 0
   m_Name: Oxygen Farm 1
   m_TagString: Untagged
@@ -72,8 +75,73 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 3.2325306, z: 2.3659043}
-  m_Center: {x: 0, y: 1.6430619, z: 0.23579693}
+  m_Size: {x: 0.12540722, y: 0.66506976, z: 2.3659043}
+  m_Center: {x: 1.0872962, y: 0.35933146, z: 0.23579693}
+--- !u!65 &953117094198492642
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675829941045592108}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.0255625, y: 0.29832867, z: 2.3659043}
+  m_Center: {x: 0.012781385, y: 0.17596091, z: 0.23579687}
+--- !u!65 &7210294560151903967
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675829941045592108}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.12540722, y: 0.66506976, z: 2.3659043}
+  m_Center: {x: -1.087296, y: 0.35933146, z: 0.2357969}
+--- !u!136 &7058498245500269927
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675829941045592108}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 3.8890526
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.8477935, z: 0}
 --- !u!1001 &4141656103048052314
 PrefabInstance:
   m_ObjectHideFlags: 0
