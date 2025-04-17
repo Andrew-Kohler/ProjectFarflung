@@ -55,10 +55,14 @@ public class WireBoxHandler : MonoBehaviour
 
         // puzzle not completed if end connection has no nodes
         if (!_outputNode.HasAnyConnections())
+        {
+            // no wires connected, simply display input voltage
+            UpdateDisplayText(_outputNode.VoltageDifference);
             return;
+        }
 
         // check puzzle completion
-        int chargeTotal = 0;
+        int chargeTotal = _outputNode.VoltageDifference; // start with charge of starting node
         NodeSelector prevNode = _outputNode;
         NodeSelector currNode = _outputNode.GetFirstConnection();
 
@@ -66,23 +70,14 @@ public class WireBoxHandler : MonoBehaviour
         bool cont = true;
         while (cont)
         {
-            chargeTotal += currNode.VoltageDifference;
+            // don't add the final node's charge
+            if (!currNode.IsEndNode)
+                chargeTotal += currNode.VoltageDifference;
+
+            // fetch next node, if possible
             if (currNode.GetNextConnection(prevNode) is null)
             {
                 cont = false;
-                _currentVoltageText.text = (chargeTotal >= 0 ? "+" : "-") + (int)Mathf.Abs(chargeTotal) + "V";
-                if (chargeTotal == 0)
-                {
-                    _currentVoltageText.color = Color.white;
-                }
-                else if (chargeTotal > 0)
-                {
-                    _currentVoltageText.color = Color.green;
-                }
-                else
-                {
-                    _currentVoltageText.color = Color.red;
-                }
             }
             else
             {
@@ -92,10 +87,13 @@ public class WireBoxHandler : MonoBehaviour
             }
         }
 
+        // show running charge total - regardless of completion state
+        UpdateDisplayText(chargeTotal);
+
         // Puzzle completion conditions
-        // (1) connected to start node
+        // (1) connected to end (output) node
         // (2) charge total equals expected output charge
-        if (currNode.IsEndNode && chargeTotal == _outputNode.VoltageDifference)
+        if (currNode.IsEndNode && chargeTotal == currNode.VoltageDifference)
         {
             // Fix Box SFX
             AudioManager.Instance.PlayBoxFix();
@@ -152,5 +150,23 @@ public class WireBoxHandler : MonoBehaviour
         this.enabled = true;
 
         // animation call can go here for opening puzzle??
+    }
+
+    private void UpdateDisplayText(int chargeTotal)
+    {
+        // voltage display text
+        _currentVoltageText.text = (chargeTotal >= 0 ? "+" : "-") + (int)Mathf.Abs(chargeTotal) + "V";
+        if (chargeTotal == 0)
+        {
+            _currentVoltageText.color = Color.white;
+        }
+        else if (chargeTotal > 0)
+        {
+            _currentVoltageText.color = Color.green;
+        }
+        else
+        {
+            _currentVoltageText.color = Color.red;
+        }
     }
 }
