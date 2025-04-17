@@ -90,7 +90,7 @@ public class StartMenuHandler : MonoBehaviour
         if(_creditsAnim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && !_creditsOver)
         {
             _creditsOver = true;
-            BackButton();
+            BackButtonSilent();
         }
     }
 
@@ -238,6 +238,21 @@ public class StartMenuHandler : MonoBehaviour
 
         // Click SFX
         AudioManager.Instance.PlayClickUI();
+    }
+
+    /// <summary>
+    /// Silently does the back button functionality. Used for end of credits sequence.
+    /// </summary>
+    public void BackButtonSilent()
+    {
+        _creditsGroup.FadeOut(_creditsFadeTime);
+        _mainMenuGroup.FadeIn(_creditsFadeTime);
+
+        // Correctly sets Canvas Group settings so appropriate layer can be interacted with
+        _mainMenuGroup.ToggleInteractable(true);
+        _mainMenuGroup.ToggleBlocker(true);
+        _creditsGroup.ToggleInteractable(false);
+        _creditsGroup.ToggleBlocker(false);
     }
     #endregion
 
