@@ -31,6 +31,9 @@ public class RespawnAutoInteractable : MonoBehaviour
 
     public IEnumerator DoInteractEffects()
     {
+        // respawn interact SFX
+        AudioManager.Instance.PlayRespawnInteract();
+
         // player loses control
         GameManager.Instance.PlayerEnabled = false;
 
@@ -48,10 +51,13 @@ public class RespawnAutoInteractable : MonoBehaviour
 
         _visorCam1.gameObject.SetActive(false);
         _visorCam2.gameObject.SetActive(true);
-        
+
         // wait for camera to be for sure within the visor
         yield return new WaitForSeconds(1.5f);
-        
+
+        // cut music to create silence at this point
+        AudioManager.Instance.CutMusic();
+
         // activate respawn animator
         _cameraAnim.SetTrigger("Activate");
 

@@ -143,6 +143,9 @@ public class NodeManager : MonoBehaviour
         {
             clickedNode.SelectVisual(); // show outline
             _firstNode = clickedNode;
+
+            // general zap SFX
+            AudioManager.Instance.PlayWireSelect();
         }
         // CANCEL CONNECTION
         else if (_firstNode == clickedNode)
@@ -151,6 +154,9 @@ public class NodeManager : MonoBehaviour
             Destroy(_currConnection);
 
             DeselectFirstNode();
+
+            // remove zap SFX
+            AudioManager.Instance.PlayWireSelect();
         }
         // COMPLETE CONNECTION - range and obstruction permitting
         else if (Vector3.Distance(clickedNode.transform.position, _firstNode.transform.position) < _wireManager.GetSelectedWire().Length)
@@ -197,6 +203,9 @@ public class NodeManager : MonoBehaviour
 
             // consume the current selected wire from the wire rack
             _wireManager.ConsumeCurrentWire();
+
+            // general zap SFX
+            AudioManager.Instance.PlayGeneralZap();
         }
     }
 

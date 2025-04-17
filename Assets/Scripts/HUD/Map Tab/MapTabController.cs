@@ -291,6 +291,9 @@ public class MapTabController : MonoBehaviour
                 _floorGameObjects[_currentHUDFloor - 2].gameObject.SetActive(false);
                 _floorSelector.transform.position = _floorNumbers[_currentHUDFloor - 1].transform.position;
                 _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(true);
+
+                // general HUD SFX
+                AudioManager.Instance.PlayGeneralSoundHUD();
             }
         }
         else if (arrowInput.y < 0)
@@ -305,6 +308,9 @@ public class MapTabController : MonoBehaviour
                 _floorGameObjects[_currentHUDFloor].gameObject.SetActive(false);
                 _floorSelector.transform.position = _floorNumbers[_currentHUDFloor - 1].transform.position;
                 _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(true);
+
+                // general HUD SFX
+                AudioManager.Instance.PlayGeneralSoundHUD();
             }
         }   
     }

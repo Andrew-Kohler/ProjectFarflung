@@ -13,5 +13,8 @@ public class ResetVolume : MonoBehaviour
     public void ResetVolumeToDefaults()
     {
         GameManager.Instance.OptionsData.ResetVolumeToDefaults();
+
+        // UI Click SFX
+        AudioManager.Instance.PlayClickUI();
     }
 }

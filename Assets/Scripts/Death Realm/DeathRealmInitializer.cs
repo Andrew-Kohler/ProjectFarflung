@@ -18,6 +18,9 @@ public class DeathRealmInitializer : MonoBehaviour
 
     void Awake()
     {
+        // ensure ambient track starts playing
+        AudioManager.Instance.QueueAmbientTrack();
+
         // functionally decrement health
         GameManager.Instance.SceneData.RemainingLives--;
 

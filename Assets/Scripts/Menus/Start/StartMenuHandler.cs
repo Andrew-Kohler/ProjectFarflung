@@ -67,8 +67,6 @@ public class StartMenuHandler : MonoBehaviour
     [SerializeField, Tooltip("CanvasGroupController for back backer")]
     private CanvasGroupController _backerGroup;
 
-
-
     private void Awake()
     {
         // free control over the mouse
@@ -82,6 +80,9 @@ public class StartMenuHandler : MonoBehaviour
         }
 
         StartCoroutine(DoInitialLoad());
+
+        // play start menu music
+        AudioManager.Instance.QueueStartMusic();
     }
 
     private void Update()
@@ -89,7 +90,7 @@ public class StartMenuHandler : MonoBehaviour
         if(_creditsAnim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1 && !_creditsOver)
         {
             _creditsOver = true;
-            BackButton();
+            BackButtonSilent();
         }
     }
 
@@ -116,6 +117,9 @@ public class StartMenuHandler : MonoBehaviour
             // load brightness config scene
             _transitionHandler.LoadScene(_brightnessConfigSceneName);
         }
+
+        // Click SFX
+        AudioManager.Instance.PlayClickUI();
     }
 
     // Displays text and an image related to starting a new game
@@ -131,6 +135,9 @@ public class StartMenuHandler : MonoBehaviour
     /// </summary>
     public void ResumeButton()
     {
+        // Click SFX
+        AudioManager.Instance.PlayClickUI();
+
         // load level scene functionality
         _transitionHandler.LoadScene(_levelSceneName);
     }
@@ -148,6 +155,9 @@ public class StartMenuHandler : MonoBehaviour
     /// </summary>
     public void OptionsButton()
     {
+        // Click SFX
+        AudioManager.Instance.PlayClickUI();
+
         // bypasses pause menu of pause/options canvas
         _optionsContainer.SetActive(true);
     }
@@ -165,6 +175,9 @@ public class StartMenuHandler : MonoBehaviour
     /// </summary>
     public void CreditsButton()
     {
+        // Click SFX
+        AudioManager.Instance.PlayClickUI();
+
         // Restart the animation and fade the menus in and out
         _creditsAnim.Play("Scroll", 0, 0);
         _creditsGroup.FadeIn(_creditsFadeTime);
@@ -177,7 +190,6 @@ public class StartMenuHandler : MonoBehaviour
         _creditsGroup.ToggleBlocker(true);
 
         StartCoroutine(DoCreditsLoadDelay());
-        
     }
 
     // Displays text and an image related to otpions
@@ -223,6 +235,24 @@ public class StartMenuHandler : MonoBehaviour
         _mainMenuGroup.ToggleBlocker(true);
         _creditsGroup.ToggleInteractable(false);
         _creditsGroup.ToggleBlocker(false);
+
+        // Click SFX
+        AudioManager.Instance.PlayClickUI();
+    }
+
+    /// <summary>
+    /// Silently does the back button functionality. Used for end of credits sequence.
+    /// </summary>
+    public void BackButtonSilent()
+    {
+        _creditsGroup.FadeOut(_creditsFadeTime);
+        _mainMenuGroup.FadeIn(_creditsFadeTime);
+
+        // Correctly sets Canvas Group settings so appropriate layer can be interacted with
+        _mainMenuGroup.ToggleInteractable(true);
+        _mainMenuGroup.ToggleBlocker(true);
+        _creditsGroup.ToggleInteractable(false);
+        _creditsGroup.ToggleBlocker(false);
     }
     #endregion
 
@@ -232,6 +262,9 @@ public class StartMenuHandler : MonoBehaviour
     /// </summary>
     public void ConfirmNewGame()
     {
+        // Click SFX
+        AudioManager.Instance.PlayClickUI();
+
         GameManager.Instance.ResetGameData(); // new progression data
 
         // load brightness config scene
@@ -244,6 +277,9 @@ public class StartMenuHandler : MonoBehaviour
     /// </summary>
     public void AbortNewGame()
     {
+        // Click SFX
+        AudioManager.Instance.PlayClickUI();
+
         _currentCloseCoroutine = DoPopupClose();
         StartCoroutine(_currentCloseCoroutine);
     }

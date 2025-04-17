@@ -60,7 +60,9 @@ public class TerminalInteractable : Interactable
                 _lockedOnUse = false;
                 _terminalCam.gameObject.SetActive(true);
                 _puzzleCam.gameObject.SetActive(false);
-                
+
+                // terminal boot SFX
+                AudioManager.Instance.PlayTerminalBoot();
             }
         }
     }
@@ -111,12 +113,18 @@ public class TerminalInteractable : Interactable
         if (GameManager.Instance.SceneData.TerminalUnlocks[_terminal.ZoneIndex]) // If this terminal is unlocked
         {
             _terminalCam.gameObject.SetActive(true);
+
+            // terminal boot SFX
+            AudioManager.Instance.PlayTerminalBoot();
         }
         else // If it isn't
         {
             _puzzleCam.gameObject.SetActive(true);
             _lockedOnUse = true;
         }
+
+        // terminal open SFX - for BOTH light puzzle and terminal opening
+        AudioManager.Instance.PlayTerminalOpen();
 
         _terminalAnim.speed = 1f;
         _terminalAnim.SetTrigger("TerminalWake");
@@ -150,6 +158,9 @@ public class TerminalInteractable : Interactable
 
         _terminalAnim.SetTrigger("TerminalStandby");    // Right the terminal
         _terminalAnim.SetTrigger("TerminalSleep");
+
+        // terminal close SFX
+        AudioManager.Instance.PlayTerminalClose();
 
         yield return new WaitForEndOfFrame();
         GameManager.Instance.PlayerEnabled = true;      // Free the player

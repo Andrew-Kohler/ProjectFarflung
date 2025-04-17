@@ -11,5 +11,8 @@ public class ConfirmBrightnessConfig : MonoBehaviour
     {
         GameManager.Instance.SceneData.NewGameStarted = true;
         GameManager.Instance.SaveSceneDataToGameData(); // ensure new save state transfers not only to scene data but also to game data
+
+        // play UI Click SFX
+        AudioManager.Instance.PlayClickUI();
     }
 }
