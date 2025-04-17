@@ -25,6 +25,8 @@ public class CreatureMotion : MonoBehaviour
 
     private bool _isCreatureActive = false;
     private bool _idleTrigged = false;
+    private bool _stunTrigged = false;
+    private bool _moveTriggered = false;
 
 
     // Update is called once per frame
@@ -84,22 +86,33 @@ public class CreatureMotion : MonoBehaviour
         {
             // start stun anim
             _animator.SetBool("isStunned", true);
-            _stunnedEffect.Play();
+            if (!_stunTrigged)
+            {
+                _stunnedEffect.Play();
+                _stunTrigged = true;
+            }            
             // disable other anims
             _animator.SetBool("isMoving", false);
             _motionEffect.Stop();
+            _moveTriggered = false;
             // should not modify idle value to ensure it remains the same for creature stun during idle OR during chase
         }
         // moving animation (exiting idle)
         else if (CreatureManager.Instance.CurrentSpeed > 0f) {
             // start movement anim, speed handled above & VFX
-            _animator.SetBool("isMoving", true);
-            _motionEffect.Play();
+            if (!_moveTriggered) {
+                _animator.SetBool("isMoving", true);
+                _motionEffect.Play();
+                _moveTriggered = true;
+            }
             // disable other anims & VFX
             _animator.SetBool("isIdle", false);
             _idleEffect.Stop();
+            _idleTrigged = false;
             _animator.SetBool("isStunned", false);
             _stunnedEffect.Stop();
+            _stunTrigged = false;
+
         }
         // idle animation - lowest priority (only of not stunned and not moving)
         else if (CreatureManager.Instance.CurrentSpeed == 0f)
@@ -113,8 +126,11 @@ public class CreatureMotion : MonoBehaviour
             // disable other anims & VFX
             _animator.SetBool("isStunned", false);
             _stunnedEffect.Stop();
+            _stunTrigged = false;
             _animator.SetBool("isMoving", false);
             _motionEffect.Stop();
+            _moveTriggered = false;
+
 
         }
     }
