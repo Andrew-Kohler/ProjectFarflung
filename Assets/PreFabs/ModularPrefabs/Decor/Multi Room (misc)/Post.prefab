@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1065392110847166150}
   - component: {fileID: -4913744253045734815}
+  - component: {fileID: 5974717588553940761}
   m_Layer: 0
   m_Name: Post
   m_TagString: Untagged
@@ -52,6 +53,29 @@ LODGroup:
     renderers:
     - renderer: {fileID: 8789783796459122146}
   m_Enabled: 1
+--- !u!136 &5974717588553940761
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8218357768532707469}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.046581913
+  m_Height: 1.2072004
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.6019049, z: 0}
 --- !u!1001 &6401942497777343109
 PrefabInstance:
   m_ObjectHideFlags: 0

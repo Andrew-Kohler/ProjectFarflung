@@ -3,7 +3,37 @@ guid: 14788718e0c9be344ae6f82df5836135
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MotherShipImport_DarkAccent
+    second: {fileID: 2100000, guid: 67836c2529a70d544bf9988ba6aa367a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MotherShipImport_DarkMetal
+    second: {fileID: 2100000, guid: 12c89cde793cd05408f0f01e5797d04a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MotherShipImport_Emissive
+    second: {fileID: 2100000, guid: d236015577f8e5e42a57ed109e1056dd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MotherShipImport_Glass
+    second: {fileID: 2100000, guid: c0a6daab2b027dc40b3d38e99275d319, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MotherShipImport_LightAccent
+    second: {fileID: 2100000, guid: 490e61184ed4404438886dca7d58c1fd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Outside_Emissive
+    second: {fileID: 2100000, guid: 9f3d1a77b1746db4e843de81e4011c08, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +120,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.25
+    globalScale: 25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
