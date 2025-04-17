@@ -186,6 +186,7 @@ GameObject:
   m_Component:
   - component: {fileID: 603470267818670798}
   - component: {fileID: 4891517149346474511}
+  - component: {fileID: 7202429834838926100}
   - component: {fileID: 3076716561782300522}
   m_Layer: 0
   m_Name: Busted Wire Box
@@ -243,7 +244,20 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1fbe89d30efe09a4cb56cc96a8487255, type: 2}
   - {fileID: 2100000, guid: 4b62730ad72ce6641904f3556ae5bae1, type: 2}
   _currentVoltageText: {fileID: 3348101659614428402}
+--- !u!114 &7202429834838926100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5018329959776978198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95295dd89677372458593ca608f444c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _sparkParticles: {fileID: 311268167869402517}
+  _wirebox: {fileID: 4891517149346474511}
 --- !u!65 &3076716561782300522
 BoxCollider:
   m_ObjectHideFlags: 0
