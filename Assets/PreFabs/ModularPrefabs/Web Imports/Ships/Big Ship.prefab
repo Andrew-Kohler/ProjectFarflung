@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 5788112896994479682}
   - component: {fileID: 5410488956477125549}
   - component: {fileID: 8431258023434596048}
+  - component: {fileID: 6033721463760781774}
   m_Layer: 0
   m_Name: Big Ship
   m_TagString: Untagged
@@ -83,8 +84,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.8944979, y: 1, z: 2}
-  m_Center: {x: 2.579669, y: 2.24, z: 0}
+  m_Size: {x: 2.894498, y: 1.0178701, z: 2}
+  m_Center: {x: 2.579669, y: 2.2310572, z: 0.000000024194343}
 --- !u!65 &8929091278713849469
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -253,6 +254,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0215151, y: 1.9452863, z: 0.29398495}
   m_Center: {x: -3.4542427, y: 1.8876367, z: 0.909999}
+--- !u!65 &6033721463760781774
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8224458899095129465}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0332177, y: 0.583601, z: 2.3796906}
+  m_Center: {x: 1.6780349, y: 1.2581995, z: -0.014752448}
 --- !u!1 &8804747339525762667
 GameObject:
   m_ObjectHideFlags: 0

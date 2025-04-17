@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4097092514614861436}
   - component: {fileID: -2011506217931120262}
-  - component: {fileID: 369140091274419982}
+  - component: {fileID: 5381265977563319572}
   m_Layer: 0
   m_Name: LargePipe
   m_TagString: Untagged
@@ -53,8 +53,8 @@ LODGroup:
     renderers:
     - renderer: {fileID: 383635926512035310}
   m_Enabled: 1
---- !u!65 &369140091274419982
-BoxCollider:
+--- !u!136 &5381265977563319572
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -71,9 +71,11 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 6, y: 0.5, z: 0.5}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.18237674
+  m_Height: 6.0916004
+  m_Direction: 0
+  m_Center: {x: -0.06776762, y: 0, z: 0}
 --- !u!1001 &908091386248137678
 PrefabInstance:
   m_ObjectHideFlags: 0
