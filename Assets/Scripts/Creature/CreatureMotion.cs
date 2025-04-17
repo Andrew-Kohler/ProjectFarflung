@@ -14,6 +14,8 @@ public class CreatureMotion : MonoBehaviour
     private float _rotationSharpness;
     [SerializeField, Tooltip("Animator for the models motion.")]
     private Animator _animator;
+
+    [Header("Particle Effects")]
     [SerializeField, Tooltip("Particle system that should play on spawn")]
     private ParticleSystem _spawnEffect;
     [SerializeField, Tooltip("Particle system that should play on idle bobbing")]
@@ -24,10 +26,6 @@ public class CreatureMotion : MonoBehaviour
     private ParticleSystem _motionEffect;
 
     private bool _isCreatureActive = false;
-    private bool _idleTrigged = false;
-    private bool _stunTrigged = false;
-    private bool _moveTriggered = false;
-
 
     // Update is called once per frame
     void Update()
@@ -63,20 +61,18 @@ public class CreatureMotion : MonoBehaviour
             
             //updates creatures chase animation speed to be similar to its expected speed & trigger VFX
             _animator.SetFloat("speed", CreatureManager.Instance.CurrentSpeed);
-            _motionEffect.Play();
 
-            //VFX trailing effects
+            // VFX trailing effects
 
             // Apply to particle system force
             var particleMotion = _motionEffect.forceOverLifetime;
             particleMotion.enabled = true;
 
-            Vector3 force = transform.forward * angleFactor * CreatureManager.Instance.CurrentSpeed; ;
+            Vector3 force = transform.forward * angleFactor * CreatureManager.Instance.CurrentSpeed;
 
             particleMotion.x = new ParticleSystem.MinMaxCurve(force.y * 10);
             particleMotion.y = new ParticleSystem.MinMaxCurve(force.x * 20);
             particleMotion.z = new ParticleSystem.MinMaxCurve(force.z * 10);
-      
         }
 
         // ANIMATIONS -------------------
@@ -86,32 +82,32 @@ public class CreatureMotion : MonoBehaviour
         {
             // start stun anim
             _animator.SetBool("isStunned", true);
-            if (!_stunTrigged)
-            {
+
+            // stun VFX
+            if (!_stunnedEffect.isPlaying)
                 _stunnedEffect.Play();
-                _stunTrigged = true;
-            }            
+                    
             // disable other anims
             _animator.SetBool("isMoving", false);
             _motionEffect.Stop();
-            _moveTriggered = false;
-            // should not modify idle value to ensure it remains the same for creature stun during idle OR during chase
+            _idleEffect.Stop();
+
+            // should not modify idle anim value to ensure it remains the same for creature stun during idle OR during chase
         }
         // moving animation (exiting idle)
         else if (CreatureManager.Instance.CurrentSpeed > 0f) {
             // start movement anim, speed handled above & VFX
-            if (!_moveTriggered) {
-                _animator.SetBool("isMoving", true);
+            _animator.SetBool("isMoving", true);
+
+            // motion VFX
+            if (!_motionEffect.isPlaying)
                 _motionEffect.Play();
-                _moveTriggered = true;
-            }
+
             // disable other anims & VFX
             _animator.SetBool("isIdle", false);
             _idleEffect.Stop();
-            _idleTrigged = false;
             _animator.SetBool("isStunned", false);
             _stunnedEffect.Stop();
-            _stunTrigged = false;
 
         }
         // idle animation - lowest priority (only of not stunned and not moving)
@@ -119,19 +115,16 @@ public class CreatureMotion : MonoBehaviour
         {
             // start idle anim & VFX
             _animator.SetBool("isIdle", true);
-            if (!_idleTrigged) {
+
+            // idle VFX
+            if (!_idleEffect.isPlaying)
                 _idleEffect.Play();
-                _idleTrigged = true;
-            }
+
             // disable other anims & VFX
             _animator.SetBool("isStunned", false);
             _stunnedEffect.Stop();
-            _stunTrigged = false;
             _animator.SetBool("isMoving", false);
             _motionEffect.Stop();
-            _moveTriggered = false;
-
-
         }
     }
 
