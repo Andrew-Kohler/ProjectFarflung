@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4135013735270702856}
   - component: {fileID: 4676545958147597682}
+  - component: {fileID: 5282250281254943880}
   m_Layer: 0
   m_Name: PlayerCameraRoot
   m_TagString: CinemachineTarget
@@ -46,6 +47,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _raycastDistance: 3
+--- !u!114 &5282250281254943880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4135013735270702863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2036a285cfa2bb14187f484b8b983dd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8486795282179176684
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,10 +276,14 @@ MonoBehaviour:
   GroundedRadius: 0.29
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 262144
+    m_Bits: 262145
   CinemachineCameraTarget: {fileID: 4135013735270702863}
-  TopClamp: 89
-  BottomClamp: -89
+  TopClamp: 65
+  BottomClamp: -65
+  _walkNoise: {fileID: 11400000, guid: 8281f43828319ed4c8b0312823f6ff29, type: 2}
+  _minAmp: 0
+  _maxAmp: 0.1
+  _ampIncrement: 0.01
 --- !u!114 &5420857361349278248
 MonoBehaviour:
   m_ObjectHideFlags: 0
