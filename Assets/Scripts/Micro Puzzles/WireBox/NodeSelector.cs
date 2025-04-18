@@ -46,13 +46,21 @@ public class NodeSelector : ClickableObject
         _outline.OutlineWidth = 0; // no outline by default
 
         // voltage text configuration (never changes)
-        _voltageText.text = (VoltageDifference >= 0 ? "+" : "-") + (int) Mathf.Abs(VoltageDifference) + "V";
+        _voltageText.text = (VoltageDifference >= 0 ? "+" : "-") + (int) Mathf.Abs(VoltageDifference);
         // node color/model by voltage
         if (IsEndNode == true)
         {
             _nodeModels[0].SetActive(false);
             _nodeModels[1].SetActive(true);
             _nodeModels[2].SetActive(false);
+
+            if (VoltageDifference < 0)
+                _voltageText.color = Color.red;
+            else
+                _voltageText.color = Color.green;
+
+            _voltageText.text = _voltageText.text + "V";
+            _voltageText.fontSize = 50; // smaller size to be able to fit the V
         }
         else
         {
