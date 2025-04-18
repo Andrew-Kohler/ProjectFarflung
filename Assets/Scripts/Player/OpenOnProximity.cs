@@ -12,19 +12,18 @@ public class OpenOnProximity : MonoBehaviour
     private float _openDistance;
     [SerializeField, Tooltip("Used to trigger the open animation.")]
     private Animator _anim;
+    [SerializeField, Tooltip("Used to trigger SFX")]
+    private AudioSource _audio;
 
-    private Transform _player;
+    private Transform _player = null;
 
     private bool _isOpen = false;
+    private bool _firstAnim = false;    // ensures animator plays out animation properly on start
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        // fetch player transform on start through main camera - this avoids needing a direct reference on the objects
-        _player = Camera.main.GetComponent<CinemachineBrain>().ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CinemachineVirtualCamera>().Follow.parent;
-
-        // default to staying in closed state
-        _anim.Play("Close", -1, 1);
+        // fetch player transform on start - not ideal, but the alternate is adding a reference n every elevator/dumbwaiter
+        _player = GameObject.Find("PlayerCapsule").transform;
     }
 
     // Update is called once per frame
@@ -42,12 +41,25 @@ public class OpenOnProximity : MonoBehaviour
             if (!_isOpen)
             {
                 // ensure smooth open even if open has not completed
-                if (_anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
+                if (_anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1 && _firstAnim)
+                {
                     _anim.Play("Open", -1, 1f - _anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+
+                    // reverse SFX
+                    _audio.pitch = -_audio.pitch;
+                }
                 else
+                {
                     _anim.Play("Open");
 
+                    // SFX - prevent layering multiple sounds
+                    _audio.Stop();
+                    _audio.pitch = 1;
+                    _audio.PlayOneShot(_audio.clip);
+                }
+
                 _isOpen = true;
+                _firstAnim = true;
             }
         }
         // close logic
@@ -57,12 +69,25 @@ public class OpenOnProximity : MonoBehaviour
             if (_isOpen)
             {
                 // ensure smooth close even if open has not completed
-                if (_anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
+                if (_anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1 && _firstAnim)
+                {
                     _anim.Play("Close", -1, 1f - _anim.GetCurrentAnimatorStateInfo(0).normalizedTime);
+
+                    // reverse SFX
+                    _audio.pitch = -_audio.pitch;
+                }
                 else
+                {
+                    // SFX - prevent layering multiple sounds
+                    _audio.Stop();
+                    _audio.pitch = 1;
+                    _audio.PlayOneShot(_audio.clip);
+
                     _anim.Play("Close");
+                }
 
                 _isOpen = false;
+                _firstAnim = true;
             }
         }
     }
