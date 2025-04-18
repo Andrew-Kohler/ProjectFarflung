@@ -327,7 +327,7 @@ namespace StarterAssets
 					if (!_prevInputJump)
 					{
 						AudioManager.Instance.TryPlayFootsteps(true);
-						onJump?.Invoke()
+						onJump?.Invoke();
 					}
 				}
 
