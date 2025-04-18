@@ -247,6 +247,7 @@ GameObject:
   - component: {fileID: 5436624061989759974}
   - component: {fileID: 274923484696418617}
   - component: {fileID: 2236959753785211981}
+  - component: {fileID: 4690141216308267543}
   m_Layer: 0
   m_Name: Terminal
   m_TagString: Untagged
@@ -270,7 +271,7 @@ Transform:
   - {fileID: 4539339306175569260}
   - {fileID: 3981230310418274719}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &274923484696418617
 MonoBehaviour:
@@ -312,6 +313,27 @@ MonoBehaviour:
   - {fileID: 8853587867432060804}
   - {fileID: 129555353205719755}
   _terminal: {fileID: 274923484696418617}
+--- !u!65 &4690141216308267543
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3561067181913076286}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.90008444, y: 1.1755266, z: 1.252617}
+  m_Center: {x: 0, y: 0.9087294, z: -0.082752615}
 --- !u!1 &3893199620008308561
 GameObject:
   m_ObjectHideFlags: 0
