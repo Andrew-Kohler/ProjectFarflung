@@ -24,6 +24,9 @@ public class OpenOnProximity : MonoBehaviour
     {
         // fetch player transform on start - not ideal, but the alternate is adding a reference n every elevator/dumbwaiter
         _player = GameObject.Find("PlayerCapsule").transform;
+
+        // start fully closed always
+        _anim.Play("Close", -1, 1);
     }
 
     // Update is called once per frame
