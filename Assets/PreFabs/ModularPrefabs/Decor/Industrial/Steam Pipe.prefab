@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2519289561235462242}
   - component: {fileID: 2457217795752689666}
-  - component: {fileID: 6666079004682450271}
+  - component: {fileID: 6923251163903131486}
   m_Layer: 0
   m_Name: Steam Pipe
   m_TagString: Untagged
@@ -53,8 +53,8 @@ LODGroup:
     renderers:
     - renderer: {fileID: 3487217777629569318}
   m_Enabled: 1
---- !u!65 &6666079004682450271
-BoxCollider:
+--- !u!136 &6923251163903131486
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -71,9 +71,11 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.4999999, y: 0.28079945, z: 0.28079945}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.11128124
+  m_Height: 1.5500894
+  m_Direction: 0
+  m_Center: {x: -0.0029273033, y: 0, z: 0}
 --- !u!1001 &2856552883123076514
 PrefabInstance:
   m_ObjectHideFlags: 0

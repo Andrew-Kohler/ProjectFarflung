@@ -100,6 +100,9 @@ public class VolumeSlider : MonoBehaviour
                 break;
         }
 
+        // Slider click SFX
+        AudioManager.Instance.PlaySliderClick();
+
         // same formula for all types
         _displayText.text = _slider.value.ToString("##0.") + "%";
     }

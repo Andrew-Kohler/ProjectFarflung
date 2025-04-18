@@ -3,7 +3,22 @@ guid: 4cefb5646c767fa499bd32da6a615924
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DroneImport_EmissiveRed
+    second: {fileID: 2100000, guid: 58eafa18801fe1546b6b69abd12a1566, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DroneImport_EmissveRear
+    second: {fileID: 2100000, guid: 4d893b19b3317d5498d034d98eca587d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DroneImport_EmissveWhite
+    second: {fileID: 2100000, guid: d236015577f8e5e42a57ed109e1056dd, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +105,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.25
+    globalScale: 25
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

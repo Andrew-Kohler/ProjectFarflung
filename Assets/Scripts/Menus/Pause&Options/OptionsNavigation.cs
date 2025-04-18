@@ -45,7 +45,8 @@ public class OptionsNavigation : MonoBehaviour
     void Awake()
     {
         // controls always open by default
-        ToControls();
+        // cannot simply call ToControls() cause then ClickUI SFX would play on start
+        FunctionalToControls();
     }
 
     private void OnEnable()
@@ -71,7 +72,7 @@ public class OptionsNavigation : MonoBehaviour
 
     private void ContextToControls(InputAction.CallbackContext context)
     {
-        ToControls();
+        FunctionalToControls();
     }
 
     #region Button Functions
@@ -79,6 +80,18 @@ public class OptionsNavigation : MonoBehaviour
     /// Enables controls tab. Disables all others.
     /// </summary>
     public void ToControls()
+    {
+        // click UI SFX (only play if not already on new tab)
+        if (!_controlsTabObject.activeSelf)
+            AudioManager.Instance.PlayClickUI();
+
+        FunctionalToControls();
+    }
+
+    /// <summary>
+    /// Handles functionality of swapping to controls WITHOUT SFX
+    /// </summary>
+    private void FunctionalToControls()
     {
         // return toggles to controls tab appropriately when closing out
         _controlsToggle.SetIsOnWithoutNotify(true);
@@ -99,6 +112,10 @@ public class OptionsNavigation : MonoBehaviour
     /// </summary>
     public void ToVolume()
     {
+        // click UI SFX (only play if not already on new tab)
+        if (!_volumeTabObject.activeSelf)
+            AudioManager.Instance.PlayClickUI();
+
         _controlsTabObject.SetActive(false);
         _volumeTabObject.SetActive(true);
         _visualsTabObject.SetActive(false);
@@ -113,6 +130,10 @@ public class OptionsNavigation : MonoBehaviour
     /// </summary>
     public void ToVisuals()
     {
+        // click UI SFX (only play if not already on new tab)
+        if (!_visualsTabObject.activeSelf)
+            AudioManager.Instance.PlayClickUI();
+
         _controlsTabObject.SetActive(false);
         _volumeTabObject.SetActive(false);
         _visualsTabObject.SetActive(true);
@@ -128,6 +149,9 @@ public class OptionsNavigation : MonoBehaviour
     /// </summary>
     public void BackToPause()
     {
+        // click UI SFX
+        AudioManager.Instance.PlayClickUI();
+
         if (_isMainMenu)
         {
             _pauseMenuObject.SetActive(false);
@@ -139,7 +163,7 @@ public class OptionsNavigation : MonoBehaviour
             _optionsMenuObject.SetActive(false);
         }
 
-        ToControls(); // return to default controls enabled state
+        FunctionalToControls(); // return to default controls enabled state
     }
     #endregion
 }

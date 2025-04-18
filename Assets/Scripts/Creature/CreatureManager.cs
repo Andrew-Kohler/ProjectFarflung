@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Handles tracking global creature data, including speed data and player reference
@@ -85,11 +86,18 @@ public class CreatureManager : MonoBehaviour
         // increase / decrease speed
         if (IsAggro)
         {
+            // creature pursuit music track
+            if (SceneManager.GetActiveScene().name != "DeathRealm") // no pursuit music for creature in death realm
+                AudioManager.Instance.QueueCreatureTrack();
+
             // increase speed without cap
             CurrentSpeed += SPEED_INCREASE_FACTOR * Time.deltaTime;
         }
         else
         {
+            // return to normal music track
+            AudioManager.Instance.QueueAmbientTrack();
+
             // new behavior: instantly reset aggro upon leaving a creature zone
             CurrentSpeed = 0;
 
@@ -130,6 +138,9 @@ public class CreatureManager : MonoBehaviour
         // conduct stun logic ONLY if it is able to be stunned again
         if (!IsStunned)
         {
+            // creature stun SFX
+            AudioManager.Instance.PlayCreatureStun();
+
             IsStunned = true;
 
             StartCoroutine(DoStunCreature());

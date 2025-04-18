@@ -227,6 +227,9 @@ public class FileTabController : MonoBehaviour
                 _nodeDisplayList[GameManager.Instance.SceneData.LogIndex].Grow();
                 _lastSelected = GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex];
 
+                // general HUD SFX
+                AudioManager.Instance.PlayGeneralSoundHUD();
+
                 // Move the timeline
                 MoveTimeline(false);
 
@@ -248,6 +251,9 @@ public class FileTabController : MonoBehaviour
                 _nodeDisplayList[GameManager.Instance.SceneData.LogIndex].Grow();
                 _lastSelected = GameManager.Instance.FoundLogs[GameManager.Instance.SceneData.LogIndex];
 
+                // general HUD SFX
+                AudioManager.Instance.PlayGeneralSoundHUD();
+
                 MoveTimeline(false);
 
                 // Move the file nodes
@@ -260,6 +266,9 @@ public class FileTabController : MonoBehaviour
                 {
                     CurrentLogDisplay(false);
                     _isLogOpen = false;
+
+                    // log close SFX
+                    AudioManager.Instance.PlayLogClose();
                 }
                 
             }
@@ -273,6 +282,9 @@ public class FileTabController : MonoBehaviour
                     // We have now accessed this log
                     _nodeDisplayList[GameManager.Instance.SceneData.LogIndex].SetRead(true);
                     GameManager.Instance.SceneData.FoundLogReadStatus[GameManager.Instance.SceneData.LogIndex] = true;
+
+                    // log open SFX
+                    AudioManager.Instance.PlayLogOpen();
                 }
                 else
                 {
@@ -283,12 +295,16 @@ public class FileTabController : MonoBehaviour
                             _textLogIndex = 0;
                         _textLogText.text = _selectedLog.textParas[_textLogIndex];
                         _textLogPageCounter.text = (_textLogIndex + 1) + "/" + _selectedLog.textParas.Count;
+
+                        // general HUD SFX
+                        // only play text cycle SFX if there is actually text to cycle
+                        if (_selectedLog.textParas.Count > 1)
+                            AudioManager.Instance.PlayGeneralSoundHUD();
                     }
                     if(_selectedLog.type == Log.LogType.Audio)
                     {
                         _source.pitch = 1.5f;
                     }
-                    
                 }
                 
             }

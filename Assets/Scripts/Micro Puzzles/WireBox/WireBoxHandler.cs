@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 /// <summary>
 /// Handles checking for puzzle completion, and updates progression data upon completion.
@@ -27,6 +28,8 @@ public class WireBoxHandler : MonoBehaviour
     private GameObject[] _indicatorLights;
     [SerializeField, Tooltip("Materials for indicating if puzzle is won. 0 = not won, 1 = won")]
     private Material[] _indicatorMaterials;
+    [SerializeField, Tooltip("Used to configure text to match voltage total.")]
+    private TextMeshProUGUI _currentVoltageText;
 
     private void Awake()
     {
@@ -44,7 +47,7 @@ public class WireBoxHandler : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {    
         // skip detection of completion condition if already completed
         // this prevents identifier from being added to the list MANY times
         if (GameManager.Instance.SceneData.FixedWireBoxes.Contains(IdentifierName))
@@ -52,10 +55,14 @@ public class WireBoxHandler : MonoBehaviour
 
         // puzzle not completed if end connection has no nodes
         if (!_outputNode.HasAnyConnections())
+        {
+            // no wires connected, simply display input voltage
+            UpdateDisplayText(_outputNode.VoltageDifference);
             return;
+        }
 
         // check puzzle completion
-        int chargeTotal = 0;
+        int chargeTotal = _outputNode.VoltageDifference; // start with charge of starting node
         NodeSelector prevNode = _outputNode;
         NodeSelector currNode = _outputNode.GetFirstConnection();
 
@@ -63,9 +70,15 @@ public class WireBoxHandler : MonoBehaviour
         bool cont = true;
         while (cont)
         {
-            chargeTotal += currNode.VoltageDifference;
+            // don't add the final node's charge
+            if (!currNode.IsEndNode)
+                chargeTotal += currNode.VoltageDifference;
+
+            // fetch next node, if possible
             if (currNode.GetNextConnection(prevNode) is null)
+            {
                 cont = false;
+            }
             else
             {
                 NodeSelector temp = currNode;
@@ -74,11 +87,17 @@ public class WireBoxHandler : MonoBehaviour
             }
         }
 
+        // show running charge total - regardless of completion state
+        UpdateDisplayText(chargeTotal);
+
         // Puzzle completion conditions
-        // (1) connected to start node
+        // (1) connected to end (output) node
         // (2) charge total equals expected output charge
-        if (currNode.IsEndNode && chargeTotal == _outputNode.VoltageDifference)
+        if (currNode.IsEndNode && chargeTotal == currNode.VoltageDifference)
         {
+            // Fix Box SFX
+            AudioManager.Instance.PlayBoxFix();
+
             // mark puzzle as complete
             GameManager.Instance.SceneData.FixedWireBoxes.Add(IdentifierName);
 
@@ -131,5 +150,23 @@ public class WireBoxHandler : MonoBehaviour
         this.enabled = true;
 
         // animation call can go here for opening puzzle??
+    }
+
+    private void UpdateDisplayText(int chargeTotal)
+    {
+        // voltage display text
+        _currentVoltageText.text = (chargeTotal >= 0 ? "+" : "-") + (int)Mathf.Abs(chargeTotal) + "V";
+        if (chargeTotal == 0)
+        {
+            _currentVoltageText.color = Color.white;
+        }
+        else if (chargeTotal > 0)
+        {
+            _currentVoltageText.color = Color.green;
+        }
+        else
+        {
+            _currentVoltageText.color = Color.red;
+        }
     }
 }

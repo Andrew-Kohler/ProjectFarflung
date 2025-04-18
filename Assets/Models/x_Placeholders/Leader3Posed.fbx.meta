@@ -3,7 +3,42 @@ guid: 747cf2c65d5597646a3f32ed7461cd3a
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: AstroRig_model_AccentBody
+    second: {fileID: 2100000, guid: 616cafef31c44ae49afd6628dd715be3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: AstroRig_model_Dial
+    second: {fileID: 2100000, guid: 0a9079dad9c7e9042857bb7804e340e7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: AstroRig_model_MainBody
+    second: {fileID: 2100000, guid: 65a86513a5b5bf546af95a04ae2b87fc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: AstroRig_model_Metal
+    second: {fileID: 2100000, guid: 3bc12ca9947517d4982e56b7a3714671, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: AstroRig_model_Skin
+    second: {fileID: 2100000, guid: c6406c0586095bc44be9e5bd637a2ada, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: AstroRig_model_Visor1
+    second: {fileID: 2100000, guid: ca0ddde8e47cf1f45aa71a3e82afda99, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: AstroRig_model_Void
+    second: {fileID: 2100000, guid: c6406c0586095bc44be9e5bd637a2ada, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -90,7 +125,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.19999999
+    globalScale: 20
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

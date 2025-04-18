@@ -61,6 +61,9 @@ public class LightPuzzleHandler : MonoBehaviour
             return;
         }
 
+        // light button press SFX
+        AudioManager.Instance.PlayLightButtonPress();
+
         for (int i = 0; i < _toggles.Length; i++)
         {
             // apply left pattern

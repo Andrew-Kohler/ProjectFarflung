@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
 using StarterAssets;
 
 /// <summary>
@@ -22,6 +21,9 @@ public class PlayerPositionLoader : MonoBehaviour
 
     void Start()
     {
+        // start ambient music for level scene
+        AudioManager.Instance.QueueAmbientTrack();
+
         // Resume based on terminal data
         if (GameManager.Instance.LoadPoint == -1)
         {

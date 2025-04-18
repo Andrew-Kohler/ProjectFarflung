@@ -32,6 +32,9 @@ public class PauseControls : MonoBehaviour
     private InputActionMap _actionMap;
 
     // Used to ensure that controls text updates when the pause menu is exited
+    // also used to reduce music/ambient volumes while paused
+    public delegate void OnPauseOpen();
+    public static event OnPauseOpen onPauseOpen;
     public delegate void OnPauseClose();
     public static event OnPauseClose onPauseClose;
 
@@ -76,6 +79,9 @@ public class PauseControls : MonoBehaviour
         // Pause
         else
         {
+            // click UI SFX
+            AudioManager.Instance.PlayClickUI();
+
             _pauseMenu.SetActive(true);
 
             // free control over the mouse
@@ -84,9 +90,9 @@ public class PauseControls : MonoBehaviour
             Time.timeScale = 0;
             _actionMap.Disable();
 
-            // TODO: pause controls and time scale
-
             _isPaused = true;
+
+            onPauseOpen?.Invoke();
         }
     }
     #endregion
@@ -97,6 +103,9 @@ public class PauseControls : MonoBehaviour
     /// </summary>
     public void Resume()
     {
+        // click UI SFX
+        AudioManager.Instance.PlayClickUI();
+
         onPauseClose?.Invoke();
         _pauseMenu.SetActive(false);
         _optionsMenu.SetActive(false); // ensure options also closes if that was opened (i.e. closed from Escape press)
@@ -105,10 +114,9 @@ public class PauseControls : MonoBehaviour
         if(GameManager.Instance.PlayerEnabled)  // Enabled check currently used as a shorthand for if a player is in a locked interaction (terminal, wirebox)
             Cursor.lockState = CursorLockMode.Locked;
 
+        // resume controls and time scale
         Time.timeScale = 1;
         _actionMap.Enable();
-        
-        // TODO: resume controls and time scale
 
         _isPaused = false;
     }
@@ -120,6 +128,9 @@ public class PauseControls : MonoBehaviour
     {
         _pauseMenu.SetActive(false);
         _optionsMenu.SetActive(true);
+
+        // click UI SFX
+        AudioManager.Instance.PlayClickUI();
     }
 
     /// <summary>
@@ -128,6 +139,9 @@ public class PauseControls : MonoBehaviour
     public void TryQuit()
     {
         _quitConfirmationPopup.SetActive(true);
+
+        // click UI SFX
+        AudioManager.Instance.PlayClickUI();
     }
 
     /// <summary>
@@ -136,6 +150,9 @@ public class PauseControls : MonoBehaviour
     public void CancelQuit()
     {
         _quitConfirmationPopup.SetActive(false);
+
+        // click UI SFX
+        AudioManager.Instance.PlayClickUI();
     }
 
     /// <summary>
@@ -143,6 +160,9 @@ public class PauseControls : MonoBehaviour
     /// </summary>
     public void ConfirmQuit()
     {
+        // click UI SFX
+        AudioManager.Instance.PlayClickUI();
+
         // ensure transition is able to occur
         Time.timeScale = 1;
         // ensure player cannot re-pause during scene transition

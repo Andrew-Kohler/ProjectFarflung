@@ -15,6 +15,16 @@ public class CreatureMotion : MonoBehaviour
     [SerializeField, Tooltip("Animator for the models motion.")]
     private Animator _animator;
 
+    [Header("Particle Effects")]
+    [SerializeField, Tooltip("Particle system that should play on spawn")]
+    private ParticleSystem _spawnEffect;
+    [SerializeField, Tooltip("Particle system that should play on idle bobbing")]
+    private ParticleSystem _idleEffect;
+    [SerializeField, Tooltip("Particle system that should play on stun")]
+    private ParticleSystem _stunnedEffect;
+    [SerializeField, Tooltip("Particle system that should play on all other motion")]
+    private ParticleSystem _motionEffect;
+
     private bool _isCreatureActive = false;
 
     // Update is called once per frame
@@ -49,8 +59,20 @@ public class CreatureMotion : MonoBehaviour
             float angleFactor = math.remap(0, 180, 1, 0, angle); // 0 degree difference = max speed; 180 degree difference = no speed
             transform.position += transform.forward * angleFactor * CreatureManager.Instance.CurrentSpeed * Time.deltaTime;
             
-            //updates creatures chase animation speed to be similar to its expected speed
+            //updates creatures chase animation speed to be similar to its expected speed & trigger VFX
             _animator.SetFloat("speed", CreatureManager.Instance.CurrentSpeed);
+
+            // VFX trailing effects
+
+            // Apply to particle system force
+            var particleMotion = _motionEffect.forceOverLifetime;
+            particleMotion.enabled = true;
+
+            Vector3 force = transform.forward * angleFactor * CreatureManager.Instance.CurrentSpeed;
+
+            particleMotion.x = new ParticleSystem.MinMaxCurve(force.y * 10);
+            particleMotion.y = new ParticleSystem.MinMaxCurve(force.x * 20);
+            particleMotion.z = new ParticleSystem.MinMaxCurve(force.z * 10);
         }
 
         // ANIMATIONS -------------------
@@ -60,26 +82,49 @@ public class CreatureMotion : MonoBehaviour
         {
             // start stun anim
             _animator.SetBool("isStunned", true);
+
+            // stun VFX
+            if (!_stunnedEffect.isPlaying)
+                _stunnedEffect.Play();
+                    
             // disable other anims
             _animator.SetBool("isMoving", false);
-            // should not modify idle value to ensure it remains the same for creature stun during idle OR during chase
+            _motionEffect.Stop();
+            _idleEffect.Stop();
+
+            // should not modify idle anim value to ensure it remains the same for creature stun during idle OR during chase
         }
         // moving animation (exiting idle)
         else if (CreatureManager.Instance.CurrentSpeed > 0f) {
-            // start movement anim, speed handled above
+            // start movement anim, speed handled above & VFX
             _animator.SetBool("isMoving", true);
-            // disable other anims
+
+            // motion VFX
+            if (!_motionEffect.isPlaying)
+                _motionEffect.Play();
+
+            // disable other anims & VFX
             _animator.SetBool("isIdle", false);
+            _idleEffect.Stop();
             _animator.SetBool("isStunned", false);
-        } 
+            _stunnedEffect.Stop();
+
+        }
         // idle animation - lowest priority (only of not stunned and not moving)
         else if (CreatureManager.Instance.CurrentSpeed == 0f)
         {
-            // start idle anim
+            // start idle anim & VFX
             _animator.SetBool("isIdle", true);
-            // disable other anims
+
+            // idle VFX
+            if (!_idleEffect.isPlaying)
+                _idleEffect.Play();
+
+            // disable other anims & VFX
             _animator.SetBool("isStunned", false);
+            _stunnedEffect.Stop();
             _animator.SetBool("isMoving", false);
+            _motionEffect.Stop();
         }
     }
 
@@ -90,6 +135,9 @@ public class CreatureMotion : MonoBehaviour
     /// </summary>
     public void SpawnCreature(Transform[] spawnLocations)
     {
+        // spawn SFX
+        AudioManager.Instance.PlayCreatureSpawn();
+
         // determine farthest spawn location
         Transform player = CreatureManager.Instance.PlayerTransform;
         Transform farthestOption = spawnLocations[0];
@@ -116,8 +164,9 @@ public class CreatureMotion : MonoBehaviour
         enabled = true;
         _isCreatureActive = true;
 
-        // ALWAYS enter on spawn animation
+        // ALWAYS enter on spawn animation (plays VFX also)
         _animator.Play("Spawn");
+        _spawnEffect.Play();
         // ensure proper starting of idle/turning/stun/chase logic
         _animator.SetBool("isIdle", true);
         _animator.SetBool("isMoving", false);
@@ -133,15 +182,20 @@ public class CreatureMotion : MonoBehaviour
     /// </summary>
     public void DespawnCreature()
     {
+        // despawn SFX
+        AudioManager.Instance.PlayCreatureDespawn();
+
         // allow creature to slowly approach 0 speed again
         CreatureManager.Instance.IsAggro = false;
-
+        // turn off motion VFX
+        _motionEffect.Stop();
         // deactivate creature motion script - freeze behavior
         enabled = false;
         _isCreatureActive = false;
 
-        // trigger despawn animation
+        // trigger despawn animation & VFX
         _animator.SetBool("isDespawned", true);
+        _spawnEffect.Play();
         StartCoroutine(RunDespawnAnimation());
     }
 

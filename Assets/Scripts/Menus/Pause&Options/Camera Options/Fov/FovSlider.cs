@@ -38,6 +38,10 @@ public class FovSlider : MonoBehaviour
     {
         // update saved value and text
         GameManager.Instance.OptionsData.FoV = Mathf.RoundToInt(_slider.value);
+
+        // Slider Click SFX - only when a visual change occurs
+        AudioManager.Instance.PlaySliderClick();
+
         _displayText.text = _slider.value.ToString("00.");
     }
 
@@ -46,6 +50,9 @@ public class FovSlider : MonoBehaviour
     /// </summary>
     public void ResetFoV()
     {
+        // Click UI SFX
+        AudioManager.Instance.PlayClickUI();
+
         GameManager.Instance.OptionsData.ResetFoV();
     }
 }

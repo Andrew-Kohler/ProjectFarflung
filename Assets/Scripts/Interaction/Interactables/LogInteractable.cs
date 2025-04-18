@@ -26,6 +26,9 @@ public class LogInteractable : Interactable
 
     public override void InteractEffects()
     {
+        // pickup SFX
+        AudioManager.Instance.PlayPickup();
+
         GameManager.Instance.AddLogData(data, data.name);
         Destroy(gameObject);
     }

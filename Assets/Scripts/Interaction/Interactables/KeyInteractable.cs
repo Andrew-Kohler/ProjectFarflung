@@ -26,6 +26,9 @@ public class KeyInteractable : Interactable
 
     public override void InteractEffects()
     {
+        // pickup SFX
+        AudioManager.Instance.PlayPickup();
+
         GameManager.Instance.SceneData.Keys.Add(keyName.ToString());
         Destroy(gameObject);
     }
