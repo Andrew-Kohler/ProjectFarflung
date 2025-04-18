@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// Handles interfacing between toggle and game manager data for power management systems.
@@ -11,6 +12,8 @@ public class TerminalZoneToggle : MonoBehaviour
     [Header("Configuration")]
     [Tooltip("Zone index of the region this toggle controls.")]
     public int ZoneIndex;
+    [Tooltip("Zone name of the region this toggle controls.")]
+    public string ZoneName;
 
     [Header("References")]
     [SerializeField, Tooltip("Used to actually call the functional toggle of powered elements on the power system prefab instance.")]
@@ -21,6 +24,8 @@ public class TerminalZoneToggle : MonoBehaviour
     private GameObject _lockedIndicator;
     [SerializeField, Tooltip("Enabled to indicated powered state.")]
     private GameObject _poweredIndicator;
+    [SerializeField, Tooltip("Text that displays name on hover")]
+    private TextMeshProUGUI _zoneNameText;
 
     private PowerSystem _powerSystem;
 
@@ -100,5 +105,10 @@ public class TerminalZoneToggle : MonoBehaviour
             else
                 AudioManager.Instance.PlayUnpowerZone();
         }
+    }
+
+    public void ShowZoneName()
+    {
+        _zoneNameText.text = ZoneName;
     }
 }

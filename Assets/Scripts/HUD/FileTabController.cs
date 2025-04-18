@@ -175,10 +175,19 @@ public class FileTabController : MonoBehaviour
     {
         UpdateFileList();
         UpdateFileText();
-        if (_source.isPlaying)
+        if (_source.isPlaying && Time.timeScale != 0)
         {
+            _source.volume = GameManager.GetLogVolume();
             UpdateAudioSlider();
             UpdateAudioWaveform();
+        }
+        else if(Time.timeScale == 0)
+        {
+            _source.Pause();
+        }
+        else
+        {
+            _source.UnPause();
         }
 
     }
@@ -369,17 +378,20 @@ public class FileTabController : MonoBehaviour
 
             for (int i = 0; i < _bars.Count; i++) //needs to be <= sample rate
             {
-                float level = spectrum[i] * _waveformSensitivity * Time.deltaTime * 1000; 
+                float level = (spectrum[i] * _waveformSensitivity * Time.deltaTime * 1000) / GameManager.Instance.OptionsData.LogVolume; 
                 
                 // Scale bars
                 Vector3 previousScale = _bars[i].transform.localScale;
                 previousScale.y = Mathf.Lerp(previousScale.y, level, _waveformSpeed * Time.deltaTime);
-                if (previousScale.y < 0.02f)
+                if (previousScale.y < 0.02f) // Min and max caps
                     previousScale.y = .02f;
+                if (previousScale.y > 1.5f)
+                    previousScale.y = 1.5f;
 
-                // Color the bars based on their size (because it looks cool)
-                _bars[i].transform.localScale = previousScale;
-                float gradientPercent = previousScale.y * 2;
+
+            _bars[i].transform.localScale = previousScale;
+            // Color the bars based on their size (because it looks cool)
+            float gradientPercent = previousScale.y * 2;
                 if (gradientPercent > 1) gradientPercent = 1;
                 _barsImg[i].color = _gradient.Evaluate(gradientPercent);
             }

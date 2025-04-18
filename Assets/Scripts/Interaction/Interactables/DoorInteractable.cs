@@ -18,6 +18,22 @@ public class DoorInteractable : Interactable
     [HideInInspector, Tooltip("If the door is broken (will not open AT ALL)")]
     public bool IsBroken;
 
+    [Header("Display of Opening Requirements")]
+    [SerializeField, Tooltip("Sprite for displaying which keycard is needed")]
+    private SpriteRenderer _requiredKeycardSprite;
+    [SerializeField, Tooltip("Sprite for displaying if electrics are in order")]
+    private SpriteRenderer _elecOperableSprite;
+    [SerializeField, Tooltip("Graphic information associated with keycards")]
+    public List<Sprite> _keycardInfoSprites;
+    [SerializeField, Tooltip("Image for electricity working")]
+    private Sprite _elecOperableYes;
+    [SerializeField, Tooltip("Image for electricity not working")]
+    private Sprite _elecOperableNo;
+    [SerializeField, Tooltip("Parent of indicator sprites")]
+    private GameObject _indicatorParent;
+    [SerializeField, Tooltip("Parent of E to interact")]
+    private GameObject _interactPromptParent;
+
     // If a door is:
     // CLOSED and BROKEN:       This is never getting opened, ever.
     // CLOSED and NOT BROKEN:   Pretty normal door, honestly.
@@ -46,6 +62,51 @@ public class DoorInteractable : Interactable
         // calling this here ensures 100% consistency regardless of start function execution order
         Element.InitializeInteractable();
 
+        // Properly display the required key for this door
+        switch (RequiredKey)
+        {
+            case PoweredDoor.KeyType.Default:
+                _requiredKeycardSprite.sprite = _keycardInfoSprites[0];
+                break;
+            case PoweredDoor.KeyType.Security:
+                _requiredKeycardSprite.sprite = _keycardInfoSprites[1];
+                break;
+            case PoweredDoor.KeyType.Janitor:
+                _requiredKeycardSprite.sprite = _keycardInfoSprites[2];
+                break;
+            case PoweredDoor.KeyType.Cargo:
+                _requiredKeycardSprite.sprite = _keycardInfoSprites[3];
+                break;
+            case PoweredDoor.KeyType.Engineering:
+                _requiredKeycardSprite.sprite = _keycardInfoSprites[4];
+                break;
+            case PoweredDoor.KeyType.Research:
+                _requiredKeycardSprite.sprite = _keycardInfoSprites[5];
+                break;
+            case PoweredDoor.KeyType.Medical:
+                _requiredKeycardSprite.sprite = _keycardInfoSprites[6];
+                break;
+            case PoweredDoor.KeyType.Command:
+                _requiredKeycardSprite.sprite = _keycardInfoSprites[7];
+                break;
+            case PoweredDoor.KeyType.MedCloset:
+                _requiredKeycardSprite.sprite = _keycardInfoSprites[8];
+                break;
+            case PoweredDoor.KeyType.DoNotDisturbBypass:
+                _requiredKeycardSprite.sprite = _keycardInfoSprites[9];
+                break;
+            case PoweredDoor.KeyType.ResearchDumbwaiter:
+                _requiredKeycardSprite.sprite = _keycardInfoSprites[10];
+                break;
+            case PoweredDoor.KeyType.NuclearGenerator:
+                _requiredKeycardSprite.sprite = _keycardInfoSprites[11];
+                break;
+            default:
+                _requiredKeycardSprite.sprite = _keycardInfoSprites[0];
+                break;
+        }
+
+
         Col = this.GetComponent<BoxCollider>();
 
         // Set the default state of the door
@@ -72,6 +133,9 @@ public class DoorInteractable : Interactable
                 AudioManager.Instance.PlayDoorClose();
             }
         }
+
+        // Updates the visual indicators of whether you can open the door
+        IndicatorMonitor();
     }
 
     public override void InteractEffects()
@@ -98,6 +162,44 @@ public class DoorInteractable : Interactable
             // Door locked sfx (no power)
             AudioManager.Instance.PlayDoorLocked();
         }
+    }
+
+    // Pays attention to the graphics that help the player understand what they need for a door
+    private void IndicatorMonitor()
+    {
+        if (RequiredKey.ToString() == "Default" || GameManager.Instance.SceneData.Keys.Contains(RequiredKey.ToString())) // If they have the key
+            _requiredKeycardSprite.color = Color.green;
+        else
+            _requiredKeycardSprite.color = Color.red;
+
+
+        if (Element.IsPowered() && !IsBroken && !IsActiveDoorCoroutine && !IsOpen)
+        {
+            _elecOperableSprite.color = Color.green;
+            _elecOperableSprite.sprite = _elecOperableYes;
+
+            if (RequiredKey.ToString() == "Default" || GameManager.Instance.SceneData.Keys.Contains(RequiredKey.ToString()))
+            {
+                _indicatorParent.SetActive(false);  // If both conditions are a yes, there's no need for this to be enabled
+                _interactPromptParent.SetActive(true);
+            }
+
+            else
+            {
+                _indicatorParent.SetActive(true);
+                _interactPromptParent.SetActive(false);
+            }
+                
+
+        }
+        else
+        {
+            _elecOperableSprite.color = Color.red;
+            _elecOperableSprite.sprite = _elecOperableNo;
+        }
+            
+
+        
     }
 
     // Plays the door animation, and ensures that the door never tries to open & close at the same time, double open, etc.

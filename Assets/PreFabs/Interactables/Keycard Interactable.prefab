@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 3522718557240394379}
   - component: {fileID: 1986148049409732824}
   - component: {fileID: 9157175866175858949}
+  - component: {fileID: 4996845425268306905}
   m_Layer: 7
   m_Name: E to Interact
   m_TagString: Untagged
@@ -301,6 +302,23 @@ LookAtConstraint:
   m_Sources:
   - sourceTransform: {fileID: 0}
     weight: 1
+--- !u!114 &4996845425268306905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2427853529384410599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a4685ef2ccda7e43a531d680227238c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 0}
+  _textWorld: {fileID: 1986148049409732824}
+  _isCanvas: 0
+  _scenario: 0
+  _actions: {fileID: 5652569292725768737, guid: 4419d82f33d36e848b3ed5af4c8da37e, type: 3}
 --- !u!1 &6161862790554189141
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,7 +402,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6986178923517089852}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1.0279999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -15262,7 +15280,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 1
+  prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
