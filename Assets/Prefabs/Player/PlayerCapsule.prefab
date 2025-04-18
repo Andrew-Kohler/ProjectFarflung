@@ -192,7 +192,7 @@ Transform:
   - {fileID: 4135013735270702856}
   - {fileID: 2282465068763367188}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2547933277920800996
 MonoBehaviour:
@@ -431,6 +431,10 @@ PrefabInstance:
     - target: {fileID: 2533814376793508179, guid: 793bf44a9bb9f9346959199cb1eda6ec, type: 3}
       propertyPath: m_Name
       value: TempAstroFIRSTPOV
+      objectReference: {fileID: 0}
+    - target: {fileID: 2533814376793508179, guid: 793bf44a9bb9f9346959199cb1eda6ec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6564902156599555522, guid: 793bf44a9bb9f9346959199cb1eda6ec, type: 3}
       propertyPath: m_RootOrder
