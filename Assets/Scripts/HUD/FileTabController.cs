@@ -177,7 +177,7 @@ public class FileTabController : MonoBehaviour
         UpdateFileText();
         if (_source.isPlaying && Time.timeScale != 0)
         {
-            _source.volume = GameManager.Instance.OptionsData.LogVolume;
+            _source.volume = GameManager.GetLogVolume();
             UpdateAudioSlider();
             UpdateAudioWaveform();
         }
