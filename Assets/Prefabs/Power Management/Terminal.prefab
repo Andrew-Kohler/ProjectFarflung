@@ -57,6 +57,59 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &498999783824632678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5544936215611887993}
+  - component: {fileID: 7076284058593856292}
+  m_Layer: 19
+  m_Name: Collider (does not block interactable)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5544936215611887993
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498999783824632678}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5436624061989759974}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7076284058593856292
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498999783824632678}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.90008444, y: 1.1755266, z: 1.252617}
+  m_Center: {x: 0, y: 0.9087294, z: -0.082752615}
 --- !u!1 &2026044582082455982
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,7 +300,6 @@ GameObject:
   - component: {fileID: 5436624061989759974}
   - component: {fileID: 274923484696418617}
   - component: {fileID: 2236959753785211981}
-  - component: {fileID: 4690141216308267543}
   m_Layer: 0
   m_Name: Terminal
   m_TagString: Untagged
@@ -267,6 +319,7 @@ Transform:
   m_LocalScale: {x: 0.65529, y: 0.65529, z: 0.65529}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5544936215611887993}
   - {fileID: 969210009761853409}
   - {fileID: 4539339306175569260}
   - {fileID: 3981230310418274719}
@@ -313,27 +366,6 @@ MonoBehaviour:
   - {fileID: 8853587867432060804}
   - {fileID: 129555353205719755}
   _terminal: {fileID: 274923484696418617}
---- !u!65 &4690141216308267543
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3561067181913076286}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.90008444, y: 1.1755266, z: 1.252617}
-  m_Center: {x: 0, y: 0.9087294, z: -0.082752615}
 --- !u!1 &3893199620008308561
 GameObject:
   m_ObjectHideFlags: 0
