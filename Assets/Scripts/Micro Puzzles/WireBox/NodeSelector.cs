@@ -27,6 +27,8 @@ public class NodeSelector : ClickableObject
     private TextMeshProUGUI _voltageText;
     [SerializeField, Tooltip("Models for different charge types of node. 0 = negative, 1 = end node, 2 = positive")]
     private GameObject[] _nodeModels;
+    [SerializeField, Tooltip("Used to enable/disable particle sparking.")]
+    private ParticleSystem _sparkVFX;
 
     private NodeSelector _connection1 = null;
     private NodeSelector _connection2 = null;
@@ -83,7 +85,13 @@ public class NodeSelector : ClickableObject
             }
         }
     }
-       
+
+    private void Start()
+    {
+        // enable AFTER outline script generates and selects things to give outlines to
+        // otherwise particles themselves will receive hover/select outlines
+        _sparkVFX.gameObject.SetActive(true);
+    }
 
     public override void OnObjectClick()
     {
@@ -218,6 +226,19 @@ public class NodeSelector : ClickableObject
         {
             _outline.OutlineWidth = 0;
         }
+    }
+    #endregion
+
+    #region VFX
+    public void EnableSparkVFX()
+    {
+        if (!_sparkVFX.isPlaying)
+            _sparkVFX.Play();
+    }
+
+    public void DisableSparkVFX()
+    {
+        _sparkVFX.Stop();
     }
     #endregion
 }
