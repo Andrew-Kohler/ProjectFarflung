@@ -10,11 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3251248846442661750}
   - component: {fileID: 5625386149350956315}
-  - component: {fileID: 4965146530036814926}
   - component: {fileID: 7707721495598292427}
   - component: {fileID: 6483346157406733368}
   m_Layer: 0
-  m_Name: Door Small Plain Wall
+  m_Name: BrokenOpenDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +31,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 483951942246819590}
   - {fileID: 1368975448856585653}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -58,30 +56,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.78, y: 3, z: 0.3}
   m_Center: {x: 1.15, y: 1.5, z: 0}
---- !u!114 &4965146530036814926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3190364584999887557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d62864f8dfa483419a0d9643f49d7ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PowerDraw: 0
-  _switchIdentifier: 
-  _isSwitchOffByDefault: 0
-  _wireBoxIdentifier: 
-  doorPanels:
-  - {fileID: 6301874696814177089}
-  - {fileID: 3826929600264295126}
-  RequiredKey: 0
-  IsOpen: 0
-  IsBroken: 0
-  _doorCloseDistance: 3.5
-  _brokenDoorPrefab: {fileID: 3190364584999887557, guid: 6152e0bf8e365074b98fb7c68395ede8, type: 3}
 --- !u!65 &7707721495598292427
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -200,6 +174,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -2502216745817589625, guid: e44c479ecb22cf9419d0e2f91b8eb025, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.014
+      objectReference: {fileID: 0}
     - target: {fileID: -2144751712349565698, guid: e44c479ecb22cf9419d0e2f91b8eb025, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
@@ -264,13 +242,17 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[2]
       value: 
       objectReference: {fileID: 2100000, guid: 553dd6b2b210c4243b6a662baf817bf8, type: 2}
+    - target: {fileID: 7884665528434166626, guid: e44c479ecb22cf9419d0e2f91b8eb025, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.962
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e44c479ecb22cf9419d0e2f91b8eb025, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8131509351805305884}
+      addedObject: {fileID: 4364816986968944071}
     - targetCorrespondingSourceObject: {fileID: 5787872636278187269, guid: e44c479ecb22cf9419d0e2f91b8eb025, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8821902709384441853}
@@ -288,7 +270,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e44c479ecb22cf9419d0e2f91b8eb025, type: 3}
   m_PrefabInstance: {fileID: 1546188877682606686}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &8131509351805305884
+--- !u!95 &4364816986968944071
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -298,7 +280,7 @@ Animator:
   m_GameObject: {fileID: 1852179316794965775}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c11f3930ac7e9a742a17ca17053e1b21, type: 2}
+  m_Controller: {fileID: 9100000, guid: 64056cb37ad54e94f9d563d4b5bead80, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -361,107 +343,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.82377803, y: 1.6642481, z: 0.10540667}
   m_Center: {x: -2.001416, y: 0.085119665, z: -0.035754263}
---- !u!1001 &6689276287895933591
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 3251248846442661750}
-    m_Modifications:
-    - target: {fileID: 838185142904863190, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
-      propertyPath: Element
-      value: 
-      objectReference: {fileID: 4965146530036814926}
-    - target: {fileID: 838185142904863190, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
-      propertyPath: DoorAnim
-      value: 
-      objectReference: {fileID: 8131509351805305884}
-    - target: {fileID: 5962105723194384950, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
-      propertyPath: m_Name
-      value: Door Switches
-      objectReference: {fileID: 0}
-    - target: {fileID: 6512841599045629329, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6512841599045629329, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6512841599045629329, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6512841599045629329, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6512841599045629329, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6512841599045629329, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6512841599045629329, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6512841599045629329, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6512841599045629329, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6512841599045629329, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6512841599045629329, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7624287842345500737, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
-      propertyPath: Element
-      value: 
-      objectReference: {fileID: 4965146530036814926}
-    - target: {fileID: 7624287842345500737, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
-      propertyPath: DoorAnim
-      value: 
-      objectReference: {fileID: 8131509351805305884}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
---- !u!4 &483951942246819590 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6512841599045629329, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
-  m_PrefabInstance: {fileID: 6689276287895933591}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3826929600264295126 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7624287842345500737, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
-  m_PrefabInstance: {fileID: 6689276287895933591}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf793f0592c395540bf1c8cb39d986cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6301874696814177089 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 838185142904863190, guid: f918aa3ab9a666b40a8c20c93727cedc, type: 3}
-  m_PrefabInstance: {fileID: 6689276287895933591}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf793f0592c395540bf1c8cb39d986cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
