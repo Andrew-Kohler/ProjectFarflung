@@ -7,11 +7,18 @@ using UnityEngine;
 /// </summary>
 public class BrokenDoorEffects : MonoBehaviour
 {
-    [SerializeField, Tooltip("Used to trigger SFX")]
+    [SerializeField, Tooltip("Used to trigger SFX.")]
     private AudioSource _audio;
+    [SerializeField, Tooltip("Used to trigger VFX.")]
+    private ParticleSystem _particles;
 
-    public void TriggerEffects()
+    public void TriggerAudio()
     {
         _audio.PlayOneShot(_audio.clip);
+    }
+
+    public void TriggerParticles()
+    {
+        _particles.Play();
     }
 }
