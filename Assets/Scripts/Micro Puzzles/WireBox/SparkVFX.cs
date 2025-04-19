@@ -17,8 +17,9 @@ public class SparkVFX : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Spark Condition, not in fixed box + area is activated
-        if (!GameManager.Instance.SceneData.FixedWireBoxes.Contains(_wirebox.IdentifierName) && _wirebox.LightZone.IsPowered())
+        // Spark Condition, not in fixed box + area is activated
+        // only play sparks when player has control (i.e. not in terminal OR wire box)
+        if (!GameManager.Instance.SceneData.FixedWireBoxes.Contains(_wirebox.IdentifierName) && _wirebox.LightZone.IsPowered() && GameManager.Instance.PlayerEnabled)
         {
             // don't restart spark particles if already playing
             if (!_sparkParticles.isPlaying)
