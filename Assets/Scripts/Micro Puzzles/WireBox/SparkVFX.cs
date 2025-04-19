@@ -9,6 +9,8 @@ public class SparkVFX : MonoBehaviour
 {
     [SerializeField, Tooltip("The sparking particle system")]
     public ParticleSystem _sparkParticles;
+    [SerializeField, Tooltip("Used to enable/disable sparking SFX.")]
+    private AudioSource _audio;
     [SerializeField, Tooltip("Used to access wire box identifier and its corresponding light zone.")]
     private WireBoxHandler _wirebox;
 
@@ -20,11 +22,15 @@ public class SparkVFX : MonoBehaviour
         {
             // don't restart spark particles if already playing
             if (!_sparkParticles.isPlaying)
+            {
                 _sparkParticles.Play();
+                _audio.Play();
+            }
         }
         else
         {
             _sparkParticles.Stop();
+            _audio.Stop();
         }
     }
 
