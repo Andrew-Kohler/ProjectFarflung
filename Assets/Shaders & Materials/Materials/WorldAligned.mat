@@ -48,8 +48,10 @@ Material:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     - _BaseMaterialRoughness: 0.3
+    - _BaseRoughness: 0.5
     - _MetallicBase: 0
     - _MetallicIntensity: 0
+    - _MetallicNoise: 0
     - _Noise1Seed: 4
     - _Noise1_Intensity: 0.05
     - _Noise2Seed: 6
@@ -57,6 +59,7 @@ Material:
     - _Noise3Intensity: 0.15
     - _Noise3Seed: 9
     - _NoiseNormals: 0
+    - _NoiseRoughness: 0.5
     - _NoiseRoughnessIntensity: 1
     - _Noise_Normals_On: 1
     - _Normal_Texture_On: 0
@@ -66,12 +69,16 @@ Material:
     - _OverallNoiseScale: 0
     - _Scale: 1
     - _Smoothnness: 48
-    - _Transitions: 0.92
+    - _Transitions: 0.5
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 0}
+    - _Blur: {r: 64, g: 64, b: 64, a: 0}
     - _Side2color: {r: 1, g: 1, b: 1, a: 0}
     - _SideColor: {r: 1, g: 1, b: 1, a: 0}
     - _TopColor: {r: 1, g: 1, b: 1, a: 0}
+    - _Transition: {r: 64, g: 64, b: 64, a: 0}
+    - _Transitions: {r: 32, g: 32, b: 32, a: 0}
+    - _Vector3: {r: 64, g: 64, b: 64, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &7212796365679508189
 MonoBehaviour:

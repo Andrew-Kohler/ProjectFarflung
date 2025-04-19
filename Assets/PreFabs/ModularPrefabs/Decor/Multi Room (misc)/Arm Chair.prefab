@@ -53,8 +53,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.67, y: 0.8, z: 1.06}
-  m_Center: {x: 0, y: 0.39, z: 0}
+  m_Size: {x: 1.29, y: 0.79999995, z: 0.7931646}
+  m_Center: {x: 0, y: 0.39, z: -0.0150450915}
 --- !u!205 &-4091859955102044262
 LODGroup:
   m_ObjectHideFlags: 0
@@ -87,6 +87,18 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 44a867f35b3b19143982ced9cf067f26, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 44a867f35b3b19143982ced9cf067f26, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.825
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 44a867f35b3b19143982ced9cf067f26, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.825
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 44a867f35b3b19143982ced9cf067f26, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.825
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 44a867f35b3b19143982ced9cf067f26, type: 3}
       propertyPath: m_LocalPosition.x
@@ -128,10 +140,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 44a867f35b3b19143982ced9cf067f26, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -6652725513331149018, guid: 44a867f35b3b19143982ced9cf067f26, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 74a3de2088f70a24a971e1e1b4496c33, type: 2}
+      objectReference: {fileID: 2100000, guid: 6ddcdf26f27d13c4ba6dbc0ea15aeb15, type: 2}
     - target: {fileID: -1052647238114628369, guid: 44a867f35b3b19143982ced9cf067f26, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
