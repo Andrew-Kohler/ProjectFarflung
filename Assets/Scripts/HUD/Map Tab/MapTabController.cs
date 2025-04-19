@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
 using Unity.Mathematics;
+using UnityEngine.SceneManagement;
 
 public class MapTabController : MonoBehaviour
 {
@@ -105,10 +106,33 @@ public class MapTabController : MonoBehaviour
         _baselinePlayerHeight = _mainHUD.PlayerTransform.position.y;
 
         // Update the floor we're on, the floor the HUD is on, and the floor being shown by the HUD
+        switch (SceneManager.GetActiveScene().name)
+        {
+            case "Floor1":
+                GameManager.Instance.SceneData.Floor = 1;
+                break;
+            case "Floor2":
+                GameManager.Instance.SceneData.Floor = 2;
+                break;
+            case "Command":
+                GameManager.Instance.SceneData.Floor = 3;
+                break;
+            case "Hangar":
+                // This actually works quite well, as you can only enter a hangar floor from the corresponding main floor
+                break;
+            default:
+                break;
+        }
+
         _currentFloor = GameManager.Instance.SceneData.Floor;
         _currentHUDFloor = _currentFloor;
         _floorSelector.transform.position = _floorNumbers[_currentHUDFloor - 1].transform.position;
-        _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(true);
+        for(int i = 0; i < 3; i++)
+        {
+            if(i == _currentHUDFloor - 1) _floorGameObjects[i].gameObject.SetActive(true);
+            else _floorGameObjects[i].gameObject.SetActive(false);
+        }
+        
 
         _visitationL1Length = GameManager.Instance.SceneData.VisitationList1F.Length;
         _visitationL2Length = GameManager.Instance.SceneData.VisitationList2F.Length;
