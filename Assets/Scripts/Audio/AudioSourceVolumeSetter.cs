@@ -16,6 +16,7 @@ public class AudioSourceVolumeSetter : MonoBehaviour
     private void Awake()
     {
         // ensure volume can be changed, even during scene enter when timescale is 0
+        // okay actually this is NOT solving the scene load sound bug but I swear it fixed it once and then not later - inconsistent?
         _audioSource.velocityUpdateMode = AudioVelocityUpdateMode.Dynamic;
     }
 
