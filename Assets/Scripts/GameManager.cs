@@ -165,6 +165,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < PoweredZones.Length; i++)
                 PoweredZones[i] = false; // all off by default
             PoweredZones[0] = true; // command enabled by default
+            PoweredZones[6] = true; // nuclear enabled by default
 
             PowerSwitches = new List<string>();
 

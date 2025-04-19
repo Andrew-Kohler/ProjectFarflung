@@ -113,6 +113,9 @@ public class FlashlightController : MonoBehaviour
             // cancel charging stun SFX
             AudioManager.Instance.StopChargeStunSFX();
 
+            // flashlight click up SFX
+            AudioManager.Instance.PlayFlashlightClickUp();
+
             return;
         }
 
@@ -168,6 +171,16 @@ public class FlashlightController : MonoBehaviour
 
                 StartCoroutine(DoFlashlightForceOff());
             }
+        }
+
+        // cancel hold state if battery is dead
+        // this prevents player from using stun blast when flashlight is out of battery
+        if (GameManager.FlashlightCharge <= 0)
+        {
+            _isHeld = false;
+
+            // cancel charging stun SFX in case it had started
+            AudioManager.Instance.StopChargeStunSFX();
         }
 
         // Delayed rotation of lights

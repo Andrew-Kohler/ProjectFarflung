@@ -17,6 +17,22 @@ public class PoweredDoor : PoweredElement
     [SerializeField, Tooltip("Distance the player needs to go from a door before it autocloses")]
     private float _doorCloseDistance = 6f;
 
+    [Header("References")]
+    [SerializeField, Tooltip("Used to replace door with broken variant.")]
+    private GameObject _brokenDoorPrefab;
+
+    private void Awake()
+    {
+        // replace door with BrokenOpenDoorPrefab
+        if (IsOpen && IsBroken)
+        {
+            // spawn new broken door at exact same location as current door
+            Instantiate(_brokenDoorPrefab, transform.position, transform.rotation, transform.parent);
+
+            Destroy(this.gameObject);
+        }
+    }
+
     public void InitializeInteractable() 
     {
         // Set the key type on each of the door panels

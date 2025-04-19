@@ -31,6 +31,8 @@ public class WireBoxHandler : MonoBehaviour
     [SerializeField, Tooltip("Used to configure text to match voltage total.")]
     private TextMeshProUGUI _currentVoltageText;
 
+    private NodeSelector _prevSparkNode;
+
     private void Awake()
     {
         // Precondition: MUST be associated with a light to determine if interactor should be disabled
@@ -40,6 +42,8 @@ public class WireBoxHandler : MonoBehaviour
         // Precondition: must have non-empty identifier name
         if (IdentifierName.Equals(""))
             throw new Exception("Incorrect Wire Box Configuration: MUST have non-empty identifier name.");
+
+        _prevSparkNode = _outputNode;
 
         // disabled until interacted with (interaction system accounts for completion to block re-interaction)
         DisablePuzzle();
@@ -56,6 +60,14 @@ public class WireBoxHandler : MonoBehaviour
         // puzzle not completed if end connection has no nodes
         if (!_outputNode.HasAnyConnections())
         {
+            // disable previous sparking if replaced by output node
+            if (_prevSparkNode != _outputNode)
+                _prevSparkNode.DisableSparkVFX();
+
+            // ensure first node properly shows sparking
+            _outputNode.EnableSparkVFX();
+            _prevSparkNode = _outputNode;
+
             // no wires connected, simply display input voltage
             UpdateDisplayText(_outputNode.VoltageDifference);
             return;
@@ -77,10 +89,25 @@ public class WireBoxHandler : MonoBehaviour
             // fetch next node, if possible
             if (currNode.GetNextConnection(prevNode) is null)
             {
+                // ensure sparks enabled - this is the end node
+                // do NOT allow sparks to ever show on the FINAL node (first node sparking handled above)
+                if (!currNode.IsEndNode)
+                {
+                    // disable previous sparking if replaced by output node
+                    if (_prevSparkNode != currNode)
+                        _prevSparkNode.DisableSparkVFX();
+
+                    currNode.EnableSparkVFX();
+                    _prevSparkNode = currNode;
+                }
+
                 cont = false;
             }
             else
             {
+                // ensure sparks disabled - NOT end node
+                currNode.DisableSparkVFX();
+
                 NodeSelector temp = currNode;
                 currNode = currNode.GetNextConnection(prevNode);
                 prevNode = temp;

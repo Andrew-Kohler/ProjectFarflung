@@ -41,7 +41,9 @@ public abstract class Interactable : MonoBehaviour
 
     public virtual void HideVFX()
     {
-        if (!_isActiveCoroutine)
+        // only activate hide VFX coroutine if the vfx is enabled in the first place
+        // prevents animator inactive warning when exiting wire box / terminal
+        if (!_isActiveCoroutine && _vfx.activeInHierarchy)
         {
             _currentHideCoroutine = DoHideVFX();
             StartCoroutine(_currentHideCoroutine);
