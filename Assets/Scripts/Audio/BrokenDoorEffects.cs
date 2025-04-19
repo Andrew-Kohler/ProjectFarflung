@@ -14,7 +14,9 @@ public class BrokenDoorEffects : MonoBehaviour
 
     public void TriggerAudio()
     {
-        _audio.PlayOneShot(_audio.clip);
+        // don't play audio if player is in wire box or terminal, it gets annoying
+        if (GameManager.Instance.PlayerEnabled)
+            _audio.PlayOneShot(_audio.clip);
     }
 
     public void TriggerParticles()
