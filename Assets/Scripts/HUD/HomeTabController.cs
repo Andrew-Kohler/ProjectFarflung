@@ -31,7 +31,9 @@ public class HomeTabController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _healthReadout;
 
     // Flashlight
+    [Header("Flashlight")]
     [SerializeField] private Image _lightFill;
+    [SerializeField] private Image _chargeFill;
 
     // Update is called once per frame
     void Update()
@@ -124,5 +126,6 @@ public class HomeTabController : MonoBehaviour
     private void UpdateFlashlightBattery()
     {
         _lightFill.fillAmount = GameManager.FlashlightCharge;
+        _chargeFill.fillAmount = GameManager.StunHoldRatio;
     }
 }
