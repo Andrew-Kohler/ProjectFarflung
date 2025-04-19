@@ -5072,6 +5072,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8018756150065885535}
   - component: {fileID: 8878295301017870976}
+  - component: {fileID: 7169256198004808614}
   - component: {fileID: 2550424644102502575}
   m_Layer: 0
   m_Name: Sparks
@@ -5111,6 +5112,19 @@ MonoBehaviour:
   _sparkParticles: {fileID: 5968459163663225778}
   _audio: {fileID: 2550424644102502575}
   _wirebox: {fileID: 0}
+--- !u!114 &7169256198004808614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6030090656530122105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5623e847d40e3044dab9acbdb709b926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioSource: {fileID: 2550424644102502575}
 --- !u!82 &2550424644102502575
 AudioSource:
   m_ObjectHideFlags: 0
