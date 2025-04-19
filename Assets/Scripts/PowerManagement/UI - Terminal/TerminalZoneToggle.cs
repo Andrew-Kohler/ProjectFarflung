@@ -111,4 +111,9 @@ public class TerminalZoneToggle : MonoBehaviour
     {
         _zoneNameText.text = ZoneName;
     }
+
+    public void HideZoneName()
+    {
+        _zoneNameText.text = "";
+    }
 }
