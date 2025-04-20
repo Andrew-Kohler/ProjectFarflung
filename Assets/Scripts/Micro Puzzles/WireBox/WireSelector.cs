@@ -25,6 +25,8 @@ public class WireSelector : ClickableObject
     public GameObject UnstuckTape;
     [SerializeField, Tooltip("Main wire renderer for fetching material to be placed on newly placed wire.")]
     public Renderer WireRenderer;
+    [SerializeField, Tooltip("Used to disable wire functionality even though object still enabled.")]
+    private Collider _coll;
 
     private WireManager _wireManager;
     private Outline _outline;
@@ -81,6 +83,28 @@ public class WireSelector : ClickableObject
         _outline.OutlineWidth = _outlineWidth;
         _outline.OutlineColor = _selectedColor;
         _isSelected = true;
+    }
+
+    /// <summary>
+    /// Removes wire visual and collider functionality from left board.
+    /// </summary>
+    public void RemoveWire()
+    {
+        _coll.enabled = false;
+        WireRenderer.enabled = false;
+        StuckTape.SetActive(false);
+        UnstuckTape.SetActive(true);
+    }
+
+    /// <summary>
+    /// Returns wire to left board.
+    /// </summary>
+    public void ReturnWire()
+    {
+        _coll.enabled = true;
+        WireRenderer.enabled = true;
+        StuckTape.SetActive(true);
+        UnstuckTape.SetActive(false);
     }
 
     public override void OnObjectHover()
