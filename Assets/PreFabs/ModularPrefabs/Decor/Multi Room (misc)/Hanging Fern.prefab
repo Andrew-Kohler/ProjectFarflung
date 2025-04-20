@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6650970065366771970}
   - component: {fileID: -7575204302129467623}
+  - component: {fileID: 119498777010215355}
   m_Layer: 0
   m_Name: Hanging Fern
   m_TagString: Untagged
@@ -33,27 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &119498777010215355
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8705891738081840622}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.38, y: 0.76, z: 0.4}
-  m_Center: {x: 0, y: 2.46, z: 0}
 --- !u!205 &-7575204302129467623
 LODGroup:
   m_ObjectHideFlags: 0
@@ -74,6 +54,27 @@ LODGroup:
     - renderer: {fileID: 1376026191824696826}
     - renderer: {fileID: 4760171241366318781}
   m_Enabled: 1
+--- !u!65 &119498777010215355
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8705891738081840622}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.38, y: 0.93147504, z: 0.4}
+  m_Center: {x: 0, y: 2.3742626, z: 0}
 --- !u!1001 &4259278744136118806
 PrefabInstance:
   m_ObjectHideFlags: 0
