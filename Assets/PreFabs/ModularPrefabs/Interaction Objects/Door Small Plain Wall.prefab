@@ -35,7 +35,7 @@ Transform:
   - {fileID: 483951942246819590}
   - {fileID: 1368975448856585653}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &5625386149350956315
 BoxCollider:
@@ -80,7 +80,8 @@ MonoBehaviour:
   RequiredKey: 0
   IsOpen: 0
   IsBroken: 0
-  _doorCloseDistance: 6
+  _doorCloseDistance: 3.5
+  _brokenDoorPrefab: {fileID: 3190364584999887557, guid: 6152e0bf8e365074b98fb7c68395ede8, type: 3}
 --- !u!65 &7707721495598292427
 BoxCollider:
   m_ObjectHideFlags: 0
