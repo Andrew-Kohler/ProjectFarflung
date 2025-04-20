@@ -92,18 +92,6 @@ public class TerminalZoneToggle : MonoBehaviour
     {
         _toggle.interactable = GameManager.Instance.SceneData.TerminalUnlocks[ZoneIndex];
         _lockedIndicator.SetActive(!_toggle.interactable);
-
-        /*if (_lockedIndicator.activeSelf)
-        {
-            _consumptionDisplayText.color = Color.gray;
-            _consumptionDisplayBar.GetComponent<Image>().color = Color.gray;
-        }
-
-        else
-        {
-            _consumptionDisplayText.color = Color.white;
-            _consumptionDisplayBar.GetComponent<Image>().color = Color.white;
-        }*/
     }
 
     /// <summary>
