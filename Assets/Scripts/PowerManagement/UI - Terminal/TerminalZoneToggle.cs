@@ -27,6 +27,11 @@ public class TerminalZoneToggle : MonoBehaviour
     [SerializeField, Tooltip("Text that displays name on hover")]
     private TextMeshProUGUI _zoneNameText;
 
+    [SerializeField, Tooltip("Numbers in ZoneConsumptionDisplay")]
+    private TextMeshProUGUI _consumptionDisplayText;
+    [SerializeField, Tooltip("Bar between said numbers")]
+    private GameObject _consumptionDisplayBar;
+
     private PowerSystem _powerSystem;
 
     private void Awake()
@@ -65,6 +70,19 @@ public class TerminalZoneToggle : MonoBehaviour
         // random behavior since it would depend on which Awake() method happened first (pseudodrandom)
         _toggle.SetIsOnWithoutNotify(GameManager.Instance.SceneData.PoweredZones[ZoneIndex]);
         _poweredIndicator.SetActive(_toggle.isOn); // powered indicator should match toggle
+
+        if (!_poweredIndicator.activeSelf)
+        {
+            _consumptionDisplayText.color = Color.gray;
+            _consumptionDisplayBar.GetComponent<Image>().color = Color.gray;
+        }
+
+        else
+        {
+            _consumptionDisplayText.color = Color.white;
+            _consumptionDisplayBar.GetComponent<Image>().color = Color.white;
+        }
+            
     }
 
     /// <summary>
@@ -74,6 +92,18 @@ public class TerminalZoneToggle : MonoBehaviour
     {
         _toggle.interactable = GameManager.Instance.SceneData.TerminalUnlocks[ZoneIndex];
         _lockedIndicator.SetActive(!_toggle.interactable);
+
+        /*if (_lockedIndicator.activeSelf)
+        {
+            _consumptionDisplayText.color = Color.gray;
+            _consumptionDisplayBar.GetComponent<Image>().color = Color.gray;
+        }
+
+        else
+        {
+            _consumptionDisplayText.color = Color.white;
+            _consumptionDisplayBar.GetComponent<Image>().color = Color.white;
+        }*/
     }
 
     /// <summary>
