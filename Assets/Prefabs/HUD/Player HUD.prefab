@@ -700,6 +700,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 6684873233453581076}
+  _textWorld: {fileID: 0}
+  _isCanvas: 1
   _scenario: 6
   _actions: {fileID: 5652569292725768737, guid: 4419d82f33d36e848b3ed5af4c8da37e, type: 3}
 --- !u!1 &2761421996249534186
@@ -1003,6 +1005,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 7214380328515623515}
+  _textWorld: {fileID: 0}
+  _isCanvas: 1
   _scenario: 1
   _actions: {fileID: -6735490659340567944, guid: 4419d82f33d36e848b3ed5af4c8da37e, type: 3}
 --- !u!1 &3551327100666560547
@@ -2150,6 +2154,18 @@ PrefabInstance:
       propertyPath: _mainHUD
       value: 
       objectReference: {fileID: 8061570771452208166}
+    - target: {fileID: 3433323200161087965, guid: bd77a50ffae39a3438dc2483c4bd7ce4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -49.30002
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518913416830969615, guid: bd77a50ffae39a3438dc2483c4bd7ce4, type: 3}
+      propertyPath: m_text
+      value: StarLight v2.0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518913416830969615, guid: bd77a50ffae39a3438dc2483c4bd7ce4, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5816914269451954804, guid: bd77a50ffae39a3438dc2483c4bd7ce4, type: 3}
       propertyPath: m_Name
       value: Home Tab
@@ -2350,7 +2366,8 @@ PrefabInstance:
       value: File Tab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8954405013352128106, guid: 86e7bc66e61968744ae491332182e09b, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86e7bc66e61968744ae491332182e09b, type: 3}

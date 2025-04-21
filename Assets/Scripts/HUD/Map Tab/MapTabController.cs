@@ -33,6 +33,8 @@ public class MapTabController : MonoBehaviour
     [SerializeField] private Vector4 _2FGameRange;
     [SerializeField] private Vector4 _3FHUDRange;
     [SerializeField] private Vector4 _3FGameRange;
+    [SerializeField] private Vector4 _HangarHUDRange;
+    [SerializeField] private Vector4 _HangarGameRange;
 
     [Header("Floor Lists & Floor Switching")]
     [SerializeField] private List<GameObject> _floorGameObjects;
@@ -106,22 +108,18 @@ public class MapTabController : MonoBehaviour
         _baselinePlayerHeight = _mainHUD.PlayerTransform.position.y;
 
         // Update the floor we're on, the floor the HUD is on, and the floor being shown by the HUD
-        switch (SceneManager.GetActiveScene().name)
+        // Not a switch case because Hangar is accounted for by this just not changing anything when going from 1F or 2F to Hangar
+        if(SceneManager.GetActiveScene().name == "Floor1")
         {
-            case "Floor1":
-                GameManager.Instance.SceneData.Floor = 1;
-                break;
-            case "Floor2":
-                GameManager.Instance.SceneData.Floor = 2;
-                break;
-            case "Command":
-                GameManager.Instance.SceneData.Floor = 3;
-                break;
-            case "Hangar":
-                // This actually works quite well, as you can only enter a hangar floor from the corresponding main floor
-                break;
-            default:
-                break;
+            GameManager.Instance.SceneData.Floor = 1;
+        }
+        if (SceneManager.GetActiveScene().name == "Floor2")
+        {
+            GameManager.Instance.SceneData.Floor = 2;
+        }
+        if (SceneManager.GetActiveScene().name == "Command")
+        {
+            GameManager.Instance.SceneData.Floor = 3;
         }
 
         _currentFloor = GameManager.Instance.SceneData.Floor;
@@ -261,7 +259,7 @@ public class MapTabController : MonoBehaviour
 
 
         // Updating position correctly based on the bounds of the given floor
-        if (_currentFloor == 1)
+        if (_currentFloor == 1) //TODO: Hangar conditionals in 1F and 2F statements
         {
             hudXPos = math.remap(_1FGameRange.x, _1FGameRange.y, _1FHUDRange.x, _1FHUDRange.y, _mainHUD.PlayerTransform.position.x);
             hudYPos = math.remap(_1FGameRange.z, _1FGameRange.w, _1FHUDRange.z, _1FHUDRange.w, _mainHUD.PlayerTransform.position.z);
