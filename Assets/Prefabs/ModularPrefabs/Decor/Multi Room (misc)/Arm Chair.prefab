@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7099466015444382356}
   - component: {fileID: 6851852198253854440}
   - component: {fileID: -4091859955102044262}
+  - component: {fileID: 6871589192105215330}
   m_Layer: 0
   m_Name: Arm Chair
   m_TagString: Untagged
@@ -53,8 +54,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.29, y: 0.79999995, z: 0.7931646}
-  m_Center: {x: 0, y: 0.39, z: -0.0150450915}
+  m_Size: {x: 1.2847933, y: 0.68731767, z: 0.5315102}
+  m_Center: {x: -0.000000022494216, y: 0.33365884, z: -0.06894841}
 --- !u!205 &-4091859955102044262
 LODGroup:
   m_ObjectHideFlags: 0
@@ -76,6 +77,27 @@ LODGroup:
     - renderer: {fileID: 8991512674727199685}
     - renderer: {fileID: 1484681402761904634}
   m_Enabled: 1
+--- !u!65 &6871589192105215330
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4711608868017140596}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.2518595, y: 0.98247534, z: 0.20268537}
+  m_Center: {x: 0.000000028578345, y: 0.67416656, z: 0.25547642}
 --- !u!1001 &876280747231555273
 PrefabInstance:
   m_ObjectHideFlags: 0
