@@ -60,7 +60,10 @@ public class ControlsTextHUD : MonoBehaviour
                     _text.text = "Press " + action.ToUpper() + " to toggle";
                     break;
                 case 8:
-                    _text.text = "DANGER: Hold " + action.ToUpper() + " to overclock";
+                    _text.text = "DANGER: Hold " + action.ToUpper() + " to engage flare";
+                    break;
+                case 9:
+                    _text.text = ">Engage command '" + action.ToUpper() + "' to close system dialogue";
                     break;
                 default:
                     _text.text = "Wuh oh";

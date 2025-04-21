@@ -76,6 +76,8 @@ public class GameManager : MonoBehaviour
         // whether there is data to be overriden - only used for start menu
         public bool NewGameStarted;
 
+        public bool IntroCutsceneWatched;
+
         // HEADS-UP DISPLAY (HUD)
         // Narrative timestamp (conveying to the player that time has past - represented as an integer 0 through 4)
         public int NarrativeTimestamp;
@@ -127,6 +129,7 @@ public class GameManager : MonoBehaviour
         public ProgressionData()
         {
             NewGameStarted = false;
+            IntroCutsceneWatched = false;
 
             // HEADS-UP DISPLAY (HUD)
 
@@ -188,6 +191,7 @@ public class GameManager : MonoBehaviour
         public ProgressionData(ProgressionData other)
         {
             NewGameStarted = other.NewGameStarted;
+            IntroCutsceneWatched = other.IntroCutsceneWatched;
 
             // HEADS-UP DISPLAY (HUD)
             NarrativeTimestamp = other.NarrativeTimestamp;                    
