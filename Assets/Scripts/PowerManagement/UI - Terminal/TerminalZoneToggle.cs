@@ -92,6 +92,12 @@ public class TerminalZoneToggle : MonoBehaviour
     {
         _toggle.interactable = GameManager.Instance.SceneData.TerminalUnlocks[ZoneIndex];
         _lockedIndicator.SetActive(!_toggle.interactable);
+
+/*        if (!_lockedIndicator.activeSelf)
+        {
+            _consumptionDisplayText.color = Color.white;
+            _consumptionDisplayBar.GetComponent<Image>().color = Color.white; 
+        }*/
     }
 
     /// <summary>
@@ -117,11 +123,21 @@ public class TerminalZoneToggle : MonoBehaviour
         // NOT shutting down grid
         else
         {
-            // play proper power/unpower zone SFX
+            // play proper power/unpower zone SFX & change visuals
             if (GameManager.Instance.SceneData.PoweredZones[ZoneIndex] == true)
+            {
                 AudioManager.Instance.PlayPowerZone();
+                _consumptionDisplayText.color = Color.white;
+                _consumptionDisplayBar.GetComponent<Image>().color = Color.white;
+            }
+
             else
+            {
                 AudioManager.Instance.PlayUnpowerZone();
+                _consumptionDisplayText.color = Color.gray;
+                _consumptionDisplayBar.GetComponent<Image>().color = Color.gray;
+            }
+                
         }
     }
 
