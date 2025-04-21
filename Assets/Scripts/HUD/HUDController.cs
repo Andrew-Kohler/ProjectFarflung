@@ -88,7 +88,8 @@ public class HUDController : MonoBehaviour
             // tab cycle SFX
             AudioManager.Instance.PlayTabCycle();
 
-            StartCoroutine(DoTabSwitch());
+            if (GameManager.Instance.SceneData.IntroCutsceneWatched) // Allows the sound to play in the tutorial while the functionality doesn't occur
+                StartCoroutine(DoTabSwitch());
         }
     }
 

@@ -76,6 +76,8 @@ public class GameManager : MonoBehaviour
         // whether there is data to be overriden - only used for start menu
         public bool NewGameStarted;
 
+        public bool IntroCutsceneWatched;
+
         // HEADS-UP DISPLAY (HUD)
         // Narrative timestamp (conveying to the player that time has past - represented as an integer 0 through 4)
         public int NarrativeTimestamp;
@@ -127,6 +129,7 @@ public class GameManager : MonoBehaviour
         public ProgressionData()
         {
             NewGameStarted = false;
+            IntroCutsceneWatched = false;
 
             // HEADS-UP DISPLAY (HUD)
 
@@ -141,10 +144,10 @@ public class GameManager : MonoBehaviour
 
             VisitationList1F[0] = true; // Tram station is where the game opens
 
-            VisitationList2F = new bool[3];
+            VisitationList2F = new bool[54];
             for (int i = 0; i < VisitationList2F.Length; i++)
                 VisitationList2F[i] = false;
-            VisitationList2F[0] = true; // Center room visited by default for now
+            //VisitationList2F[0] = true; // Center room visited by default for now
 
             VisitationList3F = new bool[1];
             for (int i = 0; i < VisitationList3F.Length; i++)
@@ -188,6 +191,7 @@ public class GameManager : MonoBehaviour
         public ProgressionData(ProgressionData other)
         {
             NewGameStarted = other.NewGameStarted;
+            IntroCutsceneWatched = other.IntroCutsceneWatched;
 
             // HEADS-UP DISPLAY (HUD)
             NarrativeTimestamp = other.NarrativeTimestamp;                    
@@ -198,7 +202,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i<VisitationList1F.Length; i++)
                 VisitationList1F[i] = other.VisitationList1F[i];
 
-            VisitationList2F = new bool[3];
+            VisitationList2F = new bool[54];
             for (int i = 0; i<VisitationList2F.Length; i++)
                 VisitationList2F[i] = other.VisitationList2F[i];
 

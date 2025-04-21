@@ -194,6 +194,9 @@ public class DoorInteractable : Interactable
         }
         else
         {
+            _indicatorParent.SetActive(true);   // no power, so there will be an indicator
+            _interactPromptParent.SetActive(false); // no longer able to interact (power was turned off)
+
             _elecOperableSprite.color = Color.red;
             _elecOperableSprite.sprite = _elecOperableNo;
         }
