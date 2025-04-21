@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
 using Unity.Mathematics;
+using UnityEngine.SceneManagement;
 
 public class MapTabController : MonoBehaviour
 {
@@ -32,6 +33,8 @@ public class MapTabController : MonoBehaviour
     [SerializeField] private Vector4 _2FGameRange;
     [SerializeField] private Vector4 _3FHUDRange;
     [SerializeField] private Vector4 _3FGameRange;
+    [SerializeField] private Vector4 _HangarHUDRange;
+    [SerializeField] private Vector4 _HangarGameRange;
 
     [Header("Floor Lists & Floor Switching")]
     [SerializeField] private List<GameObject> _floorGameObjects;
@@ -105,10 +108,29 @@ public class MapTabController : MonoBehaviour
         _baselinePlayerHeight = _mainHUD.PlayerTransform.position.y;
 
         // Update the floor we're on, the floor the HUD is on, and the floor being shown by the HUD
+        // Not a switch case because Hangar is accounted for by this just not changing anything when going from 1F or 2F to Hangar
+        if(SceneManager.GetActiveScene().name == "Floor1")
+        {
+            GameManager.Instance.SceneData.Floor = 1;
+        }
+        if (SceneManager.GetActiveScene().name == "Floor2")
+        {
+            GameManager.Instance.SceneData.Floor = 2;
+        }
+        if (SceneManager.GetActiveScene().name == "Command")
+        {
+            GameManager.Instance.SceneData.Floor = 3;
+        }
+
         _currentFloor = GameManager.Instance.SceneData.Floor;
         _currentHUDFloor = _currentFloor;
         _floorSelector.transform.position = _floorNumbers[_currentHUDFloor - 1].transform.position;
-        _floorGameObjects[_currentHUDFloor - 1].gameObject.SetActive(true);
+        for(int i = 0; i < 3; i++)
+        {
+            if(i == _currentHUDFloor - 1) _floorGameObjects[i].gameObject.SetActive(true);
+            else _floorGameObjects[i].gameObject.SetActive(false);
+        }
+        
 
         _visitationL1Length = GameManager.Instance.SceneData.VisitationList1F.Length;
         _visitationL2Length = GameManager.Instance.SceneData.VisitationList2F.Length;
@@ -237,7 +259,7 @@ public class MapTabController : MonoBehaviour
 
 
         // Updating position correctly based on the bounds of the given floor
-        if (_currentFloor == 1)
+        if (_currentFloor == 1) //TODO: Hangar conditionals in 1F and 2F statements
         {
             hudXPos = math.remap(_1FGameRange.x, _1FGameRange.y, _1FHUDRange.x, _1FHUDRange.y, _mainHUD.PlayerTransform.position.x);
             hudYPos = math.remap(_1FGameRange.z, _1FGameRange.w, _1FHUDRange.z, _1FHUDRange.w, _mainHUD.PlayerTransform.position.z);
