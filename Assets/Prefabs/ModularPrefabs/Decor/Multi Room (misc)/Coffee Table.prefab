@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3343381511082574044}
   - component: {fileID: 4893215913729184674}
-  - component: {fileID: 6626134165117228505}
   m_Layer: 0
   m_Name: Coffee Table
   m_TagString: Untagged
@@ -31,6 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5768338008890318769}
+  - {fileID: 4268366855921732005}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -59,13 +59,45 @@ LODGroup:
     - renderer: {fileID: 5435363083389721579}
     - renderer: {fileID: 8285641802178844372}
   m_Enabled: 1
---- !u!136 &6626134165117228505
-CapsuleCollider:
+--- !u!1 &5831395518276750585
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2721847832279839816}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4268366855921732005}
+  - component: {fileID: 1382308814926431701}
+  m_Layer: 0
+  m_Name: Colldier
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4268366855921732005
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5831395518276750585}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3.6366193, y: 1.198896, z: 3.6366193}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3343381511082574044}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &1382308814926431701
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5831395518276750585}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -77,11 +109,10 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.93
-  m_Height: 2.63
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.52, z: 0}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5076798556035486163, guid: d5b56c7cb3e7ddc4bb76d97f839a8e24, type: 3}
 --- !u!1001 &6307284294833797210
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -189,7 +220,7 @@ PrefabInstance:
     - target: {fileID: 3334084601288164714, guid: 0026d2c8d293e7b4f96a7af2f64c6a45, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: ead67c14ecd67b44a8c6c6c7e586ddfa, type: 2}
+      objectReference: {fileID: 2100000, guid: 3f32bc327b4c2fd42ac9a3f89fb249ba, type: 2}
     - target: {fileID: 6957521621168839148, guid: 0026d2c8d293e7b4f96a7af2f64c6a45, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647

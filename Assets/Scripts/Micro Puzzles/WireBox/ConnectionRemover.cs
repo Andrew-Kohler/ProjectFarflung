@@ -40,9 +40,7 @@ public class ConnectionRemover : ClickableObject
     public override void OnObjectClick()
     {
         // re-enable wire on wire board
-        _wireSelector.gameObject.SetActive(true);
-        _wireSelector.StuckTape.SetActive(true);
-        _wireSelector.UnstuckTape.SetActive(false);
+        _wireSelector.ReturnWire();
 
         // remove node connections for connection processing
         _connectedNodes[0].RemoveConnection(_connectedNodes[1]);
