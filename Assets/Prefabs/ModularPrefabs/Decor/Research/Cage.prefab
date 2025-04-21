@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 3005089272507001558}
   - component: {fileID: 6813795369063548666}
   - component: {fileID: 7095567062266846710}
+  - component: {fileID: 7791301118417673886}
+  - component: {fileID: 8406132106055804228}
   m_Layer: 0
   m_Name: Cage
   m_TagString: Untagged
@@ -186,8 +188,50 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
+  m_Size: {x: 0.986442, y: 1.9787422, z: 0.10000008}
+  m_Center: {x: 1.006777, y: 1.0206263, z: 1.5}
+--- !u!65 &7791301118417673886
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6959464902643939642}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
   m_Size: {x: 3, y: 1, z: 0.1}
   m_Center: {x: 0, y: 2.5, z: 1.5}
+--- !u!65 &8406132106055804228
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6959464902643939642}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.986442, y: 1.9787422, z: 0.10000008}
+  m_Center: {x: -1.006777, y: 1.0206263, z: 1.5}
 --- !u!1001 &5085572062055552137
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -240,9 +284,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8225957826858751774, guid: b6f4122cb26c3834e9f2121855860fa4, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8068073526183931155, guid: b6f4122cb26c3834e9f2121855860fa4, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6303116636865536453, guid: b6f4122cb26c3834e9f2121855860fa4, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 243041194690276544, guid: b6f4122cb26c3834e9f2121855860fa4, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6f4122cb26c3834e9f2121855860fa4, type: 3}
       propertyPath: m_Name
       value: Cage
+      objectReference: {fileID: 0}
+    - target: {fileID: 6327709693574008663, guid: b6f4122cb26c3834e9f2121855860fa4, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -296,8 +360,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0221343, y: 2.7518384, z: 0.09859109}
-  m_Center: {x: -0.49190474, y: 0.50190115, z: -0.07078707}
+  m_Size: {x: 1.0221343, y: 2.7518349, z: 0.20613739}
+  m_Center: {x: -0.49190477, y: 0.50190115, z: -0.017013896}
 --- !u!23 &6926282199144567598 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 2777749199383906215, guid: b6f4122cb26c3834e9f2121855860fa4, type: 3}
