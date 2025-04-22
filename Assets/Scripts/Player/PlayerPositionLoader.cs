@@ -79,6 +79,9 @@ public class PlayerPositionLoader : MonoBehaviour
                 }
             }
 
+            // allow player to work again
+            _charController.enabled = true;
+
             // if we got this far, no matching terminal was found - no loading occurs (throw a warning)
             Debug.LogWarning("PlayerPositionLoader could not find the appropriate terminal in this scene to load position based on save data." +
                 " This should NOT occur through normal play but can occur through editor testing. The player will simply remain where they were placed in editor.");
@@ -112,6 +115,9 @@ public class PlayerPositionLoader : MonoBehaviour
             // move player to load spot - the actual functionality!
             transform.position = loadSpots[GameManager.Instance.LoadPoint].transform.position;
             transform.rotation = loadSpots[GameManager.Instance.LoadPoint].transform.rotation;
+
+            // allow player to work again
+            _charController.enabled = true;
         }
     }
 }
