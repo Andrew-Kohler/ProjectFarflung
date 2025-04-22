@@ -56,8 +56,8 @@ public class StartMenuHandler : MonoBehaviour
     private List<Sprite> _modeImages;
 
     [Header("Scene Intro Sequence")]
-    [SerializeField, Tooltip("Toggle for whether this plays (for editor work)")]
-    private bool _doOpen = true;
+    /*[SerializeField, Tooltip("Toggle for whether this plays (for editor work)")]
+    private bool _doOpen = true;*/
     [SerializeField, Tooltip("Parent of the cutscene (off by default)")]
     private GameObject _cutsceneParent;
     [SerializeField, Tooltip("CanvasGroupController for full logo")]
@@ -289,9 +289,10 @@ public class StartMenuHandler : MonoBehaviour
 
     private IEnumerator DoInitialLoad()
     {
-        if (_doOpen)
+        _cutsceneParent.SetActive(true);
+        if (!GameManager.Instance.GameBooted)
         {
-            _cutsceneParent.SetActive(true);
+            
             // Fade in Farflung Games
             yield return new WaitForSeconds(1f);
             _fullLogoGroup.FadeIn(4f);
@@ -304,6 +305,14 @@ public class StartMenuHandler : MonoBehaviour
             // Fade out backer so that you can see the main menu
             _backerGroup.FadeOut(4f);
             yield return new WaitForSeconds(2f);
+            _backerGroup.ToggleBlocker(false);
+            GameManager.Instance.GameBooted = true;
+        }
+        else
+        {
+            _fullLogoGroup.FadeIn(0f);
+            _gamesGroup.FadeOut(0f);
+            _backerGroup.FadeOut(0f);
             _backerGroup.ToggleBlocker(false);
         }
         

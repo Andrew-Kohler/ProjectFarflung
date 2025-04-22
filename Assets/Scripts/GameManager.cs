@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     // Whether the player is allowed to do anything right now
     public bool PlayerEnabled = false; // starts false since scene enter sets it to true
 
+    public bool GameBooted = false; // Used to see if the game has been booted so that the lengthly opener on the start menu only plays once
+
     // The index of the point the player should be positioned at when they load into a scene
     public int LoadPoint = -1; // -1 means logic will default to using resume logic (i.e. picking based on terminal or default pos for station).
 
