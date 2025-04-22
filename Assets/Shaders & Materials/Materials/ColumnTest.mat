@@ -35,6 +35,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: e34091010bb66964785a1ab88962b936, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _TopTexture:
         m_Texture: {fileID: 2800000, guid: 98f7610c62e960141a0669afc6534752, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -62,11 +66,15 @@ Material:
     - _NormalsIntensity: 0
     - _OveralNoiseIntensity: 1.39
     - _OverallNoiseScale: 0
+    - _OverallNoiseScale_1: 41.4
     - _Scale: 1
     - _Smoothnness: 105.66
+    - _TextureNormalIntensity: 1
+    - _TextureTiling: 0
     - _Transitions: 0.5
+    - _TriPlaneBlur: 0
     m_Colors:
-    - _BaseColor: {r: 0.57850003, g: 0.598, b: 0.624, a: 0}
+    - _BaseColor: {r: 0.48867923, g: 0.5018868, b: 0.525, a: 0}
     - _Transition: {r: 32, g: 64, b: 64, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &2119745265945795886
