@@ -28,6 +28,8 @@ namespace StarterAssets
 		private InputAction _moveBackward;
 		private InputAction _moveLeft;
 
+		private bool _firstSceneLoad = false;
+
 		private void OnEnable()
         {
 			// bind input updating
@@ -49,7 +51,14 @@ namespace StarterAssets
 			_moveLeft.Enable();
 
 			// enter locked state upon being in this scene (enabling the player)
-			SetCursorState(true);
+			// this is also called on re-focusing the application
+			if (!_firstSceneLoad || (GameManager.Instance.PlayerEnabled && Time.timeScale != 0))
+			{
+				SetCursorState(true);   // locked mode
+				_firstSceneLoad = true;	// only do override first time on scene load (special case handled different from re-focusing)
+			}
+			else
+				SetCursorState(false);	// free cursor
 		}
         private void OnDisable()
         {
