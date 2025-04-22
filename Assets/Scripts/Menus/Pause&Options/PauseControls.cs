@@ -111,7 +111,7 @@ public class PauseControls : MonoBehaviour
         _optionsMenu.SetActive(false); // ensure options also closes if that was opened (i.e. closed from Escape press)
 
         // lock mouse back to center screen for first-person controls
-        if(GameManager.Instance.PlayerEnabled)  // Enabled check currently used as a shorthand for if a player is in a locked interaction (terminal, wirebox)
+        if(GameManager.Instance.PlayerEnabled || !GameManager.Instance.SceneData.IntroCutsceneWatched)  // Enabled check currently used as a shorthand for if a player is in a locked interaction (terminal, wirebox)
             Cursor.lockState = CursorLockMode.Locked;
 
         // resume controls and time scale
