@@ -182,7 +182,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 2
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 1}
@@ -192,9 +192,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
+    m_HighlightedSprite: {fileID: 21300000, guid: 78def325637fbc14fb78a1f9101c381d, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 78def325637fbc14fb78a1f9101c381d, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 78def325637fbc14fb78a1f9101c381d, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -251,8 +251,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 7a22a3c1584b4d94b8759ee592d3bf90, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -508,15 +508,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Confirm
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 744d6ded094399e40aa91c0638735f34, type: 2}
-  m_sharedMaterial: {fileID: -9100407609249715480, guid: 744d6ded094399e40aa91c0638735f34, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: b1d75e0ed6b649446b787729ab8ef7be, type: 2}
+  m_sharedMaterial: {fileID: -1497321639230609691, guid: b1d75e0ed6b649446b787729ab8ef7be, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -918,6 +918,10 @@ PrefabInstance:
     - target: {fileID: 866672402259209243, guid: 78c6f5d297a1f1149ab3de08fd715c3b, type: 3}
       propertyPath: m_Name
       value: Brightness Conflguration
+      objectReference: {fileID: 0}
+    - target: {fileID: 4630341529863586579, guid: 78c6f5d297a1f1149ab3de08fd715c3b, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 5321482137537883350, guid: 78c6f5d297a1f1149ab3de08fd715c3b, type: 3}
       propertyPath: m_AnchorMax.y
