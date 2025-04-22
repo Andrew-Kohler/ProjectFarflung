@@ -45,7 +45,7 @@ public class SceneSwapInteractable : Interactable
         }
         else
         {
-            // TODO: negative feedback for unable to interact
+            AudioManager.Instance.PlayDoorLocked();
         }
     }
 
@@ -57,6 +57,7 @@ public class SceneSwapInteractable : Interactable
         }
         else
         {
+            _requiredKeycard.sprite = _requiredKeycardImage;
             _indicatorParent.SetActive(true);
             _interactPromptParent.SetActive(false);
         }

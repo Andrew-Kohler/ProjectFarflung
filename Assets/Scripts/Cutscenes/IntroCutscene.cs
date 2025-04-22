@@ -170,6 +170,7 @@ public class IntroCutscene : MonoBehaviour
     void Update()
     {
         _flashlightMeter.fillAmount = GameManager.StunHoldRatio;
+        GameManager.Instance.PlayerEnabled = GameManager.Instance.SceneData.IntroCutsceneWatched; // Keeps the player disabled
     }
 
     private IEnumerator DoIntroCutscene()
@@ -185,6 +186,7 @@ public class IntroCutscene : MonoBehaviour
         // Part 2: Welcome to calibration
         _anim.Play("Intro2", 0, 0);
         yield return new WaitForSeconds(1.667f);
+        _interactPressed = false;
         yield return new WaitUntil(() => _interactPressed);
         _interactPressed = false;
 
@@ -224,12 +226,14 @@ public class IntroCutscene : MonoBehaviour
         // Part 6: Calibration conclusion
         _anim.Play("Intro6", 0, 0);
         yield return new WaitForSeconds(1.1667f);
+        _interactPressed = false;
         yield return new WaitUntil(() => _interactPressed);
         _interactPressed = false;
 
         // Part 7: Attempting to connect
         _anim.Play("Intro7", 0, 0);
         yield return new WaitForSeconds(25f);
+        _interactPressed = false;
         yield return new WaitUntil(() => _interactPressed);
         _interactPressed = false;
 
@@ -239,8 +243,8 @@ public class IntroCutscene : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // Cleanup
-        GameManager.Instance.PlayerEnabled = true;
         GameManager.Instance.SceneData.IntroCutsceneWatched = true;
-        
+        GameManager.Instance.PlayerEnabled = true;
+        Destroy(this);
     }
 }

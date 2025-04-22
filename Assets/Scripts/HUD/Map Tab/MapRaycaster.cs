@@ -86,8 +86,13 @@ public class MapRaycaster : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision) // For when a player spawns into a trigger, since they didn't 'enter' it
     {
-        collision.GetComponent<Image>().color = _activeColor;
-        _tabController.SetLocationText(collision.gameObject.name.Substring(2, collision.gameObject.name.Length - 2));
+        if (collision.GetComponent<Image>().color != _activeColor)
+        {
+            collision.GetComponent<Image>().color = _activeColor;
+            onPassthrough?.Invoke(int.Parse(collision.gameObject.name.Substring(0, 2)));
+            _tabController.SetLocationText(collision.gameObject.name.Substring(2, collision.gameObject.name.Length - 2));
+        }
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)

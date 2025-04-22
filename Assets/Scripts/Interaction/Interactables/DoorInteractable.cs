@@ -165,7 +165,7 @@ public class DoorInteractable : Interactable
     }
 
     // Pays attention to the graphics that help the player understand what they need for a door
-    private void IndicatorMonitor()
+    private void IndicatorMonitor() // Problem is somewhere in here
     {
         if (RequiredKey.ToString() == "Default" || GameManager.Instance.SceneData.Keys.Contains(RequiredKey.ToString())) // If they have the key
             _requiredKeycardSprite.color = Color.green;
@@ -173,7 +173,7 @@ public class DoorInteractable : Interactable
             _requiredKeycardSprite.color = Color.red;
 
 
-        if (Element.IsPowered() && !IsBroken && !IsActiveDoorCoroutine && !IsOpen)
+        if (Element.IsPowered() && !IsBroken) //  && !IsActiveDoorCoroutine && !IsOpen
         {
             _elecOperableSprite.color = Color.green;
             _elecOperableSprite.sprite = _elecOperableYes;
