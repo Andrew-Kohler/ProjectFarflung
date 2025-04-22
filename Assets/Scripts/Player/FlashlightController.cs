@@ -79,7 +79,7 @@ public class FlashlightController : MonoBehaviour
     private void FlashlightClick(InputAction.CallbackContext context)
     {
         // skip functionality if player is in light puzzle, terminal, or wire box
-        if (!GameManager.Instance.PlayerEnabled)
+        if (!GameManager.Instance.PlayerEnabled && GameManager.Instance.SceneData.IntroCutsceneWatched)
             return;
 
         // start timer for stun blast
@@ -100,7 +100,7 @@ public class FlashlightController : MonoBehaviour
     private void ToggleFlashlight(InputAction.CallbackContext context)
     {
         // skip functionality if player is in light puzzle, terminal, or wire box
-        if (!GameManager.Instance.PlayerEnabled)
+        if (!GameManager.Instance.PlayerEnabled && GameManager.Instance.SceneData.IntroCutsceneWatched)
             return;
 
         // do NOT turn light off on release if we previously stun blasted (off of this same click)
