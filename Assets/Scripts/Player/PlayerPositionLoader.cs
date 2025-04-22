@@ -18,9 +18,14 @@ public class PlayerPositionLoader : MonoBehaviour
     private Transform _followTransform;
     [SerializeField, Tooltip("Needed to override starting pitch on camera.")]
     private FirstPersonController _controller;
+    [SerializeField, Tooltip("Used to disable char controller when moving player on start.")]
+    private CharacterController _charController;
 
     void Start()
     {
+        // prevents character controller position from re-overriding position back in some cases
+        _charController.enabled = false;
+
         // start ambient music for level scene
         AudioManager.Instance.QueueAmbientTrack();
 
@@ -36,6 +41,10 @@ public class PlayerPositionLoader : MonoBehaviour
                     Debug.LogWarning("PlayerPositionLoader attempting to default to first position. " +
                         "This will not work because there is either no load spot parent assigned, or it contains no children transforms. " +
                         "The player will simply remain where they were placed in editor.");
+
+                    // allow player to work again
+                    _charController.enabled = true;
+
                     return;
                 }
 
@@ -43,6 +52,10 @@ public class PlayerPositionLoader : MonoBehaviour
                 Transform defaultLoadSpot = _loadSpotParent.transform.GetChild(0);
                 transform.position = defaultLoadSpot.position;
                 transform.rotation = defaultLoadSpot.rotation;
+
+                // allow player to work again
+                _charController.enabled = true;
+
                 return;
             }
 
@@ -59,9 +72,15 @@ public class PlayerPositionLoader : MonoBehaviour
                     // ensure player controller does not override angle
                     _controller.OverrideTargetPitch(_terminalCamAngle);
 
+                    // allow player to work again
+                    _charController.enabled = true;
+
                     return;
                 }
             }
+
+            // allow player to work again
+            _charController.enabled = true;
 
             // if we got this far, no matching terminal was found - no loading occurs (throw a warning)
             Debug.LogWarning("PlayerPositionLoader could not find the appropriate terminal in this scene to load position based on save data." +
@@ -77,6 +96,10 @@ public class PlayerPositionLoader : MonoBehaviour
             {
                 Debug.LogWarning("PlayerPositionLoader will not work because there is either no load spot parent assigned, or it contains no children transforms. " +
                     "The player will simply remain where they were placed in editor.");
+
+                // allow player to work again
+                _charController.enabled = true;
+
                 return;
             }
 
@@ -92,6 +115,9 @@ public class PlayerPositionLoader : MonoBehaviour
             // move player to load spot - the actual functionality!
             transform.position = loadSpots[GameManager.Instance.LoadPoint].transform.position;
             transform.rotation = loadSpots[GameManager.Instance.LoadPoint].transform.rotation;
+
+            // allow player to work again
+            _charController.enabled = true;
         }
     }
 }
