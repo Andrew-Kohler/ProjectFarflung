@@ -52,7 +52,8 @@ LODGroup:
   - screenRelativeHeight: 0.05
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: 5352042136167588936, guid: 70bdc3b3b4187a44087bf002f0d514f4, type: 3}
+    - renderer: {fileID: 8818779486524978581}
+    - renderer: {fileID: 3702135818783664450}
   m_Enabled: 1
 --- !u!1 &6685999101473981785
 GameObject:
@@ -178,6 +179,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 76cd00edc1d4d46459efbfad0b99005f, type: 3}
   m_PrefabInstance: {fileID: 2639449441152218566}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &3702135818783664450 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 76cd00edc1d4d46459efbfad0b99005f, type: 3}
+  m_PrefabInstance: {fileID: 2639449441152218566}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5477577381834046263
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -234,7 +240,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Water Canister
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -1660572664063737671, guid: 188dc514bc580f645a3e99f0fd6663af, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -242,5 +249,10 @@ PrefabInstance:
 --- !u!4 &79950095991191727 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5555271140068197272, guid: 188dc514bc580f645a3e99f0fd6663af, type: 3}
+  m_PrefabInstance: {fileID: 5477577381834046263}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8818779486524978581 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3920060921153326754, guid: 188dc514bc580f645a3e99f0fd6663af, type: 3}
   m_PrefabInstance: {fileID: 5477577381834046263}
   m_PrefabAsset: {fileID: 0}
