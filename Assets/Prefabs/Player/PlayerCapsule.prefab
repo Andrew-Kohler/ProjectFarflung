@@ -192,7 +192,7 @@ Transform:
   - {fileID: 4135013735270702856}
   - {fileID: 2282465068763367188}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2547933277920800996
 MonoBehaviour:
@@ -224,6 +224,7 @@ MonoBehaviour:
   _terminalCamAngle: 30
   _followTransform: {fileID: 4135013735270702856}
   _controller: {fileID: 8616685848737228371}
+  _charController: {fileID: 8616685848737228382}
 --- !u!143 &8616685848737228382
 CharacterController:
   m_ObjectHideFlags: 0
