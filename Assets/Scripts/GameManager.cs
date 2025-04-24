@@ -304,7 +304,14 @@ public class GameManager : MonoBehaviour
         // Resets BOTH game and scene data to properly reset progress
         Instance.GameData = new ProgressionData();
         Instance.SceneData = new ProgressionData();
-    }
+
+        // Clear / Reset all scene data between new game saves (i.e. non-saved data)
+        // i.e. properly reset stuff from previous playthrough if a playthrough is started in the same session
+        DefaultSceneData();
+        FoundLogs = new List<Log>();
+        PlayerEnabled = false; // starts false since scene enter sets it to true
+        LoadPoint = -1; // -1 means logic will default to using resume logic (i.e. picking based on terminal or default pos for station).
+}
 
     // private stored scene data
     private ProgressionData _sceneData;

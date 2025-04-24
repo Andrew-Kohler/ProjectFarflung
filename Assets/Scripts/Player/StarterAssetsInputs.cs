@@ -58,7 +58,7 @@ namespace StarterAssets
 				_firstSceneLoad = true;	// only do override first time on scene load (special case handled different from re-focusing)
 			}
 			else
-				SetCursorState(false);	// free cursor
+				SetCursorState(false);  // free cursor
 		}
         private void OnDisable()
         {
@@ -171,6 +171,10 @@ namespace StarterAssets
 		private void SetCursorState(bool newState)
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
+			if (newState)
+				Cursor.visible = false;
+			else
+				Cursor.visible = true;
 		}
 	}
 	
