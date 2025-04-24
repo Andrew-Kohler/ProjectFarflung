@@ -55,6 +55,7 @@ public class SceneTransitionHandler : MonoBehaviour
             {
                 // return mouse to first-person mode if not already
                 Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
 
                 SceneManager.LoadScene("DeathRealm");
             }
@@ -66,24 +67,28 @@ public class SceneTransitionHandler : MonoBehaviour
                     case 0:
                         // return mouse to first-person mode if not already
                         Cursor.lockState = CursorLockMode.Locked;
+                        Cursor.visible = false;
 
                         SceneManager.LoadScene("Hangar");
                         break;
                     case 1:
                         // return mouse to first-person mode if not already
                         Cursor.lockState = CursorLockMode.Locked;
+                        Cursor.visible = false;
 
                         SceneManager.LoadScene("Floor1");
                         break;
                     case 2:
                         // return mouse to first-person mode if not already
                         Cursor.lockState = CursorLockMode.Locked;
+                        Cursor.visible = false;
 
                         SceneManager.LoadScene("Floor2");
                         break;
                     case 3:
                         // return mouse to first-person mode if not already
                         Cursor.lockState = CursorLockMode.Locked;
+                        Cursor.visible = false;
 
                         SceneManager.LoadScene("Command");
                         break;
