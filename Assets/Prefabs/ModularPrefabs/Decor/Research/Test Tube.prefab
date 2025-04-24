@@ -198,6 +198,10 @@ PrefabInstance:
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 5162820104835090806, guid: 625524237fa5c8046a202a1f57c84bff, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5162820104835090806, guid: 625524237fa5c8046a202a1f57c84bff, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -206,9 +210,25 @@ PrefabInstance:
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8029106800918022278, guid: 625524237fa5c8046a202a1f57c84bff, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029106800918022278, guid: 625524237fa5c8046a202a1f57c84bff, type: 3}
       propertyPath: m_ImportantGI
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8029106800918022278, guid: 625524237fa5c8046a202a1f57c84bff, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029106800918022278, guid: 625524237fa5c8046a202a1f57c84bff, type: 3}
+      propertyPath: m_StitchLightmapSeams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029106800918022278, guid: 625524237fa5c8046a202a1f57c84bff, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ead67c14ecd67b44a8c6c6c7e586ddfa, type: 2}
     - target: {fileID: 8747927661657533632, guid: 625524237fa5c8046a202a1f57c84bff, type: 3}
       propertyPath: m_ReceiveGI
       value: 1
