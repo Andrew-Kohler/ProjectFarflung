@@ -58,7 +58,11 @@ namespace StarterAssets
 				_firstSceneLoad = true;	// only do override first time on scene load (special case handled different from re-focusing)
 			}
 			else
-				SetCursorState(false);	// free cursor
+				SetCursorState(false);  // free cursor
+
+			// ENSURE CURSOR VISIBLE
+			// if cursor is locked, it is not visible anyways, so just make it visible to be safe
+			Cursor.visible = true;
 		}
         private void OnDisable()
         {
