@@ -142,8 +142,7 @@ public class WireBoxInteractable : Interactable
         _mainCam.gameObject.SetActive(true);
         _wireboxCam.gameObject.SetActive(false);
 
-        // DO NOT SET VISIBLE TO FALSE - locked mode does this inherently, visible = false just messes up mouse in edge cases of build
-        //Cursor.visible = false;
+        Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
         onLockedInteractionWirebox?.Invoke(false);

@@ -59,10 +59,6 @@ namespace StarterAssets
 			}
 			else
 				SetCursorState(false);  // free cursor
-
-			// ENSURE CURSOR VISIBLE
-			// if cursor is locked, it is not visible anyways, so just make it visible to be safe
-			Cursor.visible = true;
 		}
         private void OnDisable()
         {
@@ -175,6 +171,10 @@ namespace StarterAssets
 		private void SetCursorState(bool newState)
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
+			if (newState)
+				Cursor.visible = false;
+			else
+				Cursor.visible = true;
 		}
 	}
 	

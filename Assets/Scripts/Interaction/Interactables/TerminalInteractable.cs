@@ -149,8 +149,8 @@ public class TerminalInteractable : Interactable
         _puzzleCam.gameObject.SetActive(false);
         _terminalCam.gameObject.SetActive(false);
 
-        // DO NOT SET VISIBLE TO FALSE - locked mode does this inherently, visible = false just messes up mouse in edge cases of build
-        //Cursor.visible = false;                     // Right the cursor
+        
+        Cursor.visible = false;                     // Right the cursor
         Cursor.lockState = CursorLockMode.Locked;
 
         onLockedInteractionTerminal?.Invoke(false); // Right the HUD
