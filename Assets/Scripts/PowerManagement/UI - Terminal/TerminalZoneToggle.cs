@@ -17,7 +17,7 @@ public class TerminalZoneToggle : MonoBehaviour
 
     [Header("References")]
     [SerializeField, Tooltip("Used to actually call the functional toggle of powered elements on the power system prefab instance.")]
-    private TerminalConfiguration _terminal;
+    public TerminalConfiguration Terminal;
     [SerializeField, Tooltip("Used to read the state of the toggle.")]
     private Toggle _toggle;
     [SerializeField, Tooltip("Enabled to indicate locked state.")]
@@ -36,7 +36,7 @@ public class TerminalZoneToggle : MonoBehaviour
 
     private void Awake()
     {
-        _powerSystem = _terminal.PowerSystem;
+        _powerSystem = Terminal.PowerSystem;
 
         // Precondition: zone index must be valid
         if (ZoneIndex < 0 || ZoneIndex >= GameManager.Instance.SceneData.PoweredZones.Length || ZoneIndex >= GameManager.Instance.SceneData.TerminalUnlocks.Length)
