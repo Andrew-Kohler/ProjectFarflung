@@ -113,6 +113,7 @@ public class FlashlightController : MonoBehaviour
         if (_heldTimer > _stunHoldDuration || !_isHeld || _stunTrigger.enabled)
         {
             _isHeld = false;    // ensure stun doesn't go off twice - edge case
+            _stunHoldRatio = 0f;
 
             // cancel charging stun SFX
             AudioManager.Instance.StopChargeStunSFX();
@@ -163,6 +164,7 @@ public class FlashlightController : MonoBehaviour
         if (!GameManager.Instance.PlayerEnabled)
         {
             _stunHoldRatio = 0f;
+            GameManager.StunHoldRatio = 0f;
             _isHeld = false; // ensures proper cancelling of below logic for terminals / wire boxes / scene transitions
             AudioManager.Instance.StopChargeStunSFX();  // prevent chargins SFX from continuing to play
         }
@@ -206,7 +208,12 @@ public class FlashlightController : MonoBehaviour
 
         // skip stun burst processing if actively stun bursting
         if (_isStunning)
+        {
+            // max charge level while stunning
+            GameManager.StunHoldRatio = 1f;
+
             return;
+        }
 
         // check for stun burst
         if (_isHeld)    // no longer requires light to be on for charging to start
