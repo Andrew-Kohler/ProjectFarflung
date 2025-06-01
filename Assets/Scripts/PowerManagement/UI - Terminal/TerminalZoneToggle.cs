@@ -59,6 +59,13 @@ public class TerminalZoneToggle : MonoBehaviour
         UpdateLockedState();
     }
 
+    private void OnEnable()
+    {
+        // ensures graphic aligns with actual state BEFORE rendering - a funny fix for it but I think it works
+        // i.e. avoids briefly seeing red from other page's zone overloading upon switching to new floor in terminal
+        Update();
+    }
+
     // Update is called once per frame
     void Update()
     {
