@@ -33,6 +33,8 @@ public class DoorInteractable : Interactable
     private GameObject _indicatorParent;
     [SerializeField, Tooltip("Parent of E to interact")]
     private GameObject _interactPromptParent;
+    [SerializeField, Tooltip("Keycard game objects, used to disable this component of the popup separately.")]
+    private GameObject[] _keycardReqObjs;
 
     // If a door is:
     // CLOSED and BROKEN:       This is never getting opened, ever.
@@ -165,8 +167,12 @@ public class DoorInteractable : Interactable
     }
 
     // Pays attention to the graphics that help the player understand what they need for a door
-    private void IndicatorMonitor() // Problem is somewhere in here
+    private void IndicatorMonitor()
     {
+        // show keycard objects by default unless overrided to be disabled in below logic
+        foreach (GameObject obj in _keycardReqObjs)
+            obj.SetActive(true);
+
         if (RequiredKey.ToString() == "Default" || GameManager.Instance.SceneData.Keys.Contains(RequiredKey.ToString())) // If they have the key
             _requiredKeycardSprite.color = Color.green;
         else
@@ -194,7 +200,19 @@ public class DoorInteractable : Interactable
         }
         else
         {
-            _indicatorParent.SetActive(true);   // no power, so there will be an indicator
+            // only show key indicator if it actually needs a key other than default
+            if (RequiredKey.ToString() == "Default")
+            {
+                foreach (GameObject obj in _keycardReqObjs)
+                    obj.SetActive(false);
+            }
+            else
+            {
+                foreach (GameObject obj in _keycardReqObjs)
+                    obj.SetActive(true);
+            }
+
+            _indicatorParent.SetActive(true); // must show for elec requirement to be visible
             _interactPromptParent.SetActive(false); // no longer able to interact (power was turned off)
 
             _elecOperableSprite.color = Color.red;
