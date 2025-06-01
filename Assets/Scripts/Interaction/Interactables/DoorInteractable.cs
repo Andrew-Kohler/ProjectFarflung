@@ -220,6 +220,13 @@ public class DoorInteractable : Interactable
         Sibling.IsOpen = IsOpen; // Make sure both doors keep the same open state
 
         yield return new WaitForSeconds(1.667f / 2);
+
+        // ensure door always snaps to end of animation, even at low frame rates
+        if (IsOpen)
+            DoorAnim.Play("Take 001", 0, 0.5f);
+        else
+            DoorAnim.Play("Take 001", 0, 1f);
+
         DoorAnim.speed = 0f;
         IsActiveDoorCoroutine = false;
         Sibling.IsActiveDoorCoroutine = false;
