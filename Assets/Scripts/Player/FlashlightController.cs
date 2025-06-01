@@ -159,7 +159,11 @@ public class FlashlightController : MonoBehaviour
     {
         // ensure hold ratio resets upon opening a box/terminal
         if (!GameManager.Instance.PlayerEnabled)
+        {
             GameManager.StunHoldRatio = 0f;
+            _isHeld = false; // ensures proper cancelling of below logic for terminals / wire boxes / scene transitions
+            AudioManager.Instance.StopChargeStunSFX();  // prevent chargins SFX from continuing to play
+        }
 
         // decrease battery charge
         if (_isOn)
