@@ -41,6 +41,8 @@ public class FlashlightController : MonoBehaviour
     private float _defaultLightRange;
     private float _defaultSpotAngle;
 
+    private bool _isStunning = false;
+
     private void Awake()
     {
         _defaultLightRange = _light.range;
@@ -196,6 +198,10 @@ public class FlashlightController : MonoBehaviour
         // save pivot for next frame
         _prevPivotRot = _lightPivot.transform.rotation;
 
+        // skip stun burst processing if actively stun bursting
+        if (_isStunning)
+            return;
+
         // check for stun burst
         if (_isHeld)    // no longer requires light to be on for charging to start
         {
@@ -208,6 +214,7 @@ public class FlashlightController : MonoBehaviour
 
                 _light.range = _stunLightRange;
                 _light.spotAngle = _stunSpotAngle;
+                _isStunning = true;
 
                 _stunTrigger.enabled = true;
 
@@ -247,6 +254,7 @@ public class FlashlightController : MonoBehaviour
         _light.range = _defaultLightRange;
         _light.spotAngle = _defaultSpotAngle;
         _stunTrigger.enabled = false;
+        _isStunning = false;
 
         GameManager.StunHoldRatio = 0f; // return hold value back to 0 - stun is over
     }
