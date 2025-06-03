@@ -62,17 +62,9 @@ public class CreatureMotion : MonoBehaviour
             //updates creatures chase animation speed to be similar to its expected speed & trigger VFX
             _animator.SetFloat("speed", CreatureManager.Instance.CurrentSpeed);
 
-            // VFX trailing effects
-
-            // Apply to particle system force
+            // VFX trailing effects - set y force (only the backwards force since it uses local coordinates)
             var particleMotion = _motionEffect.forceOverLifetime;
-            particleMotion.enabled = true;
-
-            Vector3 force = transform.forward * angleFactor * CreatureManager.Instance.CurrentSpeed;
-
-            particleMotion.x = new ParticleSystem.MinMaxCurve(force.y * 10);
-            particleMotion.y = new ParticleSystem.MinMaxCurve(force.x * 20);
-            particleMotion.z = new ParticleSystem.MinMaxCurve(force.z * 10);
+            particleMotion.y = new ParticleSystem.MinMaxCurve(CreatureManager.Instance.CurrentSpeed * -15);
         }
 
         // ANIMATIONS -------------------
