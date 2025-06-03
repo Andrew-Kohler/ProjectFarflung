@@ -15,6 +15,8 @@ public class TerminalInteractable : Interactable
     private CinemachineVirtualCamera _terminalCam;
     [SerializeField, Tooltip("The camera aimed at the light puzzle")]
     private CinemachineVirtualCamera _puzzleCam;
+    [SerializeField, Tooltip("Animator for boot-up screen of terminal.")]
+    private Animator _bootUpAnim;
 
     private CinemachineVirtualCamera _mainCam;
     private bool _inUse = false;        // If player uses this terminal (to prevent constantly reactivating exit keybind)
@@ -63,6 +65,8 @@ public class TerminalInteractable : Interactable
 
                 // terminal boot SFX
                 AudioManager.Instance.PlayTerminalBoot();
+
+                _bootUpAnim.Play("BootUp");
             }
         }
     }
@@ -116,6 +120,9 @@ public class TerminalInteractable : Interactable
 
             // terminal boot SFX
             AudioManager.Instance.PlayTerminalBoot();
+
+            // fade logo into interface
+            _bootUpAnim.Play("BootUp");
         }
         else // If it isn't
         {
@@ -161,6 +168,8 @@ public class TerminalInteractable : Interactable
 
         // terminal close SFX
         AudioManager.Instance.PlayTerminalClose();
+
+        _bootUpAnim.Play("BootDown");
 
         yield return new WaitForEndOfFrame();
         GameManager.Instance.PlayerEnabled = true;      // Free the player

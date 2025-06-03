@@ -190,6 +190,10 @@ public class FileTabController : MonoBehaviour
             _source.UnPause();
         }
 
+        if (_selectedLog.type == Log.LogType.Audio && _isLogOpen)
+            AudioManager.Instance.SetAudioLogPlaying();
+        else
+            AudioManager.Instance.SetAudioLogNotPlaying();
     }
 
     /// <summary>

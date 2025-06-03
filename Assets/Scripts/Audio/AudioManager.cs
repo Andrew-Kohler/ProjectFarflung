@@ -123,6 +123,7 @@ public class AudioManager : MonoBehaviour
     private AudioClip _queueTrack = null;
     private AudioClip _currTrack = null;
     private bool _isPaused = false;
+    private bool _isAudioLogPlaying = false;
 
     float _prevTime = 0f;
 
@@ -154,7 +155,7 @@ public class AudioManager : MonoBehaviour
         else if (_currTrack is not null)
         {
             // move towards 25% configured volume during pause
-            if (_isPaused)
+            if (_isPaused || _isAudioLogPlaying)
             {
                 if (_musicSource.volume > GameManager.GetMusicVolume() / 4f)
                 {
@@ -225,10 +226,21 @@ public class AudioManager : MonoBehaviour
         _isPaused = false;
     }
 
+    public void SetAudioLogPlaying()
+    {
+        _isAudioLogPlaying = true;
+    }
+
+    public void SetAudioLogNotPlaying()
+    {
+        _isAudioLogPlaying = false;
+    }
+
     private void SetPauseOnLoad(Scene scene, LoadSceneMode mode)
     {
         // ensure pause saved state properly reset between scenes for the sake of music/ambient reduction
         _isPaused = false;
+        _isAudioLogPlaying = false;
     }
     #endregion
 

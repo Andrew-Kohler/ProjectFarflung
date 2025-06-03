@@ -9,8 +9,6 @@ using TMPro;
 public class ConsumptionDisplay : MonoBehaviour
 {
     [Header("Data Retrieval")]
-    [SerializeField, Tooltip("Used to retrieve the power system and read data.")]
-    private TerminalConfiguration _terminal;
     [SerializeField, Tooltip("Used to determine the index of the current zone without duplicate inspector fields.")]
     TerminalZoneToggle _zone;
 
@@ -25,7 +23,7 @@ public class ConsumptionDisplay : MonoBehaviour
     void Start()
     {
         // retrieve power zone
-        _poweredZone = _terminal.PowerSystem.PoweredZones[_zone.ZoneIndex];
+        _poweredZone = _zone.Terminal.PowerSystem.PoweredZones[_zone.ZoneIndex];
 
         UpdateDisplay();
 
