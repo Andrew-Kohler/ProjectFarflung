@@ -11,16 +11,28 @@ public class HelpToggle : MonoBehaviour
     private CanvasGroup _alphaGroup;
     [SerializeField, Tooltip("Rate at which fade in/out occurs.")]
     private float _fadeRate;
+    [SerializeField, Tooltip("Whether the tutorial opens the help menu by default on terminal first open.")]
+    private bool _isTutorialTerminal;
 
     private bool _isOpen;
 
     // Start is called before the first frame update
     void Start()
     {
-        // configure menu closed by default
-        _alphaGroup.alpha = 0;
-        _isOpen = false;
-        _alphaGroup.blocksRaycasts = false;
+        // tutorial terminal help menu open by default
+        if (_isTutorialTerminal)
+        {
+            _alphaGroup.alpha = 1;
+            _isOpen = true;
+            _alphaGroup.blocksRaycasts = true;
+        }
+        // menu closed by default otherwise
+        else
+        {
+            _alphaGroup.alpha = 0;
+            _isOpen = false;
+            _alphaGroup.blocksRaycasts = false;
+        }
     }
 
     // Update is called once per frame
