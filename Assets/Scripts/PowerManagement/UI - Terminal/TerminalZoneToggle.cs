@@ -17,7 +17,7 @@ public class TerminalZoneToggle : MonoBehaviour
 
     [Header("References")]
     [SerializeField, Tooltip("Used to actually call the functional toggle of powered elements on the power system prefab instance.")]
-    private TerminalConfiguration _terminal;
+    public TerminalConfiguration Terminal;
     [SerializeField, Tooltip("Used to read the state of the toggle.")]
     private Toggle _toggle;
     [SerializeField, Tooltip("Enabled to indicate locked state.")]
@@ -32,19 +32,38 @@ public class TerminalZoneToggle : MonoBehaviour
     [SerializeField, Tooltip("Bar between said numbers")]
     private GameObject _consumptionDisplayBar;
 
+    [Header("Overload Flashing")]
+    [SerializeField, Tooltip("Interval at which image flashes during overload sequence.")]
+    private float _flashingInterval;
+    [SerializeField, Tooltip("Color to which the image flashes while overloading.")]
+    private Color _flashingColor;
+    [SerializeField, Tooltip("Image component for changing color component.")]
+    private Image _zoneImg;
+
+    private Color _initImgColor;
+
     private PowerSystem _powerSystem;
 
     private void Awake()
     {
-        _powerSystem = _terminal.PowerSystem;
+        _powerSystem = Terminal.PowerSystem;
 
         // Precondition: zone index must be valid
         if (ZoneIndex < 0 || ZoneIndex >= GameManager.Instance.SceneData.PoweredZones.Length || ZoneIndex >= GameManager.Instance.SceneData.TerminalUnlocks.Length)
             throw new System.Exception("Invalid zone index: toggle MUST be in range of Game Manager's powered zones list.");
 
+        _initImgColor = _zoneImg.color;
+
         // initial configuration
         UpdatePoweredState();
         UpdateLockedState();
+    }
+
+    private void OnEnable()
+    {
+        // ensures graphic aligns with actual state BEFORE rendering - a funny fix for it but I think it works
+        // i.e. avoids briefly seeing red from other page's zone overloading upon switching to new floor in terminal
+        Update();
     }
 
     // Update is called once per frame
@@ -54,9 +73,32 @@ public class TerminalZoneToggle : MonoBehaviour
         if (_toggle.isOn != GameManager.Instance.SceneData.PoweredZones[ZoneIndex])
             UpdatePoweredState();
 
-        // update toggle interactability
-        if (_toggle.interactable != GameManager.Instance.SceneData.TerminalUnlocks[ZoneIndex])
-            UpdateLockedState();
+        // overload flashing
+        if (_powerSystem.OverloadLock)
+        {
+            _toggle.interactable = false;
+
+            // flash color
+            if ((int) (Time.timeSinceLevelLoad / _flashingInterval) % 2 == 1)
+            {
+                _zoneImg.color = _flashingColor;
+            }
+            // default color
+            else
+            {
+                _zoneImg.color = _initImgColor;
+            }
+        }
+        // standard button behavior
+        else
+        {
+            // ensure always solid default color in default state
+            _zoneImg.color = _initImgColor;
+
+            // update toggle interactability
+            if (_toggle.interactable != GameManager.Instance.SceneData.TerminalUnlocks[ZoneIndex])
+                UpdateLockedState();
+        }
     }
 
     /// <summary>
@@ -92,12 +134,6 @@ public class TerminalZoneToggle : MonoBehaviour
     {
         _toggle.interactable = GameManager.Instance.SceneData.TerminalUnlocks[ZoneIndex];
         _lockedIndicator.SetActive(!_toggle.interactable);
-
-/*        if (!_lockedIndicator.activeSelf)
-        {
-            _consumptionDisplayText.color = Color.white;
-            _consumptionDisplayBar.GetComponent<Image>().color = Color.white; 
-        }*/
     }
 
     /// <summary>
@@ -148,6 +184,6 @@ public class TerminalZoneToggle : MonoBehaviour
 
     public void HideZoneName()
     {
-        _zoneNameText.text = "";
+        _zoneNameText.text = "[None]";
     }
 }

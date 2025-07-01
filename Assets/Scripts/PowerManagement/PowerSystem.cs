@@ -28,6 +28,13 @@ public class PowerSystem : MonoBehaviour
     [Tooltip("Ordered list of powered zones, used to access power data.")]
     public PoweredZone[] PoweredZones;
 
+    [Header("Overload Sequence")]
+    [SerializeField, Tooltip("Duration of the locked button flashing sequence.")]
+    private float _overloadDuration;
+
+    [HideInInspector]
+    public bool OverloadLock = false; // whether buttons should be locked right now
+
     private void Awake()
     {
         // give all lights a chance to configure their data and power states properly, even if they will be disabled
@@ -126,5 +133,18 @@ public class PowerSystem : MonoBehaviour
             foreach (PoweredZone zone in PoweredZones)
                 zone.UpdatePowerStates();
         }
+
+        StartCoroutine(DoShutdownLock());
+    }
+
+    private IEnumerator DoShutdownLock()
+    {
+        // lock terminal controls
+        OverloadLock = true;
+
+        yield return new WaitForSeconds(_overloadDuration);
+
+        // end flashing and return control to buttons
+        OverloadLock = false;
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Mathematics;
 
 /// <summary>
 /// Controls enabling/disabling of flashlight with key presses.
@@ -40,6 +41,9 @@ public class FlashlightController : MonoBehaviour
     private Quaternion _prevPivotRot;
     private float _defaultLightRange;
     private float _defaultSpotAngle;
+
+    private float _stunHoldRatio = 0f;
+    private bool _isStunning = false;
 
     private void Awake()
     {
@@ -109,6 +113,7 @@ public class FlashlightController : MonoBehaviour
         if (_heldTimer > _stunHoldDuration || !_isHeld || _stunTrigger.enabled)
         {
             _isHeld = false;    // ensure stun doesn't go off twice - edge case
+            _stunHoldRatio = 0f;
 
             // cancel charging stun SFX
             AudioManager.Instance.StopChargeStunSFX();
@@ -120,7 +125,7 @@ public class FlashlightController : MonoBehaviour
         }
 
         // on mouse release, stun hold level resets to 0
-        GameManager.StunHoldRatio = 0f;
+        _stunHoldRatio = 0f;
 
         // indicates player is NOT holding down key for stun
         _isHeld = false;
@@ -156,8 +161,13 @@ public class FlashlightController : MonoBehaviour
     void Update()
     {
         // ensure hold ratio resets upon opening a box/terminal
-        if (!GameManager.Instance.PlayerEnabled)
+        if (!GameManager.Instance.PlayerEnabled && GameManager.Instance.SceneData.IntroCutsceneWatched)
+        {
+            _stunHoldRatio = 0f;
             GameManager.StunHoldRatio = 0f;
+            _isHeld = false; // ensures proper cancelling of below logic for terminals / wire boxes / scene transitions
+            AudioManager.Instance.StopChargeStunSFX();  // prevent chargins SFX from continuing to play
+        }
 
         // decrease battery charge
         if (_isOn)
@@ -196,6 +206,15 @@ public class FlashlightController : MonoBehaviour
         // save pivot for next frame
         _prevPivotRot = _lightPivot.transform.rotation;
 
+        // skip stun burst processing if actively stun bursting
+        if (_isStunning)
+        {
+            // max charge level while stunning
+            GameManager.StunHoldRatio = 1f;
+
+            return;
+        }
+
         // check for stun burst
         if (_isHeld)    // no longer requires light to be on for charging to start
         {
@@ -208,6 +227,7 @@ public class FlashlightController : MonoBehaviour
 
                 _light.range = _stunLightRange;
                 _light.spotAngle = _stunSpotAngle;
+                _isStunning = true;
 
                 _stunTrigger.enabled = true;
 
@@ -216,7 +236,7 @@ public class FlashlightController : MonoBehaviour
                 // cancel charging stun SFX
                 AudioManager.Instance.StopChargeStunSFX();
 
-                GameManager.StunHoldRatio = 1f; // set stun hold ratio to max
+                _stunHoldRatio = 1f; // set stun hold ratio to max
 
                 // consume charge
                 GameManager.FlashlightCharge -= _stunBatteryCost;
@@ -233,8 +253,12 @@ public class FlashlightController : MonoBehaviour
             _heldTimer += Time.deltaTime;
 
             // update stun hold ratio in game manager
-            GameManager.StunHoldRatio = Mathf.Clamp(_heldTimer / _stunHoldDuration, 0f, 1f);
+            _stunHoldRatio = Mathf.Clamp(_heldTimer / _stunHoldDuration, 0f, 1f);
         }
+
+        // update game manager stun hold ratio
+        // remap so graphics only show 20% or higher charge value (to avoid flicker when simply turning on/off flashlight)
+        GameManager.StunHoldRatio = math.remap(0.25f, 1f, 0f, 1f, _stunHoldRatio);
     }
 
     /// <summary>
@@ -247,8 +271,9 @@ public class FlashlightController : MonoBehaviour
         _light.range = _defaultLightRange;
         _light.spotAngle = _defaultSpotAngle;
         _stunTrigger.enabled = false;
+        _isStunning = false;
 
-        GameManager.StunHoldRatio = 0f; // return hold value back to 0 - stun is over
+        _stunHoldRatio = 0f; // return hold value back to 0 - stun is over
     }
 
     /// <summary>
