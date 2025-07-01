@@ -161,7 +161,7 @@ public class FlashlightController : MonoBehaviour
     void Update()
     {
         // ensure hold ratio resets upon opening a box/terminal
-        if (!GameManager.Instance.PlayerEnabled)
+        if (!GameManager.Instance.PlayerEnabled && GameManager.Instance.SceneData.IntroCutsceneWatched)
         {
             _stunHoldRatio = 0f;
             GameManager.StunHoldRatio = 0f;
