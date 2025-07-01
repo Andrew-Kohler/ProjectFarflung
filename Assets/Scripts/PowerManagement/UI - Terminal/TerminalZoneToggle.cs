@@ -186,4 +186,12 @@ public class TerminalZoneToggle : MonoBehaviour
     {
         _zoneNameText.text = "[None]";
     }
+
+    public void NegativeFeedbackIfDisabled()
+    {
+        // play negative feedback if button is pressed while disabled
+        // don't allow the negative feedback while in grid overload (conflicting negatigve sounds)
+        if (!_toggle.interactable && !_powerSystem.OverloadLock)
+            AudioManager.Instance.PlayTerminalNegativeFeedback();
+    }
 }

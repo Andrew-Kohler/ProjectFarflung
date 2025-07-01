@@ -608,6 +608,12 @@ public class AudioManager : MonoBehaviour
         _sfxSource.PlayOneShot(_doorLocked, GameManager.GetSFXVolume());
     }
 
+    public void PlayTerminalNegativeFeedback()
+    {
+        // play locked SFX but quieter
+        _sfxSource.PlayOneShot(_doorLocked, GameManager.GetSFXVolume() / 2f);
+    }
+
     public void PlayRespawnInteract()
     {
         _sfxSource.PlayOneShot(_respawnInteract, GameManager.GetSFXVolume());
