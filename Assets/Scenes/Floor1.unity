@@ -59129,6 +59129,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 870663505835021647, guid: 73a582d1ab5f5ab45bf44df4439c0ea4, type: 3}
+      propertyPath: m_RendererIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 870663505835021647, guid: 73a582d1ab5f5ab45bf44df4439c0ea4, type: 3}
       propertyPath: m_RenderPostProcessing
       value: 0
       objectReference: {fileID: 0}
@@ -59183,6 +59187,10 @@ PrefabInstance:
     - target: {fileID: 2657369914316549353, guid: 73a582d1ab5f5ab45bf44df4439c0ea4, type: 3}
       propertyPath: m_Name
       value: Helmet Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 9096534587210708461, guid: 73a582d1ab5f5ab45bf44df4439c0ea4, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -127392,7 +127400,7 @@ PrefabInstance:
       value: Pause & Options Menus
       objectReference: {fileID: 0}
     - target: {fileID: 7838719086586867389, guid: 9fcd557e28e5a434294a415a5f46958a, type: 3}
-      propertyPath: m_ClearDepth
+      propertyPath: m_CameraType
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -127436,13 +127444,13 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 1
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 1
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -156406,7 +156414,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -3281586491799629678, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
       propertyPath: m_RendererIndex
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -3281586491799629678, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
       propertyPath: m_Cameras.Array.size
@@ -156428,6 +156436,10 @@ PrefabInstance:
       propertyPath: m_Cameras.Array.data[2]
       value: 
       objectReference: {fileID: 1771078288}
+    - target: {fileID: 7204700524216778714, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
+      propertyPath: priority
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9005220659476430818, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -156471,6 +156483,14 @@ PrefabInstance:
     - target: {fileID: 9005220659476430818, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005220659476430821, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005220659476430821, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 310775
       objectReference: {fileID: 0}
     - target: {fileID: 9005220659476430823, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
       propertyPath: m_Name

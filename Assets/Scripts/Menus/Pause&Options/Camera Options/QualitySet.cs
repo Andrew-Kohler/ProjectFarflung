@@ -7,7 +7,8 @@ public class QualitySet : MonoBehaviour
 {
     [SerializeField] private TMP_Dropdown qualityDropdown;
 
-    private void Start() {
+    private void Awake() {
+        // When opening camera tab, sets drop down to match the unity default quality level
         if (qualityDropdown != null)
         {
             qualityDropdown.value = QualitySettings.GetQualityLevel();
@@ -16,8 +17,18 @@ public class QualitySet : MonoBehaviour
 
     public void SetQualityDropdown(int index)
     {
+
+        // Read value / remap
+        int newQuality = qualityDropdown.value;
+
+        // Update game manager
+        GameManager.Instance.OptionsData.Brightness = newQuality;
+
+        // Actually switch quality
         QualitySettings.SetQualityLevel(index, false);
         Debug.Log("Switched to quality level: " + QualitySettings.names[index]);
+
+       
     }
 
 }

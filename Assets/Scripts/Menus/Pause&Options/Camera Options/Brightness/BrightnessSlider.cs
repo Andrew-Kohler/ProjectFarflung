@@ -20,8 +20,6 @@ public class BrightnessSlider : MonoBehaviour
     private Slider _slider;
     [SerializeField, Tooltip("Used to update display text.")]
     private TextMeshProUGUI _displayText;
-    [SerializeField, Tooltip("Used to update post processing filter (dither graph).")]
-    private Material ditherMaterial;
 
 
     private void Awake()
@@ -51,9 +49,6 @@ public class BrightnessSlider : MonoBehaviour
     {
         // read value / remap
         float newBrightness = RemapNonlinear(_slider.value);
-
-        //update post processer
-        GetComponent<Renderer>().material.SetFloat("Brightness", newBrightness);
 
         // update game manager
         GameManager.Instance.OptionsData.Brightness = newBrightness;
