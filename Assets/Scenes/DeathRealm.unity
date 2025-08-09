@@ -3007,6 +3007,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pause & Options Menus
       objectReference: {fileID: 0}
+    - target: {fileID: 330274479176131922, guid: 9fcd557e28e5a434294a415a5f46958a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062967730964572351, guid: 9fcd557e28e5a434294a415a5f46958a, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5394960698667989145, guid: 9fcd557e28e5a434294a415a5f46958a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838719086586867389, guid: 9fcd557e28e5a434294a415a5f46958a, type: 3}
+      propertyPath: m_CameraType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838719086586867389, guid: 9fcd557e28e5a434294a415a5f46958a, type: 3}
+      propertyPath: m_RendererIndex
+      value: -1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3036,7 +3056,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -3281586491799629678, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
       propertyPath: m_Cameras.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -3281586491799629678, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
       propertyPath: m_RenderPostProcessing
@@ -3045,11 +3065,15 @@ PrefabInstance:
     - target: {fileID: -3281586491799629678, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
       propertyPath: m_Cameras.Array.data[0]
       value: 
-      objectReference: {fileID: 2082915232}
+      objectReference: {fileID: 7494562980600691551}
     - target: {fileID: -3281586491799629678, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
       propertyPath: m_Cameras.Array.data[1]
       value: 
       objectReference: {fileID: 2082915233}
+    - target: {fileID: -3281586491799629678, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
+      propertyPath: m_Cameras.Array.data[2]
+      value: 
+      objectReference: {fileID: 2082915232}
     - target: {fileID: 9005220659476430818, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -3797,7 +3821,7 @@ MonoBehaviour:
   m_RenderShadows: 1
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
+  m_CameraType: 1
   m_Cameras: []
   m_RendererIndex: -1
   m_VolumeLayerMask:

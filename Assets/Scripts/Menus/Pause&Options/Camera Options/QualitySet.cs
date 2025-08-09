@@ -22,7 +22,7 @@ public class QualitySet : MonoBehaviour
         int newQuality = qualityDropdown.value;
 
         // Update game manager
-        GameManager.Instance.OptionsData.Brightness = newQuality;
+        GameManager.Instance.OptionsData.QualityIndex = newQuality;
 
         // Actually switch quality
         QualitySettings.SetQualityLevel(index, false);
