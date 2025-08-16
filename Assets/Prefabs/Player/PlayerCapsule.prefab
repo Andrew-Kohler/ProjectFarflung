@@ -583,21 +583,53 @@ PrefabInstance:
       propertyPath: _cameraRoot
       value: 
       objectReference: {fileID: 4135013735270702863}
+    - target: {fileID: 7261653889972815403, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: _stunSpotAngle
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261653889972815403, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: _stunLightRange
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261653889972815403, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: _stunIntensityMultiplier
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261653889972815403, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: _stunSpotAngleMultiplier
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261653889972815403, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: _stunLightRangeMultiplier
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7565683518033406030, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: m_Range
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 7565683518033406030, guid: 024bf047946bc834294a67327be58347, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7565683518033406030, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: m_Intensity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7565683518033406030, guid: 024bf047946bc834294a67327be58347, type: 3}
       propertyPath: m_SpotAngle
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7565683518033406030, guid: 024bf047946bc834294a67327be58347, type: 3}
       propertyPath: m_InnerSpotAngle
-      value: 25
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7565683518033406030, guid: 024bf047946bc834294a67327be58347, type: 3}
       propertyPath: m_Shadows.m_Type
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7565683518033406030, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: m_BounceIntensity
+      value: 0.9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -607,6 +607,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3281586491799629678, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
+      propertyPath: m_Cameras.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3281586491799629678, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
+      propertyPath: m_Cameras.Array.data[0]
+      value: 
+      objectReference: {fileID: 1977181637}
     - target: {fileID: 9005220659476430818, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -668,6 +676,11 @@ PrefabInstance:
 Camera:
   m_CorrespondingSourceObject: {fileID: 9005220659476430821, guid: 2d3a85ecde41a8246a79669975912b74, type: 3}
   m_PrefabInstance: {fileID: 1611509151}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &1977181637 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1465595482763253471, guid: 93634a347d13f424f9d350125f1359e9, type: 3}
+  m_PrefabInstance: {fileID: 689535583}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1999259916
 GameObject:

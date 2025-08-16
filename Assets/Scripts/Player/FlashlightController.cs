@@ -21,10 +21,12 @@ public class FlashlightController : MonoBehaviour
     private float _stunHoldDuration;
     [SerializeField, Tooltip("Duration that the stun works for. Should be SHORTER than stun hold duration.")]
     private float _stunDuration;
-    [SerializeField, Tooltip("range of light components during flash mode.")]
-    private float _stunLightRange;
-    [SerializeField, Tooltip("spot angle of light during flash mode.")]
-    private float _stunSpotAngle;
+    [SerializeField, Tooltip("multiplier of the light components during flash mode.")]
+    private float _stunIntensityMultiplier;
+    [SerializeField, Tooltip("multiplier of the light components during flash mode.")]
+    private float _stunLightRangeMultiplier;
+    [SerializeField, Tooltip("multiplier of the spot angle of light during flash mode.")]
+    private float _stunSpotAngleMultiplier;
     [SerializeField, Tooltip("amount of battery consumed on stun use. Full battery is 1.")]
     private float _stunBatteryCost;
 
@@ -39,6 +41,7 @@ public class FlashlightController : MonoBehaviour
     private GameObject _cameraRoot;
 
     private Quaternion _prevPivotRot;
+    private float _defaultIntensity;
     private float _defaultLightRange;
     private float _defaultSpotAngle;
 
@@ -47,6 +50,7 @@ public class FlashlightController : MonoBehaviour
 
     private void Awake()
     {
+        _defaultIntensity = _light.intensity;
         _defaultLightRange = _light.range;
         _defaultSpotAngle = _light.spotAngle;
     }
@@ -225,8 +229,9 @@ public class FlashlightController : MonoBehaviour
                 _isOn = true;
                 _light.enabled = true;
 
-                _light.range = _stunLightRange;
-                _light.spotAngle = _stunSpotAngle;
+                _light.intensity = _defaultIntensity * _stunIntensityMultiplier;
+                _light.range = _defaultLightRange * _stunLightRangeMultiplier;
+                _light.spotAngle = _defaultSpotAngle * _stunSpotAngleMultiplier;
                 _isStunning = true;
 
                 _stunTrigger.enabled = true;
@@ -268,6 +273,7 @@ public class FlashlightController : MonoBehaviour
     {
         yield return new WaitForSeconds(_stunDuration);
 
+        _light.intensity = _defaultIntensity;
         _light.range = _defaultLightRange;
         _light.spotAngle = _defaultSpotAngle;
         _stunTrigger.enabled = false;
