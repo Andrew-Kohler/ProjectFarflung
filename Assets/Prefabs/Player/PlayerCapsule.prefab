@@ -69,6 +69,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3838192956517521597}
   - component: {fileID: 1510516453732599091}
+  - component: {fileID: 2465062457372895843}
   m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
@@ -84,7 +85,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8486795282179176684}
   m_LocalRotation: {x: 0.04008141, y: -0, z: -0, w: 0.9991964}
-  m_LocalPosition: {x: 0, y: 0, z: 0.15}
+  m_LocalPosition: {x: 0, y: 0, z: -0.017999992}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -102,8 +103,8 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0, g: 0.5967709, b: 0.8490566, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.27803493, g: 0.66479707, b: 0.8301887, a: 1}
+  m_Intensity: 0.1
   m_Range: 7.5
   m_SpotAngle: 100
   m_InnerSpotAngle: 1
@@ -145,7 +146,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0.05
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -153,6 +154,29 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &2465062457372895843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8486795282179176684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &8616685848737228372
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,14 +567,70 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2072701372063183801, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.01799999
+      objectReference: {fileID: 0}
     - target: {fileID: 3078610103984850691, guid: 024bf047946bc834294a67327be58347, type: 3}
       propertyPath: m_Name
       value: Shoulder-Mounted Lights
+      objectReference: {fileID: 0}
+    - target: {fileID: 7046141193552192595, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: m_AdditionalLightsShadowResolutionTier
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7261653889972815403, guid: 024bf047946bc834294a67327be58347, type: 3}
       propertyPath: _cameraRoot
       value: 
       objectReference: {fileID: 4135013735270702863}
+    - target: {fileID: 7261653889972815403, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: _stunSpotAngle
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261653889972815403, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: _stunLightRange
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261653889972815403, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: _stunIntensityMultiplier
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261653889972815403, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: _stunSpotAngleMultiplier
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261653889972815403, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: _stunLightRangeMultiplier
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7565683518033406030, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: m_Range
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7565683518033406030, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7565683518033406030, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: m_Intensity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7565683518033406030, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: m_SpotAngle
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7565683518033406030, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: m_InnerSpotAngle
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7565683518033406030, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: m_Shadows.m_Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7565683518033406030, guid: 024bf047946bc834294a67327be58347, type: 3}
+      propertyPath: m_BounceIntensity
+      value: 0.9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

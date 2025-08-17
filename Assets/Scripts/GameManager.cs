@@ -471,6 +471,8 @@ public class GameManager : MonoBehaviour
         public int FoV;
         public float Sensitivity;
         public bool CameraBobbing;
+        public int QualityIndex;
+
 
         /// <summary>
         /// Default constructor.
@@ -520,6 +522,7 @@ public class GameManager : MonoBehaviour
         {
             CameraBobbing = true;
         }
+
     }
 
     // private stored save data

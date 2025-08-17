@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 /// <summary>
 /// Applies the game manager post-processing values to the post process profile linked to this script.
@@ -10,16 +11,18 @@ using UnityEngine.Rendering.PostProcessing;
 public class ApplyPostProcessingSettings : MonoBehaviour
 {
     [SerializeField, Tooltip("Used to set exposure value on post-processing volume.")]
-    private PostProcessProfile _profile;
+    private Volume volume;
 
-    private AutoExposure _exposure;
+    private ColorAdjustments _colorAdjustments;
     private float _currVal;
 
     private void Awake()
     {
-        // fetch exposure compnent of post process profile
-        _profile.TryGetSettings(out _exposure);
-        _currVal = _exposure.keyValue.value;
+        if (volume.profile.TryGet(out _colorAdjustments))
+        {
+            _currVal = _colorAdjustments.postExposure.value;
+        }
+       
     }
 
     // Update is called once per frame
@@ -28,7 +31,7 @@ public class ApplyPostProcessingSettings : MonoBehaviour
         // avoid applying value every frame
         if (_currVal != GameManager.Instance.OptionsData.Brightness)
         {
-            _exposure.keyValue.value = GameManager.Instance.OptionsData.Brightness;
+            _colorAdjustments.postExposure.value = GameManager.Instance.OptionsData.Brightness;
             _currVal = GameManager.Instance.OptionsData.Brightness;
         }
     }

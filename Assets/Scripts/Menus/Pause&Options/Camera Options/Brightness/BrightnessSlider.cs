@@ -21,6 +21,7 @@ public class BrightnessSlider : MonoBehaviour
     [SerializeField, Tooltip("Used to update display text.")]
     private TextMeshProUGUI _displayText;
 
+
     private void Awake()
     {
         // configure initial slider pos  
